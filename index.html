@@ -175,6 +175,10 @@
   .cta-join .price .per { color: var(--dim); font-weight: 400; font-size: 13px; }
   .cta-join .fine { font-size: 11px; color: var(--dim); }
 
+  /* actions group — transparent on desktop so time-pick + join-btn stay
+     direct flex children of the bar; collapses to its own row on mobile */
+  .win-actions { display: contents; }
+
   /* time-level segmented control — lives in the topbar */
   .time-pick {
     display: flex; align-items: center; gap: 6px;
@@ -1201,6 +1205,19 @@
     }
   }
 
+  /* Narrow: the bar can no longer hold tabs + controls + CTA on one line,
+     so drop the time-pick + join-btn group to its own full-width row. */
+  @media (max-width: 600px) {
+    .win-bar { flex-wrap: wrap; }
+    .win-bar .tabs { align-self: center; margin-bottom: 0; }
+    .win-actions {
+      display: flex; flex-basis: 100%;
+      align-items: center; justify-content: space-between;
+      gap: 8px; margin-top: 4px;
+    }
+    .time-pick { margin-left: 0; }
+  }
+
   @media (max-width: 520px) {
     .win-bar .title { display: none; }
     .join-btn { margin-left: 8px; padding: 5px 10px; font-size: 11px; }
@@ -1223,15 +1240,17 @@
         <a class="tab" href="#sec-timeline" data-tab="timeline">таймлайн</a>
       </div>
 
-      <div class="time-pick" role="group" aria-label="Время на обучение">
-        <span class="tp-label">свободное время:</span>
-        <div class="tp-track">
-          <button class="tp-btn on" type="button" data-level="2"><span class="lvl">2ч</span></button>
-          <button class="tp-btn" type="button" data-level="4"><span class="lvl">4ч</span></button>
-          <button class="tp-btn" type="button" data-level="6"><span class="lvl">6+ч</span></button>
+      <div class="win-actions">
+        <div class="time-pick" role="group" aria-label="Время на обучение">
+          <span class="tp-label">свободное время:</span>
+          <div class="tp-track">
+            <button class="tp-btn on" type="button" data-level="2"><span class="lvl">2ч</span></button>
+            <button class="tp-btn" type="button" data-level="4"><span class="lvl">4ч</span></button>
+            <button class="tp-btn" type="button" data-level="6"><span class="lvl">6+ч</span></button>
+          </div>
         </div>
+        <a class="join-btn" id="join-btn" href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&source_channel=website" target="_blank" rel="noopener"><span class="jb-dot"></span>Присоединиться<span class="jb-arrow">→</span></a>
       </div>
-      <a class="join-btn" id="join-btn" href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&source_channel=website" target="_blank" rel="noopener"><span class="jb-dot"></span>Присоединиться<span class="jb-arrow">→</span></a>
     </div>
 
     <!-- HERO -->
