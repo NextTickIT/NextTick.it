@@ -1667,6 +1667,21 @@
     });
   })();
 
+  // GA4 event on CTA click — distinguishes the header vs the subscribe CTA.
+  (function () {
+    const locations = { "join-btn": "header", "join-btn-2": "subscribe" };
+    document.querySelectorAll("#join-btn, #join-btn-2").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (typeof gtag !== "function") return;
+        gtag("event", "cta_click", {
+          cta_location: locations[btn.id] || btn.id,
+          time_level: document.body.dataset.timeLevel || "",
+          link_url: btn.href,
+        });
+      });
+    });
+  })();
+
   document.getElementById("lede-sub").innerHTML =
     'Контент, который выходит регулярно и встраивается в твою неделю — <span class="em">фоном, как обновления редактора</span>.';
   // (overwritten by time-level picker below — leaving as initial fallback)
