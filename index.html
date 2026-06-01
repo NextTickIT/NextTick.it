@@ -332,6 +332,63 @@
   }
   .hero .sub .em { color: var(--amber); }
 
+  /* hero: copy + video two-column */
+  .hero-main {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .hero-copy { flex: 1 1 0; min-width: 0; }
+  .hero-copy .sub { margin-bottom: 0; }
+  .hero-video {
+    flex: 0 0 42%;
+    max-width: 480px;
+    align-self: center;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-2);
+    box-shadow: 0 0 28px rgba(126,231,135,.08);
+  }
+  .hero-video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    cursor: pointer;
+  }
+  .hero-video-frame iframe,
+  .hero-video-frame .hv-poster {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: 0;
+    display: block;
+  }
+  .hero-video-frame .hv-poster { object-fit: cover; }
+  .hv-play {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 66px; height: 66px;
+    border-radius: 50%;
+    background: rgba(13,17,23,.72);
+    border: 1.5px solid var(--green);
+    box-shadow: 0 0 26px rgba(126,231,135,.35);
+    transition: transform .15s ease, background .15s ease;
+  }
+  .hv-play::after {
+    content: "";
+    position: absolute; left: 54%; top: 50%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-width: 11px 0 11px 18px;
+    border-color: transparent transparent transparent var(--green);
+  }
+  .hero-video-frame:hover .hv-play,
+  .hero-video-frame:focus-visible .hv-play {
+    transform: translate(-50%, -50%) scale(1.06);
+    background: rgba(13,17,23,.88);
+  }
+  .hero-video-frame:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
   .ascii-box {
     color: var(--line-2);
     font-size: 12px;
@@ -1218,6 +1275,9 @@
     .hero-logo { width: 64px; height: 64px; }
     .hero .sub { font-size: 12.5px; }
 
+    .hero-main { flex-direction: column; align-items: stretch; gap: 20px; }
+    .hero-video { flex: none; max-width: 100%; width: 100%; }
+
     .kicker-bar { padding: 12px 18px 22px; gap: 6px; font-size: 11px; }
     .kicker-bar .pill { padding: 2px 8px; font-size: 10.5px; }
 
@@ -1338,11 +1398,25 @@
         <span class="blink">▍</span>
       </div>
 
-      <div class="hero-title">
-        <img class="hero-logo" src="assets/nexttick-logo.png" alt="nexttick" />
-        <h1 data-comment-anchor="1586baca91-h1"><span class="swap" id="h1-w1">фоновое</span><br /><span class="swap" id="h1-w2">обучение_</span></h1>
+      <div class="hero-main">
+        <div class="hero-copy">
+          <div class="hero-title">
+            <img class="hero-logo" src="assets/nexttick-logo.png" alt="nexttick" />
+            <h1 data-comment-anchor="1586baca91-h1"><span class="swap" id="h1-w1">фоновое</span><br /><span class="swap" id="h1-w2">обучение_</span></h1>
+          </div>
+          <div class="sub" id="lede-sub"></div>
+        </div>
+
+        <div class="hero-video">
+          <div class="hero-video-frame" id="hero-video" role="button" tabindex="0"
+               aria-label="Смотреть видео: обзор гильдии инженеров NextTick"
+               data-embed="https://www.youtube-nocookie.com/embed/nW8g4Y6otWM?autoplay=1&rel=0">
+            <img class="hv-poster" src="https://i.ytimg.com/vi/nW8g4Y6otWM/maxresdefault.jpg"
+                 alt="Обзор гильдии инженеров NextTick" loading="lazy" />
+            <span class="hv-play" aria-hidden="true"></span>
+          </div>
+        </div>
       </div>
-      <div class="sub" id="lede-sub"></div>
     </div>
 
     <div class="kicker-bar" id="kicker-bar" style="display:none"></div>
@@ -2046,6 +2120,29 @@
     target = Math.max(0, Math.min(target, maxScroll()));
     tlScroll.scrollTo({ left: target, behavior: "smooth" });
   });
+
+  // Hero video facade: load the embed only on user interaction
+  const heroVid = document.getElementById("hero-video");
+  if (heroVid) {
+    const playHeroVid = () => {
+      if (heroVid.dataset.loaded === "true") return;
+      heroVid.dataset.loaded = "true";
+      const ifr = document.createElement("iframe");
+      ifr.src = heroVid.dataset.embed;
+      ifr.title = "NextTick — intro";
+      ifr.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      ifr.referrerPolicy = "strict-origin-when-cross-origin";
+      ifr.allowFullscreen = true;
+      heroVid.innerHTML = "";
+      heroVid.appendChild(ifr);
+      heroVid.style.cursor = "default";
+      heroVid.removeAttribute("role");
+    };
+    heroVid.addEventListener("click", playHeroVid);
+    heroVid.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); playHeroVid(); }
+    });
+  }
 
   // Scroll-to-now button
   document.getElementById("jump-now").addEventListener("click", () => {
