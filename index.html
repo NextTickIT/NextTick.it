@@ -1770,9 +1770,21 @@
     });
   });
 
-  // nowWeek on the 1..40 scale (nowMonth=1.0 means end of month 1 = week 4)
-  const nowWeek = (R.nowMonth ?? 1) * 4;
-  const nextWeek = Math.ceil(nowWeek); // the episode currently airing
+  // nowWeek = marker position on the 1..40 scale (a column boundary of N means the
+  // start of week N+1); nextWeek = the week currently airing. Anchored to a real date
+  // (seasonStart = Monday of week 1) so on Monday the marker sits at the very start of
+  // the current week's cell and slides across it as the week progresses, stepping to
+  // the next column each week. Falls back to the static nowMonth if no/invalid date.
+  const { nowWeek, nextWeek } = (() => {
+    const start = R.seasonStart ? new Date(R.seasonStart + "T00:00:00") : null;
+    if (start && !isNaN(start)) {
+      const elapsed = (Date.now() - start.getTime()) / (7 * 864e5); // fractional weeks since week 1
+      const pos = Math.min(WEEKS, Math.max(0, elapsed));
+      return { nowWeek: pos, nextWeek: Math.min(WEEKS, Math.floor(pos) + 1) };
+    }
+    const pos = (R.nowMonth ?? 1) * 4;
+    return { nowWeek: pos, nextWeek: Math.ceil(pos) };
+  })();
 
   // Planning horizon: content visible only ~3 months (12 weeks) ahead of now.
   // Beyond that — fog + a hard scroll stop.
@@ -1862,7 +1874,7 @@
       const isBoundary = w % 4 === 0;
       const ep = R.episodes.find(e => e.track === t.id && epWeek.get(e.id) === w);
       let state = "future";
-      if (w < nowWeek) state = "released";
+      if (w < nextWeek) state = "released";
       else if (w === nextWeek) state = "next";
 
       const lastRowCls = last ? "last-row" : "";
@@ -1982,7 +1994,7 @@
     mmHtml += `<div class="mm-row ${tid}" data-track="${tid}" style="grid-template-columns: repeat(${VIS_WEEKS}, 1fr);">`;
     for (let w = 1; w <= VIS_WEEKS; w++) {
       let st = "future";
-      if (w < nowWeek) st = "released";
+      if (w < nextWeek) st = "released";
       else if (w === nextWeek) st = "next";
       const lk = isLocked(w) ? ' data-locked="true"' : "";
       mmHtml += `<div class="mm-cell" data-state="${st}"${lk}></div>`;

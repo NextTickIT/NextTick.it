@@ -347,7 +347,11 @@
       { num: 10, label: "Месяц 10", theme: "Закрытие сезона" },
     ],
 
-    // Position on the 10-month axis (1.0 = end of month 1)
-    nowMonth: 1.4,
+    // Anchor for the dynamic "now" marker: Monday of week 1 of the season.
+    // The marker advances one cell each week from this date (week 7 = agents track start).
+    seasonStart: "2026-04-20",
+    // Fallback position on the 10-month axis if seasonStart is missing/invalid
+    // (1.0 = end of month 1; 1.625 = week 6.5, i.e. mid-week-7).
+    nowMonth: 1.625,
   };
 })();
