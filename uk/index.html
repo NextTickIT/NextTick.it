@@ -1,0 +1,2365 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>nexttick — гільдія інженерів</title>
+<!-- Favicons -->
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="description" content="NextTick — гільдія інженерів. Фонове навчання: короткі відео про агентську розробку, архітектуру та інженерні комунікації, вбудовані у твій робочий тиждень." />
+<link rel="canonical" href="https://nexttick.it/uk/" />
+<link rel="alternate" hreflang="uk" href="https://nexttick.it/uk/" />
+<link rel="alternate" hreflang="en" href="https://nexttick.it/en/" />
+<link rel="alternate" hreflang="ru" href="https://nexttick.it/ru/" />
+<link rel="alternate" hreflang="x-default" href="https://nexttick.it/uk/" />
+<meta name="theme-color" content="#0b0d0f" />
+<script>
+  /* Apply saved/system theme before paint to avoid a flash of the wrong theme. */
+  (function () {
+    try {
+      var saved = localStorage.getItem("theme");
+      var theme = saved
+        || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {}
+  })();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MXX0XQWV3R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MXX0XQWV3R');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    color-scheme: dark;
+    --bg:     #0b0d0f;
+    --bg-2:   #111417;
+    --panel:  #15191c;
+    --panel-2:#1c2126;
+    --line:   #2a3138;
+    --line-2: #3a444c;
+    --txt:    #d6d8da;
+    --dim:    #888d92;
+    --muted:  #5d6469;
+    --green:  #7ee787;
+    --green-2:#3fb950;
+    --green-hover:#8df29a;
+    --amber:  #e3b341;
+    --amber-2:#d29922;
+    --cyan:   #56d4dd;
+    --magenta:#bc8cff;
+    --red:    #ff7b72;
+    --mono:   "JetBrains Mono", ui-monospace, Menlo, monospace;
+    /* theme-dependent effects (routed through vars so the light theme can flip them) */
+    --bg-rgb: 11,13,15;            /* base bg as rgb, for edge-fade gradients/shadows */
+    --scan:   rgba(255,255,255,0.012);  /* CRT scanline tint */
+    --vignette: rgba(0,0,0,0.5);   /* corner darkening */
+    --tint:   rgba(255,255,255,.04);    /* faint overlay (minimap viewport) */
+    --dot-r:  #4a2222;
+    --dot-y:  #4a3a14;
+    --dot-g:  #1d3a24;
+  }
+  [data-theme="light"] {
+    color-scheme: light;
+    --bg:     #ffffff;
+    --bg-2:   #f6f8fa;
+    --panel:  #f0f3f6;
+    --panel-2:#e7ecf1;
+    --line:   #d4dae0;
+    --line-2: #b6bfc8;
+    --txt:    #1f2328;
+    --dim:    #59636e;
+    --muted:  #8b949e;
+    --green:  #1a7f37;
+    --green-2:#116329;
+    --green-hover:#166b2e;
+    --amber:  #9a6700;
+    --amber-2:#7a5200;
+    --cyan:   #0b7285;
+    --magenta:#8250df;
+    --red:    #cf222e;
+    --bg-rgb: 255,255,255;
+    --scan:   rgba(0,0,0,0.022);
+    --vignette: rgba(0,0,0,0.05);
+    --tint:   rgba(0,0,0,.05);
+    --dot-r:  #ff5f57;
+    --dot-y:  #febc2e;
+    --dot-g:  #28c840;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--txt);
+    background: var(--bg);
+    overflow-x: hidden;
+  }
+  /* subtle CRT-ish scanlines */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom, var(--scan) 0 1px, transparent 1px 3px
+    );
+    z-index: 100;
+  }
+  /* vignette */
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 50%, var(--vignette) 100%);
+    z-index: 99;
+  }
+
+  .page { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0; }
+
+  /* ─── window chrome ─────────────────────────────────────── */
+  .win {
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    margin: 24px;
+  }
+  .win-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+    font-size: 11px; color: var(--dim);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .win-bar .dots { display: flex; gap: 6px; margin-right: 6px; }
+  .win-bar .dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--line-2); }
+  .win-bar .dot.r { background: var(--dot-r); }
+  .win-bar .dot.y { background: var(--dot-y); }
+  .win-bar .dot.g { background: var(--dot-g); }
+  .win-bar .logo {
+    width: 18px; height: 18px;
+    margin-right: 8px;
+    flex: 0 0 auto;
+    image-rendering: auto;
+  }
+  .win-bar .title { color: var(--txt); }
+  .win-bar .path { color: var(--dim); }
+  .win-bar .tabs { margin-left: auto; display: flex; gap: 1px; align-self: flex-end; margin-bottom: -8px; }
+  .win-bar .tab {
+    padding: 3px 10px; border: 1px solid var(--line); border-bottom: 0;
+    font-size: 10.5px; color: var(--dim);
+    background: var(--bg-2);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color .15s, background .15s, border-color .15s;
+  }
+  .win-bar .tab:hover { color: var(--txt); }
+  .win-bar .tab.on { color: var(--green); background: var(--panel-2); border-color: var(--green); }
+
+  /* theme toggle — compact ghost button in the title bar */
+  .theme-toggle {
+    flex: 0 0 auto;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 20px; padding: 0;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    color: var(--dim);
+    font-size: 12px; line-height: 1;
+    cursor: pointer; border-radius: 2px;
+    transition: color .15s, border-color .15s, background .15s;
+  }
+  .theme-toggle:hover { color: var(--green); border-color: var(--green); }
+  .lang-switch { display: inline-flex; gap: 2px; margin-left: 6px; }
+  .lang-switch .ls-opt { font: inherit; font-size: 11px; letter-spacing: .04em; line-height: 1; padding: 4px 6px; border-radius: 6px; color: inherit; opacity: .5; text-decoration: none; border: 1px solid transparent; transition: opacity .15s, color .15s, border-color .15s; }
+  .lang-switch .ls-opt:hover { opacity: 1; color: var(--green); border-color: var(--green); }
+  .lang-switch .ls-opt.on { opacity: 1; color: var(--green); border-color: var(--green); }
+  .theme-toggle .tt-icon { display: none; width: 13px; height: 13px; }
+  .theme-toggle .tt-sun { display: block; }
+  [data-theme="light"] .theme-toggle .tt-sun { display: none; }
+  [data-theme="light"] .theme-toggle .tt-moon { display: block; }
+
+  .join-btn {
+    margin-left: 14px;
+    flex: 0 0 auto;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--green); color: var(--bg);
+    font-family: var(--mono); font-size: 11.5px; font-weight: 700;
+    letter-spacing: .03em;
+    padding: 6px 15px;
+    border: 1px solid var(--green);
+    text-decoration: none;
+    position: relative;
+    box-shadow: 0 0 0 0 rgba(126,231,135,.5);
+    animation: joinPulse 2.4s ease-out infinite;
+    transition: background .15s, box-shadow .15s, transform .15s;
+  }
+  .join-btn .jb-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--bg);
+    box-shadow: 0 0 0 0 rgba(var(--bg-rgb),.6);
+    animation: joinDot 2.4s ease-out infinite;
+  }
+  .join-btn .jb-arrow { font-weight: 700; transition: transform .15s; }
+  .join-btn:hover {
+    background: var(--green-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(126,231,135,.55);
+    animation: none;
+  }
+  .join-btn:hover .jb-arrow { transform: translateX(3px); }
+  @keyframes joinPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(126,231,135,.5); }
+    70%  { box-shadow: 0 0 0 8px rgba(126,231,135,0); }
+    100% { box-shadow: 0 0 0 0 rgba(126,231,135,0); }
+  }
+  @keyframes joinDot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .35; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .join-btn, .join-btn .jb-dot { animation: none; }
+  }
+
+  /* large CTA variant of the join button */
+  .cta-join { display: flex; flex-direction: column; gap: 12px; align-items: stretch; }
+  .join-btn-lg {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+    font-size: 16px;
+    padding: 16px 28px;
+    gap: 10px;
+    letter-spacing: .02em;
+  }
+  .join-btn-lg .jb-dot { width: 8px; height: 8px; }
+  .join-btn-lg .jb-arrow { font-size: 18px; }
+  .cta-join .price {
+    font-size: 17px; font-weight: 700; color: var(--green);
+    letter-spacing: .01em;
+  }
+  .cta-join .price .per { color: var(--dim); font-weight: 400; font-size: 13px; }
+  .cta-join .fine { font-size: 11px; color: var(--dim); }
+
+  /* actions group — transparent on desktop so time-pick + join-btn stay
+     direct flex children of the bar; collapses to its own row on mobile */
+  .win-actions { display: contents; }
+
+  /* time-level segmented control — lives in the topbar */
+  .time-pick {
+    display: flex; align-items: center; gap: 6px;
+    margin-left: 14px;
+    border: 1px solid var(--green);
+    background: rgba(126, 231, 135, 0.04);
+    padding: 2px;
+    border-radius: 1px;
+  }
+  .time-pick .tp-label {
+    color: var(--green);
+    font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    padding: 0 6px 0 8px;
+    font-weight: 600;
+  }
+  .time-pick .tp-track {
+    display: flex; gap: 0;
+    position: relative;
+    background: var(--bg-2);
+    border: 1px solid var(--green);
+  }
+  .tp-btn {
+    background: transparent;
+    color: var(--dim);
+    border: 0;
+    padding: 3px 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    cursor: pointer;
+    border-right: 1px solid var(--line);
+    transition: color .15s, background .15s;
+  }
+  .tp-btn:last-child { border-right: 0; }
+  .tp-btn:hover { color: var(--txt); }
+  .tp-btn.on {
+    background: var(--green);
+    color: var(--bg);
+    font-weight: 700;
+  }
+  .tp-btn .lvl { letter-spacing: -.02em; }
+
+  /* ─── prompt + hero ─────────────────────────────────────── */
+  .hero { padding: 36px 40px 12px; }
+  .prompt-line {
+    color: var(--green);
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+  .prompt-line .arrow { color: var(--amber); }
+  .prompt-line .cmd { color: var(--txt); }
+  .prompt-line .flag { color: var(--cyan); }
+  .prompt-line .arg { color: var(--magenta); }
+  .blink { animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero h1 {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 86px;
+    line-height: .92;
+    letter-spacing: -.04em;
+    margin: 0 0 8px;
+    color: var(--green);
+    text-shadow: 0 0 22px rgba(126,231,135,.18);
+    transition: color .25s ease;
+  }
+  .hero h1 .swap {
+    display: inline-block;
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .hero h1.flip .swap { opacity: 0; transform: translateY(-6px); }
+  .hero-title {
+    display: flex; align-items: center; gap: 26px;
+    margin: 0 0 8px;
+  }
+  .hero-logo {
+    width: 104px; height: 104px;
+    flex: 0 0 auto;
+    filter: drop-shadow(0 0 24px rgba(126,231,135,.16));
+  }
+  .hero-title h1 { margin: 0; }
+  .hero .sub {
+    font-size: 14px; color: var(--dim); margin: 4px 0 24px;
+    max-width: 60ch; line-height: 1.6;
+  }
+  .hero .sub .em { color: var(--amber); }
+
+  /* hero: copy + video two-column */
+  .hero-main {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .hero-copy { flex: 1 1 0; min-width: 0; }
+  .hero-copy .sub { margin-bottom: 0; }
+  .hero-video {
+    flex: 0 0 42%;
+    max-width: 480px;
+    align-self: center;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-2);
+    box-shadow: 0 0 28px rgba(126,231,135,.08);
+  }
+  .hero-video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    cursor: pointer;
+  }
+  .hero-video-frame iframe,
+  .hero-video-frame .hv-poster {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: 0;
+    display: block;
+  }
+  .hero-video-frame .hv-poster { object-fit: cover; }
+  .hv-play {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 66px; height: 66px;
+    border-radius: 50%;
+    background: rgba(13,17,23,.72);
+    border: 1.5px solid var(--green);
+    box-shadow: 0 0 26px rgba(126,231,135,.35);
+    transition: transform .15s ease, background .15s ease;
+  }
+  .hv-play::after {
+    content: "";
+    position: absolute; left: 54%; top: 50%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-width: 11px 0 11px 18px;
+    border-color: transparent transparent transparent var(--green);
+  }
+  .hero-video-frame:hover .hv-play,
+  .hero-video-frame:focus-visible .hv-play {
+    transform: translate(-50%, -50%) scale(1.06);
+    background: rgba(13,17,23,.88);
+  }
+  .hero-video-frame:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
+  .ascii-box {
+    color: var(--line-2);
+    font-size: 12px;
+    line-height: 1.15;
+    white-space: pre;
+    margin: 0 0 8px;
+  }
+  .ascii-box .acc-g { color: var(--green); }
+  .ascii-box .acc-a { color: var(--amber); }
+  .ascii-box .acc-c { color: var(--cyan); }
+  .ascii-box .txt   { color: var(--txt); }
+  .ascii-box .dim   { color: var(--dim); }
+
+  /* ─── grid blocks ───────────────────────────────────────── */
+  .row { display: grid; gap: 1px; background: var(--line); margin: 0; }
+  .row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+  .block { background: var(--bg-2); padding: 0; }
+
+  .blk-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+    font-size: 11px;
+    color: var(--dim);
+    text-transform: lowercase;
+    letter-spacing: .04em;
+  }
+  .blk-head .marker { color: var(--amber); }
+  .blk-head .num    { color: var(--green); }
+  .blk-head .file   { color: var(--txt); }
+  .blk-head .right  { margin-left: auto; color: var(--dim); font-size: 10px; }
+
+  /* hero kicker line of tags */
+  .kicker-bar {
+    display: flex; gap: 8px; padding: 16px 40px 28px;
+    font-size: 11.5px; color: var(--dim);
+    border-bottom: 1px dashed var(--line);
+    flex-wrap: wrap;
+  }
+  .kicker-bar .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 9px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 999px;
+  }
+  .kicker-bar .pill .k { color: var(--muted); }
+  .kicker-bar .pill .v { color: var(--txt); }
+  .kicker-bar .pill .v.g { color: var(--green); }
+  .kicker-bar .pill .v.a { color: var(--amber); }
+
+  /* ─── section heading ──────────────────────────────────── */
+  .sec {
+    margin-top: 32px;
+    padding: 0 24px;
+  }
+  .sec-head {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: var(--dim);
+    margin-bottom: 12px;
+  }
+  .sec-head .hash { color: var(--green); }
+  .sec-head .name { color: var(--txt); font-size: 13px; font-weight: 600; }
+  .sec-head .rule {
+    flex: 1; border-top: 1px dashed var(--line-2); margin-top: 3px;
+  }
+  .sec-desc {
+    margin: 0 14px 16px;
+    font-size: 13px; line-height: 1.6; color: var(--dim);
+    max-width: 72ch;
+  }
+  .sec-desc .em { color: var(--txt); font-weight: 500; }
+
+  /* "найближчим часом" upcoming grid */
+  .soon-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--line);
+    border: 1px solid var(--line);
+    margin: 0 14px;
+  }
+  .soon-item {
+    background: var(--bg-2);
+    padding: 20px 20px 22px;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative;
+  }
+  .soon-item .num { position: absolute; top: 16px; right: 18px; color: var(--muted); font-size: 10px; }
+  .soon-item .tag {
+    align-self: flex-start;
+    font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--amber); border: 1px solid var(--amber); padding: 1px 7px;
+  }
+  .soon-item h3 { font-size: 16px; font-weight: 600; color: var(--txt); line-height: 1.2; margin: 0; }
+  .soon-item h3 a { color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(126,231,135,.4); transition: border-color .15s; }
+  .soon-item h3 a:hover { border-bottom-color: var(--green); }
+  .soon-item p { font-size: 12.5px; color: var(--dim); line-height: 1.5; margin: 0; }
+
+  /* автори */
+  .authors-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--line);
+    border: 1px solid var(--line);
+    margin: 0 14px;
+  }
+  .author {
+    background: var(--bg-2);
+    padding: 22px 24px;
+    display: flex; gap: 18px; align-items: center;
+  }
+  .author img {
+    width: 92px; height: 92px; object-fit: cover;
+    border: 1px solid var(--line); flex: 0 0 auto;
+    filter: grayscale(.15);
+  }
+  .author .nm { font-size: 18px; font-weight: 600; color: var(--txt); line-height: 1.15; }
+  .author .role { font-size: 12.5px; color: var(--dim); line-height: 1.5; margin-top: 7px; }
+  .author .role .hl { color: var(--green); }
+
+  /* ─── three tracks panel ───────────────────────────────── */
+  .tracks-wrap { margin: 0 14px; }
+  .tracks-grid {
+    display: grid;
+    grid-template-columns: 172px 1fr 1fr 1fr;
+    gap: 1px; background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .tg-corner {
+    background: var(--panel-2);
+    padding: 14px 16px;
+    display: flex; align-items: flex-end;
+    font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .12em;
+    line-height: 1.4;
+  }
+  .tcol-head {
+    background: var(--panel);
+    padding: 16px 18px;
+    position: relative;
+  }
+  .tcol-head .code {
+    position: absolute; top: 14px; right: 16px;
+    color: var(--muted); font-size: 10px;
+  }
+  .tcol-head .accent {
+    font-size: 11px; letter-spacing: .04em;
+    margin-bottom: 4px;
+  }
+  .tcol-head[data-track="agents"] .accent { color: var(--amber); }
+  .tcol-head[data-track="comms"]  .accent { color: var(--cyan); }
+  .tcol-head[data-track="arch"]   .accent { color: var(--green); }
+  .tcol-head .name {
+    font-size: 20px; color: var(--txt); font-weight: 600; line-height: 1.1;
+    margin: 0 0 8px;
+  }
+  .tcol-head .summary {
+    font-size: 12px; color: var(--dim); line-height: 1.5;
+  }
+
+  /* horizon row headers (left column of the matrix) */
+  .h-rowhead {
+    background: var(--panel-2);
+    padding: 16px 16px;
+    display: flex; flex-direction: column; gap: 4px;
+    justify-content: center;
+  }
+  .h-rowhead .code {
+    color: var(--green); font-weight: 700; font-size: 10.5px; letter-spacing: .08em;
+  }
+  .h-rowhead .label {
+    font-size: 16px; color: var(--txt); font-weight: 600; line-height: 1.05;
+  }
+  .h-rowhead .range { font-size: 10.5px; color: var(--muted); }
+  .h-rowhead .hint { font-size: 10.5px; color: var(--dim); margin-top: 2px; }
+
+  .tracks-grid .cell {
+    background: var(--bg-2);
+    padding: 16px 18px;
+    font-size: 13px; line-height: 1.55; color: var(--txt);
+  }
+
+  /* mobile stacked version of the tracks matrix */
+  .tracks-mobile { display: none; }
+  .tm-cards { display: grid; grid-template-columns: 1fr; }
+  .tm-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    padding: 14px 16px;
+    position: relative;
+  }
+  .tm-card .code { position: absolute; top: 12px; right: 14px; color: var(--muted); font-size: 10px; }
+  .tm-card .accent { font-size: 11px; margin-bottom: 4px; letter-spacing: .04em; }
+  .tm-card[data-track="agents"] .accent { color: var(--amber); }
+  .tm-card[data-track="comms"]  .accent { color: var(--cyan); }
+  .tm-card[data-track="arch"]   .accent { color: var(--green); }
+  .tm-card .name { font-size: 18px; font-weight: 600; color: var(--txt); line-height: 1.1; }
+  .tm-card .summary { font-size: 12px; color: var(--dim); line-height: 1.5; margin-top: 6px; }
+
+  .tm-hz { border: 1px solid var(--line); border-bottom: 0; }
+  .tm-hz:last-child { border-bottom: 1px solid var(--line); }
+  .tm-hz-head {
+    background: var(--panel-2);
+    padding: 12px 16px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tm-hz-head .code { color: var(--green); font-weight: 700; font-size: 10.5px; letter-spacing: .08em; }
+  .tm-hz-head .label { font-size: 15px; font-weight: 600; color: var(--txt); }
+  .tm-hz-head .range { font-size: 10.5px; color: var(--muted); margin-left: auto; }
+  .tm-row {
+    display: grid; grid-template-columns: 104px 1fr; gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .tm-row:last-child { border-bottom: 0; }
+  .tm-row .tm-tk {
+    font-size: 11px; font-weight: 600; letter-spacing: .02em;
+    padding-top: 1px;
+  }
+  .tm-row[data-track="agents"] .tm-tk { color: var(--amber); }
+  .tm-row[data-track="comms"]  .tm-tk { color: var(--cyan); }
+  .tm-row[data-track="arch"]   .tm-tk { color: var(--green); }
+  .tm-row .tm-benefit { font-size: 13px; line-height: 1.5; color: var(--txt); }
+
+  /* ─── timeline ─────────────────────────────────────────── */
+  .tl-tools {
+    display: flex; gap: 14px; align-items: center;
+    padding: 0 14px 12px;
+    flex-wrap: wrap;
+  }
+  .tl-tools .label {
+    font-size: 11px; color: var(--dim);
+  }
+  .tl-tools .label .g { color: var(--green); }
+  .filters { display: flex; gap: 6px; }
+  .filt {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--dim);
+    font-family: var(--mono); font-size: 11px;
+    cursor: pointer;
+  }
+  .filt .sw { width: 8px; height: 8px; border: 1px solid currentColor; }
+  .filt[data-on="true"][data-track="agents"] { color: var(--amber); border-color: var(--amber); }
+  .filt[data-on="true"][data-track="agents"] .sw { background: var(--amber); }
+  .filt[data-on="true"][data-track="comms"]  { color: var(--cyan); border-color: var(--cyan); }
+  .filt[data-on="true"][data-track="comms"]  .sw { background: var(--cyan); }
+  .filt[data-on="true"][data-track="arch"]   { color: var(--green); border-color: var(--green); }
+  .filt[data-on="true"][data-track="arch"]   .sw { background: var(--green); }
+
+  .tl-tools .jump {
+    border: 1px solid var(--line); background: var(--panel); color: var(--dim);
+    font-family: var(--mono); font-size: 11px; padding: 4px 10px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .tl-tools .jump:hover { color: var(--red); border-color: var(--red); }
+  .tl-tools .jump .pip { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+
+  .legend { margin-left: auto; font-size: 10.5px; color: var(--dim); display: flex; gap: 14px; }
+  .legend .it { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .it .now-tick { width: 12px; height: 0; border-top: 1px dashed var(--red); }
+
+  /* ── horizontal-scroll timeline ─────────────────────── */
+  .timeline {
+    margin: 0 14px;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    position: relative;
+  }
+  .tl-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-color: var(--line-2) var(--bg-2);
+  }
+  .tl-scroll::-webkit-scrollbar { height: 10px; }
+  .tl-scroll::-webkit-scrollbar-track { background: var(--bg-2); }
+  .tl-scroll::-webkit-scrollbar-thumb { background: var(--line-2); border: 2px solid var(--bg-2); }
+  .tl-scroll::-webkit-scrollbar-thumb:hover { background: var(--dim); }
+
+  /* CSS-driven sizing — change cell width here */
+  .tl-grid {
+    --label-w: 150px;
+    --cell-w: 184px;
+    --weeks: 40;
+    display: grid;
+    grid-template-columns: var(--label-w) repeat(var(--weeks), var(--cell-w));
+    width: calc(var(--label-w) + var(--weeks) * var(--cell-w));
+    position: relative;
+  }
+
+  /* month band — row 1 — spans 4 weeks each */
+  .mo-cell {
+    grid-row: 1;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 12px 9px;
+    background: var(--panel);
+    font-size: 10.5px; color: var(--dim);
+    display: flex; align-items: center; gap: 8px;
+    overflow: hidden; white-space: nowrap;
+  }
+  .mo-cell .mn {
+    color: var(--txt); font-weight: 700; letter-spacing: -.01em;
+    font-size: 13px;
+  }
+  .mo-cell .mn-tag {
+    color: var(--dim); font-size: 9.5px; letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .mo-cell.lbl {
+    grid-column: 1; background: var(--panel-2);
+    color: var(--dim); text-transform: uppercase; letter-spacing: .12em;
+    font-size: 9.5px;
+    position: sticky; left: 0; z-index: 4;
+    justify-content: center;
+  }
+
+  /* per-track series header band — sits above each track row */
+  .ser-cell {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px dashed var(--line);
+    padding: 8px 12px 9px;
+    background: var(--panel);
+    font-size: 11px;
+    display: flex; align-items: center; gap: 8px;
+    overflow: hidden;
+    transition: opacity .2s, filter .2s;
+  }
+  .ser-cell.boundary { border-right: 1px solid var(--line-2); }
+  .ser-cell .m-num {
+    flex: 0 0 auto;
+    font-size: 9.5px; color: var(--muted); letter-spacing: .14em;
+    padding: 1px 6px; border: 1px solid var(--line-2);
+  }
+  .ser-cell .s-name {
+    color: var(--txt); font-weight: 500;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .ser-cell[data-track="agents"] .s-name { color: var(--amber); }
+  .ser-cell[data-track="agents"] .m-num { color: var(--amber); border-color: var(--amber); }
+  .ser-cell[data-track="comms"]  .s-name { color: var(--cyan); }
+  .ser-cell[data-track="comms"]  .m-num { color: var(--cyan); border-color: var(--cyan); }
+  .ser-cell[data-track="arch"]   .s-name { color: var(--green); }
+  .ser-cell[data-track="arch"]   .m-num { color: var(--green); border-color: var(--green); }
+  .ser-cell[data-empty="true"] { background: transparent; }
+  .ser-cell[data-empty="true"] .s-name {
+    color: var(--muted); font-style: italic; font-weight: 400;
+  }
+  .ser-cell[data-empty="true"] .m-num {
+    color: var(--muted); border-color: var(--line-2);
+    border-style: dashed;
+  }
+  .ser-cell[data-dim="true"] { opacity: .15; filter: grayscale(.6); }
+
+  /* week axis — row 2 */
+  .wk-cell {
+    grid-row: 2;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 6px 12px 7px;
+    background: var(--panel);
+    font-size: 10px; color: var(--dim);
+    display: flex; align-items: center; gap: 6px;
+    overflow: hidden;
+  }
+  .wk-cell .wn { color: var(--txt); }
+  .wk-cell.boundary { border-right: 1px solid var(--line-2); }
+  .wk-cell.lbl {
+    grid-column: 1; background: var(--panel-2);
+    color: var(--dim); text-transform: uppercase; letter-spacing: .12em;
+    font-size: 9.5px;
+    position: sticky; left: 0; z-index: 4;
+  }
+
+  /* track rows — row-lbl now spans 2 rows (series-header + episodes) */
+  .row-lbl {
+    grid-column: 1;
+    grid-row: span 2;
+    position: sticky; left: 0; z-index: 3;
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+    box-shadow: 6px 0 12px -8px rgba(0,0,0,.6);
+    transition: opacity .2s, filter .2s;
+  }
+  .row-lbl .rc { font-size: 10px; color: var(--muted); letter-spacing: .12em; }
+  .row-lbl .rn { font-size: 14px; font-weight: 700; letter-spacing: -.01em; }
+  .row-lbl[data-track="agents"] .rn { color: var(--amber); }
+  .row-lbl[data-track="comms"]  .rn { color: var(--cyan); }
+  .row-lbl[data-track="arch"]   .rn { color: var(--green); }
+  .row-lbl .rs { font-size: 10px; color: var(--dim); margin-top: auto; }
+  .row-lbl[data-dim="true"] { opacity: .25; filter: grayscale(.6); }
+  .row-lbl.last { border-bottom: 0; }
+
+  .tl-cell {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 8px;
+    min-height: 116px;
+    transition: opacity .2s, filter .2s;
+  }
+  .tl-cell.last-row { border-bottom: 0; }
+  .tl-cell.boundary { border-right: 1px solid var(--line-2); }
+  .tl-cell[data-dim="true"] { opacity: .15; filter: grayscale(.6); }
+
+  .ep {
+    height: 100%;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 7px 9px 8px;
+    cursor: pointer;
+    display: flex; flex-direction: column; gap: 4px;
+    transition: transform .12s, border-color .12s, background .12s;
+  }
+  .ep:hover { background: var(--panel-2); transform: translateY(-1px); }
+  .ep[data-track="agents"] { border-top: 2px solid var(--amber); }
+  .ep[data-track="comms"]  { border-top: 2px solid var(--cyan); }
+  .ep[data-track="arch"]   { border-top: 2px solid var(--green); }
+  .ep[data-track="agents"]:hover { border-color: var(--amber); }
+  .ep[data-track="comms"]:hover  { border-color: var(--cyan); }
+  .ep[data-track="arch"]:hover   { border-color: var(--green); }
+
+  .ep[data-state="future"] { opacity: .55; }
+  .ep[data-state="future"] .ttl { color: var(--dim); }
+  .ep[data-state="next"] {
+    box-shadow: inset 0 0 0 1px var(--red);
+  }
+
+  .ep .h {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 10px;
+  }
+  .ep .h .num { color: var(--dim); }
+  .ep .h .tag {
+    padding: 0 5px;
+    border: 1px solid currentColor;
+    font-size: 9px;
+  }
+  .ep[data-track="agents"] .tag { color: var(--amber); }
+  .ep[data-track="comms"]  .tag { color: var(--cyan); }
+  .ep[data-track="arch"]   .tag { color: var(--green); }
+  .ep[data-state="released"] .h .num::before { content: "● "; color: var(--green-2); }
+
+  .ep .ttl {
+    font-size: 11.5px;
+    line-height: 1.3;
+    color: var(--txt);
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+    font-weight: 500;
+  }
+  .ep .ft {
+    margin-top: auto;
+    font-size: 9.5px; color: var(--muted);
+    display: flex; justify-content: space-between; gap: 4px;
+  }
+  .ep .ft .runtime {
+    margin-left: auto;
+    font-weight: 500;
+  }
+  .ep[data-track="agents"] .ft .runtime { color: var(--amber); }
+  .ep[data-track="comms"]  .ft .runtime { color: var(--cyan); }
+  .ep[data-track="arch"]   .ft .runtime { color: var(--green); }
+  .ep .ft .sr { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* now marker — positioned within .tl-grid */
+  .now {
+    position: absolute; top: 0; bottom: 0;
+    width: 0;
+    border-left: 1px dashed var(--red);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .now::before {
+    content: ""; position: absolute; left: -4px; top: -4px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--red); box-shadow: 0 0 12px var(--red);
+  }
+  .now-lbl {
+    position: absolute; top: 4px;
+    color: var(--red);
+    font-size: 10px; letter-spacing: .14em;
+    padding: 2px 6px;
+    background: var(--bg-2);
+    border: 1px solid var(--red);
+    transform: translateX(8px);
+    z-index: 2;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* planning-horizon fog + marker */
+  .tl-fog {
+    position: absolute; top: 0; bottom: 0;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      rgba(var(--bg-rgb),0) 0,
+      rgba(var(--bg-rgb),0.55) 90px,
+      rgba(var(--bg-rgb),0.92) 230px,
+      var(--bg) 360px
+    );
+  }
+  .horizon-line {
+    display: none;
+    position: absolute; top: 0; bottom: 0;
+    width: 0;
+    border-left: 1px dashed var(--amber);
+    z-index: 6;
+    pointer-events: none;
+  }
+  .horizon-line::before {
+    content: ""; position: absolute; left: -4px; top: -4px;
+    width: 9px; height: 9px;
+    background: var(--amber);
+    transform: rotate(45deg);
+    box-shadow: 0 0 10px var(--amber);
+  }
+  .horizon-lbl {
+    display: none;
+    position: absolute; top: 4px;
+    color: var(--amber);
+    font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    padding: 3px 8px;
+    background: var(--bg-2);
+    border: 1px solid var(--amber);
+    transform: translateX(10px);
+    z-index: 8;
+    pointer-events: none;
+    white-space: nowrap;
+    line-height: 1.35;
+  }
+  .horizon-lbl span {
+    color: var(--muted);
+    text-transform: none; letter-spacing: .04em;
+    font-size: 9px;
+  }
+  .ep[data-locked="true"] { cursor: default; }
+  .ep[data-locked="true"]:hover { transform: none; background: var(--panel); border-color: var(--line); }
+  .mm-horizon {
+    position: absolute; top: -2px; bottom: -2px; width: 0;
+    border-left: 1px dashed var(--amber);
+    pointer-events: none; z-index: 3;
+  }
+  .mm-cell[data-locked="true"] { opacity: .08 !important; }
+
+  /* ── minimap below timeline ──────────────────────────── */
+  .minimap {
+    margin: 0 14px;
+    border: 1px solid var(--line);
+    border-top: 0;
+    background: var(--panel);
+    padding: 10px 14px 12px;
+    position: relative;
+  }
+  .minimap .mm-label {
+    font-size: 9.5px; color: var(--dim); letter-spacing: .12em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .mm-track {
+    position: relative;
+    height: 36px;
+    background:
+      linear-gradient(to right, var(--line) 1px, transparent 1px) 0 0 / calc(100%/10) 100%;
+  }
+  .mm-row {
+    position: absolute; left: 0; right: 0; height: 8px;
+    display: grid; grid-template-columns: repeat(40, 1fr); gap: 1px;
+  }
+  .mm-row.agents { top: 0; }
+  .mm-row.comms  { top: 12px; }
+  .mm-row.arch   { top: 24px; }
+  .mm-cell {
+    height: 100%;
+    opacity: .25;
+  }
+  .mm-row.agents .mm-cell { background: var(--amber); }
+  .mm-row.comms  .mm-cell { background: var(--cyan); }
+  .mm-row.arch   .mm-cell { background: var(--green); }
+  .mm-cell[data-state="released"] { opacity: 1; }
+  .mm-cell[data-state="next"]     { opacity: .8; box-shadow: 0 0 0 1px var(--red) inset; }
+
+  /* viewport indicator over minimap */
+  .mm-viewport {
+    position: absolute; top: 0; bottom: 0;
+    border: 1px solid var(--txt);
+    background: var(--tint);
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* now line over minimap */
+  .mm-now {
+    position: absolute; top: -2px; bottom: -2px; width: 0;
+    border-left: 1px solid var(--red);
+    pointer-events: none;
+    z-index: 3;
+  }
+  .mm-axis {
+    display: grid; grid-template-columns: repeat(10, 1fr);
+    margin-top: 6px;
+    font-size: 9.5px; color: var(--muted); letter-spacing: .08em;
+  }
+  .mm-axis span { text-align: left; }
+  /* click overlay above minimap to scroll-to */
+  .mm-click {
+    position: absolute; inset: 0;
+    cursor: pointer;
+    z-index: 4;
+  }
+
+  /* expand detail */
+  .ep-detail {
+    display: none;
+    margin: 18px 14px 0;
+    border: 1px solid var(--green);
+    background: var(--bg-2);
+  }
+  .ep-detail[data-open="true"] { display: block; }
+  .ep-detail[data-track="agents"] { border-color: var(--amber); }
+  .ep-detail[data-track="comms"]  { border-color: var(--cyan); }
+  .ep-detail[data-track="arch"]   { border-color: var(--green); }
+
+  .ep-detail .ed-bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+    font-size: 11px; color: var(--dim);
+  }
+  .ep-detail .ed-bar .t { color: var(--txt); }
+  .ep-detail .ed-bar .x {
+    margin-left: auto;
+    background: transparent; border: 1px solid var(--line);
+    color: var(--dim); padding: 2px 8px; font-family: var(--mono); font-size: 11px;
+    cursor: pointer;
+  }
+  .ep-detail .ed-bar .x:hover { color: var(--red); border-color: var(--red); }
+  .ep-detail .body { padding: 22px 28px 26px; }
+  .ep-detail .body h3 {
+    font-size: 32px; line-height: 1.1; margin: 0 0 12px; font-weight: 600;
+    letter-spacing: -.02em;
+    color: var(--txt);
+  }
+  .ep-detail[data-track="agents"] .body h3 { color: var(--amber); }
+  .ep-detail[data-track="comms"]  .body h3 { color: var(--cyan); }
+  .ep-detail[data-track="arch"]   .body h3 { color: var(--green); }
+  .ep-detail .body .blurb { font-size: 14px; color: var(--dim); margin-bottom: 18px; max-width: 70ch; }
+  .ep-detail .pts {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .ep-detail .pt {
+    background: var(--panel);
+    padding: 14px 16px;
+    font-size: 12.5px; line-height: 1.5; color: var(--txt);
+  }
+  .ep-detail .pt .pn {
+    display: block; color: var(--green); font-size: 10px; letter-spacing: .12em;
+    margin-bottom: 4px;
+  }
+
+  /* CTA */
+  .cta {
+    margin: 32px 14px 0;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  .cta .ed-bar { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid var(--line); background: var(--panel); font-size: 11px; color: var(--dim); }
+  .cta .ed-bar .t { color: var(--green); }
+  .cta .body {
+    display: grid; grid-template-columns: 1fr 360px; gap: 32px;
+    padding: 32px 36px 36px;
+    align-items: end;
+  }
+  .cta h2 {
+    font-size: 44px; line-height: 1; margin: 0 0 14px;
+    color: var(--txt); letter-spacing: -.03em; font-weight: 600;
+  }
+  .cta h2 .em { color: var(--amber); }
+  .cta .sub { font-size: 13px; color: var(--dim); max-width: 56ch; line-height: 1.6; }
+  .cta .form { display: flex; flex-direction: column; gap: 10px; }
+  .cta .field {
+    display: flex; border: 1px solid var(--green); background: var(--bg);
+  }
+  .cta .field input {
+    flex: 1; background: transparent; border: 0; outline: none;
+    padding: 12px 14px; font-family: var(--mono); font-size: 13px; color: var(--txt);
+  }
+  .cta .field input::placeholder { color: var(--muted); }
+  .cta .field button {
+    background: var(--green); color: var(--bg); border: 0;
+    padding: 12px 18px; font-family: var(--mono); font-size: 12px;
+    letter-spacing: .1em; text-transform: lowercase; cursor: pointer;
+    font-weight: 700;
+  }
+  .cta .form .fine { font-size: 10.5px; color: var(--muted); }
+
+  .colophon {
+    padding: 14px 38px 32px;
+    color: var(--muted);
+    font-size: 10.5px;
+    display: flex; justify-content: space-between;
+  }
+
+  /* ─── Gated sections (case-reviews / digest / community) ─────────── */
+
+  /* Hide gated sections that the current tier doesn't unlock */
+  body[data-time-level="2"] .gated { display: none; }
+  body[data-time-level="4"] .gated[data-tier="6"] { display: none; }
+
+  /* Hide preview teaser items that have been unlocked */
+  body[data-time-level="4"] .gates-preview .gp-item[data-tier="4"] { display: none; }
+  body[data-time-level="6"] .gates-preview { display: none; }
+
+  .gates-preview { margin: 0 14px; }
+  .gates-preview .gp-list {
+    border: 1px dashed var(--line-2);
+    background: rgba(126, 231, 135, 0.02);
+    padding: 12px 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .gates-preview .gp-head {
+    font-size: 10.5px; color: var(--green); letter-spacing: .12em;
+    text-transform: uppercase; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .gates-preview .gp-head .icon { color: var(--amber); }
+  .gates-preview .gp-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: background .12s, padding .12s;
+  }
+  .gates-preview .gp-item:hover {
+    background: rgba(126, 231, 135, 0.04);
+    padding-left: 6px; padding-right: 6px;
+  }
+  .gates-preview .gp-item:hover .tier-tag {
+    background: var(--amber); color: var(--bg);
+  }
+  .gates-preview .gp-item:last-child { border-bottom: 0; }
+  .gates-preview .gp-item .lk {
+    color: var(--muted); font-family: var(--mono); font-size: 10.5px;
+    flex: 0 0 50px;
+  }
+  .gates-preview .gp-item .ttl { color: var(--dim); flex: 1; }
+  .gates-preview .gp-item .ttl .nm { color: var(--txt); }
+  .gates-preview .gp-item .tier-tag {
+    border: 1px solid var(--amber); color: var(--amber);
+    padding: 1px 7px; font-size: 9.5px; letter-spacing: .12em;
+    text-transform: uppercase;
+    transition: background .12s, color .12s;
+  }
+
+  /* Generic gated card content blocks */
+  .gated .body-wrap { margin: 0 14px; }
+  .gated-card {
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    padding: 0;
+  }
+  .gated-card .gc-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+    font-size: 11px; color: var(--dim);
+  }
+  .gated-card .gc-bar .badge {
+    background: var(--green); color: var(--bg);
+    padding: 2px 7px; font-weight: 700; letter-spacing: .1em; font-size: 10px;
+  }
+  .gated-card .gc-bar .meta { margin-left: auto; color: var(--muted); font-size: 10px; }
+
+  .gated-card .gc-body {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
+  }
+  .gated-card .gc-pitch {
+    padding: 26px 28px;
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .gated-card .gc-pitch h3 {
+    font-size: 28px; line-height: 1.05; margin: 0;
+    letter-spacing: -.02em; font-weight: 700;
+    color: var(--green);
+  }
+  .gated-card .gc-pitch .lede {
+    color: var(--dim); font-size: 13.5px; line-height: 1.6;
+    max-width: 56ch;
+  }
+  .gated-card .gc-pitch .lede em {
+    color: var(--txt); font-style: normal; font-weight: 500;
+  }
+
+  .gated-card .gc-mock {
+    padding: 22px 24px;
+    background: var(--panel);
+    font-size: 12px; color: var(--dim);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .gated-card .gc-mock .mock-head {
+    font-size: 10px; color: var(--muted); letter-spacing: .14em; text-transform: uppercase;
+    border-bottom: 1px dashed var(--line); padding-bottom: 6px; margin-bottom: 4px;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .gated-card .gc-mock .row {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 4px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .gated-card .gc-mock .row:last-child { border-bottom: 0; }
+  .gated-card .gc-mock .row .arrow { color: var(--green); flex: 0 0 12px; }
+  .gated-card .gc-mock .row .name { color: var(--txt); flex: 1; }
+  .gated-card .gc-mock .row .meta { color: var(--muted); font-size: 10.5px; }
+  .gated-card .gc-mock .footnote { color: var(--muted); font-size: 10.5px; margin-top: 6px; }
+
+  /* digest example threads */
+  .gated-card .gc-mock .dg-row {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .gated-card .gc-mock .dg-row:last-of-type { border-bottom: 0; }
+  .gated-card .gc-mock .dg-cat {
+    align-self: flex-start;
+    font-size: 9px; letter-spacing: .08em; text-transform: uppercase;
+    padding: 1px 6px; border: 1px solid var(--line-2);
+    color: var(--dim);
+  }
+  .gated-card .gc-mock .dg-cat[data-cat="agents"] { color: var(--amber); border-color: var(--amber); }
+  .gated-card .gc-mock .dg-cat[data-cat="comms"]  { color: var(--cyan); border-color: var(--cyan); }
+  .gated-card .gc-mock .dg-cat[data-cat="tech"]   { color: var(--green); border-color: var(--green); }
+  .gated-card .gc-mock .dg-row .dt {
+    font-size: 12px; color: var(--txt); line-height: 1.35;
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .time-pick { margin-left: 8px; padding: 1px; }
+    .time-pick .tp-label { display: none; }
+    .tp-btn { padding: 2px 8px; font-size: 10.5px; }
+  }
+  @media (max-width: 520px) {
+    .time-pick { margin-left: 4px; }
+    .tp-btn { padding: 2px 6px; font-size: 10px; }
+    .gated-card .gc-body { grid-template-columns: 1fr; }
+    .gated-card .gc-pitch { border-right: 0; border-bottom: 1px solid var(--line); padding: 20px 18px; }
+    .gated-card .gc-pitch h3 { font-size: 22px; }
+    .gated-card .gc-mock { padding: 18px 18px; }
+    .gates-preview { margin: 0 6px; }
+    .gated .body-wrap { margin: 0 6px; }
+  }
+  @media (max-width: 720px) {
+    .gated-card .gc-body { grid-template-columns: 1fr; }
+    .gated-card .gc-pitch { border-right: 0; border-bottom: 1px solid var(--line); }
+  }
+
+  /* ─── Mobile ───────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .win { margin: 12px; }
+    .win-bar { padding: 7px 10px; gap: 6px; }
+    .win-bar .path { display: none; }
+    .win-bar .right { display: none; }
+    .win-bar .tabs { margin-left: auto; }
+    .win-bar .title { font-size: 10.5px; }
+    .win-bar .tab { padding: 3px 8px; font-size: 10px; }
+
+    .hero { padding: 24px 18px 10px; }
+    .hero .prompt-line { font-size: 11.5px; margin-bottom: 16px; }
+    .hero h1 { font-size: 48px; letter-spacing: -.03em; }
+    .hero-title { gap: 16px; }
+    .hero-logo { width: 64px; height: 64px; }
+    .hero .sub { font-size: 12.5px; }
+
+    .hero-main { flex-direction: column; align-items: stretch; gap: 20px; }
+    .hero-video { flex: none; max-width: 100%; width: 100%; }
+
+    .kicker-bar { padding: 12px 18px 22px; gap: 6px; font-size: 11px; }
+    .kicker-bar .pill { padding: 2px 8px; font-size: 10.5px; }
+
+    .sec { margin-top: 22px; padding: 0 6px; }
+    .sec-head { padding: 4px 8px; gap: 10px; }
+    .sec-head .name { font-size: 12.5px; }
+
+    .tracks-wrap { display: none; }
+    .tracks-mobile { display: block; margin: 0 6px; }
+    .soon-grid { grid-template-columns: 1fr; margin: 0 6px; }
+    .authors-grid { grid-template-columns: 1fr; margin: 0 6px; }
+
+    .tl-tools { padding: 0 6px 10px; gap: 8px; }
+    .tl-tools .label { display: none; }
+    .tl-tools .legend { display: none; }
+    .filters { flex-wrap: wrap; }
+
+    .timeline, .minimap { margin: 0 6px; }
+    .tl-grid {
+      --label-w: 96px;
+      --cell-w: 152px;
+    }
+    .row-lbl { padding: 10px 10px; }
+    .row-lbl .rn { font-size: 12.5px; }
+    .row-lbl .rs { font-size: 9.5px; }
+    .tl-cell { min-height: 104px; }
+    .minimap { padding: 10px 10px 12px; }
+    .mm-axis { font-size: 8.5px; }
+
+    /* ep-detail uses 3-col grid; collapse to 1 */
+    .ep-detail { margin: 16px 6px 0; }
+    .ep-detail .body { padding: 18px 18px 22px; }
+    .ep-detail .body h3 { font-size: 22px; }
+    .ep-detail .pts { grid-template-columns: 1fr; }
+    .ep-detail .pt { border-right: 0; border-bottom: 1px solid var(--line); }
+    .ep-detail .pt:last-child { border-bottom: 0; }
+
+    /* CTA stacks */
+    .cta { margin: 24px 6px 0; }
+    .cta .body {
+      grid-template-columns: 1fr;
+      padding: 22px 22px 26px;
+      gap: 22px;
+    }
+    .cta h2 { font-size: 28px; }
+
+    .colophon {
+      padding: 12px 18px 22px;
+      flex-direction: column; gap: 4px;
+      align-items: flex-start;
+    }
+  }
+
+  /* Narrow: the bar can no longer hold tabs + controls + CTA on one line,
+     so drop the time-pick + join-btn group to its own full-width row. */
+  @media (max-width: 600px) {
+    .win-bar { flex-wrap: wrap; }
+    .win-bar .tabs { align-self: center; margin-bottom: 0; }
+    .win-actions {
+      display: flex; flex-basis: 100%;
+      align-items: center; justify-content: space-between;
+      gap: 8px; margin-top: 4px;
+    }
+    .time-pick { margin-left: 0; }
+  }
+
+  @media (max-width: 520px) {
+    .win-bar .title { display: none; }
+    .join-btn { margin-left: 8px; padding: 5px 10px; font-size: 11px; }
+    .hero h1 { font-size: 38px; }
+    .tl-tools .jump { padding: 3px 8px; }
+    .filt { padding: 3px 8px; font-size: 10.5px; }
+  }
+</style>
+</head>
+<body data-time-level="2">
+<div class="page">
+  <div class="win">
+    <div class="win-bar">
+      <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Перемкнути тему" title="Світла / темна тема">
+        <svg class="tt-icon tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+        </svg>
+        <svg class="tt-icon tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+        </svg>
+      </button>
+      <nav class="lang-switch" aria-label="Мова">
+        <a class="ls-opt on" data-loc="uk" hreflang="uk" href="/uk/" aria-current="true">UK</a>
+        <a class="ls-opt" data-loc="en" hreflang="en" href="/en/">EN</a>
+        <a class="ls-opt" data-loc="ru" hreflang="ru" href="/ru/">RU</a>
+      </nav>
+      <span class="title">nexttick — гільдія інженерів</span>
+      <span class="path">— дорожня карта</span>
+      <div class="tabs">
+        <a class="tab on" href="#sec-roadmap" data-tab="roadmap">дорожня карта</a>
+        <a class="tab" href="#sec-tracks" data-tab="tracks">треки</a>
+        <a class="tab" href="#sec-timeline" data-tab="timeline">таймлайн</a>
+      </div>
+
+      <div class="win-actions">
+        <div class="time-pick" role="group" aria-label="Час на навчання">
+          <span class="tp-label">вільний час:</span>
+          <div class="tp-track">
+            <button class="tp-btn on" type="button" data-level="2"><span class="lvl">2 год</span></button>
+            <button class="tp-btn" type="button" data-level="4"><span class="lvl">4 год</span></button>
+            <button class="tp-btn" type="button" data-level="6"><span class="lvl">6+ год</span></button>
+          </div>
+        </div>
+        <a class="join-btn" id="join-btn" href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&source_channel=website" target="_blank" rel="noopener"><span class="jb-dot"></span>Приєднатися<span class="jb-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero" id="sec-roadmap">
+      <div class="prompt-line">
+        <span class="arrow">$</span>
+        <span class="cmd">cat</span>
+        <span class="arg">./manifest.txt</span>
+        <span class="flag">--quiet</span>
+        <span class="blink">▍</span>
+      </div>
+
+      <div class="hero-main">
+        <div class="hero-copy">
+          <div class="hero-title">
+            <img class="hero-logo" src="/assets/nexttick-logo.png" alt="nexttick" />
+            <h1 data-comment-anchor="1586baca91-h1"><span class="swap" id="h1-w1">фонове</span><br /><span class="swap" id="h1-w2">навчання_</span></h1>
+          </div>
+          <div class="sub" id="lede-sub"></div>
+        </div>
+
+        <div class="hero-video">
+          <div class="hero-video-frame" id="hero-video" role="button" tabindex="0"
+               aria-label="Дивитися відео: огляд гільдії інженерів NextTick"
+               data-embed="https://www.youtube-nocookie.com/embed/nW8g4Y6otWM?autoplay=1&rel=0">
+            <img class="hv-poster" src="https://i.ytimg.com/vi/nW8g4Y6otWM/maxresdefault.jpg"
+                 alt="Огляд гільдії інженерів NextTick" loading="lazy" />
+            <span class="hv-play" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kicker-bar" id="kicker-bar" style="display:none"></div>
+
+    <!-- THREE TRACKS -->
+    <section class="sec" id="sec-tracks">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">три напрями × три горизонти</span>
+        <span class="rule"></span>
+      </div>
+
+      <div class="tracks-wrap"><div class="tracks-grid" id="tracks-grid"></div></div>
+      <div class="tracks-mobile" id="tracks-mobile"></div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="sec" id="sec-timeline">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">контент-таймлайн</span>
+        <span class="rule"></span>
+      </div>
+      <p class="sec-desc">На початку кожного тижня — <span class="em">три коротких відео</span>, по одному на трек. Кожне несе одну думку та завдання на впровадження — те, що можна одразу застосувати в роботі та потім розібрати разом.</p>
+
+      <div class="tl-tools">
+        <span class="label"><span class="g">фільтр</span> треки:</span>
+        <div class="filters" id="filters"></div>
+        <button class="jump" id="jump-now" type="button"><span class="pip"></span>до «зараз»</button>
+        <div class="legend">
+          <span class="it"><span class="now-tick"></span>зараз</span>
+        </div>
+      </div>
+
+      <div class="timeline" id="timeline-wrap">
+        <div class="tl-scroll" id="tl-scroll">
+          <div class="tl-grid" id="timeline"></div>
+        </div>
+      </div>
+      <div class="minimap" id="minimap"></div>
+
+      <div class="ep-detail" id="ep-detail">
+        <div class="ed-bar">
+          <span>↪</span>
+          <span id="ed-num"></span>
+          <span class="t" id="ed-track"></span>
+          <span id="ed-week" style="margin-left:8px;color:var(--muted)"></span>
+          <button class="x" id="ep-close">[esc] закрити</button>
+        </div>
+        <div class="body">
+          <h3 id="ed-title"></h3>
+          <div class="blurb" id="ed-blurb"></div>
+          <div class="pts" id="ed-points"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gates preview (visible at lower tiers to hint at locked content) -->
+    <section class="sec gates-preview" id="sec-gates-preview">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">закрито · доступно за більшого часу</span>
+        <span class="rule"></span>
+        <span style="color:var(--muted);font-size:10.5px;">перемкни час у шапці ↑</span>
+      </div>
+      <div class="gp-list">
+        <div class="gp-head"><span class="icon">⊕</span><span>що ще розблокується</span></div>
+        <div class="gp-item" data-tier="4">
+          <span class="lk">[ 4 год ]</span>
+          <span class="ttl"><span class="nm">Розбори кейсів</span> — постав питання експерту, отримай розбір на живому дзвінку.</span>
+          <span class="tier-tag">+ 4 год</span>
+        </div>
+        <div class="gp-item" data-tier="4">
+          <span class="lk">[ 4 год ]</span>
+          <span class="ttl"><span class="nm">Дайджест чатів</span> — предметний розбір обговорень з підсумками та повним транскриптом.</span>
+          <span class="tier-tag">+ 4 год</span>
+        </div>
+        <div class="gp-item" data-tier="6">
+          <span class="lk">[ 6+ год ]</span>
+          <span class="ttl"><span class="nm">Спільнота</span> — закритий телеграм-чат із гілками, експерименти, прямі питання.</span>
+          <span class="tier-tag">+ 6 год</span>
+        </div>
+        <div class="gp-item" data-tier="6">
+          <span class="lk">[ 6+ год ]</span>
+          <span class="ttl"><span class="nm">Аудіо-стріми</span> — не новини, а думки, коли в індустрії стається щось важливе.</span>
+          <span class="tier-tag">+ 6 год</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Monthly case reviews (tier 4+) -->
+    <section class="sec gated" data-tier="4" id="sec-cases">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">розбори кейсів</span>
+        <span class="rule"></span>
+        <span style="color:var(--muted);font-size:10.5px;">від 4 год вільного часу · щодня</span>
+      </div>
+      <div class="body-wrap">
+        <div class="gated-card">
+          <div class="gc-bar">
+            <span class="badge">+ 4 год</span>
+            <span>розбори кейсів · двічі на місяць</span>
+            <span class="meta">асинхронно · анонімно</span>
+          </div>
+          <div class="gc-body">
+            <div class="gc-pitch">
+              <h3>постав питання експерту</h3>
+              <div class="lede">Складна архітектурна задача, суперечливе рішення, комунікаційний затик — <em>опиши кейс</em>, отримай розгорнутий розбір. Без дзвінків, без публічності. Раз на місяць відео-відповідь з альтернативами, контекстом і trade-offs.</div>
+              <div class="lede" style="color:var(--muted);font-size:11.5px;">→ один кейс на учасника в місяць · анонімізуємо перед публікацією всередині спільноти</div>
+            </div>
+            <div class="gc-mock">
+              <div class="mock-head"><span>шаблон кейсу</span><span style="margin-left:auto;color:var(--green);">1 / 1</span></div>
+              <div class="row"><span class="arrow">→</span><span class="name">контекст</span><span class="meta">3–5 речень</span></div>
+              <div class="row"><span class="arrow">→</span><span class="name">варіанти, які розглядаєш</span><span class="meta">2–4</span></div>
+              <div class="row"><span class="arrow">→</span><span class="name">constraints і trade-offs</span><span class="meta">опціонально</span></div>
+              <div class="row"><span class="arrow">→</span><span class="name">у чому саме затик</span><span class="meta">1 речення</span></div>
+              <div class="footnote">надіслав → на живому дзвінку отримав розбір і поставив питання → застосував рекомендації</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chat digests (tier 4+) -->
+    <section class="sec gated" data-tier="4" id="sec-digest">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">дайджест чатів</span>
+        <span class="rule"></span>
+        <span style="color:var(--muted);font-size:10.5px;">від 4 год вільного часу · раз на місяць</span>
+      </div>
+      <div class="body-wrap">
+        <div class="gated-card">
+          <div class="gc-bar">
+            <span class="badge">+ 4 год</span>
+            <span>дайджест · ~10 хвилин читання · за темами</span>
+            <span class="meta">асинхронно · текст</span>
+          </div>
+          <div class="gc-body">
+            <div class="gc-pitch">
+              <h3>предметний розбір<br />обговорень</h3>
+              <div class="lede">Чати — це шум: 1200 повідомлень на місяць, з яких корисні 50. <em>Хтось це вже прочитав за тебе.</em> Отримуєш дайджест: підсумки за темами, ключові цитати, повний транскрипт за посиланням — без зайвого часу на чати.</div>
+              <div class="lede" style="color:var(--muted);font-size:11.5px;">→ структура: проблема → підходи → консенсус → відкриті питання</div>
+            </div>
+            <div class="gc-mock">
+              <div class="mock-head"><span>приклади гілок</span></div>
+              <div class="dg-row"><span class="dg-cat" data-cat="agents">цех приручення AI-агентів</span><span class="dt">Claude Opus 4.8 на бойовому Go-репо: ціна та якість одного ендпоінта</span></div>
+              <div class="dg-row"><span class="dg-cat" data-cat="agents">цех приручення AI-агентів</span><span class="dt">omc: коли ralph, а коли team</span></div>
+              <div class="dg-row"><span class="dg-cat" data-cat="comms">цех ефективних комунікацій</span><span class="dt">Камера на дзвінках: вимога тімліда vs особистий дискомфорт</span></div>
+              <div class="dg-row"><span class="dg-cat" data-cat="tech">технічні обговорення</span><span class="dt">Інженер vs вайбкодер: хто розв'язує проблему, а хто компонує з підручного</span></div>
+              <div class="dg-row"><span class="dg-cat" data-cat="meta">нетехнічні питання</span><span class="dt">ШІ як інструмент навчання: де працює, де ламається</span></div>
+              <div class="footnote">→ повний транскрипт за посиланням · ключові цитати всередині</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community (tier 6 only) -->
+    <section class="sec gated" data-tier="6" id="sec-community">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">спільнота</span>
+        <span class="rule"></span>
+        <span style="color:var(--muted);font-size:10.5px;">від 6 год вільного часу · наживо</span>
+      </div>
+      <div class="body-wrap">
+        <div class="gated-card">
+          <div class="gc-bar">
+            <span class="badge">+ 6 год</span>
+            <span>телеграм · один закритий чат із гілками · модерація</span>
+            <span class="meta">наживо · щодня</span>
+          </div>
+          <div class="gc-body">
+            <div class="gc-pitch">
+              <h3>експериментуй,<br />ділися,<br />питай</h3>
+              <div class="lede"><em>Один закритий телеграм-чат із гілками</em> за напрямами. Дискусії, експерименти з агентами, розбори кейсів у реальному часі. Ілля та запрошені експерти на зв'язку.</div>
+              <div class="lede" style="color:var(--muted);font-size:11.5px;">→ модерація · NDA-friendly · без реклами та токсичності</div>
+            </div>
+            <div class="gc-mock">
+              <div class="mock-head"><span>що всередині</span><span style="margin-left:auto;color:var(--green);">наживо</span></div>
+              <div class="row"><span class="arrow">▸</span><span class="name">Розбір живого кейсу — не чекаючи кінця місяця</span></div>
+              <div class="row"><span class="arrow">▸</span><span class="name">«Застряг» → відповідь від колег та Іллі за годину</span></div>
+              <div class="row"><span class="arrow">▸</span><span class="name">Експеримент з агентом → ділишся результатом</span></div>
+              <div class="row"><span class="arrow">▸</span><span class="name">Пряме питання експерту, без дзвінків</span></div>
+              <div class="footnote">→ відповідають люди, а не бот · без реклами та офтопу</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audio streams (tier 6 only) -->
+    <section class="sec gated" data-tier="6" id="sec-audio">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">аудіо-стріми</span>
+        <span class="rule"></span>
+        <span style="color:var(--muted);font-size:10.5px;">від 6 год вільного часу · за подіями</span>
+      </div>
+      <div class="body-wrap">
+        <div class="gated-card">
+          <div class="gc-bar">
+            <span class="badge">+ 6 год</span>
+            <span>аудіо-стрім · за подіями індустрії · без розкладу</span>
+            <span class="meta">наживо · пуш</span>
+          </div>
+          <div class="gc-body">
+            <div class="gc-pitch">
+              <h3>не новини —<br />думки</h3>
+              <div class="lede">Коли в індустрії стається щось цікаве або важливе — нова модель, резонансний інцидент, суперечливий реліз — <em>виходить короткий аудіо-стрім</em>. Без розкладу, без очікування релізу. Ілля та запрошені експерти розбирають «що це означає для нас».</div>
+              <div class="lede" style="color:var(--muted);font-size:11.5px;">→ за подіями · push-сповіщення в боті · запис приходить потім</div>
+            </div>
+            <div class="gc-mock">
+              <div class="mock-head"><span>стріми</span><span style="margin-left:auto;color:var(--green);">останні випуски</span></div>
+              <div class="row"><span class="arrow">▶</span><span class="name">Знову AI, знову скорочення: інший погляд</span><span class="meta">1:04:38</span></div>
+              <div class="row"><span class="arrow">▶</span><span class="name">AI-істерія: нові думки (Ілля)</span><span class="meta">1:11:51</span></div>
+              <div class="footnote">→ «сталося — поговоримо» · у середньому 1–2 на місяць</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">найближчим часом</span>
+        <span class="rule"></span>
+        <span style="color:var(--muted);font-size:10.5px;">в роботі</span>
+      </div>
+      <div class="soon-grid">
+        <div class="soon-item">
+          <span class="num">01</span>
+          <span class="tag">скоро</span>
+          <h3><a href="https://javascript.ninja/typescript" target="_blank" rel="noopener">Курс із TypeScript для агентського кодингу</a></h3>
+          <p>Доступ до записів: як писати код, який агент розуміє з півслова і не ламає.</p>
+        </div>
+        <div class="soon-item">
+          <span class="num">02</span>
+          <span class="tag">скоро</span>
+          <h3>Великі відео за ключовими темами</h3>
+          <p>Годинні розбори там, де 15 хвилин замало — глибоко і по суті.</p>
+        </div>
+        <div class="soon-item">
+          <span class="num">03</span>
+          <span class="tag">скоро</span>
+          <h3>ШІ-пошук за матеріалами гільдії</h3>
+          <p>Запитай своїми словами — отримай відповідь з усіх випусків, дайджестів і стрімів.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Authors -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">автори</span>
+        <span class="rule"></span>
+      </div>
+      <div class="authors-grid">
+        <div class="author">
+          <img src="/assets/author-ilya.png" alt="Ілля Климов" />
+          <div>
+            <div class="nm">Ілля Климов</div>
+            <div class="role"><span class="hl">Staff Frontend Engineer</span> у GitLab · Google Developer Expert із веб-технологій. Засновник JavaScript.ninja, спікер HolyJS, 15+ років в індустрії.</div>
+          </div>
+        </div>
+        <div class="author">
+          <img src="/assets/author-timur.png" alt="Тимур Шемседінов" />
+          <div>
+            <div class="nm">Тимур Шемседінов</div>
+            <div class="role"><span class="hl">CTO у Metatech</span> · 30+ років досвіду. Головний архітектор Metarhia, викладач КПІ, автор 350+ відкритих лекцій з Node.js та програмної інженерії.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="hash">##</span>
+        <span class="name">підписатися на фонове навчання</span>
+        <span class="rule"></span>
+        <span style="color:var(--muted);font-size:10.5px;">підписка</span>
+      </div>
+      <div class="cta">
+        <div class="ed-bar">
+          <span>$</span>
+          <span class="t">підписка</span>
+        </div>
+        <div class="body">
+          <div>
+            <h2 id="cta-heading">три відео на тиждень.<br /><span class="em">без тиску.</span></h2>
+            <div class="sub" id="cta-sub">Ти не записуєшся на курс. Ти підписуєшся на ритм. Кожне відео — 15 хвилин, можна подивитися за обідом, можна відкласти на вихідні. Через пів року в тебе інший словник та інша оптика.</div>
+          </div>
+          <div class="cta-join">
+            <a class="join-btn join-btn-lg" id="join-btn-2" href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&source_channel=website" target="_blank" rel="noopener"><span class="jb-dot"></span>Приєднатися до гільдії<span class="jb-arrow">→</span></a>
+            <div class="price">$50 <span class="per">на місяць · скасування будь-коли</span></div>
+            <div class="fine">→ доступ до всіх випусків у міру виходу</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="colophon">
+      <span>nexttick — гільдія інженерів</span>
+      <span>дорожня карта</span>
+    </div>
+  </div>
+</div>
+
+<script src="roadmap-data.js"></script>
+<script>
+  const R = window.ROADMAP;
+
+  // Join button — swap source_channel for ?utm_source if present.
+  (function () {
+    const utm = new URLSearchParams(location.search).get("utm_source");
+    if (!utm) return;
+    document.querySelectorAll("#join-btn, #join-btn-2").forEach(btn => {
+      const u = new URL(btn.href);
+      u.searchParams.set("source_channel", utm);
+      btn.href = u.toString();
+    });
+  })();
+
+  // GA4 event on CTA click — distinguishes the header vs the subscribe CTA.
+  (function () {
+    const locations = { "join-btn": "header", "join-btn-2": "subscribe" };
+    document.querySelectorAll("#join-btn, #join-btn-2").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (typeof gtag !== "function") return;
+        gtag("event", "cta_click", {
+          cta_location: locations[btn.id] || btn.id,
+          time_level: document.body.dataset.timeLevel || "",
+          link_url: btn.href,
+        });
+      });
+    });
+  })();
+
+  document.getElementById("lede-sub").innerHTML =
+    'Контент, який виходить регулярно і вбудовується у твій тиждень — <span class="em">фоном, як оновлення редактора</span>.';
+  // (overwritten by time-level picker below — leaving as initial fallback)
+
+  // ── Derived counters / labels ────────────────────────────────────
+  const totalEps = R.episodes.length;
+  const trackNames = R.tracks.map(t => t.shortName.toLowerCase()).join(" · ");
+
+  // (kicker-bar removed — hidden in markup)
+
+  // Tracks matrix: horizon row-headers (left) × 3 track columns
+  const tg = document.getElementById("tracks-grid");
+  let tgHtml = `<div class="tg-corner">горизонт ↓ / трек →</div>`;
+  tgHtml += R.tracks.map(t => `
+    <div class="tcol-head" data-track="${t.id}">
+      <span class="code">${t.code} / 03</span>
+      <div class="accent">// ${t.kicker}</div>
+      <div class="name">${t.name}</div>
+      <div class="summary">${t.summary}</div>
+    </div>
+  `).join("");
+  R.horizons.forEach(h => {
+    tgHtml += `
+      <div class="h-rowhead">
+        <span class="code">${h.code}</span>
+        <span class="label">${h.label}</span>
+        <span class="range">${h.range}</span>
+        <span class="hint">${h.hint}</span>
+      </div>
+      ${R.tracks.map(t => `<div class="cell" data-track="${t.id}">${t.benefits[h.id]}</div>`).join("")}
+    `;
+  });
+  tg.innerHTML = tgHtml;
+
+  // Mobile stacked version: track cards, then a section per horizon with
+  // each track's benefit labelled by track (horizon labels appear once).
+  const tgm = document.getElementById("tracks-mobile");
+  let tgmHtml = `<div class="tm-cards">`;
+  tgmHtml += R.tracks.map(t => `
+    <div class="tm-card" data-track="${t.id}">
+      <span class="code">${t.code} / 03</span>
+      <div class="accent">// ${t.kicker}</div>
+      <div class="name">${t.name}</div>
+      <div class="summary">${t.summary}</div>
+    </div>
+  `).join("");
+  tgmHtml += `</div>`;
+  R.horizons.forEach(h => {
+    tgmHtml += `
+      <div class="tm-hz">
+        <div class="tm-hz-head">
+          <span class="code">${h.code}</span>
+          <span class="label">${h.label}</span>
+          <span class="range">${h.range}</span>
+        </div>
+        ${R.tracks.map(t => `
+          <div class="tm-row" data-track="${t.id}">
+            <span class="tm-tk">${t.shortName}</span>
+            <div class="tm-benefit">${t.benefits[h.id]}</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  });
+  tgm.innerHTML = tgmHtml;
+
+  // ─── Timeline: 10 months × 4 weeks = 40 weekly cells ───────────────
+  // Episode duration: deterministic 8–22 min per episode id.
+  const epMins = (ep) => {
+    let h = 0;
+    for (let i = 0; i < ep.id.length; i++) h = (h * 31 + ep.id.charCodeAt(i)) | 0;
+    return 8 + (Math.abs(h) % 15);
+  };
+
+  const WEEKS = 40;
+  const TRACK_IDS = R.tracks.map(t => t.id);
+  // Per-track week offset (first episode sits on this week; 1 = no offset).
+  const trackOffset = (tid) => (R.trackStartWeek?.[tid] ?? 1) - 1;
+  // Compute the global week index for each episode: month order + track offset.
+  const epWeek = new Map();
+  R.series.forEach(s => {
+    const off = trackOffset(s.track);
+    s.episodes.forEach((ep, idx) => {
+      const w = (s.month - 1) * 4 + (idx + 1) + off;
+      epWeek.set(ep.id, w);
+    });
+  });
+
+  // nowWeek = marker position on the 1..40 scale (a column boundary of N means the
+  // start of week N+1); nextWeek = the week currently airing. Anchored to a real date
+  // (seasonStart = Monday of week 1) so on Monday the marker sits at the very start of
+  // the current week's cell and slides across it as the week progresses, stepping to
+  // the next column each week. Falls back to the static nowMonth if no/invalid date.
+  const { nowWeek, nextWeek } = (() => {
+    const start = R.seasonStart ? new Date(R.seasonStart + "T00:00:00") : null;
+    if (start && !isNaN(start)) {
+      const elapsed = (Date.now() - start.getTime()) / (7 * 864e5); // fractional weeks since week 1
+      const pos = Math.min(WEEKS, Math.max(0, elapsed));
+      return { nowWeek: pos, nextWeek: Math.min(WEEKS, Math.floor(pos) + 1) };
+    }
+    const pos = (R.nowMonth ?? 1) * 4;
+    return { nowWeek: pos, nextWeek: Math.ceil(pos) };
+  })();
+
+  // Planning horizon: content visible only ~3 months (12 weeks) ahead of now.
+  // Beyond that — fog + a hard scroll stop.
+  const HORIZON_WEEKS = 12;
+  const horizonWeek = nowWeek + HORIZON_WEEKS;   // ~17.6
+  const FOG_BAND = 3;                            // weeks of visible fade past horizon
+  // A cell is locked once its week passes the horizon.
+  const isLocked = (w) => w > horizonWeek;
+  // Fog opacity for cells inside the fade band (1 = clear, →0 = fogged out).
+  const fogClarity = (w) => {
+    if (w <= horizonWeek) return 1;
+    const d = w - horizonWeek;
+    return Math.max(0, 1 - d / FOG_BAND);
+  };
+
+  const tl = document.getElementById("timeline");
+  let html = "";
+
+  // Row 1: month band — just month numbers (theme moved into per-track series headers below)
+  html += `<div class="mo-cell lbl">трек ↓ / місяць →</div>`;
+  R.months.forEach((m) => {
+    const startCol = 2 + (m.num - 1) * 4;
+    html += `<div class="mo-cell" style="grid-column: ${startCol} / span 4;">
+      <span class="mn">M${String(m.num).padStart(2,"0")}</span>
+      <span class="mn-tag">${m.label.toLowerCase()}</span>
+    </div>`;
+  });
+
+  // Row 2: week axis
+  html += `<div class="wk-cell lbl">тиждень →</div>`;
+  for (let w = 1; w <= WEEKS; w++) {
+    const isBoundary = w % 4 === 0; // last week of a month
+    html += `<div class="wk-cell ${isBoundary ? 'boundary' : ''}">
+      <span class="wn">w${String(w).padStart(2,"0")}</span>
+    </div>`;
+  }
+
+  // For each track: row-lbl (spans 2 rows) + 10 series-header cells + 40 episode cells
+  R.tracks.forEach((t, ti) => {
+    const last = ti === R.tracks.length - 1;
+    html += `<div class="row-lbl ${last ? 'last' : ''}" data-track="${t.id}">
+      <span class="rc">${t.code} ·</span>
+      <span class="rn">${t.shortName.toLowerCase()}</span>
+      <span class="rs">${t.kicker}</span>
+    </div>`;
+
+    // Series headers — offset-aware. A leading "скоро…" spacer covers the
+    // weeks before the track starts; then one header per series-month, each
+    // spanning up to 4 week-columns, clipped at the 40-week edge.
+    const off = trackOffset(t.id);
+    let weeksUsed = 0;
+    if (off > 0) {
+      const span = Math.min(off, WEEKS);
+      const clarity = fogClarity(span); // judged at its right edge
+      const fogStyle = clarity < 1 ? ` opacity:${Math.max(0.12, clarity).toFixed(3)};` : "";
+      html += `<div class="ser-cell boundary" data-track="${t.id}" data-empty="true" style="grid-column: span ${span};${fogStyle}">
+        <span class="m-num">w01</span>
+        <span class="s-name">скоро…</span>
+      </div>`;
+      weeksUsed += span;
+    }
+    const tSeries = R.series
+      .filter(x => x.track === t.id)
+      .sort((a, b) => a.month - b.month);
+    for (const s of tSeries) {
+      if (weeksUsed >= WEEKS) break;
+      const span = Math.min(4, WEEKS - weeksUsed);
+      const startW = weeksUsed + 1;
+      const clarity = fogClarity(startW);
+      const locked = startW > horizonWeek;
+      const fogStyle = clarity < 1 ? ` opacity:${Math.max(0.12, clarity).toFixed(3)};` : "";
+      const lockAttr = locked ? ' data-locked="true"' : "";
+      html += `<div class="ser-cell boundary" data-track="${t.id}"${lockAttr} style="grid-column: span ${span};${fogStyle}">
+        <span class="m-num">M${String(s.month).padStart(2,"0")}</span>
+        <span class="s-name">${s.name}</span>
+      </div>`;
+      weeksUsed += span;
+    }
+    // Pad the series-header row to the full 40 columns so episode cells flow
+    // into the next grid row instead of leaking into unused header columns.
+    if (weeksUsed < WEEKS) {
+      html += `<div class="ser-cell" data-track="${t.id}" data-empty="true" style="grid-column: span ${WEEKS - weeksUsed};"></div>`;
+    }
+
+    // Episode cells — 40 weeks
+    for (let w = 1; w <= WEEKS; w++) {
+      const isBoundary = w % 4 === 0;
+      const ep = R.episodes.find(e => e.track === t.id && epWeek.get(e.id) === w);
+      let state = "future";
+      if (w < nextWeek) state = "released";
+      else if (w === nextWeek) state = "next";
+
+      const lastRowCls = last ? "last-row" : "";
+      const boundCls = isBoundary ? "boundary" : "";
+      const locked = isLocked(w);
+      const clarity = fogClarity(w);
+      const fogStyle = clarity < 1 ? ` style="opacity:${clarity.toFixed(3)}"` : "";
+      const lockAttr = locked ? ' data-locked="true"' : "";
+      if (ep) {
+        html += `<div class="tl-cell ${lastRowCls} ${boundCls}"${lockAttr}>
+          <div class="ep" data-track="${t.id}" data-state="${state}" data-ep="${ep.id}"${locked ? ' data-locked="true"' : ''}${fogStyle}>
+            <div class="h">
+              <span class="num">#${ep.num}</span>
+            </div>
+            <div class="ttl">${ep.title}</div>
+          </div>
+        </div>`;
+      } else {
+        html += `<div class="tl-cell ${lastRowCls} ${boundCls}"${lockAttr}></div>`;
+      }
+    }
+  });
+  tl.innerHTML = html;
+
+  // Now marker — positioned inside .tl-grid using its CSS variables.
+  const tlScroll = document.getElementById("tl-scroll");
+  const labelW = parseFloat(getComputedStyle(tl).getPropertyValue("--label-w"));
+  const cellW  = parseFloat(getComputedStyle(tl).getPropertyValue("--cell-w"));
+  const totalW = labelW + WEEKS * cellW;
+  const horizonX = labelW + horizonWeek * cellW;
+
+  // The "known world" ends a little past the horizon — drop the 40-week frame.
+  const VIS_WEEKS = Math.min(WEEKS, Math.ceil(horizonWeek + FOG_BAND)); // ≈ 21
+  const visExtentX = labelW + VIS_WEEKS * cellW;
+  const VIS_MONTHS = Math.min(R.months.length, Math.ceil(VIS_WEEKS / 4));
+
+  // Fog overlay: gradient from transparent (at horizon) to solid bg, covering
+  // everything to the right. Scrolls with the grid.
+  const fog = document.createElement("div");
+  fog.className = "tl-fog";
+  fog.style.left = horizonX + "px";
+  fog.style.width = (totalW - horizonX) + "px";
+  tl.appendChild(fog);
+
+  // Horizon marker line + label.
+  const horizonMarker = document.createElement("div");
+  horizonMarker.className = "horizon-line";
+  horizonMarker.style.left = horizonX + "px";
+  tl.appendChild(horizonMarker);
+  const horizonLabel = document.createElement("div");
+  horizonLabel.className = "horizon-lbl";
+  horizonLabel.innerHTML = "горизонт планування<br><span>+3 місяці · далі туман</span>";
+  horizonLabel.style.left = horizonX + "px";
+  tl.appendChild(horizonLabel);
+
+  // Hard scroll stop: viewport right edge may reach horizon + a small reveal.
+  const FOG_REVEAL = 150;
+  function maxScroll() {
+    return Math.max(0, (horizonX + FOG_REVEAL) - tlScroll.clientWidth);
+  }
+  let clamping = false;
+  tlScroll.addEventListener("scroll", () => {
+    if (clamping) return;
+    const max = maxScroll();
+    if (tlScroll.scrollLeft > max) {
+      clamping = true;
+      tlScroll.scrollLeft = max;
+      clamping = false;
+    }
+  }, { passive: true });
+
+  const nowMarker = document.createElement("div");
+  nowMarker.className = "now";
+  nowMarker.style.left = (labelW + nowWeek * cellW) + "px";
+  tl.appendChild(nowMarker);
+  const nowLabel = document.createElement("div");
+  nowLabel.className = "now-lbl";
+  nowLabel.textContent = "зараз";
+  nowLabel.style.left = (labelW + nowWeek * cellW) + "px";
+  tl.appendChild(nowLabel);
+
+  // Filters
+  const fl = document.getElementById("filters");
+  const state = { active: new Set(TRACK_IDS) };
+  fl.innerHTML = R.tracks.map(t =>
+    `<button class="filt" data-track="${t.id}" data-on="true"><span class="sw"></span>${t.shortName.toLowerCase()}</button>`
+  ).join("");
+  function applyFilter() {
+    [...fl.children].forEach(c => c.dataset.on = state.active.has(c.dataset.track) ? "true" : "false");
+    document.querySelectorAll(".row-lbl[data-track]").forEach(r => {
+      r.dataset.dim = state.active.has(r.dataset.track) ? "false" : "true";
+    });
+    document.querySelectorAll(".ep").forEach(e => {
+      e.closest(".tl-cell").dataset.dim = state.active.has(e.dataset.track) ? "false" : "true";
+    });
+    document.querySelectorAll(".ser-cell").forEach(s => {
+      s.dataset.dim = state.active.has(s.dataset.track) ? "false" : "true";
+    });
+    // minimap
+    document.querySelectorAll(".mm-row").forEach(r => {
+      r.style.opacity = state.active.has(r.dataset.track) ? "1" : ".15";
+    });
+  }
+  fl.addEventListener("click", e => {
+    const b = e.target.closest(".filt"); if (!b) return;
+    const id = b.dataset.track;
+    if (state.active.has(id)) state.active.delete(id); else state.active.add(id);
+    if (state.active.size === 0) state.active = new Set(TRACK_IDS);
+    applyFilter();
+  });
+
+  // ─── Minimap ───────────────────────────────────────────────────────
+  const mm = document.getElementById("minimap");
+  let mmHtml = `<div class="mm-label">карта · зроблено + горизонт</div>
+    <div class="mm-track" id="mm-track">`;
+  TRACK_IDS.forEach(tid => {
+    mmHtml += `<div class="mm-row ${tid}" data-track="${tid}" style="grid-template-columns: repeat(${VIS_WEEKS}, 1fr);">`;
+    for (let w = 1; w <= VIS_WEEKS; w++) {
+      let st = "future";
+      if (w < nextWeek) st = "released";
+      else if (w === nextWeek) st = "next";
+      const lk = isLocked(w) ? ' data-locked="true"' : "";
+      mmHtml += `<div class="mm-cell" data-state="${st}"${lk}></div>`;
+    }
+    mmHtml += `</div>`;
+  });
+  mmHtml += `
+      <div class="mm-now" id="mm-now"></div>
+      <div class="mm-horizon" id="mm-horizon"></div>
+      <div class="mm-viewport" id="mm-viewport"></div>
+      <div class="mm-click" id="mm-click"></div>
+    </div>
+    <div class="mm-axis" style="grid-template-columns: repeat(${VIS_MONTHS}, 1fr);">
+      ${R.months.slice(0, VIS_MONTHS).map(m => `<span>${String(m.num).padStart(2,"0")} · ${m.label.toLowerCase()}</span>`).join("")}
+    </div>`;
+  mm.innerHTML = mmHtml;
+
+  // Position mm-now and viewport
+  const mmTrack = document.getElementById("mm-track");
+  const mmNow = document.getElementById("mm-now");
+  const mmHorizon = document.getElementById("mm-horizon");
+  const mmViewport = document.getElementById("mm-viewport");
+  function updateMinimap() {
+    const trackW = mmTrack.clientWidth;
+    const nowFrac = (labelW + nowWeek * cellW) / visExtentX;
+    mmNow.style.left = (trackW * nowFrac) + "px";
+    const horizFrac = horizonX / visExtentX;
+    mmHorizon.style.left = (trackW * horizFrac) + "px";
+    const viewFrac = tlScroll.scrollLeft / visExtentX;
+    const viewW    = (tlScroll.clientWidth / visExtentX) * trackW;
+    mmViewport.style.left = (trackW * viewFrac) + "px";
+    mmViewport.style.width = Math.max(20, Math.min(viewW, trackW)) + "px";
+  }
+  tlScroll.addEventListener("scroll", updateMinimap, { passive: true });
+  window.addEventListener("resize", updateMinimap);
+  setTimeout(updateMinimap, 60);
+
+  // Click on minimap to jump scroll (clamped to the horizon)
+  document.getElementById("mm-click").addEventListener("click", e => {
+    const rect = mmTrack.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const frac = Math.max(0, Math.min(1, x / rect.width));
+    let target = frac * visExtentX - tlScroll.clientWidth * .35;
+    target = Math.max(0, Math.min(target, maxScroll()));
+    tlScroll.scrollTo({ left: target, behavior: "smooth" });
+  });
+
+  // Hero video facade: load the embed only on user interaction
+  const heroVid = document.getElementById("hero-video");
+  if (heroVid) {
+    const playHeroVid = () => {
+      if (heroVid.dataset.loaded === "true") return;
+      heroVid.dataset.loaded = "true";
+      const ifr = document.createElement("iframe");
+      ifr.src = heroVid.dataset.embed;
+      ifr.title = "NextTick — intro";
+      ifr.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      ifr.referrerPolicy = "strict-origin-when-cross-origin";
+      ifr.allowFullscreen = true;
+      heroVid.innerHTML = "";
+      heroVid.appendChild(ifr);
+      heroVid.style.cursor = "default";
+      heroVid.removeAttribute("role");
+    };
+    heroVid.addEventListener("click", playHeroVid);
+    heroVid.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); playHeroVid(); }
+    });
+  }
+
+  // Scroll-to-now button
+  document.getElementById("jump-now").addEventListener("click", () => {
+    const target = (labelW + nowWeek * cellW) - tlScroll.clientWidth * .35;
+    tlScroll.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
+  });
+  // initial scroll: center the now marker
+  setTimeout(() => {
+    const target = (labelW + nowWeek * cellW) - tlScroll.clientWidth * .35;
+    tlScroll.scrollLeft = Math.max(0, target);
+    updateMinimap();
+  }, 80);
+
+  // Episode detail
+  const det = document.getElementById("ep-detail");
+  const trackName = id => R.tracks.find(t => t.id === id).name;
+  const monthLabel = num => (R.months.find(m => m.num === num) || {}).label || `Місяць ${num}`;
+  document.getElementById("ep-close").onclick = () => det.dataset.open = "false";
+  document.addEventListener("keydown", e => { if (e.key === "Escape") det.dataset.open = "false"; });
+  tl.addEventListener("click", e => {
+    const c = e.target.closest(".ep"); if (!c) return;
+    if (c.dataset.locked === "true") return; // beyond horizon — not openable
+    const ep = R.episodes.find(x => x.id === c.dataset.ep);
+    const w = epWeek.get(ep.id);
+    det.dataset.open = "true";
+    det.dataset.track = ep.track;
+    document.getElementById("ed-num").textContent = `#${ep.num} · ${ep.series.toLowerCase()}`;
+    document.getElementById("ed-track").textContent = `// ${trackName(ep.track).toLowerCase()}`;
+    document.getElementById("ed-week").textContent = `· ${monthLabel(ep.monthNum).toLowerCase()} · w${String(w).padStart(2,"0")}`;
+    document.getElementById("ed-title").textContent = ep.title;
+    document.getElementById("ed-blurb").textContent = ep.blurb;
+    document.getElementById("ed-points").innerHTML = ep.points.map((p,i) =>
+      `<div class="pt"><span class="pn">// ${String(i+1).padStart(2,"0")}</span>${p}</div>`
+    ).join("");
+  });
+
+  // ── Time-level picker ────────────────────────────────────────────
+  (function () {
+    const STORAGE_KEY = "nexttick.timeLevel";
+    const h1 = document.querySelector(".hero h1");
+    const w1 = document.getElementById("h1-w1");
+    const w2 = document.getElementById("h1-w2");
+    const flagEl = document.querySelector(".prompt-line .flag");
+    const ledeEl = document.getElementById("lede-sub");
+    const buttons = document.querySelectorAll(".tp-btn");
+    const phrases = {
+      "2": {
+        w1: "фонове", w2: "навчання",
+        flag: "--quiet",
+        lede: 'Контент, який виходить регулярно і вбудовується у твій тиждень — <span class="em">фоном, як оновлення редактора</span>.',
+        ctaH:  'три відео на тиждень.<br /><span class="em">без тиску.</span>',
+        ctaS:  'Ти не записуєшся на курс. Ти підписуєшся на ритм. Кожне відео — 15 хвилин, можна подивитися за обідом, можна відкласти на вихідні. Через пів року в тебе інший словник та інша оптика.',
+      },
+      "4": {
+        w1: "доступ до", w2: "експертів",
+        flag: "",
+        lede: 'Впроваджуй у роботу наші пропозиції, приноси кейси та отримуй рішення <span class="em">своїх проблем</span>.',
+        ctaH:  'відео + відповіді<br /><span class="em">на твої кейси.</span>',
+        ctaS:  'До регулярного контенту — твої питання та дайджест обговорень. Раз на місяць — 30-хвилинний відео-розбір твого кейсу від експерта. Між справами — структурний підсумок чатів, без потреби сидіти в них самому.',
+      },
+      "6": {
+        w1: "спільнота", w2: "інноваторів",
+        flag: "--verbose",
+        lede: 'Пробуй нове, першим зустрічай проблеми та обговорюй їх з експертами й колегами, щоб <span class="em">через пів року знати те, що інші лише пробують</span>.',
+        ctaH:  'першим бачити.<br /><span class="em">першим обговорювати.</span>',
+        ctaS:  'До всього попереднього — закриті чати за треками та аудіо-стріми за подіями. Коли в індустрії стається важливе — ти в першій п\'ятірці, хто це обговорює. Не наздоганяєш індустрію — формуєш її разом з колегами.',
+      },
+    };
+    let current = null;
+    const ctaH = document.getElementById("cta-heading");
+    const ctaS = document.getElementById("cta-sub");
+    function applyChrome(p) {
+      if (p.flag) {
+        flagEl.textContent = p.flag;
+        flagEl.style.display = "";
+      } else {
+        flagEl.style.display = "none";
+      }
+      ledeEl.innerHTML = p.lede;
+      if (ctaH) ctaH.innerHTML = p.ctaH;
+      if (ctaS) ctaS.textContent = p.ctaS;
+    }
+    function apply(level, animate) {
+      const lvl = String(level);
+      if (!phrases[lvl] || lvl === current) {
+        buttons.forEach(b => b.classList.toggle("on", b.dataset.level === lvl));
+        return;
+      }
+      const p = phrases[lvl];
+      document.body.dataset.timeLevel = lvl;
+      buttons.forEach(b => b.classList.toggle("on", b.dataset.level === lvl));
+
+      if (animate && current !== null) {
+        h1.classList.add("flip");
+        setTimeout(() => {
+          w1.textContent = p.w1;
+          w2.textContent = p.w2;
+          applyChrome(p);
+          h1.classList.remove("flip");
+        }, 180);
+      } else {
+        w1.textContent = p.w1;
+        w2.textContent = p.w2;
+        applyChrome(p);
+      }
+      current = lvl;
+      try { localStorage.setItem(STORAGE_KEY, lvl); } catch (e) {}
+    }
+    buttons.forEach(b => b.addEventListener("click", () => apply(b.dataset.level, true)));
+    // Clickable locked-teaser rows — jump the slider to the required tier.
+    document.querySelectorAll(".gates-preview .gp-item[data-tier]").forEach(item => {
+      item.setAttribute("role", "button");
+      item.setAttribute("tabindex", "0");
+      const go = () => {
+        apply(item.dataset.tier, true);
+        // Scroll to the corresponding gated section after a beat.
+        setTimeout(() => {
+          const targetId = item.querySelector(".nm")?.textContent || "";
+          // Match by section name: simplest is to scroll to the section whose
+          // sec-head .name text matches the item's name.
+          const wanted = (targetId || "").trim().toLowerCase();
+          const target = [...document.querySelectorAll(".gated")].find(s => {
+            const n = s.querySelector(".sec-head .name");
+            return n && n.textContent.trim().toLowerCase() === wanted;
+          });
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 220);
+      };
+      item.addEventListener("click", go);
+      item.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+      });
+    });
+    let initial = null;
+    try { initial = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+    if (!initial || !phrases[initial]) initial = document.body.dataset.timeLevel || "2";
+    apply(initial, false);
+  })();
+
+  // ── Tab scroll-spy ───────────────────────────────────────────────
+  (function () {
+    const tabs = document.querySelectorAll(".win-bar .tab[data-tab]");
+    const map = {
+      roadmap:  document.getElementById("sec-roadmap"),
+      tracks:   document.getElementById("sec-tracks"),
+      timeline: document.getElementById("sec-timeline"),
+    };
+    function setActive(id) {
+      tabs.forEach(t => t.classList.toggle("on", t.dataset.tab === id));
+    }
+    function onScroll() {
+      const probe = 140; // px from top of viewport
+      let active = "roadmap";
+      for (const [id, el] of Object.entries(map)) {
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top - probe <= 0) active = id;
+      }
+      setActive(active);
+    }
+    // Smooth-scroll for the tab links (let default # behavior happen but soften)
+    tabs.forEach(t => t.addEventListener("click", e => {
+      e.preventDefault();
+      const target = map[t.dataset.tab];
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // Theme toggle — flip data-theme on <html>, persist choice, sync browser chrome.
+  (function () {
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    btn.addEventListener("click", () => {
+      const cur = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+      const next = cur === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      if (meta) meta.setAttribute("content", next === "light" ? "#ffffff" : "#0b0d0f");
+    });
+  })();
+
+  // ── Language switcher + saved-locale sync (i18n) ─────────────────
+  (function () {
+    var LOCS = ["uk", "en", "ru"];
+    var PAGE_LOC = "uk";
+    try { localStorage.setItem("lang", PAGE_LOC); } catch (e) {}
+    document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        var loc = a.getAttribute("data-loc");
+        if (LOCS.indexOf(loc) < 0) return;
+        try { localStorage.setItem("lang", loc); } catch (e) {}
+        var parts = location.pathname.split("/");
+        if (LOCS.indexOf(parts[1]) >= 0) { parts[1] = loc; }
+        else { parts.splice(1, 0, loc); }
+        location.href = parts.join("/") + location.search + location.hash;
+      });
+    });
+  })();
+</script>
+</body>
+</html>

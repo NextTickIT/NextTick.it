@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 points: AI agents in development</title>
+<meta name="description" content="100 points for adopting AI agents in development — a practical checklist from the engineers of the NextTick guild." />
+<link rel="canonical" href="https://nexttick.it/en/ai-speedup-checklist/" />
+<link rel="alternate" hreflang="uk" href="https://nexttick.it/uk/ai-speedup-checklist/" />
+<link rel="alternate" hreflang="en" href="https://nexttick.it/en/ai-speedup-checklist/" />
+<link rel="alternate" hreflang="ru" href="https://nexttick.it/ru/ai-speedup-checklist/" />
+<link rel="alternate" hreflang="x-default" href="https://nexttick.it/uk/ai-speedup-checklist/" />
+<style>
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #21262d;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.85em;
+  color: #ffa657;
+}
+
+/* HEADER */
+header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+  max-width: 600px;
+}
+header h1 span { color: var(--accent); }
+.header-meta {
+  font-size: 0.8rem;
+  color: var(--text2);
+  margin-top: 4px;
+}
+.reset-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reset-btn:hover { border-color: #f85149; color: #f85149; }
+
+/* PROMO BANNER */
+.promo-banner {
+  background: linear-gradient(135deg, #0d1f3c 0%, #0f2a1e 50%, #1a0d2e 100%);
+  border-bottom: 1px solid #30363d;
+  padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.promo-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 600px 200px at 80% 50%, rgba(88,166,255,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 20% 80%, rgba(63,185,80,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.promo-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+}
+.promo-text-wrap { }
+.promo-text {
+  font-size: 0.92rem;
+  color: #c9d1d9;
+  line-height: 1.65;
+}
+.promo-text a {
+  color: #79c0ff;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(121,192,255,0.35);
+  transition: border-color 0.2s, color 0.2s;
+}
+.promo-text a:hover { color: #b3d7ff; border-bottom-color: #79c0ff; text-decoration: none; }
+.promo-cta-wrap { margin-top: 16px; }
+.promo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #1d6fa4 0%, #0e4d78 100%);
+  border: 1px solid rgba(88,166,255,0.4);
+  color: #e6edf3;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(13,111,164,0.3), 0 1px 4px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.promo-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  border-radius: inherit;
+}
+.promo-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13,111,164,0.45), 0 2px 8px rgba(0,0,0,0.4);
+  border-color: rgba(88,166,255,0.65);
+  color: #fff;
+  text-decoration: none;
+}
+.promo-cta:active { transform: translateY(0); }
+.promo-cta-icon { font-size: 1.1rem; }
+
+/* SECTION CTA */
+.section-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 20px;
+  margin: 8px 0 24px;
+  background: linear-gradient(90deg, rgba(63,185,80,0.06) 0%, rgba(88,166,255,0.04) 100%);
+  border: 1px solid rgba(63,185,80,0.18);
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+.section-cta-text {
+  font-size: 0.83rem;
+  color: #8b949e;
+  font-style: italic;
+}
+.section-cta-text strong { color: #c9d1d9; font-style: normal; }
+.section-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid rgba(63,185,80,0.4);
+  color: #3fb950;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.section-cta-btn:hover {
+  background: rgba(63,185,80,0.12);
+  border-color: #3fb950;
+  color: #7ee787;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+/* SEARCH */
+.search-wrap {
+  padding: 16px 32px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
+.search-input {
+  width: 100%;
+  max-width: 520px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px 8px 36px;
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--text2); }
+
+/* MAIN */
+main { padding: 32px; max-width: 900px; margin: 0 auto; }
+
+/* DECISION TREE */
+.decision-tree {
+  background: var(--bg2);
+  border: 1px solid #bc8cff44;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.decision-tree h3 {
+  font-size: 0.9rem;
+  color: #bc8cff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+.decision-step {
+  display: none;
+}
+.decision-step.active {
+  display: block;
+}
+.decision-question {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.decision-note {
+  font-size: 0.85rem;
+  color: var(--text2);
+  margin-bottom: 14px;
+}
+.decision-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.decision-btn {
+  padding: 7px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.decision-btn:hover { border-color: #bc8cff; color: #bc8cff; }
+.decision-result {
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.decision-result.r-framework { background: #bc8cff18; border: 1px solid #bc8cff44; }
+.decision-result.r-bare { background: #3fb95018; border: 1px solid #3fb95044; }
+.decision-result.r-superpowers { background: #f0883e18; border: 1px solid #f0883e44; }
+.decision-result.r-bmad { background: #58a6ff18; border: 1px solid #58a6ff44; }
+.decision-result strong { display: block; margin-bottom: 4px; font-size: 1rem; }
+.decision-restart {
+  margin-top: 12px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.decision-restart:hover { border-color: #bc8cff; color: #bc8cff; }
+
+/* SECTIONS */
+.section {
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.section:hover { border-color: #444c56; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--bg2);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+.section-header:hover { background: var(--bg3); }
+.section-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.section-title-wrap { flex: 1; }
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.section-subtitle {
+  font-size: 0.78rem;
+  color: var(--text2);
+  margin-top: 1px;
+}
+.section-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+}
+.section-bar {
+  width: 80px;
+  background: var(--bg3);
+  border-radius: 4px;
+  height: 5px;
+  overflow: hidden;
+}
+.section-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+.section-count {
+  font-size: 0.78rem;
+  color: var(--text2);
+  white-space: nowrap;
+}
+.chevron {
+  color: var(--text2);
+  transition: transform 0.3s;
+  font-size: 1rem;
+}
+.section.collapsed .chevron { transform: rotate(-90deg); }
+.section-body {
+  padding: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.section.collapsed .section-body { display: none; }
+
+/* ITEMS */
+.item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  transition: background 0.15s;
+  cursor: pointer;
+}
+.item:hover { background: #ffffff05; }
+.item.checked { background: #3fb95008; }
+.item.hidden { display: none; }
+.item-cb {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  position: relative;
+}
+.item.checked .item-cb {
+  background: var(--green);
+  border-color: var(--green);
+}
+.item.checked .item-cb::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: 2px solid #fff;
+  border-left: none;
+  border-top: none;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.item-content { flex: 1; min-width: 0; }
+.item-num {
+  font-size: 0.72rem;
+  color: var(--text2);
+  font-family: 'SF Mono', monospace;
+  margin-bottom: 2px;
+}
+.item-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+.item.checked .item-title { color: var(--text2); text-decoration: line-through; text-decoration-color: #3fb95066; }
+.item-desc {
+  font-size: 0.84rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.item-desc a { font-size: inherit; }
+.item-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.tag {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid;
+  font-family: 'SF Mono', monospace;
+}
+
+/* NESTED CHECKLIST (decision tree sub-items) */
+.nested-check { margin-top: 14px; padding: 12px 16px; background: var(--bg3); border-radius: 8px; }
+.nested-check h4 { font-size: 0.8rem; color: var(--text2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+.nested-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; font-size: 0.84rem; cursor: pointer; }
+.nested-item:last-child { margin-bottom: 0; }
+.nested-cb {
+  width: 16px; height: 16px; border: 1px solid var(--border);
+  border-radius: 3px; flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.nested-item.checked .nested-cb { background: #bc8cff; border-color: #bc8cff; }
+.nested-item.checked .nested-cb::after {
+  content: ''; width: 4px; height: 7px;
+  border: 1.5px solid #fff; border-left: none; border-top: none;
+  transform: rotate(45deg) translate(-0.5px, -1px);
+}
+.nested-item.checked span { text-decoration: line-through; color: var(--text2); }
+
+/* NO RESULTS */
+.no-results { text-align: center; padding: 60px 20px; color: var(--text2); }
+.no-results svg { margin-bottom: 12px; opacity: 0.3; }
+
+/* SECTION COLORS */
+.s1 { --sc: #bc8cff; } .s2 { --sc: #58a6ff; } .s3 { --sc: #3fb950; }
+.s4 { --sc: #d29922; } .s5 { --sc: #f0883e; } .s6 { --sc: #79c0ff; }
+.s7 { --sc: #7ee787; } .s8 { --sc: #ffa657; } .s9 { --sc: #ff7b72; }
+.s10 { --sc: #e3b341; }
+.section-num { background: color-mix(in srgb, var(--sc) 20%, transparent); color: var(--sc); border: 1px solid color-mix(in srgb, var(--sc) 40%, transparent); }
+.section-bar-fill { background: var(--sc); }
+.section:hover { border-color: color-mix(in srgb, var(--sc) 30%, transparent); }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  main { padding: 16px; }
+  header { padding: 16px; }
+  .search-wrap { padding: 12px 16px; }
+  .section-progress-wrap { display: none; }
+}
+.lang-switch { display:inline-flex; gap:2px; }
+.lang-switch .ls-opt { font:inherit; font-size:12px; letter-spacing:.04em; line-height:1; padding:5px 7px; border-radius:6px; color:var(--text2); opacity:.85; text-decoration:none; border:1px solid var(--border); transition:color .15s,border-color .15s,opacity .15s; }
+.lang-switch .ls-opt:hover { color:var(--green); border-color:var(--green); opacity:1; }
+.lang-switch .ls-opt.on { color:var(--green); border-color:var(--green); opacity:1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <h1>Effective adoption of <span>AI agents</span> in development</h1>
+      <div class="header-meta">Last updated 23 May 2026</div>
+    </div>
+    <div class="header-actions" style="display:flex;align-items:center;gap:10px;">
+      <nav class="lang-switch" aria-label="Language"><a class="ls-opt" data-loc="uk" hreflang="uk" href="/uk/ai-speedup-checklist/">UK</a><a class="ls-opt on" data-loc="en" hreflang="en" href="/en/ai-speedup-checklist/" aria-current="true">EN</a><a class="ls-opt" data-loc="ru" hreflang="ru" href="/ru/ai-speedup-checklist/">RU</a></nav>
+      <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
+    </div>
+  </div>
+</header>
+
+<div class="promo-banner">
+  <div class="promo-inner">
+    <div class="promo-text-wrap">
+      <div class="promo-text">
+        This checklist is built on personal experience and discussions about advancing AI in the
+        <a href="https://www.youtube.com/watch?v=GQ0c1WQEpW0" target="_blank">NextTick</a> guild.
+        Want to be at the cutting edge of real, practical agent use? Join us.
+      </div>
+      <div class="promo-cta-wrap">
+        <a class="promo-cta" href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&source_channel=conf" target="_blank">
+          <span class="promo-cta-icon">✈</span>
+          Join the NextTick guild
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <input class="search-input" type="text" placeholder="Search items..." id="searchInput" oninput="doSearch(this.value)">
+</div>
+
+<main id="mainContent">
+
+<!-- DECISION TREE -->
+<div class="decision-tree" id="decisionTree">
+  <h3>⚡ Do you need a framework?</h3>
+
+  <div class="decision-step active" id="ds0">
+    <div class="decision-question">Do 3+ developers on your team actively use agents?</div>
+    <div class="decision-note">Count everyone who writes prompts and runs agents in their workflow.</div>
+    <div class="decision-btns">
+      <button class="decision-btn" onclick="dt(1)">Yes →</button>
+      <button class="decision-btn" onclick="dt(2)">No →</button>
+    </div>
+  </div>
+
+  <div class="decision-step" id="ds1">
+    <div class="decision-question">Do you need prompt and workflow standardization across the whole team?</div>
+    <div class="decision-note">Want everyone to use the same agent roles, the same slash commands, the same templates?</div>
+    <div class="decision-btns">
+      <button class="decision-btn" onclick="dt(3)">Yes →</button>
+      <button class="decision-btn" onclick="dt(4)">No →</button>
+    </div>
+  </div>
+
+  <div class="decision-step" id="ds2">
+    <div class="decision-question">Need TDD-first enforcement — the agent can't skip tests?</div>
+    <div class="decision-note">Want a strict workflow: test first, then code, no exceptions?</div>
+    <div class="decision-btns">
+      <button class="decision-btn" onclick="dt(5)">Yes →</button>
+      <button class="decision-btn" onclick="dt(6)">No →</button>
+    </div>
+  </div>
+
+  <div class="decision-step" id="ds3">
+    <div class="decision-question">Does the project span the full cycle (idea → PM → architecture → code → QA)?</div>
+    <div class="decision-note">Need specialized agent personas: PM, Architect, Developer, QA?</div>
+    <div class="decision-btns">
+      <button class="decision-btn" onclick="showResult('bmad')">Yes — BMAD →</button>
+      <button class="decision-btn" onclick="showResult('omcc')">No — oh-my-claudecode →</button>
+    </div>
+  </div>
+
+  <div class="decision-step" id="ds4">
+    <div class="decision-question">Are you a solo dev who wants to work like a virtual team?</div>
+    <div class="decision-note">CEO/Designer/QA modes in one tool — that's gstack.</div>
+    <div class="decision-btns">
+      <button class="decision-btn" onclick="showResult('gstack')">Yes — gstack →</button>
+      <button class="decision-btn" onclick="showResult('bare')">No — bare tool →</button>
+    </div>
+  </div>
+
+  <div class="decision-step" id="ds5">
+    <div class="decision-result r-superpowers">
+      <strong>→ superpowers by Jesse Vincent</strong>
+      The agent physically can't skip the planning/testing phases. TDD, YAGNI, DRY enforcement out of the box. 93K+ stars, officially in the Claude Code marketplace.
+      <br><a href="https://github.com/obra/superpowers" target="_blank">github.com/obra/superpowers</a>
+    </div>
+    <button class="decision-restart" onclick="resetDt()">← Start over</button>
+  </div>
+
+  <div class="decision-step" id="ds6">
+    <div class="decision-question">Is this an experiment / PoC, or do you want full customization of the flow?</div>
+    <div class="decision-btns">
+      <button class="decision-btn" onclick="showResult('bare')">Yes — bare tool →</button>
+      <button class="decision-btn" onclick="showResult('gstack')">No — gstack →</button>
+    </div>
+  </div>
+
+  <div class="decision-step" id="ds-bmad">
+    <div class="decision-result r-bmad">
+      <strong>→ BMAD Method</strong>
+      Breakthrough Method for Agile AI-Driven Development. 12+ specialized agents, quality gates, from specs to production. Works with Claude, GPT, Gemini.
+      <br><a href="https://github.com/bmad-code-org/BMAD-METHOD" target="_blank">github.com/bmad-code-org/BMAD-METHOD</a>
+    </div>
+    <button class="decision-restart" onclick="resetDt()">← Start over</button>
+  </div>
+
+  <div class="decision-step" id="ds-omcc">
+    <div class="decision-result r-framework">
+      <strong>→ oh-my-claudecode</strong>
+      Teams-first multi-agent orchestration. 19 specialized agents, 36 skills, zero learning curve, task decomposition → execution → verification.
+      <br><a href="https://github.com/yeachan-heo/oh-my-claudecode" target="_blank">github.com/yeachan-heo/oh-my-claudecode</a>
+    </div>
+    <button class="decision-restart" onclick="resetDt()">← Start over</button>
+  </div>
+
+  <div class="decision-step" id="ds-gstack">
+    <div class="decision-result r-framework">
+      <strong>→ gstack (Garry Tan)</strong>
+      23 specialized skills, 8 power tools, CEO/Designer/QA/EngManager roles. 71K+ stars, fast browser (100–200ms), Apache 2.0.
+      <br><a href="https://github.com/garrytan/gstack" target="_blank">github.com/garrytan/gstack</a>
+    </div>
+    <button class="decision-restart" onclick="resetDt()">← Start over</button>
+  </div>
+
+  <div class="decision-step" id="ds-bare">
+    <div class="decision-result r-bare">
+      <strong>→ Bare tool: Claude Code / Codex CLI / Mastra</strong>
+      Maximum flexibility, minimal overhead. Custom CLAUDE.md + slash commands + hooks give you everything you need. Add a framework when you feel concrete pain — not before.
+    </div>
+    <button class="decision-restart" onclick="resetDt()">← Start over</button>
+  </div>
+</div>
+
+<div id="sectionsContainer"></div>
+<div class="no-results" id="noResults" style="display:none">
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+  <div>Nothing found. Try a different query.</div>
+</div>
+
+</main>
+
+<script>
+const SECTIONS = [
+  {
+    id: 1, cls: 's1',
+    title: 'Frameworks and ecosystem',
+    subtitle: 'oh-my-claudecode · superpowers · BMAD · GStack · Mastra',
+    cta: { text: 'Using a different framework that actually works?', cta: 'Tell the guild →' },
+    items: [
+      {
+        title: 'Don\'t install a framework by default — use the decision tree above',
+        desc: 'Frameworks give structure but add overhead: extra dependencies, slash command conflicts, abstractions on top of tools you don\'t yet understand. Use the decision tree above to choose deliberately, not because "everyone does it." Add a framework when you feel concrete pain — not before.',
+        tags: ['strategy']
+      },
+      {
+        title: 'oh-my-claudecode: multi-agent orchestration for teamwork',
+        desc: 'A teams-first framework with 19 specialized agents and 36 skills. Automatically decomposes a task into phases: planning → execution → verification → iteration. Zero learning curve — installs via a slash command from the marketplace. Links: <a href="https://github.com/yeachan-heo/oh-my-claudecode" target="_blank">github.com/yeachan-heo/oh-my-claudecode</a> · <a href="https://yeachan-heo.github.io/oh-my-claudecode-website/" target="_blank">website</a>',
+        tags: ['framework', 'team']
+      },
+      {
+        title: 'superpowers: TDD-first enforcement — the agent can\'t skip tests',
+        desc: 'The only framework that covers the entire development cycle. The agent literally can\'t write code before tests, and enforces YAGNI and DRY. 93K+ GitHub stars, in the official Claude Code marketplace since January 2026. Principle: don\'t make the agent smarter, enforce the discipline we\'ve built over decades. <a href="https://github.com/obra/superpowers" target="_blank">github.com/obra/superpowers</a>',
+        tags: ['framework', 'TDD']
+      },
+      {
+        title: 'BMAD Method: agile AI-driven development with quality gates and specialized agents',
+        desc: 'Breakthrough Method for Agile AI-Driven Development — the full cycle from idea to production. 12+ expert agents (PM, Architect, Developer, UX Designer, QA) work in a single session. Replaces "vibe coding" with structured specs, persistent artifacts, and quality gates. Works with Claude, GPT, Gemini, Grok. <a href="https://github.com/bmad-code-org/BMAD-METHOD" target="_blank">github.com/bmad-code-org/BMAD-METHOD</a> · <a href="https://github.com/24601/BMAD-AT-CLAUDE" target="_blank">Claude Code port</a>',
+        tags: ['framework', 'agile']
+      },
+      {
+        title: 'gstack (Garry Tan): turns a single developer into a virtual dev team',
+        desc: 'The personal Claude Code setup of the Y Combinator CEO. 23 specialized skills, 8 power tools, CEO/Designer/Engineering Manager/QA/Release Manager roles. The built-in browser runs 20x faster than Claude in Chrome (100–200ms after startup). 71K+ stars in the first 48 hours. Apache 2.0. <a href="https://github.com/garrytan/gstack" target="_blank">github.com/garrytan/gstack</a>',
+        tags: ['framework', 'solo']
+      },
+      {
+        title: 'Mastra: TypeScript-native agent framework with full type safety',
+        desc: 'If you write agents programmatically, Mastra gives you workflow steps, Zod schemas for everything, typed tool inputs, and built-in Vercel AI SDK integration. Everything out of the box: memory, RAG, observability. Ideal for a production TypeScript backend. <a href="https://mastra.ai" target="_blank">mastra.ai</a> · <a href="https://www.generative.inc/mastra-ai-the-complete-guide-to-the-typescript-agent-framework-2026" target="_blank">full guide</a>',
+        tags: ['TypeScript', 'production']
+      },
+      {
+        title: 'Vercel AI SDK: production-ready streaming and structured output for JS/TS agents',
+        desc: 'A provider-agnostic SDK that works with Claude, OpenAI, and Gemini through a single API. <code>generateObject()</code> gives 100% type-safe structured output, <code>streamText()</code> for streaming. Use it instead of direct API calls — easier to migrate between models. <a href="https://ai-sdk.dev" target="_blank">ai-sdk.dev</a> · <a href="https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data" target="_blank">structured data docs</a>',
+        tags: ['TypeScript', 'SDK']
+      },
+      {
+        title: 'OpenAI Agents SDK for TypeScript: if you use Codex/GPT models',
+        desc: 'The official TypeScript SDK from OpenAI with automatic JSON Schema generation from TypeScript functions and Zod validation. Function tools, handoffs, guardrails. Supports parallel tool calls and MCP servers. <a href="https://openai.github.io/openai-agents-js/" target="_blank">openai.github.io/openai-agents-js</a>',
+        tags: ['OpenAI', 'TypeScript']
+      },
+      {
+        title: 'Don\'t mix incompatible frameworks without analyzing conflicts',
+        desc: 'GStack + Superpowers + GSD can conflict over slash commands, duplicate skills, and create a non-obvious execution order. Before combining them — read their CLAUDE.md files and check for command overlaps. Detailed compatibility breakdown: <a href="https://dev.to/imaginex/a-claude-code-skills-stack-how-to-combine-superpowers-gstack-and-gsd-without-the-chaos-44b3" target="_blank">dev.to: combining frameworks</a>',
+        tags: ['compatibility']
+      },
+      {
+        title: 'Build your own "microframework" from CLAUDE.md + custom slash commands + hooks',
+        desc: 'For most solo projects, a set of: <code>CLAUDE.md</code> with project rules + <code>.claude/commands/</code> with reusable workflows + 2-3 PostToolUse hooks for lint/format — is a full-fledged framework without someone else\'s overhead. Start here, move to a ready-made framework when you outgrow it.',
+        tags: ['customization']
+      }
+    ]
+  },
+  {
+    id: 2, cls: 's2',
+    title: 'Advanced setup: Hooks, Permissions, Worktrees',
+    subtitle: 'lifecycle events · git isolation · team policies',
+    cta: { text: 'Trouble with hooks or worktrees?', cta: 'We\'ll help you figure it out →' },
+    items: [
+      {
+        title: 'PreToolUse hook: block dangerous operations before they run',
+        desc: 'Hooks are shell commands or HTTP endpoints that run automatically in the agent lifecycle. <code>PreToolUse</code> runs before every Bash/Write call. Return a non-zero exit code to block the operation and send an explanation to the agent. Perfect for: forbidding file deletion outside tmp/, validating that the agent doesn\'t change prod configs. <a href="https://code.claude.com/docs/en/hooks" target="_blank">code.claude.com/docs/hooks</a>',
+        tags: ['hooks', 'security']
+      },
+      {
+        title: 'PostToolUse hook: auto-formatting and lint after every edit',
+        desc: 'Run Prettier/ESLint automatically after every <code>Write</code> tool call — the agent never leaves unformatted code. Example: <code>{"PostToolUse": {"Write": "prettier --write $CLAUDE_TOOL_INPUT_FILE_PATH"}}</code>. You can add a TypeScript type-check after every edit to .ts files.',
+        tags: ['hooks', 'quality']
+      },
+      {
+        title: 'Async hooks: don\'t block the agent on background tasks',
+        desc: 'Add <code>async: true</code> to the hook config — it runs in the background without stopping the agent loop. Useful for: sending metrics, Slack notifications, writing audit logs. Shipped in January 2026. <a href="https://claudefa.st/blog/tools/hooks/hooks-guide" target="_blank">full guide to all 12 lifecycle events</a>',
+        tags: ['hooks', 'async']
+      },
+      {
+        title: 'HTTP hooks: centralized validation policies for the whole team',
+        desc: 'Instead of a local script, a hook can POST to your server. This lets you: keep team-wide rules in one place, audit all agent actions centrally, dynamically update rules without changing each developer\'s config. <a href="https://www.pixelmojo.io/blogs/claude-code-hooks-production-quality-ci-cd-patterns" target="_blank">production hooks patterns</a>',
+        tags: ['hooks', 'team']
+      },
+      {
+        title: 'Git worktrees: parallel agents in one repo without file conflicts',
+        desc: 'Each agent in its own worktree — edits in one session don\'t affect another\'s files. Launch: <code>claude --worktree</code>. You can run an agent on a feature branch while another agent fixes a bug in main. Built-in support in the Claude Code CLI (added in 2025). <a href="https://code.claude.com/docs/en/worktrees" target="_blank">code.claude.com/docs/worktrees</a>',
+        tags: ['worktrees', 'parallelism']
+      },
+      {
+        title: 'isolation: worktree in a custom subagent\'s frontmatter',
+        desc: 'Add <code>isolation: worktree</code> to the YAML frontmatter when creating a custom subagent — each run automatically gets its own git worktree. The worktree is cleaned up if the agent made no changes, otherwise it returns the path and branch name. Perfect for the parallel fan-out pattern.',
+        tags: ['subagent', 'isolation']
+      },
+      {
+        title: 'CLAUDE.md hierarchy: global → project → subfolder for granular control',
+        desc: '<code>~/.claude/CLAUDE.md</code> → global preferences (code style, favorite tools). <code>project/CLAUDE.md</code> → project rules (architecture, naming, anti-patterns). <code>src/api/CLAUDE.md</code> → subfolder specifics. Each level extends but doesn\'t replace the one above. Keep each file < 200 lines.',
+        tags: ['CLAUDE.md', 'config']
+      },
+      {
+        title: 'Fine-tuning permissions: the principle of least privilege for the agent',
+        desc: '<code>allowedTools</code> and <code>deniedTools</code> in <code>settings.json</code> or the subagent frontmatter. A code-review agent shouldn\'t have Bash access. A deploy agent shouldn\'t edit source files. Least privilege = fewer accidental breakages and easier action auditing. <a href="https://code.claude.com/docs/en/hooks" target="_blank">docs</a>',
+        tags: ['security', 'config']
+      },
+      {
+        title: 'Custom slash commands as reusable team workflows',
+        desc: 'Create <code>.claude/commands/review.md</code> → <code>/review</code> runs your standardized code-review process. <code>/deploy</code>, <code>/test</code>, <code>/standup</code> — all of this can be committed to the repo and shared with the team via git. The prompt in the file supports <code>$ARGUMENTS</code> for parameters.',
+        tags: ['slash commands', 'team']
+      },
+      {
+        title: 'disler/claude-code-hooks-mastery: 5 production hooks from scratch to learn from',
+        desc: 'The best practical resource on hooks with real examples. Covers: auto-commit hook, test-runner hook, security scanner, format enforcer, notification hook. Each with an explanation of the pattern and edge cases. <a href="https://github.com/disler/claude-code-hooks-mastery" target="_blank">github.com/disler/claude-code-hooks-mastery</a>',
+        tags: ['hooks', 'examples']
+      }
+    ]
+  },
+  {
+    id: 3, cls: 's3',
+    title: 'MCP vs CLI: choosing and architecting the integration',
+    subtitle: 'typescript-sdk · transport · composition · security',
+    cta: { text: 'Building your own MCP server in TypeScript?', cta: 'Show the guild →' },
+    items: [
+      {
+        title: 'The key rule for choosing: MCP for state and tools, CLI for scripts and CI',
+        desc: 'MCP is justified when you need: persistent state between calls (auth sessions, cursors), complex tools with rich types, team-wide reusability, integration with a specific service (GitHub, Slack, a database). A CLI pipe is justified for: one-off scripts, CI/CD tasks, quick experimentation. Don\'t build an MCP where <code>claude -p</code> is enough.',
+        tags: ['architecture']
+      },
+      {
+        title: 'The official TypeScript SDK is the only right way to write MCP servers',
+        desc: 'It gives full types for messages, negotiation, tools, and resources. STDIO, Streamable HTTP, and SSE transports out of the box. Don\'t reinvent the wheel with raw JSON-RPC. <a href="https://github.com/modelcontextprotocol/typescript-sdk" target="_blank">github.com/modelcontextprotocol/typescript-sdk</a> · <a href="https://modelcontextprotocol.io/docs/develop/build-server" target="_blank">official documentation</a>',
+        tags: ['TypeScript', 'MCP']
+      },
+      {
+        title: 'STDIO vs Streamable HTTP: SSE is deprecated — use the right transport',
+        desc: 'STDIO — for local connections (Claude Desktop, Claude Code). Streamable HTTP — for remote/cloud MCP servers. SSE as a standalone transport is officially deprecated. Many old tutorials teach SSE — check that they\'re current. <a href="https://pockit.tools/blog/building-custom-mcp-servers-typescript-complete-guide/" target="_blank">2026 guide</a>',
+        tags: ['transport', 'MCP']
+      },
+      {
+        title: 'Never use console.log() in a STDIO MCP server',
+        desc: 'stdout in the STDIO transport is used for JSON-RPC messages. Any <code>console.log()</code> corrupts the protocol and breaks the server. Only <code>console.error()</code> (writes to stderr) or logging to a file. This trips up every newcomer at least once. <a href="https://nearform.com/digital-community/implementing-model-context-protocol-mcp-tips-tricks-and-pitfalls/" target="_blank">tips & pitfalls</a>',
+        tags: ['MCP', 'pitfalls']
+      },
+      {
+        title: 'MCP tool descriptions are prompting, not documentation',
+        desc: 'Claude uses a tool\'s description to decide when and how to use it. Write it like a prompt: "Use this tool when you need..." with input examples. A poor description = the tool goes unused or is used incorrectly even if the code is perfect. <a href="https://www.freecodecamp.org/news/how-to-build-a-custom-mcp-server-with-typescript-a-handbook-for-developers/" target="_blank">full handbook</a>',
+        tags: ['prompting', 'MCP']
+      },
+      {
+        title: 'MCP Sessions: cache expensive operations between tool calls in one session',
+        desc: 'Sessions let an MCP server keep state across several tool calls within one conversation. Use them for: reusing auth tokens, storing pagination cursors, caching results of expensive queries, user-specific configuration. Substantially reduces latency and cost.',
+        tags: ['MCP', 'state']
+      },
+      {
+        title: 'Test an MCP server\'s business logic separately from the MCP wrapper',
+        desc: 'Write unit tests for <code>fetchUserData()</code>, <code>parseResponse()</code>, and other functions as plain Node.js code — without the MCP context. Test the MCP layer separately to check serialization and error handling. This speeds up development and simplifies debugging.',
+        tags: ['testing', 'MCP']
+      },
+      {
+        title: 'Rate limiting, input validation, and timeouts are mandatory in a production MCP',
+        desc: 'Without rate limiting, the agent can DDoS your own service by calling a tool in a loop. Without input validation — prompt injection through data. Without timeouts — the agent hangs forever. Minimum set: Zod validation + <code>AbortController</code> timeout + request counter. <a href="https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices" target="_blank">security best practices</a>',
+        tags: ['security', 'production']
+      },
+      {
+        title: 'MCP composition: multiple servers in one config for a "superagent"',
+        desc: 'In <code>claude_desktop_config.json</code> or <code>.claude/settings.json</code> you can connect dozens of MCP servers at once. GitHub MCP + Linear MCP + PostgreSQL MCP + Slack MCP = an agent that sees the whole stack. Watch for tool-name conflicts between servers.',
+        tags: ['MCP', 'architecture']
+      },
+      {
+        title: 'Attacks via MCP: prompt injection through tool descriptions and data',
+        desc: 'A real case: an attacker creates a GitHub issue with malicious instructions → an agent with GitHub MCP reads the issue and executes them. CVE-2025-53110 and CVE-2025-53109 in Filesystem MCP allowed escaping the sandbox. Never pass user-supplied data into MCP tools without sanitization. <a href="https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/" target="_blank">Simon Willison: MCP prompt injection</a>',
+        tags: ['security', 'attacks']
+      }
+    ]
+  },
+  {
+    id: 4, cls: 's4',
+    title: 'Programmatic invocation and embedding agents in systems',
+    subtitle: 'claude -p · Agent SDK · headless · microservices · Codex CLI',
+    cta: { text: 'Embedding agents in a production system?', cta: 'Share your case →' },
+    items: [
+      {
+        title: 'claude -p: run an agent from a script without the interactive interface',
+        desc: '<code>claude -p "find and fix the bug in auth.ts" --allowedTools "Read,Edit,Bash"</code> — the agent does the task and exits. The foundation of all headless pipelines. Supports <code>--output-format json</code> for machine-readable output with cost/duration metrics. <a href="https://code.claude.com/docs/en/headless" target="_blank">code.claude.com/docs/headless</a>',
+        tags: ['CLI', 'headless']
+      },
+      {
+        title: '--output-format json: structured output for automation',
+        desc: 'Returns an object <code>{result, cost_usd, duration_ms, num_turns}</code>. Parse it in Node.js: <code>const {result, cost_usd} = JSON.parse(execSync("claude -p ...").toString())</code>. Log cost to a database, build spend analytics, trigger alerts when thresholds are exceeded.',
+        tags: ['CLI', 'automation']
+      },
+      {
+        title: 'Agent SDK TypeScript/Python: the same tools as in Claude Code, in your code',
+        desc: 'The SDK gives programmatic access to the agent loop, all tools, and context management. Use it for: embedding an agent in an existing service, custom orchestrators, complex multi-step workflows with business logic between steps. <a href="https://platform.claude.com/docs/en/agent-sdk/overview" target="_blank">platform.claude.com/docs/agent-sdk</a>',
+        tags: ['SDK', 'TypeScript']
+      },
+      {
+        title: 'AGENTS.md in OpenAI Codex CLI: the CLAUDE.md analog for Codex pipelines',
+        desc: 'Codex CLI reads <code>AGENTS.md</code> at the repo root to understand project context. Supports MCP servers and parallel tool calls. Use it for: CI tasks, scheduled jobs, agents in GitHub Actions. <code>npm install -g @openai/codex</code> → <code>codex -p "task" --full-auto</code>. <a href="https://github.com/openai/codex" target="_blank">github.com/openai/codex</a>',
+        tags: ['Codex', 'CLI']
+      },
+      {
+        title: 'Agent as a microservice: event-driven architecture with queues',
+        desc: 'Webhook event → queue (SQS/BullMQ) → worker reads the task → <code>claude -p</code> or SDK call → result → callback/webhook. The agent is stateless, scales horizontally, and is isolated from the main application. The pattern is ideal for: async code review, automatic documentation, batch processing.',
+        tags: ['architecture', 'microservices']
+      },
+      {
+        title: 'Running several agents in parallel via Promise.all()',
+        desc: '<code>await Promise.all([claude("-p", "fix auth bug"), claude("-p", "update docs"), claude("-p", "write tests")])</code> — three agents work in parallel. Each in its own worktree to avoid file conflicts. Control concurrency with <code>p-limit</code> so you don\'t hit rate limits.',
+        tags: ['parallelism', 'Node.js']
+      },
+      {
+        title: 'Pass large context through files, not stdin',
+        desc: 'To pass hundreds of KB of context, create a temp file and tell the agent to read it: <code>claude -p "read /tmp/context.md and do the task"</code>. Piping through stdin works well for small data; for large data, files are more reliable and cheaper (they don\'t duplicate tokens in CLI args).',
+        tags: ['context', 'optimization']
+      },
+      {
+        title: 'Claude Code GitHub Actions: an agent right in the CI/CD pipeline',
+        desc: 'Official integration: the agent runs on every PR, can read the diff, run tests, and leave review comments. Configured via a YAML workflow. Billed since June 2026 through a separate Agent SDK credit on Pro/Max/Team plans. <a href="https://code.claude.com/docs/en/headless" target="_blank">docs</a> · <a href="https://dev.to/rajeshroyal/headless-mode-unleash-ai-in-your-cicd-pipeline-1imm" target="_blank">CI/CD guide</a>',
+        tags: ['CI/CD', 'GitHub Actions']
+      },
+      {
+        title: 'Error handling and retry strategy for headless agents',
+        desc: 'An agent can fail due to rate limits, timeouts, or invalid output. Pattern: exponential backoff (1s → 2s → 4s → 8s), max 3 attempts, a circuit breaker after 5 consecutive failures, fallback to a simpler task or human escalation. Don\'t let the pipeline hang forever.',
+        tags: ['reliability', 'error handling']
+      },
+      {
+        title: 'Observability for headless agents: log cost, duration, num_turns',
+        desc: 'Every headless call via <code>--output-format json</code> returns metrics. Collect them in a time-series store (Prometheus/InfluxDB), visualize in Grafana. Track: average cost per task, P95 duration, failure rate, token usage by task type. That\'s how you find the most expensive operations.',
+        tags: ['observability', 'metrics']
+      }
+    ]
+  },
+  {
+    id: 5, cls: 's5',
+    title: 'Subagents: decomposition, parallelism, orchestration',
+    subtitle: 'Task tool · fan-out · orchestrator→worker · handoffs',
+    cta: { text: 'Got a working multi-agent pipeline running?', cta: 'The guild wants to know →' },
+    items: [
+      {
+        title: 'Task tool — the core primitive for launching subagents from an orchestrator',
+        desc: 'Task(subagent_name, prompt) launches an isolated agent instance with its own context window. It returns the result to the orchestrator. You can run them in parallel: several Task calls in one turn execute concurrently. <a href="https://claudelog.com/mechanics/task-agent-tools/" target="_blank">ClaudeLog: Task/Agent Tools</a> · <a href="https://code.claude.com/docs/en/sub-agents" target="_blank">official documentation</a>',
+        tags: ['subagents', 'Task tool']
+      },
+      {
+        title: 'Orchestrator→worker pattern: Opus thinks, Sonnet/Haiku does',
+        desc: 'An Opus 4 orchestrator decomposes the task, understands dependencies, and resolves complex architectural questions. Sonnet 4 / Haiku 4 workers handle clearly scoped tasks. 60-80% cost savings with no quality loss on the workers — they work on well-described tasks. <a href="https://claudefa.st/blog/guide/agents/sub-agent-best-practices" target="_blank">sub-agent best practices</a>',
+        tags: ['pattern', 'cost']
+      },
+      {
+        title: 'Fan-out pattern: parallel processing of independent units of work',
+        desc: '50 components to refactor → the orchestrator launches 50 parallel subagents, each handling its own component → the results converge in the orchestrator for the final merge. Applicability condition: the tasks are independent (no shared state, no execution order). <a href="https://turion.ai/blog/claude-code-multi-agents-subagents-guide/" target="_blank">multi-agents guide</a>',
+        tags: ['pattern', 'parallelism']
+      },
+      {
+        title: 'A shared task list as a coordination primitive — agents don\'t talk directly',
+        desc: 'Agents read and write to a shared <code>tasks.json</code> file via filesystem tools. Atomic operations: "took task X" → "finished task X, result in output/X.md". No direct communication between agents → no deadlocks, easier debugging. <a href="https://www.mindstudio.ai/blog/claude-code-agent-teams-parallel-shared-task-list" target="_blank">Agent Teams Deep Dive</a>',
+        tags: ['coordination', 'pattern']
+      },
+      {
+        title: 'Subagent context isolation: each gets only what it needs',
+        desc: 'Don\'t pass the orchestrator\'s entire history into a subagent. Assemble the minimal context: task description + the needed files + the expected output format. Less context = less confusion + fewer tokens. A subagent shouldn\'t know about the other tasks in a parallel fan-out.',
+        tags: ['context', 'optimization']
+      },
+      {
+        title: 'Handoffs: how to correctly pass state between sequential agents',
+        desc: 'An explicit state file: agent 1 writes <code>stage1_output.md</code> with a structured result, agent 2 reads it at the start of its work. Use frontmatter with metadata: <code>status, completed_at, next_steps</code>. This is the chain-of-responsibility pattern — each agent continues from a clear point.',
+        tags: ['pattern', 'handoffs']
+      },
+      {
+        title: 'Worktree isolation for subagents: safe parallelism in git',
+        desc: 'Add <code>isolation: worktree</code> to a custom subagent\'s frontmatter → each run automatically creates a separate git worktree. Several agents edit different parts of the code at once without file conflicts. After they finish, the orchestrator decides how to merge the changes. <a href="https://code.claude.com/docs/en/worktrees" target="_blank">worktrees docs</a>',
+        tags: ['worktrees', 'subagents']
+      },
+      {
+        title: 'Custom subagents in .claude/agents/: build a team of specialists',
+        desc: 'YAML frontmatter defines: <code>name, model, tools, system_prompt, isolation</code>. Example: <code>frontend-agent</code> with access only to <code>src/components/</code>, <code>api-agent</code> with access to <code>src/api/</code>. Specialization reduces the chance of accidental changes in the wrong places.',
+        tags: ['config', 'specialization']
+      },
+      {
+        title: 'When you DON\'T need subagents: the overhead exceeds the benefit',
+        desc: 'Launching a subagent involves: initializing a new context window, reading CLAUDE.md, setting up tools. For a task under 2 minutes, this overhead can exceed the execution time. Rule: a subagent is justified if the task takes > 5 minutes or if you need true parallelism.',
+        tags: ['anti-pattern']
+      },
+      {
+        title: 'Debugging multi-agent workflows: each subagent writes to its own log',
+        desc: 'Instruct each subagent: "first write to <code>logs/{agent_name}.md</code>: the task, plan, progress, result". At the end the orchestrator reads all the logs and builds the full picture. When something fails, you immediately see which agent it happened on and why. <a href="https://github.com/wshobson/agents" target="_blank">example: wshobson/agents orchestration</a>',
+        tags: ['debugging', 'observability']
+      }
+    ]
+  },
+  {
+    id: 6, cls: 's6',
+    title: 'Agent context and memory',
+    subtitle: 'CLAUDE.md · compaction · memory tool · context poisoning',
+    cta: { text: 'Caught context poisoning in the wild?', cta: 'Tell us how you fixed it →' },
+    items: [
+      {
+        title: 'CLAUDE.md < 200 lines: length is inversely proportional to compliance',
+        desc: 'The longer CLAUDE.md is, the worse the agent follows the rules — it simply loses them in the long context. Keep it < 200 lines, only the critically important. Remove anything that can be read from the project code. Review regularly: if a rule hasn\'t been violated in 3 months — delete it. <a href="https://code.claude.com/docs/en/memory" target="_blank">code.claude.com/docs/memory</a>',
+        tags: ['CLAUDE.md', 'best practice']
+      },
+      {
+        title: 'CLAUDE.md is a contract: write what\'s NOT allowed, not only what is',
+        desc: 'Negative instructions work better than positive ones in long sessions. A "Never do:" block with concrete anti-patterns ("don\'t use any", "don\'t change package.json without an explicit request", "don\'t delete tests") is more effective than vague positive rules.',
+        tags: ['CLAUDE.md', 'prompting']
+      },
+      {
+        title: '/compact: compress context without losing the essence in long sessions',
+        desc: '<code>/compact</code> makes Claude summarize the conversation history into key facts and decisions while preserving the working context. Use it proactively every ~50 turns or when you see answer quality degrade — a sign the context window is overflowing.',
+        tags: ['context', 'optimization']
+      },
+      {
+        title: 'Context poisoning: how wrong data in the context breaks the agent',
+        desc: 'If the agent got a wrong result from a tool (a bug in the code, the wrong file) and didn\'t explicitly correct it, the "poisoned" fact stays in the context and influences all subsequent decisions. Symptom: the agent reproduces the same error over and over. Fix: an explicit correction or /compact with a recompute.',
+        tags: ['context', 'bugs']
+      },
+      {
+        title: 'Memory tool: persistent storage between sessions',
+        desc: 'An API-level tool that lets the agent write and read files between sessions. The agent itself decides what\'s worth remembering. Use it for: long-running projects where the agent needs to know decisions made a week ago, accumulating knowledge about the codebase. <a href="https://platform.claude.com/docs/en/managed-agents/memory" target="_blank">platform.claude.com/docs/memory</a>',
+        tags: ['memory', 'persistence']
+      },
+      {
+        title: 'Auto-memory in Claude Code: the agent updates its project notes itself',
+        desc: 'Claude Code automatically records learned preferences and patterns into memory files without manually editing CLAUDE.md. The agent accumulates knowledge about the codebase across sessions. Valuable for long-running projects: after a month the agent knows the architecture better than a new developer. <a href="https://www.mindstudio.ai/blog/what-is-claude-code-auto-memory" target="_blank">what auto-memory is</a>',
+        tags: ['memory', 'auto']
+      },
+      {
+        title: 'Tool result clearing: remove old results from the context',
+        desc: 'Large bash outputs, files read an hour ago — they still occupy tokens in the context. The context engineering API lets you explicitly delete specific tool results. For long sessions this reduces cost and improves quality. <a href="https://platform.claude.com/cookbook/tool-use-context-engineering-context-engineering-tools" target="_blank">Context Engineering Cookbook</a>',
+        tags: ['context', 'optimization']
+      },
+      {
+        title: 'Pass state between sessions through a structured state file',
+        desc: 'At the end of a session, write <code>session_state.json</code>: current status, decisions made, next steps, important findings. At the start of the next session: "read session_state.json and continue the work". More reliable than relying on auto-memory for critical data.',
+        tags: ['persistence', 'pattern']
+      },
+      {
+        title: 'Context engineering: design what the agent SEES, not just what you say',
+        desc: 'Principle: the agent makes decisions based on everything in its context window. If wrong information or extra noise gets in there, quality drops. Deliberately construct the context: include relevant files explicitly, exclude irrelevant ones, structure the order of information. <a href="https://platform.claude.com/cookbook/tool-use-context-engineering-context-engineering-tools" target="_blank">cookbook</a>',
+        tags: ['context', 'architecture']
+      },
+      {
+        title: 'Use --resume and --continue to restore interrupted sessions',
+        desc: '<code>claude --continue</code> continues the last session, <code>claude --resume SESSION_ID</code> restores a specific one. Critical for long agent tasks that can be interrupted: a deploy, refactoring a large codebase, a long research workflow.',
+        tags: ['sessions', 'reliability']
+      }
+    ]
+  },
+  {
+    id: 7, cls: 's7',
+    title: 'Prompting specifically for agents',
+    subtitle: 'system prompts · XML tags · few-shot · tool use · slash commands',
+    cta: { text: 'Got a prompt that consistently works better than others?', cta: 'Share it with the guild →' },
+    items: [
+      {
+        title: 'A prompt for an agent ≠ a prompt for a chatbot: different goals, different patterns',
+        desc: 'A chatbot prompt → "you are a helpful assistant". An agent prompt → "you perform task X, use tools Y, output the result in format Z, and stop when W". An agent needs: clear tools, stopping conditions, an output format, the bounds of its authority — not a personality and tone.',
+        tags: ['prompting', 'principles']
+      },
+      {
+        title: 'XML tags for structuring complex agent prompts',
+        desc: 'Claude natively understands XML structure: <code>&lt;context&gt;...&lt;/context&gt;</code>, <code>&lt;task&gt;...&lt;/task&gt;</code>, <code>&lt;constraints&gt;...&lt;/constraints&gt;</code>, <code>&lt;output_format&gt;...&lt;/output_format&gt;</code>. Tags help separate the roles of different parts of the prompt and reduce "confusion" in long instructions. <a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Anthropic prompting guide</a>',
+        tags: ['prompting', 'XML']
+      },
+      {
+        title: 'Few-shot examples to teach correct tool usage',
+        desc: 'Show 2-3 examples of the correct tool call flow: "first read the file, then edit only the part you need". This sharply reduces the number of wrong tool calls when the agent is unsure how to use a tool in your specific context. Especially important for custom MCP tools.',
+        tags: ['prompting', 'few-shot']
+      },
+      {
+        title: 'Negative instructions are more effective than positive ones for boundary enforcement',
+        desc: '"Don\'t edit files outside the <code>src/</code> directory" works better than "edit only <code>src/</code>". Claude follows a list of explicit prohibitions at the start of the prompt better than vague positive rules. Create a "Never:" block in your CLAUDE.md.',
+        tags: ['prompting', 'boundaries']
+      },
+      {
+        title: 'Stopping conditions are mandatory: without them the agent improves endlessly',
+        desc: '"Once all tests pass — stop and report the result." Without an explicit stopping condition, the agent keeps iterating, adding "improvements", refactoring things nobody asked for. An explicit stopping condition is one of the most important elements of an agent prompt.',
+        tags: ['prompting', 'control']
+      },
+      {
+        title: 'Decomposing the task in the prompt: numbered steps beat "do it all"',
+        desc: '"1. First read the files in src/auth/ 2. Find every use of the deprecated API 3. Update each place 4. Run the tests 5. Return the list of changed files" → more predictable than "update auth". The agent follows an explicit workflow rather than inventing its own.',
+        tags: ['prompting', 'structure']
+      },
+      {
+        title: 'Extended thinking: enable it for complex architectural decisions',
+        desc: 'Thinking mode gives the agent a token budget for reasoning before answering. For complex tasks (an architectural choice, debugging a hard bug, code review) the quality is noticeably higher. For simple tasks — needless cost. Tune the thinking budget by task type.',
+        tags: ['thinking', 'quality']
+      },
+      {
+        title: 'Slash commands as standardized prompt templates for the team',
+        desc: '<code>.claude/commands/review.md</code> contains the full code-review prompt with your standards. <code>/review $ARGUMENTS</code> passes a PR number or file. The team uses the same level of review — no variance in quality from developer to developer.',
+        tags: ['team', 'standards']
+      },
+      {
+        title: 'Version your prompts in git: a prompt is code, not magic',
+        desc: 'Keep important prompts in <code>.claude/</code> or a separate repo. Tag versions on changes. Write a changelog: "v2: added a constraint for TypeScript strict mode". This lets you roll back on a quality regression and understand exactly what changed.',
+        tags: ['practice', 'versioning']
+      },
+      {
+        title: 'Iterative refinement: document what worked right in CLAUDE.md',
+        desc: 'When you find a wording that works better than the previous one — add it to CLAUDE.md right away. Build a pattern: ran the agent → evaluated the result → improved the prompt → recorded what worked. After a month you\'ll have a battle-tested set of instructions for your specific project.',
+        tags: ['practice', 'iterations']
+      }
+    ]
+  },
+  {
+    id: 8, cls: 's8',
+    title: 'Predictability and determinism of generation',
+    subtitle: 'Zod · structured output · TypeScript contracts · validation',
+    cta: { text: 'Zod schema behaving strangely with the agent?', cta: 'Let\'s figure it out together →' },
+    items: [
+      {
+        title: 'Zod schemas as a contract between the agent and the system: parse, don\'t trust',
+        desc: '<code>const schema = z.object({files: z.array(z.string()), summary: z.string().max(200)})</code> → <code>schema.parseAsync(output)</code>. The agent either returns a valid object, or the system knows about the error. No surprises in production. Zod is the de facto standard in the TypeScript AI ecosystem. <a href="https://workos.com/blog/zod-for-typescript" target="_blank">Zod for TypeScript AI dev</a>',
+        tags: ['Zod', 'TypeScript']
+      },
+      {
+        title: 'generateObject() from the Vercel AI SDK: 100% type-safe structured output',
+        desc: '<code>const {object} = await generateObject({model, schema: z.object({...}), prompt})</code> — returns a typed object, and the provider uses constrained decoding where possible. Never parse JSON from a string by hand when this API exists. <a href="https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data" target="_blank">ai-sdk.dev/docs/generating-structured-data</a>',
+        tags: ['Vercel AI SDK', 'structured output']
+      },
+      {
+        title: 'Insert TypeScript interfaces right into the prompt: the agent generates compatible code',
+        desc: 'Include in the prompt: "Here are the types in use: <code>[paste interface]</code>. Generate code compatible with these types". The agent sees the real types from the codebase → the code compiles on the first try in 90% of cases instead of 50%.',
+        tags: ['TypeScript', 'prompting']
+      },
+      {
+        title: 'OpenAI Structured Outputs: constrained decoding guarantees valid JSON',
+        desc: 'For Codex CLI and GPT models, Structured Outputs (not function calling) constrains decoding → the JSON is always valid and always matches the schema. Claude uses a prompt-based approach + Zod validation afterward — in the Vercel AI SDK this is abstracted automatically. <a href="https://dev.to/whoffagents/openai-structured-outputs-vs-zod-which-to-use-for-llm-response-validation-in-2026-366m" target="_blank">Structured Outputs vs Zod 2026</a>',
+        tags: ['OpenAI', 'structured output']
+      },
+      {
+        title: 'Explicit output format instructions: strip the markdown wrapper that breaks parsing',
+        desc: '"Return ONLY valid JSON, no markdown blocks, no comments, no explanations." The most common cause of broken parsing is the agent wrapping JSON in ```json ... ```. An explicit instruction solves it. For extra reliability: strip markdown blocks before parsing.',
+        tags: ['prompting', 'parsing']
+      },
+      {
+        title: 'Retry with a refined prompt on invalid output',
+        desc: 'Zod fail → extract the validation error → add it to the retry prompt: "The previous response is invalid: {zodError}. Fix it and return only JSON again." Max 3 attempts with exponential backoff. After 3 failures — escalate to a human or fall back. Never fail silently.',
+        tags: ['retry', 'reliability']
+      },
+      {
+        title: 'Temperature control: 0 for code, higher for creative tasks',
+        desc: 'Temperature 0 → deterministic output, minimal variation, ideal for generating code, JSON, structured data. Temperature 0.5-0.7 → for writing documentation, commit messages, explanations. Some frameworks force a temperature for different task types.',
+        tags: ['temperature', 'determinism']
+      },
+      {
+        title: 'viteval: test agent output in CI like regular code',
+        desc: 'A Vitest-style API for LLM evals: define scorers, local datasets, assertions on output quality. <code>expect(output).toMatchSchema(schema)</code>, <code>expect(score).toBeGreaterThan(0.8)</code>. Run it in GitHub Actions — fail the PR on a regression. <a href="https://github.com/viteval/viteval" target="_blank">github.com/viteval/viteval</a>',
+        tags: ['testing', 'CI']
+      },
+      {
+        title: 'Thinking mode for complex tasks: an explicit budget for reasoning',
+        desc: 'Extended thinking (Claude) / reasoning (OpenAI) gives the model tokens to "think out loud" before the final answer. For multi-step reasoning, complex architectural decisions, debugging non-trivial bugs — the quality is substantially higher. Tune the budget: higher budget → better quality → more expensive.',
+        tags: ['thinking', 'quality']
+      },
+      {
+        title: 'Machine-readable error handling: the agent reports errors in a structured way',
+        desc: 'Instead of "something went wrong" in free text: instruct the agent to return <code>{success: false, error: {code: "FILE_NOT_FOUND", file: "...", suggestion: "..."}}</code>. The system handles different error types automatically without parsing natural language.',
+        tags: ['error handling', 'structured']
+      }
+    ]
+  },
+  {
+    id: 9, cls: 's9',
+    title: 'Evaluations and testing of agent workflows (JS/TS)',
+    subtitle: 'promptfoo · viteval · golden datasets · trace-based · CI',
+    cta: { text: 'Building an eval pipeline and have questions?', cta: 'Let\'s discuss in the guild →' },
+    items: [
+      {
+        title: 'promptfoo: the industry standard for LLM evals, used by OpenAI and Anthropic',
+        desc: 'YAML configs to define providers, prompts, and assertions. CLI and TypeScript API. Quality comparison across models, red teaming (50+ vulnerability types), CI/CD integration. In March 2026 OpenAI announced an acquisition — the de facto standard. <a href="https://github.com/promptfoo/promptfoo" target="_blank">github.com/promptfoo/promptfoo</a> · <a href="https://www.promptfoo.dev/docs/integrations/ci-cd/" target="_blank">CI/CD integration</a>',
+        tags: ['evals', 'CI']
+      },
+      {
+        title: 'viteval: a Vitest-style eval framework — a familiar API for JS developers',
+        desc: 'If you already use Vitest, the viteval API will be instantly clear. Local datasets, a scorer framework, CI integration. Run LLM evals just like unit tests. <a href="https://github.com/viteval/viteval" target="_blank">github.com/viteval/viteval</a>',
+        tags: ['evals', 'Vitest']
+      },
+      {
+        title: 'agentest: Vitest for testing AI agents with mock tool calls',
+        desc: 'Fills the "deterministic agent testing" gap: intercepts the agent\'s tool calls, lets you swap them for mock responses, and make assertions on the whole trajectory (which tools it called, in what order, with what arguments) — not just on the final text. <a href="https://dev.to/raffael_p/agentest-vitest-style-e2e-testing-for-ai-agents-44j1" target="_blank">agentest guide</a>',
+        tags: ['testing', 'mocks']
+      },
+      {
+        title: 'Golden dataset: your source of truth for regression testing',
+        desc: 'A set: input + expected_output + acceptable_variance. At least 50 examples covering the happy path, edge cases, and known hard cases. Version it in git. On every prompt change, run the full eval against the golden set — if the score dropped → regression. <a href="https://www.getmaxim.ai/articles/building-a-golden-dataset-for-ai-evaluation-a-step-by-step-guide/" target="_blank">how to build a golden dataset</a>',
+        tags: ['evals', 'dataset']
+      },
+      {
+        title: 'Trace-based evals: judge the agent\'s path, not just the final result',
+        desc: 'The agent reached the right answer the wrong way → that\'s a problem for production reliability. Record the whole trajectory: which files it read, which commands it ran, how many iterations. Evaluate: minimality (no extra tool calls), correctness (the right sequence), efficiency (no duplicated operations).',
+        tags: ['evals', 'traces']
+      },
+      {
+        title: 'LangSmith + Vitest: parameterized tests over a dataset',
+        desc: '<code>ls.test.each(dataset)("test case", async ({input, expected}) => {...})</code> — a familiar pattern that runs in the regular Vitest test runner. Useful if you already use LangChain/LangSmith for tracing agents. <a href="https://docs.langchain.com/langsmith/vitest-jest" target="_blank">LangSmith Vitest integration</a>',
+        tags: ['LangSmith', 'Vitest']
+      },
+      {
+        title: 'Regression CI: evals in GitHub Actions on every PR that touches prompts',
+        desc: 'If a PR changes CLAUDE.md, .claude/commands/, or a system prompt → the eval suite runs automatically against the golden dataset. Fail when score < threshold → can\'t merge. Prompts stop being "magic" — they become code with regression protection. <a href="https://www.promptfoo.dev/docs/integrations/ci-cd/" target="_blank">promptfoo CI/CD docs</a>',
+        tags: ['CI/CD', 'regression']
+      },
+      {
+        title: 'Assertions on a range, not exact match: test non-deterministic code',
+        desc: '<code>expect(score).toBeGreaterThan(0.8)</code> instead of <code>expect(output).toBe(exact)</code>. LLM output varies — test quality, not specific words. For structured data (a JSON schema) → exact matching is OK. For text answers → a similarity score or rule-based assertions.',
+        tags: ['testing', 'assertions']
+      },
+      {
+        title: 'Unit tests for the agent\'s tools, separate from the agent loop',
+        desc: 'Test <code>fetchUserData()</code>, <code>parseGitDiff()</code>, <code>validateSchema()</code> with regular Vitest tests without running the agent. Fast, cheap, deterministic. Test the agent loop separately with integration tests. Don\'t mix the testing levels.',
+        tags: ['unit tests', 'isolation']
+      },
+      {
+        title: 'Production monitoring: runtime evals via sampling 10% of requests',
+        desc: 'Run 10% of real requests asynchronously through the eval pipeline → real-time quality metrics. Alerts on degradation: if the score dropped 15% over the last 100 requests → a notification. This is the only way to learn about a production regression before users notice it.',
+        tags: ['production', 'monitoring']
+      }
+    ]
+  },
+  {
+    id: 10, cls: 's10',
+    title: 'Token and cost optimization',
+    subtitle: 'RTK · prompt caching · context-mode · model selection · /compact',
+    cta: { text: 'Found a way to cut even more tokens?', cta: 'The guild is waiting for your trick →' },
+    items: [
+      {
+        title: 'RTK: a CLI proxy that cuts token usage by 60–90% on frequent commands',
+        desc: 'A single Rust binary with no dependencies. Intercepts the agent\'s shell commands (git status, ls, cat) and returns cached or compressed results instead of the full output. Radically reduces tokens on filesystem and git operations. <a href="https://github.com/rtk-ai/rtk" target="_blank">github.com/rtk-ai/rtk</a>',
+        tags: ['RTK', 'tokens']
+      },
+      {
+        title: 'context-mode in RTK: smart analysis of which parts of the context are actually needed',
+        desc: 'RTK analyzes the agent context and cuts out the parts that don\'t affect the current task. Unlike a plain /compact that summarizes everything, context-mode is more surgically precise — it keeps the maximum of relevant information with the minimum of tokens. <a href="https://github.com/rtk-ai/rtk" target="_blank">github.com/rtk-ai/rtk</a>',
+        tags: ['RTK', 'context']
+      },
+      {
+        title: 'Prompt caching: 90% savings on repeated system prompts',
+        desc: 'Claude prompt caching: cached tokens cost $0.30/M instead of $3.00/M — 90% savings. The cache works on a prefix match. Mandatory for all agents with long system prompts (CLAUDE.md + documentation + instructions). Enabled automatically in the Claude API when a cache_control header is present. <a href="https://introl.com/blog/prompt-caching-infrastructure-llm-cost-latency-reduction-guide-2025" target="_blank">prompt caching guide</a>',
+        tags: ['caching', 'cost']
+      },
+      {
+        title: 'Cache-friendly prompt structure: static at the start, dynamic at the end',
+        desc: 'A cache hit happens only on a prefix match. Rule: system prompt + documentation + examples (static) → the start. The dynamic user request → the end. Never insert a timestamp or request ID into the middle of the system prompt — it invalidates the cache.',
+        tags: ['caching', 'architecture']
+      },
+      {
+        title: 'Model selection strategy: don\'t use Opus where Haiku is enough',
+        desc: 'Haiku: formatting, lint-fix, simple refactoring, boilerplate code, translation → ~100x cheaper than Opus. Sonnet: ordinary coding tasks, review, documentation. Opus: architectural decisions, hard debugging, multi-step reasoning. The orchestrator-worker pattern maximizes these savings.',
+        tags: ['models', 'cost']
+      },
+      {
+        title: '/compact instead of a restart: preserve context in long sessions',
+        desc: '<code>/compact</code> summarizes the history and continues the session with the preserved context. An alternative to a restart that loses all progress. Use it proactively before the context window fills up — once it fills, answer quality degrades until a restart.',
+        tags: ['optimization', 'context']
+      },
+      {
+        title: 'Parallel subagents save time but cost more tokens',
+        desc: 'In parallel: 5 subagents × 10K tokens each = 50K tokens in 2 minutes. Sequentially: 50K tokens in 10 minutes. Time is expensive for interactive tasks — use parallelism. For batch overnight jobs on a cost budget → sequential is cheaper. Choose deliberately.',
+        tags: ['subagents', 'trade-offs']
+      },
+      {
+        title: 'Remove large tool results from the context after use',
+        desc: 'Read a 500-line file, finished the task → that file is no longer needed in the context but takes up thousands of tokens until the end of the session. Regularly clear out the "junk" via the tool result clearing API or a forced /compact. Especially important for agents that read many files.',
+        tags: ['context', 'tokens']
+      },
+      {
+        title: 'Measure the cost of each workflow via --output-format json',
+        desc: 'The <code>cost_usd</code> field in the JSON output of <code>claude -p</code>. Log it to a database by workflow_type. The top 10 most expensive operations are your optimization queue. Often a single workflow costs 80% of the whole budget, and optimizing it solves everything.',
+        tags: ['metrics', 'cost']
+      },
+      {
+        title: 'LLMLingua: prompt compression up to 20x for long contexts',
+        desc: 'Microsoft Research training-free prompt compression. Preserves the key information while compressing 4-20x. Useful for: RAG context with large documents, long code snippets in the prompt, historical data. Use it when you need to pass a lot of context but have few tokens. <a href="https://github.com/microsoft/LLMLingua" target="_blank">github.com/microsoft/LLMLingua</a>',
+        tags: ['compression', 'tokens']
+      }
+    ]
+  }
+];
+
+// ---- STATE ----
+const STORAGE_KEY = 'ai_agents_checklist_v1';
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+let state = loadState();
+
+// ---- RENDER ----
+function render() {
+  const container = document.getElementById('sectionsContainer');
+  container.innerHTML = '';
+  let globalNum = 0;
+
+  SECTIONS.forEach(section => {
+    const sectionEl = document.createElement('div');
+    sectionEl.className = `section ${section.cls}`;
+    sectionEl.id = `section-${section.id}`;
+
+    const total = section.items.length;
+    const checked = section.items.filter((_, i) => state[`${section.id}-${i}`]).length;
+
+    sectionEl.innerHTML = `
+      <div class="section-header" onclick="toggleSection(${section.id})">
+        <div class="section-num">${section.id}</div>
+        <div class="section-title-wrap">
+          <div class="section-title">${section.title}</div>
+          <div class="section-subtitle">${section.subtitle}</div>
+        </div>
+        <div class="section-progress-wrap">
+          <div class="section-bar">
+            <div class="section-bar-fill" style="width:${Math.round(checked/total*100)}%"></div>
+          </div>
+          <span class="section-count" id="sc-${section.id}">${checked}/${total}</span>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body" id="sb-${section.id}">
+        ${section.items.map((item, i) => {
+          globalNum++;
+          const key = `${section.id}-${i}`;
+          const isChecked = !!state[key];
+          const tags = (item.tags || []).map(t => `<span class="tag" style="border-color:color-mix(in srgb, var(--sc) 40%, transparent);color:var(--sc);background:color-mix(in srgb, var(--sc) 10%, transparent)">${t}</span>`).join('');
+          return `
+            <div class="item${isChecked ? ' checked' : ''}" id="item-${section.id}-${i}" onclick="toggleItem(${section.id}, ${i})" data-search="${item.title.toLowerCase()} ${(item.desc || '').toLowerCase().replace(/<[^>]+>/g, '')}">
+              <div class="item-cb"></div>
+              <div class="item-content">
+                <div class="item-num">${String(globalNum).padStart(2,'0')} / ${section.id}.${i+1}</div>
+                <div class="item-title">${item.title}</div>
+                ${item.desc ? `<div class="item-desc">${item.desc}</div>` : ''}
+                ${tags ? `<div class="item-tags">${tags}</div>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    container.appendChild(sectionEl);
+
+    if (section.cta) {
+      const ctaEl = document.createElement('div');
+      ctaEl.className = 'section-cta';
+      ctaEl.innerHTML = `
+        <span class="section-cta-text"><strong>${section.cta.text}</strong></span>
+        <a class="section-cta-btn" href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&source_channel=conf" target="_blank">✈ ${section.cta.cta}</a>
+      `;
+      container.appendChild(ctaEl);
+    }
+  });
+
+  updateProgress();
+}
+
+function toggleItem(sectionId, itemIdx) {
+  const key = `${sectionId}-${itemIdx}`;
+  state[key] = !state[key];
+  saveState(state);
+  const el = document.getElementById(`item-${sectionId}-${itemIdx}`);
+  el.classList.toggle('checked', state[key]);
+  updateProgress();
+  updateSectionProgress(sectionId);
+}
+
+function updateSectionProgress(sectionId) {
+  const section = SECTIONS.find(s => s.id === sectionId);
+  const total = section.items.length;
+  const checked = section.items.filter((_, i) => state[`${sectionId}-${i}`]).length;
+  const fill = document.querySelector(`#section-${sectionId} .section-bar-fill`);
+  const count = document.getElementById(`sc-${sectionId}`);
+  if (fill) fill.style.width = `${Math.round(checked/total*100)}%`;
+  if (count) count.textContent = `${checked}/${total}`;
+}
+
+function updateProgress() {}
+
+function toggleSection(id) {
+  const el = document.getElementById(`section-${id}`);
+  el.classList.toggle('collapsed');
+}
+
+function resetAll() {
+  if (!confirm('Reset all progress?')) return;
+  state = {};
+  saveState(state);
+  render();
+  resetDt();
+}
+
+// ---- SEARCH ----
+function doSearch(q) {
+  q = q.toLowerCase().trim();
+  let visibleCount = 0;
+  document.querySelectorAll('.item').forEach(el => {
+    const text = el.dataset.search || '';
+    const match = !q || text.includes(q);
+    el.classList.toggle('hidden', !match);
+    if (match) visibleCount++;
+  });
+  document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+  // Expand sections with results
+  if (q) {
+    SECTIONS.forEach(s => {
+      const sec = document.getElementById(`section-${s.id}`);
+      const hasVisible = [...sec.querySelectorAll('.item')].some(el => !el.classList.contains('hidden'));
+      if (hasVisible) sec.classList.remove('collapsed');
+    });
+  }
+}
+
+// ---- DECISION TREE ----
+function dt(step) {
+  document.querySelectorAll('.decision-step').forEach(el => el.classList.remove('active'));
+  document.getElementById(`ds${step}`).classList.add('active');
+}
+function showResult(type) {
+  document.querySelectorAll('.decision-step').forEach(el => el.classList.remove('active'));
+  document.getElementById(`ds-${type}`).classList.add('active');
+}
+function resetDt() {
+  document.querySelectorAll('.decision-step').forEach(el => el.classList.remove('active'));
+  document.getElementById('ds0').classList.add('active');
+}
+
+// ---- INIT ----
+render();
+
+// ── Language switcher + saved-locale sync (i18n) ──
+(function () {
+  var LOCS = ["uk","en","ru"]; var PAGE_LOC = "en";
+  try { localStorage.setItem("lang", PAGE_LOC); } catch (e) {}
+  document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      var loc = a.getAttribute("data-loc"); if (LOCS.indexOf(loc) < 0) return;
+      try { localStorage.setItem("lang", loc); } catch (e) {}
+      var parts = location.pathname.split("/");
+      if (LOCS.indexOf(parts[1]) >= 0) { parts[1] = loc; } else { parts.splice(1,0,loc); }
+      location.href = parts.join("/") + location.search + location.hash;
+    });
+  });
+})();
+</script>
+</body>
+</html>
