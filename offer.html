@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NextTick — Оферта</title>
+    <link rel="canonical" href="https://nexttick.it/ru/offer/" />
+    <link rel="alternate" hreflang="uk" href="https://nexttick.it/uk/offer/" />
+    <link rel="alternate" hreflang="ru" href="https://nexttick.it/ru/offer/" />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/ru/offer/"
+    />
+    <script>
+      /* Locale router for the offer page. The document exists only in uk + ru;
+     an unknown/other saved or browser locale falls back to the ru default. */
+      (function () {
+        var SUB = "offer/";
+        var loc;
+        try {
+          loc = localStorage.getItem("lang");
+        } catch (e) {}
+        if (loc !== "uk" && loc !== "ru") {
+          loc = "ru";
+          var langs =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language || ""];
+          for (var i = 0; i < langs.length; i++) {
+            var t = (langs[i] || "").toLowerCase();
+            if (t.indexOf("uk") === 0) {
+              loc = "uk";
+              break;
+            }
+            if (t.indexOf("ru") === 0) {
+              loc = "ru";
+              break;
+            }
+          }
+        }
+        location.replace(
+          "/" + loc + "/" + SUB + location.search + location.hash,
+        );
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0; url=/ru/offer/" />
+  </head>
+  <body>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; padding: 24px">
+        Оферта / Оферта:
+        <a href="/ru/offer/">На русском</a> ·
+        <a href="/uk/offer/">Українською</a>
+      </p>
+    </noscript>
+  </body>
+</html>

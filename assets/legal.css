@@ -1,0 +1,363 @@
+/* legal.css — shared styles for the standalone legal pages
+   (/{loc}/offer/, /{loc}/privacy/). Reuses the flagship terminal chrome
+   (window frame + win-bar + theme toggle + lang switch) but renders the
+   long-form document body in a readable sans-serif measure. */
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0d0f;
+  --bg-2: #111417;
+  --panel: #15191c;
+  --panel-2: #1c2126;
+  --line: #2a3138;
+  --line-2: #3a444c;
+  --txt: #d6d8da;
+  --dim: #888d92;
+  --muted: #5d6469;
+  --green: #7ee787;
+  --green-2: #3fb950;
+  --green-hover: #8df29a;
+  --amber: #e3b341;
+  --cyan: #56d4dd;
+  --magenta: #bc8cff;
+  --red: #ff7b72;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --bg-rgb: 11, 13, 15;
+  --scan: rgba(255, 255, 255, 0.012);
+  --vignette: rgba(0, 0, 0, 0.5);
+  --dot-r: #4a2222;
+  --dot-y: #4a3a14;
+  --dot-g: #1d3a24;
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-2: #f6f8fa;
+  --panel: #f0f3f6;
+  --panel-2: #e7ecf1;
+  --line: #d4dae0;
+  --line-2: #b6bfc8;
+  --txt: #1f2328;
+  --dim: #59636e;
+  --muted: #8b949e;
+  --green: #1a7f37;
+  --green-2: #116329;
+  --green-hover: #166b2e;
+  --amber: #9a6700;
+  --cyan: #0b7285;
+  --magenta: #8250df;
+  --red: #cf222e;
+  --bg-rgb: 255, 255, 255;
+  --scan: rgba(0, 0, 0, 0.022);
+  --vignette: rgba(0, 0, 0, 0.05);
+  --dot-r: #ff5f57;
+  --dot-y: #febc2e;
+  --dot-g: #28c840;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--txt);
+  background: var(--bg);
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--scan) 0 1px,
+    transparent 1px 3px
+  );
+  z-index: 100;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    var(--vignette) 100%
+  );
+  z-index: 99;
+}
+
+/* ─── window chrome ─────────────────────────────────────── */
+.page {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.win {
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  margin: 24px;
+}
+.win-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  font-size: 11px;
+  color: var(--dim);
+  font-family: var(--mono);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.win-bar .dots {
+  display: flex;
+  gap: 6px;
+  margin-right: 6px;
+}
+.win-bar .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+}
+.win-bar .dot.r {
+  background: var(--dot-r);
+}
+.win-bar .dot.y {
+  background: var(--dot-y);
+}
+.win-bar .dot.g {
+  background: var(--dot-g);
+}
+.win-bar .logo {
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+  flex: 0 0 auto;
+}
+.win-bar .title {
+  color: var(--txt);
+}
+.win-bar .path {
+  color: var(--dim);
+}
+.win-bar .spacer {
+  margin-left: auto;
+}
+
+/* theme toggle */
+.theme-toggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--dim);
+  cursor: pointer;
+  border-radius: 2px;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s;
+}
+.theme-toggle:hover {
+  color: var(--green);
+  border-color: var(--green);
+}
+.theme-toggle .tt-icon {
+  display: none;
+  width: 13px;
+  height: 13px;
+}
+.theme-toggle .tt-sun {
+  display: block;
+}
+[data-theme="light"] .theme-toggle .tt-sun {
+  display: none;
+}
+[data-theme="light"] .theme-toggle .tt-moon {
+  display: block;
+}
+
+/* language switch */
+.lang-switch {
+  display: inline-flex;
+  gap: 2px;
+  margin-left: 2px;
+  font-family: var(--mono);
+}
+.lang-switch .ls-opt {
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: inherit;
+  opacity: 0.5;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    opacity 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+.lang-switch .ls-opt:hover,
+.lang-switch .ls-opt.on {
+  opacity: 1;
+  color: var(--green);
+  border-color: var(--green);
+}
+
+/* ─── legal document body (readable sans-serif measure) ─── */
+.legal {
+  max-width: 74ch;
+  margin: 0 auto;
+  padding: 40px 28px 8px;
+}
+.legal h1 {
+  font-family: var(--mono);
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--green);
+  margin: 0 0 4px;
+  letter-spacing: 0.01em;
+}
+.legal .legal-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--dim);
+  margin: 0 0 28px;
+}
+.legal h2 {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--txt);
+  margin: 34px 0 12px;
+}
+.legal h2 .h2-num {
+  color: var(--green);
+}
+.legal p {
+  margin: 0 0 12px;
+  color: var(--txt);
+}
+.legal p.clause {
+  color: var(--txt);
+}
+.legal p.clause .cl-num {
+  color: var(--green-2);
+  font-family: var(--mono);
+  font-size: 0.85em;
+  margin-right: 2px;
+}
+.legal p.lead {
+  color: var(--dim);
+}
+.legal ul {
+  margin: 8px 0 14px;
+  padding-left: 22px;
+}
+.legal li {
+  margin: 0 0 6px;
+}
+.legal li::marker {
+  color: var(--green-2);
+}
+.legal ul ul {
+  margin: 6px 0 4px;
+}
+.legal ul ul > li {
+  list-style-type: circle;
+}
+/* A clause that leads into a list sits tighter against its bullets. */
+.legal p.clause + ul {
+  margin-top: -4px;
+}
+.legal strong {
+  color: var(--txt);
+  font-weight: 600;
+}
+.legal a {
+  color: var(--green-2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal a:hover {
+  color: var(--green);
+}
+.legal .requisites {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 16px 18px;
+  margin-top: 8px;
+  white-space: pre-line;
+  color: var(--txt);
+}
+
+/* ─── footer (scoped: .legal-footer only, no global selectors) ─── */
+.legal-footer {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--dim);
+  border-top: 1px solid var(--line);
+  padding: 18px 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  align-items: center;
+}
+.legal-footer a {
+  color: var(--dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
+.legal-footer a:hover {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+.legal-footer .lf-copy {
+  margin-left: auto;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .win {
+    margin: 12px;
+  }
+  .legal {
+    padding: 28px 18px 8px;
+  }
+  .legal-footer .lf-copy {
+    margin-left: 0;
+    width: 100%;
+  }
+}
