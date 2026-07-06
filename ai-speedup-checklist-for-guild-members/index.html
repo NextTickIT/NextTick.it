@@ -1,44 +1,82 @@
 <!doctype html>
 <html lang="uk">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NextTick</title>
-<link rel="canonical" href="https://nexttick.it/uk/ai-speedup-checklist-for-guild-members/" />
-<link rel="alternate" hreflang="uk" href="https://nexttick.it/uk/ai-speedup-checklist-for-guild-members/" />
-<link rel="alternate" hreflang="en" href="https://nexttick.it/en/ai-speedup-checklist-for-guild-members/" />
-<link rel="alternate" hreflang="ru" href="https://nexttick.it/ru/ai-speedup-checklist-for-guild-members/" />
-<link rel="alternate" hreflang="x-default" href="https://nexttick.it/uk/ai-speedup-checklist-for-guild-members/" />
-<script>
-  /* Locale router: resolve before paint, never render a non-matching locale. */
-  (function () {
-    var LOCS = ["uk", "en", "ru"], SUB = "ai-speedup-checklist-for-guild-members/";
-    var loc;
-    try { loc = localStorage.getItem("lang"); } catch (e) {}
-    if (LOCS.indexOf(loc) < 0) {
-      loc = "uk";
-      var langs = (navigator.languages && navigator.languages.length)
-        ? navigator.languages : [navigator.language || ""];
-      for (var i = 0; i < langs.length; i++) {
-        var t = (langs[i] || "").toLowerCase();
-        if (t.indexOf("uk") === 0) { loc = "uk"; break; }
-        if (t.indexOf("ru") === 0) { loc = "ru"; break; }
-        if (t.indexOf("en") === 0) { loc = "en"; break; }
-      }
-    }
-    location.replace("/" + loc + "/" + SUB + location.search + location.hash);
-  })();
-</script>
-<meta http-equiv="refresh" content="0; url=/uk/ai-speedup-checklist-for-guild-members/" />
-</head>
-<body>
-<noscript>
-  <p style="font-family:system-ui,sans-serif;padding:24px">
-    Choose language / Оберіть мову / Выберите язык:
-    <a href="/uk/ai-speedup-checklist-for-guild-members/">Українська</a> ·
-    <a href="/en/ai-speedup-checklist-for-guild-members/">English</a> ·
-    <a href="/ru/ai-speedup-checklist-for-guild-members/">Русский</a>
-  </p>
-</noscript>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NextTick</title>
+    <link
+      rel="canonical"
+      href="https://nexttick.it/uk/ai-speedup-checklist-for-guild-members/"
+    />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://nexttick.it/uk/ai-speedup-checklist-for-guild-members/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/en/ai-speedup-checklist-for-guild-members/"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://nexttick.it/ru/ai-speedup-checklist-for-guild-members/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/uk/ai-speedup-checklist-for-guild-members/"
+    />
+    <script>
+      /* Locale router: resolve before paint, never render a non-matching locale. */
+      (function () {
+        var LOCS = ["uk", "en", "ru"],
+          SUB = "ai-speedup-checklist-for-guild-members/";
+        var loc;
+        try {
+          loc = localStorage.getItem("lang");
+        } catch (e) {}
+        if (LOCS.indexOf(loc) < 0) {
+          loc = "uk";
+          var langs =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language || ""];
+          for (var i = 0; i < langs.length; i++) {
+            var t = (langs[i] || "").toLowerCase();
+            if (t.indexOf("uk") === 0) {
+              loc = "uk";
+              break;
+            }
+            if (t.indexOf("ru") === 0) {
+              loc = "ru";
+              break;
+            }
+            if (t.indexOf("en") === 0) {
+              loc = "en";
+              break;
+            }
+          }
+        }
+        location.replace(
+          "/" + loc + "/" + SUB + location.search + location.hash,
+        );
+      })();
+    </script>
+    <meta
+      http-equiv="refresh"
+      content="0; url=/uk/ai-speedup-checklist-for-guild-members/"
+    />
+  </head>
+  <body>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; padding: 24px">
+        Choose language / Оберіть мову / Выберите язык:
+        <a href="/uk/ai-speedup-checklist-for-guild-members/">Українська</a> ·
+        <a href="/en/ai-speedup-checklist-for-guild-members/">English</a> ·
+        <a href="/ru/ai-speedup-checklist-for-guild-members/">Русский</a>
+      </p>
+    </noscript>
+  </body>
 </html>

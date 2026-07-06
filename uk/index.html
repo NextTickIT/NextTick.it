@@ -3,6 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-M74P6CSD");
+    </script>
+    <!-- End Google Tag Manager -->
     <title>nexttick — гільдія інженерів</title>
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -73,7 +87,7 @@
     <!-- Google tag (gtag.js) -->
     <script
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-MXX0XQWV3R"
+      src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
     ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -82,7 +96,7 @@
       }
       gtag("js", new Date());
 
-      gtag("config", "G-MXX0XQWV3R");
+      gtag("config", "G-1TYEB7YFP5");
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -2514,8 +2528,54 @@
         }
       }
     </style>
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "1022924580268547");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1022924580268547&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
   </head>
   <body data-time-level="2">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div class="page">
       <div class="win">
         <div class="win-bar">
@@ -3195,25 +3255,16 @@
     <script>
       const R = window.ROADMAP;
 
-      // Join button — swap source_channel for ?utm_source if present.
-      (function () {
-        const utm = new URLSearchParams(location.search).get("utm_source");
-        if (!utm) return;
-        document.querySelectorAll("#join-btn, #join-btn-2").forEach((btn) => {
-          const u = new URL(btn.href);
-          u.searchParams.set("source_channel", utm);
-          btn.href = u.toString();
-        });
-      })();
-
-      // GA4 event on CTA click — distinguishes the header vs the subscribe CTA.
+      // Push CTA clicks to dataLayer for GTM — distinguishes header vs subscribe CTA.
       (function () {
         const locations = { "join-btn": "header", "join-btn-2": "subscribe" };
+        window.dataLayer = window.dataLayer || [];
         document.querySelectorAll("#join-btn, #join-btn-2").forEach((btn) => {
           btn.addEventListener("click", () => {
-            if (typeof gtag !== "function") return;
-            gtag("event", "cta_click", {
+            dataLayer.push({
+              event: "cta_click",
               cta_location: locations[btn.id] || btn.id,
+              cta_text: btn.textContent.trim().replace(/\s+/g, " "),
               time_level: document.body.dataset.timeLevel || "",
               link_url: btn.href,
             });
@@ -3792,7 +3843,14 @@
           } catch (e) {}
         }
         buttons.forEach((b) =>
-          b.addEventListener("click", () => apply(b.dataset.level, true)),
+          b.addEventListener("click", () => {
+            apply(b.dataset.level, true);
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+              event: "time_level_change",
+              time_level: b.dataset.level,
+            });
+          }),
         );
         // Clickable locked-teaser rows — jump the slider to the required tier.
         document
@@ -3860,6 +3918,8 @@
         tabs.forEach((t) =>
           t.addEventListener("click", (e) => {
             e.preventDefault();
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({ event: "tab_click", tab: t.dataset.tab });
             const target = map[t.dataset.tab];
             if (target)
               target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -3918,5 +3978,6 @@
         });
       })();
     </script>
+    <script src="/assets/nt-attribution.js?v=1"></script>
   </body>
 </html>
