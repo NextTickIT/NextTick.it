@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-M74P6CSD");
+    </script>
+    <!-- End Google Tag Manager -->
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1TYEB7YFP5");
+    </script>
+    <title>
+      NextTick — a guild of engineers. Background learning for middle+
+      developers
+    </title>
+    <meta
+      name="description"
+      content="Execution is getting cheaper — judgment is getting more valuable. NextTick is a guild of engineers led by Illya Klymov and Timur Shemsedinov: three short videos a week, case reviews, and a community. $50/month, cancel anytime."
+    />
+    <link rel="canonical" href="https://nexttick.it/en/all.html" />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://nexttick.it/uk/all.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/en/all.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://nexttick.it/ru/all.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/uk/all.html"
+    />
+    <style>
+      :root {
+        --bg: #0b0d0f;
+        --panel: #12151a;
+        --border: #232830;
+        --text: #e8eaed;
+        --muted: #9aa3ad;
+        --accent: #4ade80;
+        --accent-dim: #22c55e;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+      }
+      .container {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(11, 13, 15, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 14px 0;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 18px;
+        letter-spacing: -0.01em;
+      }
+      .logo span {
+        color: var(--accent);
+      }
+      .nav .cta-small {
+        margin-left: auto;
+        background: var(--accent);
+        color: #08240f;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 9px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+      }
+      section {
+        padding: 72px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      h1 {
+        font-size: 46px;
+        line-height: 1.1;
+        letter-spacing: -0.015em;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 32px;
+        line-height: 1.18;
+        letter-spacing: -0.01em;
+        margin-bottom: 16px;
+      }
+      h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      .sub {
+        font-size: 20px;
+        color: var(--muted);
+        max-width: 58ch;
+        margin-bottom: 30px;
+      }
+      .cta {
+        display: inline-block;
+        background: var(--accent);
+        color: #08240f;
+        font-weight: 700;
+        font-size: 17px;
+        padding: 15px 32px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: transform 0.12s ease;
+      }
+      .cta:hover {
+        transform: translateY(-1px);
+      }
+      .cta-sub {
+        display: block;
+        margin-top: 12px;
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .cols3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 18px;
+        margin-top: 26px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 22px;
+      }
+      .card h3 {
+        color: var(--accent);
+      }
+      .card p {
+        font-size: 14.5px;
+        color: var(--muted);
+      }
+      .quote {
+        border-left: 3px solid var(--accent);
+        padding: 8px 0 8px 20px;
+        margin: 22px 0;
+        font-size: 19px;
+        font-style: italic;
+      }
+      .quote span {
+        display: block;
+        font-size: 13.5px;
+        font-style: normal;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+      ul.plain {
+        list-style: none;
+      }
+      ul.plain li {
+        padding: 10px 0 10px 30px;
+        position: relative;
+        border-bottom: 1px solid var(--border);
+        font-size: 16.5px;
+      }
+      ul.plain li:last-child {
+        border-bottom: none;
+      }
+      ul.plain li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
+      ul.cross li::before {
+        content: "✕";
+        color: #f87171;
+      }
+      .stats {
+        display: flex;
+        gap: 44px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .stat b {
+        display: block;
+        font-size: 36px;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .stat span {
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      .authors {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 10px;
+      }
+      .author {
+        display: flex;
+        gap: 16px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+      }
+      .avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        object-fit: cover;
+        background: #2a2f37;
+      }
+      .author p {
+        font-size: 14px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .week {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 16px;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .week:last-of-type {
+        border-bottom: none;
+      }
+      .week .n {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 15px;
+        padding-top: 2px;
+      }
+      .week h3 {
+        font-size: 17px;
+      }
+      .week p {
+        font-size: 14.5px;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+      .week .res {
+        color: var(--text);
+        margin-top: 7px;
+      }
+      .week .res b {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .price {
+        font-size: 52px;
+        font-weight: 800;
+        margin: 12px 0 4px;
+      }
+      .price small {
+        font-size: 18px;
+        font-weight: 400;
+        color: var(--muted);
+      }
+      .faq-item {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+      .faq-item h3 {
+        font-size: 16.5px;
+      }
+      .faq-item p {
+        font-size: 14.5px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      .center {
+        text-align: center;
+      }
+      footer {
+        padding: 36px 0 48px;
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      footer .row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      footer a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--text);
+      }
+      .ls-opt {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .ls-opt.on {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      @media (max-width: 820px) {
+        h1 {
+          font-size: 34px;
+        }
+        h2 {
+          font-size: 26px;
+        }
+        .cols3,
+        .authors {
+          grid-template-columns: 1fr;
+        }
+        section {
+          padding: 52px 0;
+        }
+        .week {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+      }
+    </style>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "x5houryvs2");
+    </script>
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "1022924580268547");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1022924580268547&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <header>
+      <div class="container nav">
+        <div class="logo">nexttick<span>_</span></div>
+        <a
+          class="cta-small"
+          data-cta-location="header"
+          href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+          >Join →</a
+        >
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section>
+      <div class="container">
+        <h1>
+          You're good at your job.<br />That's exactly why you're at risk.
+        </h1>
+        <p class="sub">
+          Execution is getting cheaper: more and more, AI writes the code for
+          you. What's getting more valuable is judgment, perspective, and the
+          ability to explain your decisions. NextTick is a guild of engineers
+          where you build exactly that — in the background, inside your work
+          week.
+        </p>
+        <a
+          class="cta"
+          data-cta-location="hero"
+          href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+          >Join the guild →</a
+        >
+        <span class="cta-sub"
+          >$50 a month · cancel anytime · three short videos a week</span
+        >
+      </div>
+    </section>
+
+    <!-- AUTHORS + SOCIAL PROOF -->
+    <section>
+      <div class="container">
+        <h2>
+          The guild is led by engineers who've taught more than 10,000
+          developers
+        </h2>
+        <div class="authors">
+          <div class="author">
+            <img
+              class="avatar"
+              src="/assets/author-ilya.png"
+              alt="Illya Klymov"
+            />
+            <div>
+              <h3>Illya Klymov</h3>
+              <p>
+                Staff Frontend Engineer at GitLab · Google Developer Expert ·
+                founder of JavaScript.ninja · HolyJS speaker · 15+ years in the
+                industry
+              </p>
+            </div>
+          </div>
+          <div class="author">
+            <img
+              class="avatar"
+              src="/assets/author-timur.png"
+              alt="Timur Shemsedinov"
+            />
+            <div>
+              <h3>Timur Shemsedinov</h3>
+              <p>
+                CTO at Metatech · chief architect of Metarhia · lecturer at KPI
+                · author of 350+ open lectures · 30+ years of experience
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>10,000+</b><span>engineers taught</span></div>
+          <div class="stat">
+            <b>800</b><span>members already in the guild</span>
+          </div>
+          <div class="stat">
+            <b>~9 in 10</b><span>stay and renew their subscription</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAIN -->
+    <section>
+      <div class="container">
+        <h2>"I'm stuck. And I don't understand why"</h2>
+        <p class="sub">Sound like a familiar background feeling?</p>
+        <ul class="plain">
+          <li>
+            My knowledge seems fine. I get the work done, I can handle
+            whatever's required.
+          </li>
+          <li>I can figure out a new topic on my own.</li>
+          <li>I'm valued — but there's no sense of movement.</li>
+          <li>
+            The seniors around me are different somehow, but that "something" is
+            hard to name.
+          </li>
+          <li>
+            I study on my own — articles, courses, videos — and I suspect I'm
+            learning the wrong things.
+          </li>
+          <li>
+            I stew in my own thoughts: no one reviews my code, and there's
+            nothing to compare it to.
+          </li>
+        </ul>
+        <p style="margin-top: 24px; font-size: 17px">
+          If you recognized yourself in at least three of these — that's not
+          impostor syndrome talking. It's the absence of an environment and
+          feedback. On your own, this shift is almost impossible to find.
+        </p>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section>
+      <div class="container">
+        <h2>It's not about you. What people pay for is changing</h2>
+        <p style="font-size: 17px">
+          A junior with AI covers tasks from below. A senior covers them from
+          above — by saying "we're solving the wrong problem." The middle
+          developer ends up in between: writes good code, reliable, knows the
+          codebase. But all of that is execution. And execution is getting
+          cheaper faster than you can reach your next performance review.
+        </p>
+        <div class="quote">
+          Middle developers are vulnerable not because they work badly. They're
+          vulnerable because they work well in exactly the layer that's losing
+          value. It's not a sentence. It's a diagnosis.<span
+            >— Illya Klymov</span
+          >
+        </div>
+        <p style="font-size: 17px">
+          And when stack ranking kicks in at your company — "you'll be counted,
+          whether you want it or not." The one who stands out won't be the one
+          who writes code faster. Code no longer sets anyone apart.
+        </p>
+        <div class="quote">
+          Code, knowledge, and access to tools have all gotten cheaper. The only
+          things gaining value are clarity of opinion and the quality of
+          decisions.<span>— Timur Shemsedinov</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section>
+      <div class="container">
+        <h2>
+          You're not signing up for a course.<br />You're subscribing to a
+          rhythm
+        </h2>
+        <p class="sub">
+          Courses can't keep up with the industry, and no one has time for
+          four-hour lectures — not you, not us. So the format is different:
+          background learning, built into your work week.
+        </p>
+        <div class="cols3">
+          <div class="card">
+            <h3>3 videos a week</h3>
+            <p>
+              15 minutes each: agentic development, architecture, engineering
+              communication. Watch over lunch or on the weekend.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Every one comes with an action</h3>
+            <p>
+              One idea and a task to apply in your real project today. Without
+              action in a real context, content doesn't stick.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Not on your own</h3>
+            <p>
+              800 engineers alongside you: reviews of your cases, feedback from
+              Illya, Timur, and peers on the same trajectory.
+            </p>
+          </div>
+        </div>
+        <p style="margin-top: 26px" class="muted">
+          In six months you'll have a different vocabulary and a different lens.
+          Proven on 10,000+ engineers before the guild.
+        </p>
+      </div>
+    </section>
+
+    <!-- FIRST MONTH -->
+    <section>
+      <div class="container">
+        <h2>What exactly happens in the first 4 weeks</h2>
+        <div class="week">
+          <div class="n">Week 1</div>
+          <div>
+            <h3>Why, not what: the context behind decisions</h3>
+            <p>
+              3 videos → task: take one architectural decision in your project
+              that you treat as a given, and find its constraint.
+            </p>
+            <p class="res">
+              <b>Result:</b> the first decision you can explain and defend — not
+              "that's just how it's done."
+            </p>
+          </div>
+        </div>
+        <div class="week">
+          <div class="n">Week 2</div>
+          <div>
+            <h3>
+              The language of consequences: how to sell technical decisions
+            </h3>
+            <p>
+              3 videos → task: reframe one piece of tech debt in terms of time
+              and money, not "the code is bad."
+            </p>
+            <p class="res">
+              <b>Result:</b> an argument your manager hears the first time.
+            </p>
+          </div>
+        </div>
+        <div class="week">
+          <div class="n">Week 3</div>
+          <div>
+            <h3>
+              The prompt is an interface to thinking: decomposition for an agent
+            </h3>
+            <p>
+              3 videos → task: run one real task through a decomposition that
+              leaves the agent nothing to guess.
+            </p>
+            <p class="res">
+              <b>Result:</b> the task closes faster — and you understand why.
+            </p>
+          </div>
+        </div>
+        <div class="week">
+          <div class="n">Week 4</div>
+          <div>
+            <h3>Vertical slices and the proactive status update</h3>
+            <p>
+              3 videos → task: break a 3+ day task into working slices and send
+              an update before anyone asks.
+            </p>
+            <p class="res">
+              <b>Result:</b> your team lead sees someone who has the situation
+              under control.
+            </p>
+          </div>
+        </div>
+        <p class="muted" style="margin-top: 20px">
+          From there it goes deeper: working with uncertainty, ADRs, RFCs,
+          cross-team influence. The program lives and updates along with the
+          industry.
+        </p>
+      </div>
+    </section>
+
+    <!-- WHAT'S INSIDE -->
+    <section>
+      <div class="container">
+        <h2>It adapts to your free time</h2>
+        <div class="cols3">
+          <div class="card">
+            <h3>Got 2 hours a week</h3>
+            <p>
+              3 videos of 15 minutes each + tasks to apply. The core of the
+              guild — that alone is enough to shift.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Got 4 hours</h3>
+            <p>
+              + expert reviews of your cases (anonymous, on a live call) and a
+              digest of discussions — 1,200 chat messages compressed into a
+              10-minute read.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Got 6+ hours</h3>
+            <p>
+              + a private community with Illya and experts on hand, plus audio
+              streams on "what this means for us" whenever something happens in
+              the industry.
+            </p>
+          </div>
+        </div>
+        <p class="muted" style="margin-top: 22px">
+          It all comes in one subscription. How much you take is up to your
+          week.
+        </p>
+      </div>
+    </section>
+
+    <!-- FILTER -->
+    <section>
+      <div class="container">
+        <h2>First — who this isn't for</h2>
+        <ul class="plain cross">
+          <li>
+            Looking for a course that hands you fully finished answers — this
+            isn't it. Here we discuss the options for answering your specific
+            question.
+          </li>
+          <li>Just want to add a line to your resume — not here.</li>
+          <li>
+            Not ready to try new things in your real project — definitely not
+            here. Growing faster than the market means experimenting with the
+            unknown.
+          </li>
+        </ul>
+        <p style="margin-top: 24px; font-size: 17px">
+          <b style="color: var(--accent)">Who it's built for:</b> middle+
+          developers who get that it's not about a new framework. Who see that
+          execution is getting cheaper and want to reach the level where
+          judgment is what counts. And who are ready to work surrounded by
+          people on the same trajectory.
+        </p>
+      </div>
+    </section>
+
+    <!-- PRICE -->
+    <section>
+      <div class="container center">
+        <h2>Cheaper than one book on an outdated framework</h2>
+        <div class="price">$50<small>/month</small></div>
+        <p class="muted">
+          cancel anytime · access to every release as it comes out
+        </p>
+        <p style="max-width: 54ch; margin: 20px auto; font-size: 16.5px">
+          No $2,000 "sales windows." A subscription to a rhythm: you stay as
+          long as you see value for yourself. That's exactly why people stay —
+          the guild's retention is one of the highest in the niche.
+        </p>
+        <a
+          class="cta"
+          data-cta-location="pricing"
+          href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+          >Join the guild →</a
+        >
+        <span class="cta-sub"
+          >payment and access through the Telegram bot · your first videos right
+          after subscribing</span
+        >
+      </div>
+    </section>
+
+    <!-- FAQ + FINAL -->
+    <section>
+      <div class="container">
+        <h2>The questions you're thinking right now</h2>
+        <div class="faq-item">
+          <h3>I don't have time for yet another course</h3>
+          <p>
+            That's why the format is 15-minute videos and tasks inside your
+            current work, not on top of it. The minimum rhythm is 2 hours a
+            week, including applying it.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Is this just another AI course?</h3>
+          <p>
+            No. Everyone teaches AI tools — that's a baseline, not a
+            differentiator. The guild is about the layer above: judgment,
+            architecture, communication. The things AI won't do for you.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>
+            I'm a junior / I'm a senior — is it too early / too late for me?
+          </h3>
+          <p>
+            The core is middle+. For a junior it gives a system for growth
+            without wandering; for a senior, tracks on influence, ADRs, RFCs,
+            and cross-team work. The content is tagged by level.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>What if it doesn't click?</h3>
+          <p>
+            Cancel in one click in the same bot. No forms, no "tell us why," no
+            retention traps.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>What language is the content in?</h3>
+          <p>
+            The videos and materials are in Russian and Ukrainian. The community
+            uses both.
+          </p>
+        </div>
+        <div class="center" style="margin-top: 44px">
+          <h2>In six months — a different vocabulary and a different lens</h2>
+          <p class="muted" style="margin-bottom: 24px">
+            Or the same old plateau. The difference is a rhythm that starts with
+            a single click.
+          </p>
+          <a
+            class="cta"
+            data-cta-location="final"
+            href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+            >Join the guild →</a
+          >
+          <span class="cta-sub"
+            >$50/month · cancel anytime · 800 engineers already inside</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container row">
+        <div class="logo" style="font-size: 15px">nexttick<span>_</span></div>
+        <span>guild of engineers</span>
+        <span class="lang-switch" style="margin-left: auto">
+          <a class="ls-opt" data-loc="uk" hreflang="uk" href="/uk/all.html"
+            >UK</a
+          >
+          ·
+          <a
+            class="ls-opt on"
+            data-loc="en"
+            hreflang="en"
+            href="/en/all.html"
+            aria-current="true"
+            >EN</a
+          >
+          ·
+          <a class="ls-opt" data-loc="ru" hreflang="ru" href="/ru/all.html"
+            >RU</a
+          >
+        </span>
+      </div>
+    </footer>
+    <!-- Analytics: push CTA clicks to dataLayer for GTM -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest("a.cta, a.cta-small");
+        if (!a) return;
+        dataLayer.push({
+          event: "cta_click",
+          cta_location: a.dataset.ctaLocation || "unknown",
+          cta_text: a.textContent.trim().replace(/\s+/g, " "),
+          link_url: a.href,
+        });
+      });
+    </script>
+    <script src="/assets/nt-attribution.js?v=1"></script>
+    <script>
+      (function () {
+        var LOCS = ["uk", "en", "ru"];
+        var PAGE_LOC = "en";
+        try {
+          localStorage.setItem("lang", PAGE_LOC);
+        } catch (e) {}
+        document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            var loc = a.getAttribute("data-loc");
+            if (LOCS.indexOf(loc) < 0) return;
+            try {
+              localStorage.setItem("lang", loc);
+            } catch (e) {}
+            var parts = location.pathname.split("/");
+            if (LOCS.indexOf(parts[1]) >= 0) {
+              parts[1] = loc;
+            } else {
+              parts.splice(1, 0, loc);
+            }
+            location.href = parts.join("/") + location.search + location.hash;
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

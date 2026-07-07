@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-M74P6CSD");
+    </script>
+    <!-- End Google Tag Manager -->
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1TYEB7YFP5");
+    </script>
+    <title>
+      NextTick — гильдия инженеров. Фоновое обучение для middle+ разработчиков
+    </title>
+    <meta
+      name="description"
+      content="Execution дешевеет — дорожает суждение. NextTick — гильдия инженеров Ильи Климова и Тимура Шемсединова: три коротких видео в неделю, разборы кейсов и сообщество. $50/мес, отмена в любое время."
+    />
+    <link rel="canonical" href="https://nexttick.it/ru/all.html" />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://nexttick.it/uk/all.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/en/all.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://nexttick.it/ru/all.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/uk/all.html"
+    />
+    <style>
+      :root {
+        --bg: #0b0d0f;
+        --panel: #12151a;
+        --border: #232830;
+        --text: #e8eaed;
+        --muted: #9aa3ad;
+        --accent: #4ade80;
+        --accent-dim: #22c55e;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+      }
+      .container {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(11, 13, 15, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 14px 0;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 18px;
+        letter-spacing: -0.01em;
+      }
+      .logo span {
+        color: var(--accent);
+      }
+      .nav .cta-small {
+        margin-left: auto;
+        background: var(--accent);
+        color: #08240f;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 9px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+      }
+      section {
+        padding: 72px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      h1 {
+        font-size: 46px;
+        line-height: 1.1;
+        letter-spacing: -0.015em;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 32px;
+        line-height: 1.18;
+        letter-spacing: -0.01em;
+        margin-bottom: 16px;
+      }
+      h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      .sub {
+        font-size: 20px;
+        color: var(--muted);
+        max-width: 58ch;
+        margin-bottom: 30px;
+      }
+      .cta {
+        display: inline-block;
+        background: var(--accent);
+        color: #08240f;
+        font-weight: 700;
+        font-size: 17px;
+        padding: 15px 32px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: transform 0.12s ease;
+      }
+      .cta:hover {
+        transform: translateY(-1px);
+      }
+      .cta-sub {
+        display: block;
+        margin-top: 12px;
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .cols3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 18px;
+        margin-top: 26px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 22px;
+      }
+      .card h3 {
+        color: var(--accent);
+      }
+      .card p {
+        font-size: 14.5px;
+        color: var(--muted);
+      }
+      .quote {
+        border-left: 3px solid var(--accent);
+        padding: 8px 0 8px 20px;
+        margin: 22px 0;
+        font-size: 19px;
+        font-style: italic;
+      }
+      .quote span {
+        display: block;
+        font-size: 13.5px;
+        font-style: normal;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+      ul.plain {
+        list-style: none;
+      }
+      ul.plain li {
+        padding: 10px 0 10px 30px;
+        position: relative;
+        border-bottom: 1px solid var(--border);
+        font-size: 16.5px;
+      }
+      ul.plain li:last-child {
+        border-bottom: none;
+      }
+      ul.plain li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
+      ul.cross li::before {
+        content: "✕";
+        color: #f87171;
+      }
+      .stats {
+        display: flex;
+        gap: 44px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .stat b {
+        display: block;
+        font-size: 36px;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .stat span {
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      .authors {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 10px;
+      }
+      .author {
+        display: flex;
+        gap: 16px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+      }
+      .avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        object-fit: cover;
+        background: #2a2f37;
+      }
+      .author p {
+        font-size: 14px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .week {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 16px;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .week:last-of-type {
+        border-bottom: none;
+      }
+      .week .n {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 15px;
+        padding-top: 2px;
+      }
+      .week h3 {
+        font-size: 17px;
+      }
+      .week p {
+        font-size: 14.5px;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+      .week .res {
+        color: var(--text);
+        margin-top: 7px;
+      }
+      .week .res b {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .price {
+        font-size: 52px;
+        font-weight: 800;
+        margin: 12px 0 4px;
+      }
+      .price small {
+        font-size: 18px;
+        font-weight: 400;
+        color: var(--muted);
+      }
+      .faq-item {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+      .faq-item h3 {
+        font-size: 16.5px;
+      }
+      .faq-item p {
+        font-size: 14.5px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      .center {
+        text-align: center;
+      }
+      footer {
+        padding: 36px 0 48px;
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      footer .row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      footer a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--text);
+      }
+      .ls-opt {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .ls-opt.on {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      @media (max-width: 820px) {
+        h1 {
+          font-size: 34px;
+        }
+        h2 {
+          font-size: 26px;
+        }
+        .cols3,
+        .authors {
+          grid-template-columns: 1fr;
+        }
+        section {
+          padding: 52px 0;
+        }
+        .week {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+      }
+    </style>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "x5houryvs2");
+    </script>
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "1022924580268547");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1022924580268547&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <header>
+      <div class="container nav">
+        <div class="logo">nexttick<span>_</span></div>
+        <a
+          class="cta-small"
+          data-cta-location="header"
+          href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+          >Присоединиться →</a
+        >
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section>
+      <div class="container">
+        <h1>Ты хорошо работаешь.<br />Именно поэтому ты в зоне риска.</h1>
+        <p class="sub">
+          Execution дешевеет: код за тебя всё чаще пишет AI. Дорожает суждение,
+          кругозор и умение объяснять решения. NextTick — гильдия инженеров, где
+          это прокачивается фоном, внутри твоей рабочей недели.
+        </p>
+        <a
+          class="cta"
+          data-cta-location="hero"
+          href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+          >Присоединиться к гильдии →</a
+        >
+        <span class="cta-sub"
+          >$50 в месяц · отмена в любое время · три коротких видео в
+          неделю</span
+        >
+      </div>
+    </section>
+
+    <!-- АВТОРЫ + СОЦДОКАЗАТЕЛЬСТВО -->
+    <section>
+      <div class="container">
+        <h2>
+          Гильдию ведут инженеры, которые обучили больше 10 000 разработчиков
+        </h2>
+        <div class="authors">
+          <div class="author">
+            <img
+              class="avatar"
+              src="/assets/author-ilya.png"
+              alt="Илья Климов"
+            />
+            <div>
+              <h3>Илья Климов</h3>
+              <p>
+                Staff Frontend Engineer в GitLab · Google Developer Expert ·
+                основатель JavaScript.ninja · спикер HolyJS · 15+ лет в
+                индустрии
+              </p>
+            </div>
+          </div>
+          <div class="author">
+            <img
+              class="avatar"
+              src="/assets/author-timur.png"
+              alt="Тимур Шемсединов"
+            />
+            <div>
+              <h3>Тимур Шемсединов</h3>
+              <p>
+                CTO в Metatech · главный архитектор Metarhia · преподаватель КПИ
+                · автор 350+ открытых лекций · 30+ лет опыта
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>10 000+</b><span>инженеров обучили</span></div>
+          <div class="stat">
+            <b>800</b><span>участников уже в гильдии</span>
+          </div>
+          <div class="stat">
+            <b>~9 из 10</b><span>остаются и продлевают подписку</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- БОЛЬ -->
+    <section>
+      <div class="container">
+        <h2>«Я застрял. И не понимаю почему»</h2>
+        <p class="sub">Знакомое фоновое ощущение?</p>
+        <ul class="plain">
+          <li>
+            Со знаниями вроде всё хорошо. Работу делаю, могу всё, что требуется.
+          </li>
+          <li>Могу самостоятельно разобраться в новом вопросе.</li>
+          <li>Меня ценят — но ощущения движения нет.</li>
+          <li>
+            Синьоры рядом чем-то отличаются, но это «что-то» сложно назвать.
+          </li>
+          <li>
+            Учусь сам — статьи, курсы, видео — и подозреваю, что учу не то.
+          </li>
+          <li>
+            Варюсь в собственных мыслях: мой код никто не смотрит, сравнить не с
+            чем.
+          </li>
+        </ul>
+        <p style="margin-top: 24px; font-size: 17px">
+          Если узнал себя хотя бы в трёх пунктах — это не самозванец в тебе
+          говорит. Это отсутствие среды и обратной связи. В одиночку этот сдвиг
+          почти не нащупывается.
+        </p>
+      </div>
+    </section>
+
+    <!-- ПОЧЕМУ -->
+    <section>
+      <div class="container">
+        <h2>Дело не в тебе. Меняется то, за что платят</h2>
+        <p style="font-size: 17px">
+          Джун с AI закрывает задачи снизу. Сеньор закрывает сверху — тем, что
+          говорит «мы решаем не ту задачу». Миддл оказывается в промежутке:
+          хорошо пишет код, надёжный, разбирается в кодовой базе. Но всё это —
+          execution. А execution дешевеет быстрее, чем ты успеваешь получить
+          следующий перформанс ревью.
+        </p>
+        <div class="quote">
+          Миддлы уязвимы не потому, что плохо работают. Они уязвимы, потому что
+          хорошо работают ровно в том слое, который обесценивается. Это не
+          приговор. Это диагноз.<span>— Илья Климов</span>
+        </div>
+        <p style="font-size: 17px">
+          И когда в компании начинается stack ranking — «вас посчитают, хотите
+          вы того или нет». Выделяться будет не тот, кто быстрее пишет код. Код
+          больше не выделяет никого.
+        </p>
+        <div class="quote">
+          Код, знания и доступ к инструментам стали дешевле. Дорожает только
+          ясность мнений и качество решений.<span>— Тимур Шемсединов</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- РЕШЕНИЕ -->
+    <section>
+      <div class="container">
+        <h2>Ты не записываешься на курс.<br />Ты подписываешься на ритм</h2>
+        <p class="sub">
+          Курсы не успевают за индустрией, а на 4-часовые лекции нет времени —
+          ни у тебя, ни у нас. Поэтому формат другой: фоновое обучение,
+          встроенное в рабочую неделю.
+        </p>
+        <div class="cols3">
+          <div class="card">
+            <h3>3 видео в неделю</h3>
+            <p>
+              По 15 минут: агентская разработка, архитектура, инженерные
+              коммуникации. Можно за обедом, можно на выходных.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Каждое — с действием</h3>
+            <p>
+              Одна мысль и задание на внедрение в твой рабочий проект сегодня.
+              Без действия в реальном контексте контент не работает.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Не в одиночку</h3>
+            <p>
+              800 инженеров рядом: разборы твоих кейсов, обратная связь от Ильи,
+              Тимура и коллег с таким же вектором.
+            </p>
+          </div>
+        </div>
+        <p style="margin-top: 26px" class="muted">
+          Через полгода у тебя другой словарь и другая оптика. Проверено на 10
+          000+ инженеров до гильдии.
+        </p>
+      </div>
+    </section>
+
+    <!-- ПЕРВЫЙ МЕСЯЦ -->
+    <section>
+      <div class="container">
+        <h2>Что конкретно произойдёт за первые 4 недели</h2>
+        <div class="week">
+          <div class="n">Неделя 1</div>
+          <div>
+            <h3>Почему, а не что: контекст решений</h3>
+            <p>
+              3 видео → задание: возьми одно архитектурное решение своего
+              проекта, которое принимаешь как данность, и найди его constraint.
+            </p>
+            <p class="res">
+              <b>Результат:</b> первое решение, которое ты можешь объяснить и
+              защитить — не «так принято».
+            </p>
+          </div>
+        </div>
+        <div class="week">
+          <div class="n">Неделя 2</div>
+          <div>
+            <h3>Язык последствий: как продавать технические решения</h3>
+            <p>
+              3 видео → задание: переформулируй один элемент техдолга в терминах
+              времени и денег, а не «код плохой».
+            </p>
+            <p class="res">
+              <b>Результат:</b> аргумент, который менеджер слышит с первого
+              раза.
+            </p>
+          </div>
+        </div>
+        <div class="week">
+          <div class="n">Неделя 3</div>
+          <div>
+            <h3>Промпт — интерфейс к мышлению: декомпозиция для агента</h3>
+            <p>
+              3 видео → задание: одна рабочая задача через декомпозицию, при
+              которой агенту нечего угадывать.
+            </p>
+            <p class="res">
+              <b>Результат:</b> задача закрыта быстрее — и ты понимаешь почему.
+            </p>
+          </div>
+        </div>
+        <div class="week">
+          <div class="n">Неделя 4</div>
+          <div>
+            <h3>Вертикальные слайсы и proactive status update</h3>
+            <p>
+              3 видео → задание: разбей задачу 3+ дней на работающие куски и
+              напиши апдейт до того, как спросили.
+            </p>
+            <p class="res">
+              <b>Результат:</b> тимлид видит человека, который держит ситуацию
+              под контролем.
+            </p>
+          </div>
+        </div>
+        <p class="muted" style="margin-top: 20px">
+          Дальше — глубже: работа с неопределённостью, ADR, RFC, cross-team
+          влияние. Программа живёт и обновляется вместе с индустрией.
+        </p>
+      </div>
+    </section>
+
+    <!-- ЧТО ВНУТРИ -->
+    <section>
+      <div class="container">
+        <h2>Подстраивается под твоё свободное время</h2>
+        <div class="cols3">
+          <div class="card">
+            <h3>Есть 2 часа в неделю</h3>
+            <p>
+              3 видео по 15 минут + задания на внедрение. Ядро гильдии — этого
+              уже достаточно для сдвига.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Есть 4 часа</h3>
+            <p>
+              + разборы твоих кейсов экспертом (анонимно, на живом звонке) и
+              дайджест обсуждений — 1200 сообщений чатов, сжатые в 10 минут
+              чтения.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Есть 6+ часов</h3>
+            <p>
+              + закрытое сообщество с Ильёй и экспертами на связи и аудио-стримы
+              «что это значит для нас», когда в индустрии что-то происходит.
+            </p>
+          </div>
+        </div>
+        <p class="muted" style="margin-top: 22px">
+          Всё входит в одну подписку. Сколько брать — решаешь по своей неделе.
+        </p>
+      </div>
+    </section>
+
+    <!-- ФИЛЬТР -->
+    <section>
+      <div class="container">
+        <h2>Сначала — кому сюда не надо</h2>
+        <ul class="plain cross">
+          <li>
+            Ищешь курс, где дают полностью готовые ответы — это не сюда. Здесь
+            предметно обсуждают варианты ответов на твой вопрос.
+          </li>
+          <li>Хочешь просто добавить строчку в резюме — не сюда.</li>
+          <li>
+            Не готов пробовать новое в своём рабочем проекте — точно не сюда.
+            Рост быстрее рынка — это эксперименты с непознанным.
+          </li>
+        </ul>
+        <p style="margin-top: 24px; font-size: 17px">
+          <b style="color: var(--accent)">Для кого сделано:</b> для middle+
+          разработчиков, которые понимают — дело не в новом фреймворке. Которые
+          видят, что execution дешевеет, и хотят выйти на уровень, где ценится
+          суждение. И которые готовы работать в окружении людей с таким же
+          вектором.
+        </p>
+      </div>
+    </section>
+
+    <!-- ЦЕНА -->
+    <section>
+      <div class="container center">
+        <h2>Дешевле одной книги по устаревшему фреймворку</h2>
+        <div class="price">$50<small>/месяц</small></div>
+        <p class="muted">
+          отмена в любое время · доступ ко всем выпускам по мере выхода
+        </p>
+        <p style="max-width: 54ch; margin: 20px auto; font-size: 16.5px">
+          Никаких «окон продаж» на $2000. Подписка на ритм: остаёшься, пока
+          видишь для себя ценность. Именно поэтому у нас остаются — ретеншн
+          гильдии один из самых высоких в нише.
+        </p>
+        <a
+          class="cta"
+          data-cta-location="pricing"
+          href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+          >Присоединиться к гильдии →</a
+        >
+        <span class="cta-sub"
+          >оплата и доступ через телеграм-бот · первые видео сразу после
+          подписки</span
+        >
+      </div>
+    </section>
+
+    <!-- FAQ + ФИНАЛ -->
+    <section>
+      <div class="container">
+        <h2>Вопросы, которые ты сейчас думаешь</h2>
+        <div class="faq-item">
+          <h3>У меня нет времени на ещё одно обучение</h3>
+          <p>
+            Поэтому формат — 15-минутные видео и задания внутри твоей текущей
+            работы, а не поверх неё. Минимальный ритм — 2 часа в неделю, включая
+            внедрение.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Это очередной курс про AI?</h3>
+          <p>
+            Нет. AI-инструменты учат все — это baseline, а не дифференциатор.
+            Гильдия — про слой выше: суждение, архитектура, коммуникации. То,
+            что AI не сделает вместо тебя.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Я джун / я сеньор — мне рано / поздно?</h3>
+          <p>
+            Ядро — middle+. Джуну даст систему роста без блужданий, сеньору —
+            треки про влияние, ADR, RFC и cross-team работу. Контент размечен по
+            уровням.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>А если не зайдёт?</h3>
+          <p>
+            Отменишь в один клик в том же боте. Без форм, без «расскажите
+            почему», без удержаний.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>На каком языке контент?</h3>
+          <p>
+            Видео и материалы — на русском и украинском. Сообщество — на обоих.
+          </p>
+        </div>
+        <div class="center" style="margin-top: 44px">
+          <h2>Через полгода — другой словарь и другая оптика</h2>
+          <p class="muted" style="margin-bottom: 24px">
+            Или всё то же плато. Разница — в ритме, который начинается с одного
+            клика.
+          </p>
+          <a
+            class="cta"
+            data-cta-location="final"
+            href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+            >Присоединиться к гильдии →</a
+          >
+          <span class="cta-sub"
+            >$50/мес · отмена в любое время · 800 инженеров уже внутри</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container row">
+        <div class="logo" style="font-size: 15px">nexttick<span>_</span></div>
+        <span>гильдия инженеров</span>
+        <span class="lang-switch" style="margin-left: auto">
+          <a class="ls-opt" data-loc="uk" hreflang="uk" href="/uk/all.html"
+            >UK</a
+          >
+          ·
+          <a class="ls-opt" data-loc="en" hreflang="en" href="/en/all.html"
+            >EN</a
+          >
+          ·
+          <a
+            class="ls-opt on"
+            data-loc="ru"
+            hreflang="ru"
+            href="/ru/all.html"
+            aria-current="true"
+            >RU</a
+          >
+        </span>
+      </div>
+    </footer>
+    <!-- Analytics: push CTA clicks to dataLayer for GTM -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest("a.cta, a.cta-small");
+        if (!a) return;
+        dataLayer.push({
+          event: "cta_click",
+          cta_location: a.dataset.ctaLocation || "unknown",
+          cta_text: a.textContent.trim().replace(/\s+/g, " "),
+          link_url: a.href,
+        });
+      });
+    </script>
+    <script src="/assets/nt-attribution.js?v=1"></script>
+    <script>
+      (function () {
+        var LOCS = ["uk", "en", "ru"];
+        var PAGE_LOC = "ru";
+        try {
+          localStorage.setItem("lang", PAGE_LOC);
+        } catch (e) {}
+        document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            var loc = a.getAttribute("data-loc");
+            if (LOCS.indexOf(loc) < 0) return;
+            try {
+              localStorage.setItem("lang", loc);
+            } catch (e) {}
+            var parts = location.pathname.split("/");
+            if (LOCS.indexOf(parts[1]) >= 0) {
+              parts[1] = loc;
+            } else {
+              parts.splice(1, 0, loc);
+            }
+            location.href = parts.join("/") + location.search + location.hash;
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
