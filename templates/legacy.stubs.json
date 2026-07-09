@@ -1,0 +1,21 @@
+{
+  "template": "legacy-redirect.html",
+  "outputs": [
+    { "out": "en/index.html", "data": { "title": "NextTick", "target": "/en.html" } },
+    { "out": "ru/index.html", "data": { "title": "NextTick", "target": "/ru.html" } },
+    { "out": "uk/index.html", "data": { "title": "NextTick", "target": "/uk.html" } },
+    { "out": "en/swe.html",   "data": { "title": "NextTick", "target": "/swe.html" } },
+    { "out": "ru/swe.html",   "data": { "title": "NextTick", "target": "/swe.html" } },
+    { "out": "uk/swe.html",   "data": { "title": "NextTick", "target": "/swe.html" } },
+    { "out": "en/ai-speedup-checklist/index.html", "data": { "title": "NextTick", "target": "/ai-speedup-checklist.html" } },
+    { "out": "ru/ai-speedup-checklist/index.html", "data": { "title": "NextTick", "target": "/ai-speedup-checklist.html" } },
+    { "out": "uk/ai-speedup-checklist/index.html", "data": { "title": "NextTick", "target": "/ai-speedup-checklist.html" } },
+    { "out": "en/ai-speedup-checklist-for-guild-members/index.html", "data": { "title": "NextTick", "target": "/ai-speedup-checklist-for-guild-members.html" } },
+    { "out": "ru/ai-speedup-checklist-for-guild-members/index.html", "data": { "title": "NextTick", "target": "/ai-speedup-checklist-for-guild-members.html" } },
+    { "out": "uk/ai-speedup-checklist-for-guild-members/index.html", "data": { "title": "NextTick", "target": "/ai-speedup-checklist-for-guild-members.html" } },
+    { "out": "ru/offer/index.html",   "data": { "title": "NextTick", "target": "/offer.html" } },
+    { "out": "uk/offer/index.html",   "data": { "title": "NextTick", "target": "/offer.html" } },
+    { "out": "ru/privacy/index.html", "data": { "title": "NextTick", "target": "/privacy.html" } },
+    { "out": "uk/privacy/index.html", "data": { "title": "NextTick", "target": "/privacy.html" } }
+  ]
+}

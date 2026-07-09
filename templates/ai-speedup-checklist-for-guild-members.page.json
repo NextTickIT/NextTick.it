@@ -1,0 +1,13 @@
+{
+  "template": "ai-speedup-checklist-for-guild-members.html",
+  "strings": "ai-speedup-checklist-for-guild-members.strings.json",
+  "outputScheme": "dir",
+  "locales": ["en", "ru", "uk"],
+  "analytics": {
+    "gtm": false,
+    "ga4": false,
+    "clarity": true,
+    "pixel": true,
+    "attribution": false
+  }
+}

@@ -1,0 +1,1441 @@
+<!doctype html>
+<html lang="<%= loc %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <% if (analytics.gtm) { %><%~ include("_partials/analytics/gtm.html") %><% } %>
+    <%~ include("_partials/head.html", { loc, title, description, urlBase: "https://nexttick.it/swe/" }) %>
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0b0d0f" />
+    <script>
+      /* Apply saved/system theme before paint to avoid a flash of the wrong theme. */
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var theme =
+            saved ||
+            (window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <% if (analytics.ga4) { %><%~ include("_partials/analytics/ga4.html") %><% } %>
+    <% if (analytics.clarity) { %><%~ include("_partials/analytics/clarity.html") %><% } %>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0d0f;
+        --bg-2: #111417;
+        --panel: #15191c;
+        --panel-2: #1c2126;
+        --line: #2a3138;
+        --line-2: #3a444c;
+        --txt: #d6d8da;
+        --dim: #888d92;
+        --muted: #5d6469;
+        --green: #7ee787;
+        --green-2: #3fb950;
+        --green-hover: #8df29a;
+        --amber: #e3b341;
+        --amber-2: #d29922;
+        --cyan: #56d4dd;
+        --magenta: #bc8cff;
+        --red: #ff7b72;
+        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        --max: 1200px;
+        --bg-rgb: 11, 13, 15;
+        --scan: rgba(255, 255, 255, 0.012);
+        --vignette: rgba(0, 0, 0, 0.5);
+        --dot-r: #4a2222;
+        --dot-y: #4a3a14;
+        --dot-g: #1d3a24;
+      }
+      [data-theme="light"] {
+        color-scheme: light;
+        --bg: #ffffff;
+        --bg-2: #f6f8fa;
+        --panel: #f0f3f6;
+        --panel-2: #e7ecf1;
+        --line: #d4dae0;
+        --line-2: #b6bfc8;
+        --txt: #1f2328;
+        --dim: #59636e;
+        --muted: #8b949e;
+        --green: #1a7f37;
+        --green-2: #116329;
+        --green-hover: #166b2e;
+        --amber: #9a6700;
+        --amber-2: #7a5200;
+        --cyan: #0b7285;
+        --magenta: #8250df;
+        --red: #cf222e;
+        --bg-rgb: 255, 255, 255;
+        --scan: rgba(0, 0, 0, 0.022);
+        --vignette: rgba(0, 0, 0, 0.05);
+        --dot-r: #ff5f57;
+        --dot-y: #febc2e;
+        --dot-g: #28c840;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        color: var(--txt);
+        background: var(--bg);
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.55;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          var(--scan) 0 1px,
+          transparent 1px 3px
+        );
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 52%,
+          var(--vignette) 100%
+        );
+      }
+      a {
+        color: inherit;
+      }
+      p,
+      h1,
+      h2,
+      h3 {
+        margin-top: 0;
+      }
+      p {
+        margin-bottom: 14px;
+      }
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+
+      .page {
+        width: 100%;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .win {
+        border: 1px solid var(--line);
+        background: var(--bg-2);
+      }
+
+      /* ─── window chrome ─────────────────────────────────────── */
+      .win-bar {
+        position: sticky;
+        top: 0;
+        z-index: 80;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 39px;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(var(--bg-rgb), 0.94);
+        backdrop-filter: blur(14px);
+        color: var(--dim);
+        font-size: 11px;
+      }
+      .dots {
+        display: flex;
+        gap: 6px;
+        margin-right: 6px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border: 1px solid var(--line-2);
+        border-radius: 50%;
+      }
+      .dot.r {
+        background: var(--dot-r);
+      }
+      .dot.y {
+        background: var(--dot-y);
+      }
+      .dot.g {
+        background: var(--dot-g);
+      }
+      .win-logo {
+        width: 18px;
+        height: 18px;
+        margin-right: 4px;
+      }
+      .title {
+        color: var(--txt);
+        white-space: nowrap;
+      }
+      .path {
+        color: var(--dim);
+      }
+      .tabs {
+        display: flex;
+        gap: 1px;
+        margin-left: auto;
+        align-self: flex-end;
+        margin-bottom: -8px;
+      }
+      .tab {
+        padding: 3px 10px;
+        border: 1px solid var(--line);
+        border-bottom: 0;
+        background: var(--bg-2);
+        color: var(--dim);
+        font-size: 10.5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          background 0.15s,
+          border-color 0.15s;
+      }
+      .tab:hover,
+      .tab.on {
+        border-color: var(--green);
+        color: var(--green);
+        background: var(--panel-2);
+      }
+
+      /* theme toggle + lang switch */
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 20px;
+        padding: 0;
+        border: 1px solid var(--line);
+        background: var(--bg-2);
+        color: var(--dim);
+        cursor: pointer;
+        border-radius: 2px;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .theme-toggle:hover {
+        color: var(--green);
+        border-color: var(--green);
+      }
+      .theme-toggle .tt-icon {
+        display: none;
+        width: 13px;
+        height: 13px;
+      }
+      .theme-toggle .tt-sun {
+        display: block;
+      }
+      [data-theme="light"] .theme-toggle .tt-sun {
+        display: none;
+      }
+      [data-theme="light"] .theme-toggle .tt-moon {
+        display: block;
+      }
+      .lang-switch {
+        display: inline-flex;
+        gap: 2px;
+        margin-left: 4px;
+      }
+      .lang-switch .ls-opt {
+        font: inherit;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        padding: 4px 6px;
+        border-radius: 6px;
+        color: inherit;
+        opacity: 0.5;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition:
+          opacity 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .lang-switch .ls-opt:hover,
+      .lang-switch .ls-opt.on {
+        opacity: 1;
+        color: var(--green);
+        border-color: var(--green);
+      }
+
+      /* join button — pulsing CTA */
+      .join-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        margin-left: 14px;
+        padding: 6px 15px;
+        border: 1px solid var(--green);
+        background: var(--green);
+        color: var(--bg);
+        font-family: var(--mono);
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 0 0 0 rgba(126, 231, 135, 0.5);
+        animation: joinPulse 2.4s ease-out infinite;
+        transition:
+          transform 0.15s,
+          background 0.15s,
+          box-shadow 0.15s;
+      }
+      .join-btn:hover {
+        transform: translateY(-1px);
+        background: var(--green-hover);
+        box-shadow: 0 0 18px rgba(126, 231, 135, 0.5);
+        animation: none;
+      }
+      .jb-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--bg);
+        animation: joinDot 2.4s ease-out infinite;
+      }
+      .jb-arrow {
+        transition: transform 0.15s;
+      }
+      .join-btn:hover .jb-arrow {
+        transform: translateX(3px);
+      }
+      @keyframes joinPulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(126, 231, 135, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 8px rgba(126, 231, 135, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(126, 231, 135, 0);
+        }
+      }
+      @keyframes joinDot {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .join-btn,
+        .jb-dot {
+          animation: none;
+        }
+      }
+
+      /* ─── hero ──────────────────────────────────────────────── */
+      .hero {
+        padding: clamp(28px, 5vw, 52px) 40px 28px;
+        border-bottom: 1px solid var(--line);
+      }
+      .prompt-line {
+        margin-bottom: 26px;
+        color: var(--green);
+      }
+      .prompt-line .arrow {
+        color: var(--amber);
+      }
+      .prompt-line .cmd {
+        color: var(--txt);
+      }
+      .prompt-line .arg {
+        color: var(--magenta);
+      }
+      .prompt-line .flag {
+        color: var(--cyan);
+      }
+      .blink {
+        animation: blink 1s steps(2) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .hero-main {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(340px, 0.68fr);
+        gap: clamp(24px, 4vw, 44px);
+        align-items: center;
+      }
+      .hero-title {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 16px;
+      }
+      .hero-logo {
+        width: clamp(76px, 9vw, 112px);
+        height: clamp(76px, 9vw, 112px);
+        flex: 0 0 auto;
+        filter: drop-shadow(0 0 24px rgba(126, 231, 135, 0.16));
+      }
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--amber);
+        font-size: 13px;
+        font-weight: 600;
+      }
+      h1 {
+        margin: 0;
+        color: var(--green);
+        font-size: clamp(42px, 7vw, 84px);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 0.94;
+        text-shadow: 0 0 22px rgba(126, 231, 135, 0.18);
+      }
+      h2 {
+        max-width: 920px;
+        margin-bottom: 14px;
+        color: var(--txt);
+        font-size: clamp(27px, 4.2vw, 50px);
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.03;
+      }
+      h3 {
+        margin-bottom: 10px;
+        color: var(--txt);
+        font-size: 18px;
+        line-height: 1.22;
+      }
+      .lead {
+        max-width: 760px;
+        color: var(--dim);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      .lead strong,
+      .em {
+        color: var(--amber);
+        font-weight: 600;
+      }
+      .hero-actions,
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-top: 24px;
+      }
+      .cta-row {
+        justify-content: flex-end;
+      }
+      .join-btn-lg {
+        min-height: 54px;
+        margin-left: 0;
+        padding: 14px 24px;
+        font-size: 15px;
+      }
+      .join-btn-lg .jb-dot {
+        width: 8px;
+        height: 8px;
+      }
+      .join-btn-lg .jb-arrow {
+        font-size: 17px;
+      }
+      .micro {
+        margin: 12px 0 0;
+        color: var(--dim);
+        font-size: 11.5px;
+      }
+      .hero-video {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #000;
+        box-shadow: 0 0 28px rgba(126, 231, 135, 0.08);
+      }
+      .video-frame {
+        position: relative;
+        aspect-ratio: 16 / 9;
+      }
+      .video-frame iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      /* ─── stats bar ─────────────────────────────────────────── */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-bottom: 1px solid var(--line);
+      }
+      .stat {
+        min-height: 112px;
+        padding: 20px;
+        border-right: 1px solid var(--line);
+        background: var(--panel);
+      }
+      .stat:last-child {
+        border-right: 0;
+      }
+      .stat strong {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--green);
+        font-size: 25px;
+        line-height: 1;
+      }
+      .stat span {
+        color: var(--dim);
+      }
+
+      /* ─── sections ──────────────────────────────────────────── */
+      .sec {
+        padding: clamp(42px, 6vw, 68px) 40px;
+        border-bottom: 1px solid var(--line);
+      }
+      .sec-head {
+        margin-bottom: 28px;
+      }
+      .hash {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 14px;
+        font-size: 12px;
+        color: var(--dim);
+      }
+      .hash .mk {
+        color: var(--green);
+        font-weight: 700;
+      }
+      .hash .nm {
+        color: var(--txt);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .hash .rule {
+        flex: 1;
+        border-top: 1px dashed var(--line-2);
+        transform: translateY(-3px);
+      }
+      .band {
+        background: var(--bg);
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        display: grid;
+        gap: 14px;
+      }
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .card {
+        padding: 20px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+      }
+      .card.soft {
+        background: var(--panel-2);
+      }
+      .card.green {
+        border-color: var(--green);
+      }
+      .card.amber {
+        border-color: var(--amber);
+      }
+      .card.cyan {
+        border-color: var(--cyan);
+      }
+      .card p:last-child,
+      .card ul:last-child {
+        margin-bottom: 0;
+      }
+      .card p,
+      .card li {
+        color: var(--dim);
+      }
+      .card strong {
+        color: var(--txt);
+      }
+
+      .tag {
+        display: block;
+        width: fit-content;
+        margin-bottom: 10px;
+        color: var(--green);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .quote {
+        color: var(--txt);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+      .quote cite {
+        display: block;
+        margin-top: 12px;
+        color: var(--green);
+        font-style: normal;
+      }
+
+      .before-after {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 14px;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .arrow-box {
+        color: var(--green);
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .number {
+        display: inline-grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        margin-bottom: 14px;
+        border: 1px solid var(--line-2);
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+        gap: 26px;
+        align-items: start;
+      }
+
+      .tlist {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .tlist li {
+        margin: 0;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--dim);
+      }
+      .tlist li::before {
+        content: "▸ ";
+        color: var(--green);
+      }
+
+      .authors {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .author {
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+      }
+      .author img {
+        width: 92px;
+        height: 92px;
+        border: 1px solid var(--line);
+        object-fit: cover;
+        background: var(--bg);
+      }
+
+      .price-box {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.62fr);
+        gap: 18px;
+        align-items: stretch;
+      }
+      .price {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: baseline;
+        margin: 22px 0;
+      }
+      .price strong {
+        color: var(--green);
+        font-size: clamp(46px, 6vw, 72px);
+        line-height: 1;
+      }
+      .price span {
+        color: var(--dim);
+      }
+
+      details {
+        padding: 18px 0;
+        border-top: 1px solid var(--line);
+      }
+      details:first-of-type {
+        border-top: 0;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--txt);
+        font-size: 16px;
+        font-weight: 700;
+        list-style: none;
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      summary::before {
+        content: "+";
+        color: var(--green);
+        font-weight: 700;
+      }
+      details[open] summary::before {
+        content: "−";
+      }
+      details p {
+        max-width: 860px;
+        margin: 10px 0 0 20px;
+        color: var(--dim);
+      }
+
+      /* ─── proof: screenshots grid (masonry) ─────────────────── */
+      .screens {
+        columns: 3 260px;
+        column-gap: 14px;
+        margin-top: 20px;
+      }
+      .screen-card {
+        break-inside: avoid;
+        margin: 0 0 14px;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background: var(--panel);
+      }
+      .screen-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* ─── reviews autoscroll carousel ───────────────────────── */
+      .reviews {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 16px 0;
+        margin-top: 20px;
+        container-type: inline-size;
+      }
+      .rev-track {
+        display: flex;
+        gap: 14px;
+        width: max-content;
+        align-items: center;
+        padding: 0 7px;
+        animation: revScroll 90s linear infinite;
+      }
+      .reviews:hover .rev-track {
+        animation-play-state: paused;
+      }
+      .rev-card {
+        flex: 0 0 auto;
+        line-height: 0;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background: var(--bg);
+      }
+      /* each screenshot scales proportionally to fit inside (½ carousel width
+         × max height), touching whichever edge comes first — never cropped. */
+      .rev-card img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-height: 460px;
+        max-width: 380px;
+        max-width: 50cqw;
+      }
+      @keyframes revScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .rev-track {
+          animation: none;
+        }
+        .reviews {
+          overflow-x: auto;
+        }
+      }
+
+      .final {
+        border-bottom: 0;
+      }
+      .footer-line {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 16px 40px 22px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      /* ─── responsive ────────────────────────────────────────── */
+      @media (max-width: 1080px) {
+        .tabs {
+          display: none;
+        }
+        .hero-main,
+        .split,
+        .price-box {
+          grid-template-columns: 1fr;
+        }
+        .stats,
+        .grid-4,
+        .grid-3 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 720px) {
+        .page {
+          padding: 10px;
+        }
+        .win-bar {
+          flex-wrap: wrap;
+        }
+        .title,
+        .path {
+          display: none;
+        }
+        .join-btn {
+          margin-left: auto;
+        }
+        .hero,
+        .sec {
+          padding: 34px 18px;
+        }
+        .hero-title {
+          align-items: flex-start;
+          gap: 14px;
+        }
+        .hero-logo {
+          width: 58px;
+          height: 58px;
+        }
+        .lead {
+          font-size: 13px;
+        }
+        .stats,
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .authors,
+        .before-after {
+          grid-template-columns: 1fr;
+        }
+        .stat {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .stat:last-child {
+          border-bottom: 0;
+        }
+        .arrow-box {
+          transform: rotate(90deg);
+          justify-self: start;
+        }
+        .author {
+          grid-template-columns: 1fr;
+        }
+        .screens {
+          columns: 1;
+        }
+        .rev-track {
+          padding: 0;
+        }
+        .rev-card img {
+          max-height: 70vh;
+          max-width: 100cqw;
+        }
+        .footer-line {
+          padding: 14px 18px 20px;
+        }
+      }
+    </style>
+    <% if (analytics.pixel) { %><%~ include("_partials/analytics/pixel.html") %><% } %>
+  </head>
+  <body>
+    <%
+      const joinHref =
+        "https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&source_channel=" +
+        analytics.attribution;
+      const reviews = [
+        "rev-01", "rev-02", "rev-03", "rev-04", "rev-05", "rev-06",
+        "rev-07", "rev-08", "rev-09", "rev-10", "rev-11", "rev-12",
+        "rev-13", "rev-14", "rev-15", "rev-16", "rev-17", "rev-18",
+      ];
+      const screens = ["res-1", "res-2", "res-3", "res-4", "res-5", "res-6"];
+    %>
+    <% if (analytics.gtm) { %>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <% } %>
+    <div class="page">
+      <div class="win">
+        <header class="win-bar">
+          <div class="dots" aria-hidden="true">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          </div>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+            <svg class="tt-icon tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+            </svg>
+            <svg class="tt-icon tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+            </svg>
+          </button>
+          <nav class="lang-switch" aria-label="Language">
+            <a class="ls-opt<% if (loc === "uk") { %> on<% } %>" data-loc="uk" hreflang="uk" href="/swe/uk.html"<% if (loc === "uk") { %> aria-current="true"<% } %>>UK</a>
+            <a class="ls-opt<% if (loc === "en") { %> on<% } %>" data-loc="en" hreflang="en" href="/swe/en.html"<% if (loc === "en") { %> aria-current="true"<% } %>>EN</a>
+            <a class="ls-opt<% if (loc === "ru") { %> on<% } %>" data-loc="ru" hreflang="ru" href="/swe/ru.html"<% if (loc === "ru") { %> aria-current="true"<% } %>>RU</a>
+          </nav>
+          <img class="win-logo" src="/assets/nexttick-logo.png" alt="" />
+          <span class="title">nexttick</span>
+          <span class="path">~/guild/middle.md</span>
+          <nav class="tabs" aria-label="nav">
+            <a class="tab on" href="#top" data-tab><%~ navTab1 %></a>
+            <a class="tab" href="#authors" data-tab><%~ navTab2 %></a>
+            <a class="tab" href="#rhythm" data-tab><%~ navTab3 %></a>
+            <a class="tab" href="#price" data-tab><%~ navTab4 %></a>
+            <a class="tab" href="#faq" data-tab><%~ navTab5 %></a>
+          </nav>
+          <a class="join-btn" data-cta-location="header" href="<%= joinHref %>" target="_blank" rel="noopener">
+            <span class="jb-dot"></span><%~ joinShort %><span class="jb-arrow">→</span>
+          </a>
+        </header>
+
+        <main id="top">
+          <!-- HERO -->
+          <section class="hero">
+            <div class="prompt-line">
+              <span class="arrow">$</span>
+              <span class="cmd">cat</span>
+              <span class="arg">./middle-developer.txt</span>
+              <span class="flag">--quiet</span>
+              <span class="blink">▍</span>
+            </div>
+            <div class="hero-main">
+              <div>
+                <div class="hero-title">
+                  <img class="hero-logo" src="/assets/nexttick-logo.png" alt="nexttick" />
+                  <div>
+                    <p class="eyebrow"><%~ heroEyebrow %></p>
+                    <h1><%~ heroH1 %></h1>
+                  </div>
+                </div>
+                <p class="lead"><%~ heroLead %></p>
+                <div class="hero-actions">
+                  <a class="join-btn join-btn-lg" data-cta-location="hero" href="<%= joinHref %>" target="_blank" rel="noopener">
+                    <span class="jb-dot"></span><%~ joinGuild %><span class="jb-arrow">→</span>
+                  </a>
+                </div>
+                <p class="micro"><%~ heroMicro %></p>
+              </div>
+              <aside class="hero-video" aria-label="NextTick">
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/nW8g4Y6otWM?rel=0"
+                    title="NextTick"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </aside>
+            </div>
+          </section>
+
+          <!-- STATS -->
+          <div class="stats" aria-label="stats">
+            <div class="stat"><strong><%~ stat1Num %></strong><span><%~ stat1Label %></span></div>
+            <div class="stat"><strong><%~ stat2Num %></strong><span><%~ stat2Label %></span></div>
+            <div class="stat"><strong><%~ stat3Num %></strong><span><%~ stat3Label %></span></div>
+            <div class="stat"><strong><%~ stat4Num %></strong><span><%~ stat4Label %></span></div>
+          </div>
+
+          <!-- RISK -->
+          <section class="sec" id="risk">
+            <div class="sec-head">
+              <h2><%~ riskH2 %></h2>
+              <p class="lead"><%~ riskLead %></p>
+            </div>
+            <div class="before-after">
+              <article class="card soft">
+                <span class="tag"><%~ riskBeforeTag %></span>
+                <p class="quote"><%~ riskBeforeQuote %></p>
+              </article>
+              <div class="arrow-box" aria-hidden="true">→</div>
+              <article class="card green">
+                <span class="tag"><%~ riskAfterTag %></span>
+                <p class="quote"><%~ riskAfterQuote %></p>
+              </article>
+            </div>
+            <div class="cta-row">
+              <a class="join-btn" data-cta-location="risk" href="<%= joinHref %>" target="_blank" rel="noopener">
+                <span class="jb-dot"></span><%~ joinGuild %><span class="jb-arrow">→</span>
+              </a>
+            </div>
+          </section>
+
+          <!-- AUTHORS -->
+          <section class="sec" id="authors">
+            <div class="sec-head">
+              <span class="hash"><span class="mk">##</span><span class="nm"><%~ authorsHash %></span><span class="rule"></span></span>
+              <h2><%~ authorsH2 %></h2>
+            </div>
+            <div class="authors">
+              <article class="card author cyan">
+                <img src="/assets/author-ilya.png" alt="<%~ ilyaName %>" />
+                <div>
+                  <h3><%~ ilyaName %></h3>
+                  <p><%~ ilyaBio %></p>
+                </div>
+              </article>
+              <article class="card author amber">
+                <img src="/assets/author-timur.png" alt="<%~ timurName %>" />
+                <div>
+                  <h3><%~ timurName %></h3>
+                  <p><%~ timurBio %></p>
+                </div>
+              </article>
+            </div>
+            <p class="micro"><%~ authorsMicro %></p>
+          </section>
+
+          <!-- PAIN -->
+          <section class="sec band">
+            <div class="sec-head">
+              <h2><%~ painH2 %></h2>
+              <p class="lead"><%~ painLead %></p>
+            </div>
+            <div class="grid-2">
+              <ul class="tlist">
+                <li><%~ painLi1 %></li>
+                <li><%~ painLi2 %></li>
+                <li><%~ painLi3 %></li>
+                <li><%~ painLi4 %></li>
+              </ul>
+              <ul class="tlist">
+                <li><%~ painLi5 %></li>
+                <li><%~ painLi6 %></li>
+                <li><%~ painLi7 %></li>
+              </ul>
+            </div>
+            <p class="lead" style="margin-top: 20px"><%~ painClose %></p>
+          </section>
+
+          <!-- WHY -->
+          <section class="sec">
+            <div class="sec-head">
+              <h2><%~ whyH2 %></h2>
+              <p class="lead"><%~ whyLead %></p>
+            </div>
+            <div class="grid-2">
+              <article class="card green">
+                <p class="quote"><%~ whyQuote1 %><cite><%~ whyCite1 %></cite></p>
+              </article>
+              <article class="card amber">
+                <p class="quote"><%~ whyQuote2 %></p>
+              </article>
+              <article class="card cyan">
+                <p class="quote"><%~ whyQuote3 %><cite><%~ whyCite3 %></cite></p>
+              </article>
+            </div>
+            <div class="cta-row">
+              <a class="join-btn" data-cta-location="why" href="<%= joinHref %>" target="_blank" rel="noopener">
+                <span class="jb-dot"></span><%~ joinGuild %><span class="jb-arrow">→</span>
+              </a>
+            </div>
+          </section>
+
+          <!-- RHYTHM -->
+          <section class="sec" id="rhythm">
+            <div class="split">
+              <div class="sec-head">
+                <h2><%~ rhythmH2 %></h2>
+                <p class="lead"><%~ rhythmLead %></p>
+              </div>
+              <div class="grid-2">
+                <article class="card green">
+                  <h3><%~ rhythmCard1H %></h3>
+                  <p><%~ rhythmCard1P %></p>
+                </article>
+                <article class="card cyan">
+                  <h3><%~ rhythmCard2H %></h3>
+                  <p><%~ rhythmCard2P %></p>
+                </article>
+                <article class="card amber">
+                  <h3><%~ rhythmCard3H %></h3>
+                  <p><%~ rhythmCard3P %></p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <!-- CHANGES -->
+          <section class="sec band">
+            <div class="sec-head">
+              <h2><%~ changesH2 %></h2>
+            </div>
+            <ul class="tlist">
+              <li><%~ changesLi1 %></li>
+              <li><%~ changesLi2 %></li>
+              <li><%~ changesLi3 %></li>
+              <li><%~ changesLi4 %></li>
+              <li><%~ changesLi5 %></li>
+            </ul>
+          </section>
+
+          <!-- WEEKS -->
+          <section class="sec" id="weeks">
+            <div class="sec-head">
+              <h2><%~ weeksH2 %></h2>
+            </div>
+            <div class="grid-4">
+              <article class="card green">
+                <span class="number"><%~ week1Num %></span>
+                <h3><%~ week1H %></h3>
+                <p><%~ week1P %></p>
+              </article>
+              <article class="card amber">
+                <span class="number"><%~ week2Num %></span>
+                <h3><%~ week2H %></h3>
+                <p><%~ week2P %></p>
+              </article>
+              <article class="card cyan">
+                <span class="number"><%~ week3Num %></span>
+                <h3><%~ week3H %></h3>
+                <p><%~ week3P %></p>
+              </article>
+              <article class="card">
+                <span class="number"><%~ week4Num %></span>
+                <h3><%~ week4H %></h3>
+                <p><%~ week4P %></p>
+              </article>
+            </div>
+            <p class="lead" style="margin-top: 20px"><%~ weeksLead %></p>
+            <p class="micro"><%~ weeksMicro %></p>
+            <div class="cta-row">
+              <a class="join-btn" data-cta-location="weeks" href="<%= joinHref %>" target="_blank" rel="noopener">
+                <span class="jb-dot"></span><%~ joinGuild %><span class="jb-arrow">→</span>
+              </a>
+            </div>
+          </section>
+
+          <!-- PROOF: quotes + screenshots + carousel -->
+          <section class="sec" id="proof">
+            <div class="sec-head">
+              <span class="hash"><span class="mk">##</span><span class="nm"><%~ proofHash %></span><span class="rule"></span></span>
+              <h2><%~ proofH2 %></h2>
+            </div>
+            <div class="grid-2">
+              <article class="card quote green">
+                <span class="tag"><%~ proof1Tag %></span><%~ proof1Quote %><cite><%~ proof1Cite %></cite>
+              </article>
+              <article class="card quote">
+                <span class="tag"><%~ proof2Tag %></span><%~ proof2Quote %><cite><%~ proof2Cite %></cite>
+              </article>
+              <article class="card quote amber">
+                <span class="tag"><%~ proof3Tag %></span><%~ proof3Quote %><cite><%~ proof3Cite %></cite>
+              </article>
+              <article class="card quote cyan">
+                <span class="tag"><%~ proof4Tag %></span><%~ proof4Quote %><cite><%~ proof4Cite %></cite>
+              </article>
+            </div>
+
+            <!-- screenshots proof -->
+            <div class="hash" style="margin-top: 34px"><span class="mk">##</span><span class="nm"><%~ screensHash %></span><span class="rule"></span></div>
+            <div class="screens">
+              <% screens.forEach(function (s) { %>
+              <figure class="screen-card">
+                <img src="/assets/results/<%= s %>.webp" alt="<%~ screensAlt %>" loading="lazy" />
+              </figure>
+              <% }) %>
+            </div>
+
+            <!-- reviews carousel -->
+            <div class="hash" style="margin-top: 34px"><span class="mk">##</span><span class="nm"><%~ reviewsHash %></span><span class="rule"></span></div>
+            <div class="reviews" aria-label="<%~ reviewsHash %>">
+              <div class="rev-track">
+                <% for (var pass = 0; pass < 2; pass++) { %> <%
+                reviews.forEach(function (r) { %>
+                <div class="rev-card"<% if (pass === 1) { %> aria-hidden="true"<% } %>>
+                  <img src="/assets/reviews/<%= r %>.webp" alt="<%~ reviewsAlt %>" loading="lazy" />
+                </div>
+                <% }) %> <% } %>
+              </div>
+            </div>
+            <p class="micro"><%~ proofMicro %></p>
+          </section>
+
+          <!-- WHAT'S INCLUDED -->
+          <section class="sec band">
+            <div class="sec-head">
+              <span class="hash"><span class="mk">##</span><span class="nm"><%~ inclHash %></span><span class="rule"></span></span>
+              <h2><%~ inclH2 %></h2>
+            </div>
+            <div class="grid-3">
+              <article class="card green">
+                <h3><%~ inclCard1H %></h3>
+                <p><%~ inclCard1P %></p>
+              </article>
+              <article class="card amber">
+                <h3><%~ inclCard2H %></h3>
+                <p><%~ inclCard2P %></p>
+              </article>
+              <article class="card cyan">
+                <h3><%~ inclCard3H %></h3>
+                <p><%~ inclCard3P %></p>
+              </article>
+            </div>
+            <p class="lead" style="margin-top: 20px"><%~ inclLead %></p>
+          </section>
+
+          <!-- FILTER -->
+          <section class="sec">
+            <div class="split">
+              <div>
+                <span class="hash"><span class="mk">##</span><span class="nm"><%~ filterHash %></span><span class="rule"></span></span>
+                <h2><%~ filterH2 %></h2>
+              </div>
+              <div class="grid-2">
+                <article class="card">
+                  <ul>
+                    <li><%~ filterLi1 %></li>
+                    <li><%~ filterLi2 %></li>
+                    <li><%~ filterLi3 %></li>
+                  </ul>
+                </article>
+                <article class="card green">
+                  <h3><%~ filterForH3 %></h3>
+                  <p><%~ filterForP %></p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <!-- PRICE -->
+          <section class="sec" id="price">
+            <div class="price-box">
+              <div>
+                <h2><%~ priceH2 %></h2>
+                <div class="price">
+                  <strong><%~ priceValue %></strong>
+                  <span><%~ pricePer %></span>
+                </div>
+                <p class="lead"><%~ priceLead %></p>
+              </div>
+              <div class="card green">
+                <ul>
+                  <li><%~ priceLi1 %></li>
+                  <li><%~ priceLi2 %></li>
+                  <li><%~ priceLi3 %></li>
+                  <li><%~ priceLi4 %></li>
+                  <li><%~ priceLi5 %></li>
+                  <li><%~ priceLi6 %></li>
+                </ul>
+              </div>
+            </div>
+            <div class="cta-row">
+              <a class="join-btn join-btn-lg" data-cta-location="pricing" href="<%= joinHref %>" target="_blank" rel="noopener">
+                <span class="jb-dot"></span><%~ joinGuild %><span class="jb-arrow">→</span>
+              </a>
+            </div>
+            <p class="micro"><%~ priceMicro %></p>
+          </section>
+
+          <!-- FAQ -->
+          <section class="sec" id="faq">
+            <div class="sec-head">
+              <span class="hash"><span class="mk">##</span><span class="nm"><%~ faqHash %></span><span class="rule"></span></span>
+              <h2><%~ faqH2 %></h2>
+            </div>
+            <details open>
+              <summary><%~ faq1Q %></summary>
+              <p><%~ faq1A %></p>
+            </details>
+            <details>
+              <summary><%~ faq2Q %></summary>
+              <p><%~ faq2A %></p>
+            </details>
+            <details>
+              <summary><%~ faq3Q %></summary>
+              <p><%~ faq3A %></p>
+            </details>
+            <details>
+              <summary><%~ faq4Q %></summary>
+              <p><%~ faq4A %></p>
+            </details>
+          </section>
+
+          <!-- FINAL -->
+          <section class="sec final">
+            <div class="price-box">
+              <div>
+                <h2><%~ finalH2 %></h2>
+                <p class="lead"><%~ finalLead %></p>
+                <div class="cta-row">
+                  <a class="join-btn join-btn-lg" data-cta-location="final" href="<%= joinHref %>" target="_blank" rel="noopener">
+                    <span class="jb-dot"></span><%~ joinGuild %><span class="jb-arrow">→</span>
+                  </a>
+                </div>
+                <p class="micro"><%~ finalMicro %></p>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <footer class="footer-line">
+          <span><%~ footerLine %></span>
+          <span><%~ heroMicro %></span>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      // Theme toggle
+      (function () {
+        const btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        const meta = document.querySelector('meta[name="theme-color"]');
+        btn.addEventListener("click", () => {
+          const cur =
+            document.documentElement.getAttribute("data-theme") === "light"
+              ? "light"
+              : "dark";
+          const next = cur === "light" ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem("theme", next);
+          } catch (e) {}
+          if (meta)
+            meta.setAttribute("content", next === "light" ? "#ffffff" : "#0b0d0f");
+        });
+      })();
+
+      // Scroll-spy for the topbar tabs
+      (function () {
+        const tabs = Array.from(document.querySelectorAll(".win-bar .tab"));
+        if (!tabs.length || !("IntersectionObserver" in window)) return;
+        const secs = tabs
+          .map((t) => document.querySelector(t.getAttribute("href")))
+          .filter(Boolean);
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (!e.isIntersecting) return;
+              tabs.forEach((t) =>
+                t.classList.toggle("on", t.getAttribute("href") === "#" + e.target.id),
+              );
+            });
+          },
+          { rootMargin: "-45% 0px -50% 0px" },
+        );
+        secs.forEach((s) => io.observe(s));
+      })();
+
+      // Push CTA clicks to dataLayer for GTM
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest("a.join-btn");
+        if (!a) return;
+        dataLayer.push({
+          event: "cta_click",
+          cta_location: a.dataset.ctaLocation || "unknown",
+          cta_text: a.textContent.trim().replace(/\s+/g, " "),
+          link_url: a.href,
+        });
+      });
+    </script>
+    <% if (analytics.attribution) { %><%~ include("_partials/analytics/attribution.html") %><% } %>
+    <script>
+      <%~ include("_partials/lang-switch.html", { loc, switchPrefix: "swe/" }) %>
+    </script>
+  </body>
+</html>

@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="<%= loc %>">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%~ include("_partials/head.html", { loc, title, description, urlBase: "https://nexttick.it/ai-speedup-checklist-for-guild-members/" }) %>
+    <% if (analytics.clarity) { %><%~ include("_partials/analytics/clarity.html") %><% } %>
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg2: #161b22;
+        --bg3: #21262d;
+        --border: #30363d;
+        --text: #e6edf3;
+        --text2: #8b949e;
+        --accent: #58a6ff;
+        --green: #3fb950;
+        --content-max: 900px;
+        --gutter: 32px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      code {
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 1px 6px;
+        font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+        font-size: 0.85em;
+        color: #ffa657;
+      }
+
+      /* HEADER */
+      header {
+        background: var(--bg2);
+        border-bottom: 1px solid var(--border);
+        padding: 24px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .header-top {
+        max-width: var(--content-max);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      header h1 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.3;
+        max-width: 600px;
+      }
+      header h1 span {
+        color: var(--accent);
+      }
+      .header-meta {
+        font-size: 0.8rem;
+        color: var(--text2);
+        margin-top: 4px;
+      }
+      .reset-btn {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text2);
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .reset-btn:hover {
+        border-color: #f85149;
+        color: #f85149;
+      }
+
+      /* SEARCH */
+      .search-wrap {
+        padding: 16px 0;
+        background: var(--bg2);
+        border-bottom: 1px solid var(--border);
+      }
+      .search-input {
+        display: block;
+        width: calc(100% - var(--gutter) * 2);
+        max-width: calc(var(--content-max) - var(--gutter) * 2);
+        margin: 0 auto;
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 14px 8px 36px;
+        color: var(--text);
+        font-size: 0.9rem;
+        outline: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: 10px center;
+      }
+      .search-input:focus {
+        border-color: var(--accent);
+      }
+      .search-input::placeholder {
+        color: var(--text2);
+      }
+
+      /* MAIN */
+      main {
+        padding: var(--gutter);
+        max-width: var(--content-max);
+        margin: 0 auto;
+      }
+
+      /* DECISION TREE */
+      .decision-tree {
+        background: var(--bg2);
+        border: 1px solid #bc8cff44;
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 32px;
+      }
+      .decision-tree h3 {
+        font-size: 0.9rem;
+        color: #bc8cff;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 16px;
+      }
+      .decision-step {
+        display: none;
+      }
+      .decision-step.active {
+        display: block;
+      }
+      .decision-question {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--text);
+      }
+      .decision-note {
+        font-size: 0.85rem;
+        color: var(--text2);
+        margin-bottom: 14px;
+      }
+      .decision-btns {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .decision-btn {
+        padding: 7px 18px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg3);
+        color: var(--text);
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .decision-btn:hover {
+        border-color: #bc8cff;
+        color: #bc8cff;
+      }
+      .decision-result {
+        padding: 14px 18px;
+        border-radius: 10px;
+        font-size: 0.92rem;
+        line-height: 1.6;
+      }
+      .decision-result.r-framework {
+        background: #bc8cff18;
+        border: 1px solid #bc8cff44;
+      }
+      .decision-result.r-bare {
+        background: #3fb95018;
+        border: 1px solid #3fb95044;
+      }
+      .decision-result.r-superpowers {
+        background: #f0883e18;
+        border: 1px solid #f0883e44;
+      }
+      .decision-result.r-bmad {
+        background: #58a6ff18;
+        border: 1px solid #58a6ff44;
+      }
+      .decision-result strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1rem;
+      }
+      .decision-restart {
+        margin-top: 12px;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text2);
+        padding: 5px 14px;
+        border-radius: 6px;
+        font-size: 0.82rem;
+        cursor: pointer;
+      }
+      .decision-restart:hover {
+        border-color: #bc8cff;
+        color: #bc8cff;
+      }
+
+      /* SECTIONS */
+      .section {
+        margin-bottom: 24px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: border-color 0.2s;
+      }
+      .section:hover {
+        border-color: #444c56;
+      }
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 20px;
+        background: var(--bg2);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .section-header:hover {
+        background: var(--bg3);
+      }
+      .section-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .section-title-wrap {
+        flex: 1;
+      }
+      .section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .section-subtitle {
+        font-size: 0.78rem;
+        color: var(--text2);
+        margin-top: 1px;
+      }
+      .section-progress-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 120px;
+      }
+      .section-bar {
+        width: 80px;
+        background: var(--bg3);
+        border-radius: 4px;
+        height: 5px;
+        overflow: hidden;
+      }
+      .section-bar-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.3s ease;
+      }
+      .section-count {
+        font-size: 0.78rem;
+        color: var(--text2);
+        white-space: nowrap;
+      }
+      .chevron {
+        color: var(--text2);
+        transition: transform 0.3s;
+        font-size: 1rem;
+      }
+      .section.collapsed .chevron {
+        transform: rotate(-90deg);
+      }
+      .section-body {
+        padding: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .section.collapsed .section-body {
+        display: none;
+      }
+
+      /* ITEMS */
+      .item {
+        display: flex;
+        gap: 14px;
+        padding: 16px 20px;
+        border-top: 1px solid var(--border);
+        transition: background 0.15s;
+        cursor: pointer;
+      }
+      .item:hover {
+        background: #ffffff05;
+      }
+      .item.checked {
+        background: #3fb95008;
+      }
+      .item.hidden {
+        display: none;
+      }
+      .item-cb {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--border);
+        border-radius: 4px;
+        flex-shrink: 0;
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .item.checked .item-cb {
+        background: var(--green);
+        border-color: var(--green);
+      }
+      .item.checked .item-cb::after {
+        content: "";
+        width: 5px;
+        height: 9px;
+        border: 2px solid #fff;
+        border-left: none;
+        border-top: none;
+        transform: rotate(45deg) translate(-1px, -1px);
+      }
+      .item-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .item-num {
+        font-size: 0.72rem;
+        color: var(--text2);
+        font-family: "SF Mono", monospace;
+        margin-bottom: 2px;
+      }
+      .item-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+        line-height: 1.4;
+      }
+      .item.checked .item-title {
+        color: var(--text2);
+        text-decoration: line-through;
+        text-decoration-color: #3fb95066;
+      }
+      .item-desc {
+        font-size: 0.84rem;
+        color: var(--text2);
+        line-height: 1.6;
+      }
+      .item-desc a {
+        font-size: inherit;
+      }
+      .item-tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .tag {
+        font-size: 0.72rem;
+        padding: 2px 8px;
+        border-radius: 10px;
+        border: 1px solid;
+        font-family: "SF Mono", monospace;
+      }
+
+      /* NESTED CHECKLIST (decision tree sub-items) */
+      .nested-check {
+        margin-top: 14px;
+        padding: 12px 16px;
+        background: var(--bg3);
+        border-radius: 8px;
+      }
+      .nested-check h4 {
+        font-size: 0.8rem;
+        color: var(--text2);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .nested-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 0.84rem;
+        cursor: pointer;
+      }
+      .nested-item:last-child {
+        margin-bottom: 0;
+      }
+      .nested-cb {
+        width: 16px;
+        height: 16px;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        flex-shrink: 0;
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .nested-item.checked .nested-cb {
+        background: #bc8cff;
+        border-color: #bc8cff;
+      }
+      .nested-item.checked .nested-cb::after {
+        content: "";
+        width: 4px;
+        height: 7px;
+        border: 1.5px solid #fff;
+        border-left: none;
+        border-top: none;
+        transform: rotate(45deg) translate(-0.5px, -1px);
+      }
+      .nested-item.checked span {
+        text-decoration: line-through;
+        color: var(--text2);
+      }
+
+      /* NO RESULTS */
+      .no-results {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text2);
+      }
+      .no-results svg {
+        margin-bottom: 12px;
+        opacity: 0.3;
+      }
+
+      /* SECTION COLORS */
+      .s1 {
+        --sc: #bc8cff;
+      }
+      .s2 {
+        --sc: #58a6ff;
+      }
+      .s3 {
+        --sc: #3fb950;
+      }
+      .s4 {
+        --sc: #d29922;
+      }
+      .s5 {
+        --sc: #f0883e;
+      }
+      .s6 {
+        --sc: #79c0ff;
+      }
+      .s7 {
+        --sc: #7ee787;
+      }
+      .s8 {
+        --sc: #ffa657;
+      }
+      .s9 {
+        --sc: #ff7b72;
+      }
+      .s10 {
+        --sc: #e3b341;
+      }
+      .section-num {
+        background: color-mix(in srgb, var(--sc) 20%, transparent);
+        color: var(--sc);
+        border: 1px solid color-mix(in srgb, var(--sc) 40%, transparent);
+      }
+      .section-bar-fill {
+        background: var(--sc);
+      }
+      .section:hover {
+        border-color: color-mix(in srgb, var(--sc) 30%, transparent);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 600px) {
+        :root {
+          --gutter: 16px;
+        }
+        header {
+          padding: 16px 0;
+        }
+        .search-wrap {
+          padding: 12px 0;
+        }
+        .section-progress-wrap {
+          display: none;
+        }
+      }
+      .lang-switch {
+        display: inline-flex;
+        gap: 2px;
+      }
+      .lang-switch .ls-opt {
+        font: inherit;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        padding: 5px 7px;
+        border-radius: 6px;
+        color: var(--text2);
+        opacity: 0.85;
+        text-decoration: none;
+        border: 1px solid var(--border);
+        transition:
+          color 0.15s,
+          border-color 0.15s,
+          opacity 0.15s;
+      }
+      .lang-switch .ls-opt:hover {
+        color: var(--green);
+        border-color: var(--green);
+        opacity: 1;
+      }
+      .lang-switch .ls-opt.on {
+        color: var(--green);
+        border-color: var(--green);
+        opacity: 1;
+      }
+    </style>
+    <% if (analytics.pixel) { %><%~ include("_partials/analytics/pixel.html") %><% } %>
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <div>
+          <h1><%~ headerH1 %></h1>
+          <div class="header-meta"><%~ headerMeta %></div>
+        </div>
+        <div
+          class="header-actions"
+          style="display: flex; align-items: center; gap: 10px"
+        >
+          <nav class="lang-switch" aria-label="<%~ langSwitchLabel %>">
+            <a class="ls-opt<% if (loc === 'uk') { %> on<% } %>" data-loc="uk" hreflang="uk" href="/ai-speedup-checklist-for-guild-members/uk.html"<% if (loc === 'uk') { %> aria-current="true"<% } %>>UK</a><a class="ls-opt<% if (loc === 'en') { %> on<% } %>" data-loc="en" hreflang="en" href="/ai-speedup-checklist-for-guild-members/en.html"<% if (loc === 'en') { %> aria-current="true"<% } %>>EN</a><a class="ls-opt<% if (loc === 'ru') { %> on<% } %>" data-loc="ru" hreflang="ru" href="/ai-speedup-checklist-for-guild-members/ru.html"<% if (loc === 'ru') { %> aria-current="true"<% } %>>RU</a>
+          </nav>
+          <button class="reset-btn" onclick="resetAll()"><%~ resetBtn %></button>
+        </div>
+      </div>
+    </header>
+
+    <div class="search-wrap">
+      <input
+        class="search-input"
+        type="text"
+        placeholder="<%= searchPlaceholder %>"
+        id="searchInput"
+        oninput="doSearch(this.value)"
+      />
+    </div>
+
+    <main id="mainContent">
+      <!-- DECISION TREE -->
+      <div class="decision-tree" id="decisionTree">
+        <h3><%~ dtH3 %></h3>
+
+        <div class="decision-step active" id="ds0">
+          <div class="decision-question"><%~ dtQ0 %></div>
+          <div class="decision-note"><%~ dtNote0 %></div>
+          <div class="decision-btns">
+            <button class="decision-btn" onclick="dt(1)"><%~ dtBtnYes %></button>
+            <button class="decision-btn" onclick="dt(2)"><%~ dtBtnNo %></button>
+          </div>
+        </div>
+
+        <div class="decision-step" id="ds1">
+          <div class="decision-question"><%~ dtQ1 %></div>
+          <div class="decision-note"><%~ dtNote1 %></div>
+          <div class="decision-btns">
+            <button class="decision-btn" onclick="dt(3)"><%~ dtBtnYes %></button>
+            <button class="decision-btn" onclick="dt(4)"><%~ dtBtnNo %></button>
+          </div>
+        </div>
+
+        <div class="decision-step" id="ds2">
+          <div class="decision-question"><%~ dtQ2 %></div>
+          <div class="decision-note"><%~ dtNote2 %></div>
+          <div class="decision-btns">
+            <button class="decision-btn" onclick="dt(5)"><%~ dtBtnYes %></button>
+            <button class="decision-btn" onclick="dt(6)"><%~ dtBtnNo %></button>
+          </div>
+        </div>
+
+        <div class="decision-step" id="ds3">
+          <div class="decision-question"><%~ dtQ3 %></div>
+          <div class="decision-note"><%~ dtNote3 %></div>
+          <div class="decision-btns">
+            <button class="decision-btn" onclick="showResult('bmad')"><%~ dtBtnYesBmad %></button>
+            <button class="decision-btn" onclick="showResult('omcc')"><%~ dtBtnNoOmcc %></button>
+          </div>
+        </div>
+
+        <div class="decision-step" id="ds4">
+          <div class="decision-question"><%~ dtQ4 %></div>
+          <div class="decision-note"><%~ dtNote4 %></div>
+          <div class="decision-btns">
+            <button class="decision-btn" onclick="showResult('gstack')"><%~ dtBtnYesGstack %></button>
+            <button class="decision-btn" onclick="showResult('bare')"><%~ dtBtnNoBare %></button>
+          </div>
+        </div>
+
+        <div class="decision-step" id="ds5">
+          <div class="decision-result r-superpowers">
+            <strong>→ superpowers by Jesse Vincent</strong>
+            <%~ dtDescSuperpowers %>
+            <br /><a href="https://github.com/obra/superpowers" target="_blank">github.com/obra/superpowers</a>
+          </div>
+          <button class="decision-restart" onclick="resetDt()"><%~ dtStartOver %></button>
+        </div>
+
+        <div class="decision-step" id="ds6">
+          <div class="decision-question"><%~ dtQ6 %></div>
+          <div class="decision-btns">
+            <button class="decision-btn" onclick="showResult('bare')"><%~ dtBtnYesBare %></button>
+            <button class="decision-btn" onclick="showResult('gstack')"><%~ dtBtnNoGstack %></button>
+          </div>
+        </div>
+
+        <div class="decision-step" id="ds-bmad">
+          <div class="decision-result r-bmad">
+            <strong>→ BMAD Method</strong>
+            <%~ dtDescBmad %>
+            <br /><a href="https://github.com/bmad-code-org/BMAD-METHOD" target="_blank">github.com/bmad-code-org/BMAD-METHOD</a>
+          </div>
+          <button class="decision-restart" onclick="resetDt()"><%~ dtStartOver %></button>
+        </div>
+
+        <div class="decision-step" id="ds-omcc">
+          <div class="decision-result r-framework">
+            <strong>→ oh-my-claudecode</strong>
+            <%~ dtDescOmcc %>
+            <br /><a href="https://github.com/yeachan-heo/oh-my-claudecode" target="_blank">github.com/yeachan-heo/oh-my-claudecode</a>
+          </div>
+          <button class="decision-restart" onclick="resetDt()"><%~ dtStartOver %></button>
+        </div>
+
+        <div class="decision-step" id="ds-gstack">
+          <div class="decision-result r-framework">
+            <strong>→ gstack (Garry Tan)</strong>
+            <%~ dtDescGstack %>
+            <br /><a href="https://github.com/garrytan/gstack" target="_blank">github.com/garrytan/gstack</a>
+          </div>
+          <button class="decision-restart" onclick="resetDt()"><%~ dtStartOver %></button>
+        </div>
+
+        <div class="decision-step" id="ds-bare">
+          <div class="decision-result r-bare">
+            <strong>→ Bare tool: Claude Code / Codex CLI / Mastra</strong>
+            <%~ dtDescBare %>
+          </div>
+          <button class="decision-restart" onclick="resetDt()"><%~ dtStartOver %></button>
+        </div>
+      </div>
+
+      <div id="sectionsContainer"></div>
+      <div class="no-results" id="noResults" style="display: none">
+        <svg
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <div><%~ noResults %></div>
+      </div>
+    </main>
+
+    <script>
+      const SECTIONS = <%~ JSON.stringify(sections) %>;
+
+            // ---- STATE ----
+      const STORAGE_KEY = "ai_agents_checklist_v1";
+      function loadState() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        } catch {
+          return {};
+        }
+      }
+      function saveState(state) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+      let state = loadState();
+
+      // ---- RENDER ----
+      function render() {
+        const container = document.getElementById("sectionsContainer");
+        container.innerHTML = "";
+        let globalNum = 0;
+
+        SECTIONS.forEach((section) => {
+          const sectionEl = document.createElement("div");
+          sectionEl.className = `section ${section.cls}`;
+          sectionEl.id = `section-${section.id}`;
+
+          const total = section.items.length;
+          const checked = section.items.filter(
+            (_, i) => state[`${section.id}-${i}`],
+          ).length;
+
+          sectionEl.innerHTML = `
+      <div class="section-header" onclick="toggleSection(${section.id})">
+        <div class="section-num">${section.id}</div>
+        <div class="section-title-wrap">
+          <div class="section-title">${section.title}</div>
+          <div class="section-subtitle">${section.subtitle}</div>
+        </div>
+        <div class="section-progress-wrap">
+          <div class="section-bar">
+            <div class="section-bar-fill" style="width:${Math.round((checked / total) * 100)}%"></div>
+          </div>
+          <span class="section-count" id="sc-${section.id}">${checked}/${total}</span>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body" id="sb-${section.id}">
+        ${section.items
+          .map((item, i) => {
+            globalNum++;
+            const key = `${section.id}-${i}`;
+            const isChecked = !!state[key];
+            const tags = (item.tags || [])
+              .map(
+                (t) =>
+                  `<span class="tag" style="border-color:color-mix(in srgb, var(--sc) 40%, transparent);color:var(--sc);background:color-mix(in srgb, var(--sc) 10%, transparent)">${t}</span>`,
+              )
+              .join("");
+            return `
+            <div class="item${isChecked ? " checked" : ""}" id="item-${section.id}-${i}" onclick="toggleItem(${section.id}, ${i})" data-search="${(
+              item.title +
+              " " +
+              (item.desc || "")
+            )
+              .toLowerCase()
+              .replace(/<[^>]+>/g, "")
+              .replace(/&/g, "&amp;")
+              .replace(/"/g, "&quot;")}">
+              <div class="item-cb"></div>
+              <div class="item-content">
+                <div class="item-num">${String(globalNum).padStart(2, "0")} / ${section.id}.${i + 1}</div>
+                <div class="item-title">${item.title}</div>
+                ${item.desc ? `<div class="item-desc">${item.desc}</div>` : ""}
+                ${tags ? `<div class="item-tags">${tags}</div>` : ""}
+              </div>
+            </div>
+          `;
+          })
+          .join("")}
+      </div>
+    `;
+          container.appendChild(sectionEl);
+        });
+
+        updateProgress();
+      }
+
+      function toggleItem(sectionId, itemIdx) {
+        const key = `${sectionId}-${itemIdx}`;
+        state[key] = !state[key];
+        saveState(state);
+        const el = document.getElementById(`item-${sectionId}-${itemIdx}`);
+        el.classList.toggle("checked", state[key]);
+        updateProgress();
+        updateSectionProgress(sectionId);
+      }
+
+      function updateSectionProgress(sectionId) {
+        const section = SECTIONS.find((s) => s.id === sectionId);
+        const total = section.items.length;
+        const checked = section.items.filter(
+          (_, i) => state[`${sectionId}-${i}`],
+        ).length;
+        const fill = document.querySelector(
+          `#section-${sectionId} .section-bar-fill`,
+        );
+        const count = document.getElementById(`sc-${sectionId}`);
+        if (fill) fill.style.width = `${Math.round((checked / total) * 100)}%`;
+        if (count) count.textContent = `${checked}/${total}`;
+      }
+
+      function updateProgress() {}
+
+      function toggleSection(id) {
+        const el = document.getElementById(`section-${id}`);
+        el.classList.toggle("collapsed");
+      }
+
+      function resetAll() {
+        if (!confirm("<%= confirmReset %>")) return;
+        state = {};
+        saveState(state);
+        render();
+        resetDt();
+      }
+
+      // ---- SEARCH ----
+      function doSearch(q) {
+        q = q.toLowerCase().trim();
+        let visibleCount = 0;
+        document.querySelectorAll(".item").forEach((el) => {
+          const text = el.dataset.search || "";
+          const match = !q || text.includes(q);
+          el.classList.toggle("hidden", !match);
+          if (match) visibleCount++;
+        });
+        document.getElementById("noResults").style.display =
+          visibleCount === 0 ? "block" : "none";
+        // Expand sections with results
+        if (q) {
+          SECTIONS.forEach((s) => {
+            const sec = document.getElementById(`section-${s.id}`);
+            const hasVisible = [...sec.querySelectorAll(".item")].some(
+              (el) => !el.classList.contains("hidden"),
+            );
+            if (hasVisible) sec.classList.remove("collapsed");
+          });
+        }
+      }
+
+      // ---- DECISION TREE ----
+      function dt(step) {
+        document
+          .querySelectorAll(".decision-step")
+          .forEach((el) => el.classList.remove("active"));
+        document.getElementById(`ds${step}`).classList.add("active");
+      }
+      function showResult(type) {
+        document
+          .querySelectorAll(".decision-step")
+          .forEach((el) => el.classList.remove("active"));
+        document.getElementById(`ds-${type}`).classList.add("active");
+      }
+      function resetDt() {
+        document
+          .querySelectorAll(".decision-step")
+          .forEach((el) => el.classList.remove("active"));
+        document.getElementById("ds0").classList.add("active");
+      }
+
+      // ---- INIT ----
+      render();
+
+      // ── Language switcher + saved-locale sync (i18n) ──
+      <%~ include("_partials/lang-switch.html", { loc, switchPrefix: "ai-speedup-checklist-for-guild-members/" }) %>
+    </script>
+  </body>
+</html>

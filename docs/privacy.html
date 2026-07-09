@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NextTick — Конфіденційність / Конфиденциальность</title>
+    <link rel="canonical" href="https://nexttick.it/privacy/ru.html" />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://nexttick.it/privacy/uk.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://nexttick.it/privacy/ru.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/privacy/ru.html"
+    />
+    <script>
+      (function () {
+        var LOCS = ["uk", "ru"],
+          def = "ru";
+        var loc;
+        try {
+          loc = localStorage.getItem("lang");
+        } catch (e) {}
+        if (LOCS.indexOf(loc) < 0) {
+          loc = def;
+          var langs =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language || ""];
+          for (var i = 0; i < langs.length; i++) {
+            var t = (langs[i] || "").toLowerCase();
+            if (t.indexOf("uk") === 0) {
+              loc = "uk";
+              break;
+            }
+            if (t.indexOf("ru") === 0) {
+              loc = "ru";
+              break;
+            }
+          }
+        }
+        location.replace(
+          "/privacy/" + loc + ".html" + location.search + location.hash,
+        );
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0; url=/privacy/ru.html" />
+  </head>
+  <body>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; padding: 24px">
+        Конфіденційність / Конфиденциальность:
+        <a href="/privacy/uk.html">Українською</a> ·
+        <a href="/privacy/ru.html">На русском</a>
+      </p>
+    </noscript>
+  </body>
+</html>

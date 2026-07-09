@@ -1,0 +1,1461 @@
+<!doctype html>
+<html lang="<%= loc %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <% if (analytics.gtm) { %><%~ include("_partials/analytics/gtm.html") %><% } %>
+    <%~ include("_partials/head.html", { loc, title, description, urlBase: "https://nexttick.it/all/" }) %>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0b0d0f" />
+    <script>
+      /* Apply saved/system theme before paint to avoid a flash of the wrong theme. */
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var theme =
+            saved ||
+            (window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <% if (analytics.ga4) { %><%~ include("_partials/analytics/ga4.html") %><% } %>
+    <% if (analytics.clarity) { %><%~ include("_partials/analytics/clarity.html") %><% } %>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0d0f;
+        --bg-2: #111417;
+        --surface: #15191c;
+        --surface-2: #1c2126;
+        --line: #2a3138;
+        --line-2: #3a444c;
+        --text: #d6d8da;
+        --muted: #888d92;
+        --dim: #5d6469;
+        --green: #7ee787;
+        --green-2: #3fb950;
+        --green-hover: #8df29a;
+        --red: #ff7b72;
+        --amber: #e3b341;
+        --cyan: #56d4dd;
+        --magenta: #bc8cff;
+        --white: #ffffff;
+        --bg-rgb: 11, 13, 15;
+        --scan: rgba(255, 255, 255, 0.012);
+        --vignette: rgba(0, 0, 0, 0.5);
+        --dot-r: #4a2222;
+        --dot-y: #4a3a14;
+        --dot-g: #1d3a24;
+        --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        --sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --max: 1160px;
+      }
+
+      [data-theme="light"] {
+        color-scheme: light;
+        --bg: #ffffff;
+        --bg-2: #f6f8fa;
+        --surface: #f0f3f6;
+        --surface-2: #e7ecf1;
+        --line: #d4dae0;
+        --line-2: #b6bfc8;
+        --text: #1f2328;
+        --muted: #59636e;
+        --dim: #8b949e;
+        --green: #1a7f37;
+        --green-2: #116329;
+        --green-hover: #166b2e;
+        --red: #cf222e;
+        --amber: #9a6700;
+        --cyan: #0b7285;
+        --magenta: #8250df;
+        --white: #1f2328;
+        --bg-rgb: 255, 255, 255;
+        --scan: rgba(0, 0, 0, 0.022);
+        --vignette: rgba(0, 0, 0, 0.05);
+        --dot-r: #ff5f57;
+        --dot-y: #febc2e;
+        --dot-g: #28c840;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.55;
+        overflow-x: hidden;
+      }
+
+      /* CRT scanlines + corner vignette — terminal decoration (index.html) */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          var(--scan) 0 1px,
+          transparent 1px 3px
+        );
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 52%,
+          var(--vignette) 100%
+        );
+      }
+
+      /* Viewers (including in-app browsers) may repaint html/body white.
+         Each block sets its own background so the page always stays dark. */
+      html,
+      main,
+      section,
+      header.hero,
+      .footer {
+        background-color: var(--bg);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: 100%;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .win {
+        border: 1px solid var(--line);
+        background: var(--bg-2);
+      }
+
+      .win-bar {
+        position: sticky;
+        top: 0;
+        z-index: 80;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        min-height: 39px;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(var(--bg-rgb), 0.94);
+        backdrop-filter: blur(14px);
+        color: var(--dim);
+        font-size: 11px;
+      }
+
+      .dots {
+        display: flex;
+        gap: 6px;
+        margin-right: 6px;
+      }
+
+      .dots span {
+        width: 10px;
+        height: 10px;
+        border: 1px solid var(--line-2);
+        border-radius: 50%;
+      }
+
+      .dots .r {
+        background: var(--dot-r);
+      }
+
+      .dots .y {
+        background: var(--dot-y);
+      }
+
+      .dots .g {
+        background: var(--dot-g);
+      }
+
+      .title {
+        color: var(--text);
+        font-family: var(--mono);
+        white-space: nowrap;
+      }
+
+      .path {
+        color: var(--dim);
+        font-family: var(--mono);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 1px;
+        margin-left: auto;
+        align-self: flex-end;
+        margin-bottom: -8px;
+      }
+
+      .tab {
+        padding: 3px 10px;
+        border: 1px solid var(--line);
+        border-bottom: 0;
+        background: var(--bg-2);
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 10.5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          background 0.15s,
+          border-color 0.15s;
+      }
+
+      .tab:hover,
+      .tab.on {
+        border-color: var(--green);
+        color: var(--green);
+        background: var(--surface-2);
+      }
+
+      .win-bar .btn {
+        min-height: 0;
+        padding: 6px 13px;
+        font-size: 12px;
+      }
+
+      /* language switch (page-based /all/<loc>.html) */
+      .lang-switch {
+        display: inline-flex;
+        gap: 2px;
+      }
+
+      .lang-switch .ls-opt {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        padding: 5px 7px;
+        border-radius: 2px;
+        color: var(--muted);
+        text-decoration: none;
+        border: 1px solid transparent;
+        opacity: 0.75;
+        transition:
+          opacity 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+      }
+
+      .lang-switch .ls-opt:hover,
+      .lang-switch .ls-opt.on {
+        opacity: 1;
+        color: var(--green);
+        border-color: var(--green);
+      }
+
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        background: var(--surface);
+        color: var(--muted);
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+      }
+
+      .theme-toggle:hover {
+        color: var(--green);
+        border-color: var(--green);
+      }
+
+      .theme-toggle .tt-icon {
+        display: none;
+        width: 14px;
+        height: 14px;
+      }
+
+      .theme-toggle .tt-sun {
+        display: block;
+      }
+
+      [data-theme="light"] .theme-toggle .tt-sun {
+        display: none;
+      }
+
+      [data-theme="light"] .theme-toggle .tt-moon {
+        display: block;
+      }
+
+      .btn {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid var(--green);
+        padding: 11px 18px;
+        background: var(--green);
+        color: var(--bg);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        background: var(--green-hover);
+      }
+
+      .btn.secondary {
+        background: var(--surface);
+        border-color: var(--line);
+        color: var(--text);
+      }
+
+      .btn.secondary:hover {
+        background: var(--surface-2);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 84vh;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+        padding: 74px 0 58px;
+      }
+
+      .hero h1,
+      .hero .lead {
+        max-width: none;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        border: 1px solid var(--green);
+        border-radius: 2px;
+        padding: 7px 11px;
+        background: var(--surface);
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: none;
+        margin-bottom: 22px;
+        font-size: clamp(42px, 7vw, 82px);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: none;
+        margin-bottom: 30px;
+        color: var(--text);
+        font-size: 21px;
+        line-height: 1.48;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .hero-facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        max-width: none;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .hero-facts span {
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        padding: 7px 10px;
+        background: var(--surface);
+      }
+
+      section {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-inner {
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+        padding: 48px 0;
+      }
+
+      .section-label {
+        margin-bottom: 14px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        max-width: none;
+        margin-bottom: 22px;
+        font-size: clamp(30px, 4.5vw, 56px);
+        line-height: 1.04;
+        letter-spacing: 0;
+      }
+
+      .section-copy {
+        max-width: none;
+        color: var(--muted);
+        font-size: 19px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+        gap: 46px;
+        align-items: start;
+      }
+
+      .list {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .list li,
+      .quote,
+      .track,
+      .fit-item,
+      .objection,
+      .author,
+      .price-box,
+      .signal,
+      .load-card,
+      .review {
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+
+      /* accent outlines — guild_v2 accent colors, palette-mapped */
+      .acc-green {
+        border-color: var(--green);
+      }
+      .acc-amber {
+        border-color: var(--amber);
+      }
+      .acc-cyan {
+        border-color: var(--cyan);
+      }
+      .acc-magenta {
+        border-color: var(--magenta);
+      }
+      .acc-red {
+        border-color: var(--red);
+      }
+
+      .list li {
+        display: flex;
+        gap: 12px;
+        padding: 15px 16px;
+        color: var(--text);
+      }
+
+      .mark {
+        flex: 0 0 auto;
+        color: var(--green);
+        font-family: var(--mono);
+      }
+
+      .statement {
+        max-width: none;
+        color: var(--muted);
+        font-size: 22px;
+      }
+
+      .statement strong {
+        color: var(--text);
+      }
+
+      .ticks {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        max-width: none;
+        margin-top: 28px;
+      }
+
+      .ticks div {
+        border: 1px solid var(--line);
+        padding: 12px 14px;
+        color: var(--text);
+      }
+
+      .tracks {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .track {
+        padding: 24px;
+        min-height: 250px;
+      }
+
+      .track .num {
+        display: block;
+        margin-bottom: 34px;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .track h3 {
+        margin-bottom: 12px;
+        font-size: 24px;
+      }
+
+      .track p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .month {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .month-item {
+        border: 1px solid var(--line);
+        padding: 18px;
+        background: var(--surface);
+      }
+
+      .month-item strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .month-item span {
+        color: var(--muted);
+      }
+
+      .fit-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .fit-item {
+        padding: 20px;
+        color: var(--text);
+      }
+
+      .not-for .section-label,
+      .not-for .mark {
+        color: var(--red);
+      }
+
+      .quote-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .quote {
+        padding: 20px;
+        color: var(--text);
+        font-size: 16px;
+      }
+
+      .quote::before {
+        content: "“";
+        display: block;
+        color: var(--green);
+        font-family: Georgia, serif;
+        font-size: 42px;
+        line-height: 0.8;
+      }
+
+      .authors {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .author {
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        gap: 18px;
+        align-items: center;
+        padding: 18px;
+      }
+
+      .author img {
+        width: 92px;
+        height: 92px;
+        object-fit: cover;
+        background: var(--surface-2);
+      }
+
+      .author h3 {
+        margin-bottom: 6px;
+        font-size: 22px;
+      }
+
+      .author p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .author-quote {
+        max-width: none;
+        margin: 30px 0 0;
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        color: var(--text);
+        font-size: 18px;
+        font-style: italic;
+      }
+
+      .author-quote small {
+        display: block;
+        margin-top: 8px;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 12px;
+        font-style: normal;
+      }
+
+      .load-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .load-card {
+        padding: 20px;
+      }
+
+      .load-card .hrs {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+
+      .load-card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .signals {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .signal {
+        padding: 20px;
+        color: var(--text);
+      }
+
+      .signal.key {
+        border-color: var(--green);
+        background: var(--surface);
+      }
+
+      .reviews {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .review {
+        padding: 20px;
+        min-height: 150px;
+        border-style: dashed;
+        color: var(--dim);
+        font-size: 15px;
+      }
+
+      /* ── ADDED: recommendations carousel (rev-*.webp autoscroll) ── */
+      .rec-carousel {
+        position: relative;
+        overflow: hidden;
+        margin-top: 34px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 16px 0;
+        container-type: inline-size;
+      }
+
+      .rec-track {
+        display: flex;
+        gap: 14px;
+        width: max-content;
+        align-items: center;
+        padding: 0 7px;
+        animation: recScroll 100s linear infinite;
+      }
+
+      .rec-carousel:hover .rec-track {
+        animation-play-state: paused;
+      }
+
+      .rec-card {
+        flex: 0 0 auto;
+        line-height: 0;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background: var(--bg-2);
+      }
+
+      .rec-card img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-height: 440px;
+        max-width: 360px;
+        max-width: 48cqw;
+      }
+
+      @keyframes recScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .rec-track {
+          animation: none;
+        }
+        .rec-carousel {
+          overflow-x: auto;
+        }
+      }
+
+      /* ── ADDED: chat screenshots grid (res-*.webp masonry) ── */
+      .shots {
+        columns: 3 260px;
+        column-gap: 14px;
+        margin-top: 34px;
+      }
+
+      .shot {
+        break-inside: avoid;
+        margin: 0 0 14px;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background: var(--surface);
+      }
+
+      .shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .objections {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .objection {
+        padding: 20px;
+      }
+
+      .objection strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--amber);
+      }
+
+      .objection p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .price-box {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 22px;
+        align-items: center;
+        margin-top: 34px;
+        padding: 26px;
+        border-color: var(--green);
+        background: var(--surface);
+      }
+
+      .price {
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 42px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .price small {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .soft-cta {
+        margin-top: 26px;
+        max-width: none;
+        color: var(--muted);
+        font-size: 16px;
+        scroll-margin-top: 56px;
+      }
+
+      .soft-cta h3 {
+        margin-bottom: 10px;
+        color: var(--text);
+        font-size: 20px;
+      }
+
+      .soft-cta ul {
+        margin: 10px 0 12px;
+        padding-left: 18px;
+      }
+
+      .soft-cta li {
+        margin-bottom: 4px;
+      }
+
+      .soft-cta a:not(.btn) {
+        color: var(--green);
+      }
+
+      .soft-cta .btn {
+        margin-top: 6px;
+        color: var(--bg);
+      }
+
+      .footer {
+        padding: 28px 0;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .footer-inner {
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      @media (max-width: 900px) {
+        .tabs,
+        .path {
+          display: none;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        h1 {
+          font-size: 46px;
+        }
+
+        .lead,
+        .section-copy,
+        .statement {
+          font-size: 18px;
+        }
+
+        .split,
+        .tracks,
+        .month,
+        .fit-grid,
+        .quote-grid,
+        .authors,
+        .objections,
+        .price-box,
+        .load-grid,
+        .signals,
+        .reviews {
+          grid-template-columns: 1fr;
+        }
+
+        .ticks {
+          grid-template-columns: 1fr;
+        }
+
+        .price {
+          font-size: 34px;
+        }
+
+        .shots {
+          columns: 1;
+        }
+
+        .rec-card img {
+          max-height: 70vh;
+          max-width: 88cqw;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .nav-inner {
+          width: min(var(--max), calc(100% - 22px));
+        }
+
+        .hero-inner,
+        .section-inner,
+        .footer {
+          width: min(var(--max), calc(100% - 22px));
+        }
+
+        h1 {
+          font-size: 39px;
+        }
+
+        h2 {
+          font-size: 31px;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        .author {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <% if (analytics.pixel) { %><%~ include("_partials/analytics/pixel.html") %><% } %>
+  </head>
+  <body>
+    <%
+      const joinHref =
+        "https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&source_channel=" +
+        analytics.attribution;
+      const shots = ["res-1", "res-2", "res-3", "res-4", "res-5", "res-6"];
+      const recos = [
+        "rev-01", "rev-02", "rev-03", "rev-04", "rev-05", "rev-06",
+        "rev-07", "rev-08", "rev-09", "rev-10", "rev-11", "rev-12",
+        "rev-13", "rev-14", "rev-15", "rev-16", "rev-17", "rev-18",
+      ];
+    %>
+    <% if (analytics.gtm) { %>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <% } %>
+    <div class="page">
+      <div class="win">
+        <header class="win-bar">
+          <div class="dots" aria-hidden="true">
+            <span class="r"></span><span class="y"></span><span class="g"></span>
+          </div>
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            <svg class="tt-icon tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+            </svg>
+            <svg class="tt-icon tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+            </svg>
+          </button>
+          <nav class="lang-switch" aria-label="Language">
+            <a class="ls-opt<% if (loc === "uk") { %> on<% } %>" data-loc="uk" hreflang="uk" href="/all/uk.html"<% if (loc === "uk") { %> aria-current="true"<% } %>>UK</a>
+            <a class="ls-opt<% if (loc === "en") { %> on<% } %>" data-loc="en" hreflang="en" href="/all/en.html"<% if (loc === "en") { %> aria-current="true"<% } %>>EN</a>
+            <a class="ls-opt<% if (loc === "ru") { %> on<% } %>" data-loc="ru" hreflang="ru" href="/all/ru.html"<% if (loc === "ru") { %> aria-current="true"<% } %>>RU</a>
+          </nav>
+          <span class="title">nexttick</span>
+          <span class="path">~/guild/nexttick.md</span>
+          <nav class="tabs" aria-label="nav">
+            <a class="tab on" href="#inside" data-tab><%~ navLink1 %></a>
+            <a class="tab" href="#month" data-tab><%~ navLink2 %></a>
+            <a class="tab" href="#result" data-tab><%~ navLink3 %></a>
+            <a class="tab" href="#join" data-tab><%~ navLink4 %></a>
+          </nav>
+          <a class="btn" data-cta-location="header" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ navCta %></a>
+        </header>
+
+    <main id="top">
+      <!-- SCREEN 1: HERO -->
+      <header class="hero">
+        <div class="hero-inner">
+          <div class="eyebrow"><span class="dot"></span> <%~ heroEyebrow %></div>
+          <h1><%~ heroH1 %></h1>
+          <p class="lead"><%~ heroLead %></p>
+          <div class="hero-actions">
+            <a class="btn" data-cta-location="hero" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ heroCta1 %></a>
+            <a class="btn secondary" href="#checklist"><%~ ctaChecklist %></a>
+          </div>
+          <div class="hero-facts">
+            <span><%~ heroFact1 %></span>
+            <span><%~ heroFact2 %></span>
+            <span><%~ heroFact3 %></span>
+            <span><%~ heroFact4 %></span>
+            <span><%~ heroFact5 %></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SCREEN 2: AUTHORS + NUMBERS -->
+      <section class="band" id="authors">
+        <div class="section-inner">
+          <div class="section-label"><%~ authorsLabel %></div>
+          <h2><%~ authorsH2 %></h2>
+          <p class="section-copy"><%~ authorsCopy %></p>
+          <div class="authors">
+            <article class="author acc-cyan">
+              <img src="/assets/author-ilya.png" alt="<%~ ilyaName %>" />
+              <div>
+                <h3><%~ ilyaName %></h3>
+                <p><%~ ilyaBio %></p>
+              </div>
+            </article>
+            <article class="author acc-amber">
+              <img src="/assets/author-timur.png" alt="<%~ timurName %>" />
+              <div>
+                <h3><%~ timurName %></h3>
+                <p><%~ timurBio %></p>
+              </div>
+            </article>
+          </div>
+          <blockquote class="author-quote"><%~ authorsQuote %><small><%~ authorsQuoteSrc %></small></blockquote>
+        </div>
+      </section>
+
+      <!-- SCREEN 2.5: MISSION -->
+      <section>
+        <div class="section-inner">
+          <div class="section-label"><%~ missionLabel %></div>
+          <h2><%~ missionH2 %></h2>
+          <p class="statement">
+            <%~ missionStatement %> <strong><%~ missionStatementEmph %></strong>
+          </p>
+          <p class="section-copy"><%~ missionSign %></p>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: WHY NOW -->
+      <section>
+        <div class="section-inner split">
+          <div>
+            <div class="section-label"><%~ whyLabel %></div>
+            <h2><%~ whyH2 %></h2>
+            <p class="section-copy"><%~ whyCopy1 %></p>
+            <p class="section-copy"><%~ whyCopy2 %></p>
+          </div>
+          <ul class="list" aria-label="What AI does not decide for the engineer">
+            <li><span class="mark">01</span><span><%~ whyLi1 %></span></li>
+            <li><span class="mark">02</span><span><%~ whyLi2 %></span></li>
+            <li><span class="mark">03</span><span><%~ whyLi3 %></span></li>
+            <li><span class="mark">04</span><span><%~ whyLi4 %></span></li>
+            <li><span class="mark">05</span><span><%~ whyLi5 %></span></li>
+            <li><span class="mark">06</span><span><%~ whyLi6 %></span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SCREEN 5: ENVIRONMENT -->
+      <section class="insight">
+        <div class="section-inner">
+          <div class="section-label"><%~ envLabel %></div>
+          <h2><%~ envH2 %></h2>
+          <p class="statement">
+            <%~ envStatPre %> <strong><%~ envStatEmph %></strong><%~ envStatPost %>
+          </p>
+          <div class="ticks">
+            <div><%~ envTick1 %></div>
+            <div><%~ envTick2 %></div>
+            <div><%~ envTick3 %></div>
+            <div><%~ envTick4 %></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 6: WHAT'S INSIDE -->
+      <section id="inside" class="band">
+        <div class="section-inner">
+          <div class="section-label"><%~ insideLabel %></div>
+          <h2><%~ insideH2 %></h2>
+          <p class="section-copy"><%~ insideCopy %></p>
+          <div class="month">
+            <div class="month-item"><strong><%~ inside1H %></strong><span><%~ inside1P %></span></div>
+            <div class="month-item"><strong><%~ inside2H %></strong><span><%~ inside2P %></span></div>
+            <div class="month-item"><strong><%~ inside3H %></strong><span><%~ inside3P %></span></div>
+            <div class="month-item"><strong><%~ inside4H %></strong><span><%~ inside4P %></span></div>
+            <div class="month-item"><strong><%~ inside5H %></strong><span><%~ inside5P %></span></div>
+            <div class="month-item"><strong><%~ inside6H %></strong><span><%~ inside6P %></span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 7: TRACKS -->
+      <section id="tracks">
+        <div class="section-inner">
+          <div class="section-label"><%~ tracksLabel %></div>
+          <h2><%~ tracksH2 %></h2>
+          <div class="tracks">
+            <article class="track acc-green">
+              <span class="num">01 / architecture</span>
+              <h3><%~ track1H %></h3>
+              <p><%~ track1P %></p>
+            </article>
+            <article class="track acc-cyan">
+              <span class="num">02 / agents</span>
+              <h3><%~ track2H %></h3>
+              <p><%~ track2P %></p>
+            </article>
+            <article class="track acc-amber">
+              <span class="num">03 / communication</span>
+              <h3><%~ track3H %></h3>
+              <p><%~ track3P %></p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 8: LOAD 2/4/6 -->
+      <section>
+        <div class="section-inner">
+          <div class="section-label"><%~ loadLabel %></div>
+          <h2><%~ loadH2 %></h2>
+          <p class="section-copy"><%~ loadCopy %></p>
+          <div class="load-grid">
+            <div class="load-card acc-green"><span class="hrs"><%~ load1H %></span><p><%~ load1P %></p></div>
+            <div class="load-card acc-amber"><span class="hrs"><%~ load2H %></span><p><%~ load2P %></p></div>
+            <div class="load-card acc-cyan"><span class="hrs"><%~ load3H %></span><p><%~ load3P %></p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 9: FIRST MONTH -->
+      <section id="month" class="band">
+        <div class="section-inner">
+          <div class="section-label"><%~ monthLabel %></div>
+          <h2><%~ monthH2 %></h2>
+          <div class="fit-grid">
+            <div class="fit-item"><strong><%~ month1H %></strong> <%~ month1P %></div>
+            <div class="fit-item"><strong><%~ month2H %></strong> <%~ month2P %></div>
+            <div class="fit-item"><strong><%~ month3H %></strong> <%~ month3P %></div>
+            <div class="fit-item"><strong><%~ month4H %></strong> <%~ month4P %></div>
+            <div class="fit-item"><strong><%~ month5H %></strong> <%~ month5P %></div>
+            <div class="fit-item"><strong><%~ month6H %></strong> <%~ month6P %></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 10: RESULT -->
+      <section id="result">
+        <div class="section-inner">
+          <div class="section-label"><%~ resultLabel %></div>
+          <h2><%~ resultH2 %></h2>
+          <p class="section-copy"><%~ resultCopy %></p>
+          <div class="shots">
+            <% shots.forEach(function (s) { %>
+            <figure class="shot">
+              <img src="/assets/results/<%= s %>.webp" alt="<%~ screensAlt %>" loading="lazy" />
+            </figure>
+            <% }) %>
+          </div>
+          <div class="signals">
+            <div class="signal key"><%~ resultKey %></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 11: RECOMMENDATIONS CAROUSEL (added; replaces the empty reviews placeholder slots) -->
+      <section class="band" id="reviews">
+        <div class="section-inner">
+          <div class="section-label"><%~ reviewsLabel %></div>
+          <h2><%~ reviewsH2 %></h2>
+          <p class="section-copy"><%~ reviewsCopy %></p>
+          <div class="rec-carousel" aria-label="Member recommendations">
+            <div class="rec-track">
+              <% for (var pass = 0; pass < 2; pass++) { %> <%
+              recos.forEach(function (r) { %>
+              <div class="rec-card"<% if (pass === 1) { %> aria-hidden="true"<% } %>>
+                <img src="/assets/reviews/<%= r %>.webp" alt="<%~ reviewsAlt %>" loading="lazy" />
+              </div>
+              <% }) %> <% } %>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 12: WHO IT'S FOR -->
+      <section>
+        <div class="section-inner">
+          <div class="section-label"><%~ forLabel %></div>
+          <h2><%~ forH2 %></h2>
+          <div class="fit-grid">
+            <div class="fit-item"><%~ forItem1 %></div>
+            <div class="fit-item"><%~ forItem2 %></div>
+            <div class="fit-item"><%~ forItem3 %></div>
+            <div class="fit-item"><%~ forItem4 %></div>
+            <div class="fit-item"><%~ forItem5 %></div>
+            <div class="fit-item"><%~ forItem6 %></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 13: NOT FOR -->
+      <section class="not-for">
+        <div class="section-inner split">
+          <div>
+            <div class="section-label"><%~ notLabel %></div>
+            <h2><%~ notH2 %></h2>
+            <p class="section-copy"><%~ notCopy %></p>
+          </div>
+          <ul class="list" aria-label="Who the Guild is not for">
+            <li><span class="mark">×</span><span><%~ notLi1 %></span></li>
+            <li><span class="mark">×</span><span><%~ notLi2 %></span></li>
+            <li><span class="mark">×</span><span><%~ notLi3 %></span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SCREEN 14: OBJECTIONS -->
+      <section>
+        <div class="section-inner">
+          <div class="section-label"><%~ objLabel %></div>
+          <h2><%~ objH2 %></h2>
+          <div class="objections">
+            <div class="objection"><strong><%~ obj1Q %></strong><p><%~ obj1A %></p></div>
+            <div class="objection"><strong><%~ obj2Q %></strong><p><%~ obj2A %></p></div>
+            <div class="objection"><strong><%~ obj3Q %></strong><p><%~ obj3A %></p></div>
+            <div class="objection"><strong><%~ obj4Q %></strong><p><%~ obj4A %></p></div>
+            <div class="objection"><strong><%~ obj5Q %></strong><p><%~ obj5A %></p></div>
+            <div class="objection"><strong><%~ obj6Q %></strong><p><%~ obj6A %></p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 15: PRICE / FINAL -->
+      <section id="join" class="final">
+        <div class="section-inner">
+          <div class="section-label"><%~ priceLabel %></div>
+          <h2><%~ priceH2 %></h2>
+          <p class="section-copy"><%~ priceCopy %></p>
+          <div class="price-box">
+            <div>
+              <div class="price"><%~ priceValue %> <small><%~ pricePer %></small></div>
+              <p class="section-copy" style="margin-bottom: 0"><%~ priceBoxCopy %></p>
+            </div>
+            <a
+              class="btn"
+              data-cta-location="pricing"
+              href="<%= joinHref %>"
+              target="_blank"
+              rel="noopener"
+              ><%~ priceCta %></a
+            >
+          </div>
+          <div class="soft-cta" id="checklist">
+            <h3><%~ checklistH %></h3>
+            <p><%~ checklistP1 %></p>
+            <p><%~ checklistP2 %></p>
+            <ul>
+              <li><%~ checklistLi1 %></li>
+              <li><%~ checklistLi2 %></li>
+              <li><%~ checklistLi3 %></li>
+              <li><%~ checklistLi4 %></li>
+              <li><%~ checklistLi5 %></li>
+            </ul>
+            <p>
+              <a
+                class="btn"
+                data-cta-location="checklist"
+                href="<%= joinHref %>"
+                target="_blank"
+                rel="noopener"
+                ><%~ checklistCta %></a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+        <footer class="footer">
+          <div class="footer-inner"><%~ footerText %></div>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      // Light/dark theme toggle.
+      (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        btn.addEventListener("click", function () {
+          var cur =
+            document.documentElement.getAttribute("data-theme") === "light"
+              ? "light"
+              : "dark";
+          var next = cur === "light" ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem("theme", next);
+          } catch (e) {}
+          if (meta)
+            meta.setAttribute("content", next === "light" ? "#ffffff" : "#0b0d0f");
+        });
+      })();
+
+      // Scroll-spy: highlight the active topbar tab.
+      (function () {
+        var tabs = Array.prototype.slice.call(
+          document.querySelectorAll(".win-bar .tab"),
+        );
+        if (!tabs.length || !("IntersectionObserver" in window)) return;
+        var secs = tabs
+          .map(function (t) {
+            return document.querySelector(t.getAttribute("href"));
+          })
+          .filter(Boolean);
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              tabs.forEach(function (t) {
+                t.classList.toggle(
+                  "on",
+                  t.getAttribute("href") === "#" + e.target.id,
+                );
+              });
+            });
+          },
+          { rootMargin: "-45% 0px -50% 0px" },
+        );
+        secs.forEach(function (s) {
+          io.observe(s);
+        });
+      })();
+
+      // Track join (bot) + free-channel clicks in Google (GTM dataLayer + GA4).
+      // Runs after nt-attribution.js has patched the bot href (capture phase),
+      // so link_url carries the full source_channel + UTM/attribution payload.
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest("a");
+        if (!a) return;
+        var href = a.href || "";
+        var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
+        var isChannel = href.indexOf("t.me/") !== -1;
+        if (!isBot && !isChannel) return;
+        var evt = isBot ? "cta_click" : "channel_click";
+        var payload = {
+          event: evt,
+          cta_location:
+            a.dataset.ctaLocation || (isChannel ? "free-channel" : "unknown"),
+          cta_text: a.textContent.trim().replace(/\s+/g, " "),
+          link_url: a.href,
+        };
+        window.dataLayer.push(payload);
+        if (typeof window.gtag === "function") {
+          window.gtag("event", evt, {
+            cta_location: payload.cta_location,
+            cta_text: payload.cta_text,
+            link_url: payload.link_url,
+          });
+        }
+      });
+    </script>
+    <% if (analytics.attribution) { %><%~ include("_partials/analytics/attribution.html") %><% } %>
+    <script>
+      <%~ include("_partials/lang-switch.html", { loc, switchPrefix: "all/" }) %>
+    </script>
+  </body>
+</html>

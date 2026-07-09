@@ -1,0 +1,17 @@
+{
+  "template": "index.html",
+  "strings": "index.strings.json",
+  "outputScheme": "root",
+  "locales": [
+    "en",
+    "ru",
+    "uk"
+  ],
+  "analytics": {
+    "gtm": true,
+    "ga4": true,
+    "clarity": true,
+    "pixel": true,
+    "attribution": "website"
+  }
+}

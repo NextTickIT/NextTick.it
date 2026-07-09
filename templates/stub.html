@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="<%= default_loc %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link
+      rel="canonical"
+      href="https://nexttick.it<%= base %><%= default_loc %><%= ext %>"
+    />
+    <% for (const l of locs) { %>
+    <link
+      rel="alternate"
+      hreflang="<%= l %>"
+      href="https://nexttick.it<%= base %><%= l %><%= ext %>"
+    />
+    <% } %>
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it<%= base %><%= default_loc %><%= ext %>"
+    />
+    <script>
+      (function () {
+        var LOCS = <%~ JSON.stringify(locs) %>,
+          def = "<%= default_loc %>";
+        var loc;
+        try {
+          loc = localStorage.getItem("lang");
+        } catch (e) {}
+        if (LOCS.indexOf(loc) < 0) {
+          loc = def;
+          var langs =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language || ""];
+          for (var i = 0; i < langs.length; i++) {
+            var t = (langs[i] || "").toLowerCase();
+            <% for (const l of locs) { %>
+            if (t.indexOf("<%= l %>") === 0) {
+              loc = "<%= l %>";
+              break;
+            }
+            <% } %>
+          }
+        }
+        location.replace(
+          "<%= base %>" + loc + "<%= ext %>" + location.search + location.hash,
+        );
+      })();
+    </script>
+    <meta
+      http-equiv="refresh"
+      content="0; url=<%= base %><%= default_loc %><%= ext %>"
+    />
+  </head>
+  <body>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; padding: 24px">
+        <%= noscript_prompt %>:
+        <%~ locs.map((l, i) => '<a href="' + base + l + ext + '">' + noscript_labels[l] + '</a>' + (i < locs.length - 1 ? ' · ' : '')).join('') %>
+      </p>
+    </noscript>
+  </body>
+</html>

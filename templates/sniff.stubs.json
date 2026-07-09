@@ -1,0 +1,113 @@
+{
+  "template": "stub.html",
+  "outputs": [
+    {
+      "out": "index.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+      }
+    },
+    {
+      "out": "swe.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/swe/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+      }
+    },
+    {
+      "out": "all.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/all/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+      }
+    },
+    {
+      "out": "ai-speedup-checklist.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/ai-speedup-checklist/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+      }
+    },
+    {
+      "out": "ai-speedup-checklist-for-guild-members.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/ai-speedup-checklist-for-guild-members/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+      }
+    },
+    {
+      "out": "offer.html",
+      "data": {
+        "title": "NextTick — Оферта",
+        "locs": ["uk", "ru"],
+        "default_loc": "ru",
+        "base": "/offer/",
+        "ext": ".html",
+        "noscript_prompt": "Оферта / Оферта",
+        "noscript_labels": { "uk": "Українською", "ru": "На русском" }
+      }
+    },
+    {
+      "out": "privacy.html",
+      "data": {
+        "title": "NextTick — Конфіденційність / Конфиденциальность",
+        "locs": ["uk", "ru"],
+        "default_loc": "ru",
+        "base": "/privacy/",
+        "ext": ".html",
+        "noscript_prompt": "Конфіденційність / Конфиденциальность",
+        "noscript_labels": { "uk": "Українською", "ru": "На русском" }
+      }
+    },
+    {
+      "out": "ai-speedup-checklist/index.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/ai-speedup-checklist/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+      }
+    },
+    {
+      "out": "ai-speedup-checklist-for-guild-members/index.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/ai-speedup-checklist-for-guild-members/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+      }
+    }
+  ]
+}

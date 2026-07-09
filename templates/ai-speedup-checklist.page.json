@@ -1,0 +1,13 @@
+{
+  "template": "ai-speedup-checklist.html",
+  "strings": "ai-speedup-checklist.strings.json",
+  "outputScheme": "dir",
+  "locales": ["en", "ru", "uk"],
+  "analytics": {
+    "gtm": false,
+    "ga4": false,
+    "clarity": false,
+    "pixel": true,
+    "attribution": "conf"
+  }
+}

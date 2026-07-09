@@ -1,0 +1,20 @@
+<%
+/* Footer with logo, tagline, and the ls-opt language switch. Include data:
+     loc          -> current locale (marks the active anchor "on" + aria-current)
+     footerTagline-> per-locale tagline text
+     switchPrefix -> URL prefix for lang-switch targets:
+                     "all/" -> /all/<loc>.html ; "" (home) -> /<loc>.html */
+%>
+<footer>
+  <div class="container row">
+    <div class="logo" style="font-size: 15px">nexttick<span>_</span></div>
+    <span><%~ footerTagline %></span>
+    <span class="lang-switch" style="margin-left: auto">
+      <a class="ls-opt<% if (loc === "uk") { %> on<% } %>" data-loc="uk" hreflang="uk" href="/<%= switchPrefix %>uk.html"<% if (loc === "uk") { %> aria-current="true"<% } %>>UK</a>
+      ·
+      <a class="ls-opt<% if (loc === "en") { %> on<% } %>" data-loc="en" hreflang="en" href="/<%= switchPrefix %>en.html"<% if (loc === "en") { %> aria-current="true"<% } %>>EN</a>
+      ·
+      <a class="ls-opt<% if (loc === "ru") { %> on<% } %>" data-loc="ru" hreflang="ru" href="/<%= switchPrefix %>ru.html"<% if (loc === "ru") { %> aria-current="true"<% } %>>RU</a>
+    </span>
+  </div>
+</footer>

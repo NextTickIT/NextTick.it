@@ -1,0 +1,2228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-M74P6CSD");
+    </script>
+    <!-- End Google Tag Manager -->
+    <title>NextTick — a guild for middle developers</title>
+    <meta
+      name="description"
+      content="NextTick is a guild of engineers for middle developers: short videos, tasks, case reviews and a community to become an engineer who's hard to replace."
+    />
+    <link rel="canonical" href="https://nexttick.it/swe/en.html" />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://nexttick.it/swe/uk.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/swe/en.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://nexttick.it/swe/ru.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/swe/uk.html"
+    />
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="48x48"
+      href="/assets/favicon-48x48.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0b0d0f" />
+    <script>
+      /* Apply saved/system theme before paint to avoid a flash of the wrong theme. */
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var theme =
+            saved ||
+            (window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1TYEB7YFP5");
+    </script>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "x5houryvs2");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0d0f;
+        --bg-2: #111417;
+        --panel: #15191c;
+        --panel-2: #1c2126;
+        --line: #2a3138;
+        --line-2: #3a444c;
+        --txt: #d6d8da;
+        --dim: #888d92;
+        --muted: #5d6469;
+        --green: #7ee787;
+        --green-2: #3fb950;
+        --green-hover: #8df29a;
+        --amber: #e3b341;
+        --amber-2: #d29922;
+        --cyan: #56d4dd;
+        --magenta: #bc8cff;
+        --red: #ff7b72;
+        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        --max: 1200px;
+        --bg-rgb: 11, 13, 15;
+        --scan: rgba(255, 255, 255, 0.012);
+        --vignette: rgba(0, 0, 0, 0.5);
+        --dot-r: #4a2222;
+        --dot-y: #4a3a14;
+        --dot-g: #1d3a24;
+      }
+      [data-theme="light"] {
+        color-scheme: light;
+        --bg: #ffffff;
+        --bg-2: #f6f8fa;
+        --panel: #f0f3f6;
+        --panel-2: #e7ecf1;
+        --line: #d4dae0;
+        --line-2: #b6bfc8;
+        --txt: #1f2328;
+        --dim: #59636e;
+        --muted: #8b949e;
+        --green: #1a7f37;
+        --green-2: #116329;
+        --green-hover: #166b2e;
+        --amber: #9a6700;
+        --amber-2: #7a5200;
+        --cyan: #0b7285;
+        --magenta: #8250df;
+        --red: #cf222e;
+        --bg-rgb: 255, 255, 255;
+        --scan: rgba(0, 0, 0, 0.022);
+        --vignette: rgba(0, 0, 0, 0.05);
+        --dot-r: #ff5f57;
+        --dot-y: #febc2e;
+        --dot-g: #28c840;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        color: var(--txt);
+        background: var(--bg);
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.55;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          var(--scan) 0 1px,
+          transparent 1px 3px
+        );
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 52%,
+          var(--vignette) 100%
+        );
+      }
+      a {
+        color: inherit;
+      }
+      p,
+      h1,
+      h2,
+      h3 {
+        margin-top: 0;
+      }
+      p {
+        margin-bottom: 14px;
+      }
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+
+      .page {
+        width: 100%;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .win {
+        border: 1px solid var(--line);
+        background: var(--bg-2);
+      }
+
+      /* ─── window chrome ─────────────────────────────────────── */
+      .win-bar {
+        position: sticky;
+        top: 0;
+        z-index: 80;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 39px;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(var(--bg-rgb), 0.94);
+        backdrop-filter: blur(14px);
+        color: var(--dim);
+        font-size: 11px;
+      }
+      .dots {
+        display: flex;
+        gap: 6px;
+        margin-right: 6px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border: 1px solid var(--line-2);
+        border-radius: 50%;
+      }
+      .dot.r {
+        background: var(--dot-r);
+      }
+      .dot.y {
+        background: var(--dot-y);
+      }
+      .dot.g {
+        background: var(--dot-g);
+      }
+      .win-logo {
+        width: 18px;
+        height: 18px;
+        margin-right: 4px;
+      }
+      .title {
+        color: var(--txt);
+        white-space: nowrap;
+      }
+      .path {
+        color: var(--dim);
+      }
+      .tabs {
+        display: flex;
+        gap: 1px;
+        margin-left: auto;
+        align-self: flex-end;
+        margin-bottom: -8px;
+      }
+      .tab {
+        padding: 3px 10px;
+        border: 1px solid var(--line);
+        border-bottom: 0;
+        background: var(--bg-2);
+        color: var(--dim);
+        font-size: 10.5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          background 0.15s,
+          border-color 0.15s;
+      }
+      .tab:hover,
+      .tab.on {
+        border-color: var(--green);
+        color: var(--green);
+        background: var(--panel-2);
+      }
+
+      /* theme toggle + lang switch */
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 20px;
+        padding: 0;
+        border: 1px solid var(--line);
+        background: var(--bg-2);
+        color: var(--dim);
+        cursor: pointer;
+        border-radius: 2px;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .theme-toggle:hover {
+        color: var(--green);
+        border-color: var(--green);
+      }
+      .theme-toggle .tt-icon {
+        display: none;
+        width: 13px;
+        height: 13px;
+      }
+      .theme-toggle .tt-sun {
+        display: block;
+      }
+      [data-theme="light"] .theme-toggle .tt-sun {
+        display: none;
+      }
+      [data-theme="light"] .theme-toggle .tt-moon {
+        display: block;
+      }
+      .lang-switch {
+        display: inline-flex;
+        gap: 2px;
+        margin-left: 4px;
+      }
+      .lang-switch .ls-opt {
+        font: inherit;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        padding: 4px 6px;
+        border-radius: 6px;
+        color: inherit;
+        opacity: 0.5;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition:
+          opacity 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .lang-switch .ls-opt:hover,
+      .lang-switch .ls-opt.on {
+        opacity: 1;
+        color: var(--green);
+        border-color: var(--green);
+      }
+
+      /* join button — pulsing CTA */
+      .join-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        margin-left: 14px;
+        padding: 6px 15px;
+        border: 1px solid var(--green);
+        background: var(--green);
+        color: var(--bg);
+        font-family: var(--mono);
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 0 0 0 rgba(126, 231, 135, 0.5);
+        animation: joinPulse 2.4s ease-out infinite;
+        transition:
+          transform 0.15s,
+          background 0.15s,
+          box-shadow 0.15s;
+      }
+      .join-btn:hover {
+        transform: translateY(-1px);
+        background: var(--green-hover);
+        box-shadow: 0 0 18px rgba(126, 231, 135, 0.5);
+        animation: none;
+      }
+      .jb-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--bg);
+        animation: joinDot 2.4s ease-out infinite;
+      }
+      .jb-arrow {
+        transition: transform 0.15s;
+      }
+      .join-btn:hover .jb-arrow {
+        transform: translateX(3px);
+      }
+      @keyframes joinPulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(126, 231, 135, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 8px rgba(126, 231, 135, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(126, 231, 135, 0);
+        }
+      }
+      @keyframes joinDot {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .join-btn,
+        .jb-dot {
+          animation: none;
+        }
+      }
+
+      /* ─── hero ──────────────────────────────────────────────── */
+      .hero {
+        padding: clamp(28px, 5vw, 52px) 40px 28px;
+        border-bottom: 1px solid var(--line);
+      }
+      .prompt-line {
+        margin-bottom: 26px;
+        color: var(--green);
+      }
+      .prompt-line .arrow {
+        color: var(--amber);
+      }
+      .prompt-line .cmd {
+        color: var(--txt);
+      }
+      .prompt-line .arg {
+        color: var(--magenta);
+      }
+      .prompt-line .flag {
+        color: var(--cyan);
+      }
+      .blink {
+        animation: blink 1s steps(2) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .hero-main {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(340px, 0.68fr);
+        gap: clamp(24px, 4vw, 44px);
+        align-items: center;
+      }
+      .hero-title {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 16px;
+      }
+      .hero-logo {
+        width: clamp(76px, 9vw, 112px);
+        height: clamp(76px, 9vw, 112px);
+        flex: 0 0 auto;
+        filter: drop-shadow(0 0 24px rgba(126, 231, 135, 0.16));
+      }
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--amber);
+        font-size: 13px;
+        font-weight: 600;
+      }
+      h1 {
+        margin: 0;
+        color: var(--green);
+        font-size: clamp(42px, 7vw, 84px);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 0.94;
+        text-shadow: 0 0 22px rgba(126, 231, 135, 0.18);
+      }
+      h2 {
+        max-width: 920px;
+        margin-bottom: 14px;
+        color: var(--txt);
+        font-size: clamp(27px, 4.2vw, 50px);
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.03;
+      }
+      h3 {
+        margin-bottom: 10px;
+        color: var(--txt);
+        font-size: 18px;
+        line-height: 1.22;
+      }
+      .lead {
+        max-width: 760px;
+        color: var(--dim);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      .lead strong,
+      .em {
+        color: var(--amber);
+        font-weight: 600;
+      }
+      .hero-actions,
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-top: 24px;
+      }
+      .cta-row {
+        justify-content: flex-end;
+      }
+      .join-btn-lg {
+        min-height: 54px;
+        margin-left: 0;
+        padding: 14px 24px;
+        font-size: 15px;
+      }
+      .join-btn-lg .jb-dot {
+        width: 8px;
+        height: 8px;
+      }
+      .join-btn-lg .jb-arrow {
+        font-size: 17px;
+      }
+      .micro {
+        margin: 12px 0 0;
+        color: var(--dim);
+        font-size: 11.5px;
+      }
+      .hero-video {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #000;
+        box-shadow: 0 0 28px rgba(126, 231, 135, 0.08);
+      }
+      .video-frame {
+        position: relative;
+        aspect-ratio: 16 / 9;
+      }
+      .video-frame iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      /* ─── stats bar ─────────────────────────────────────────── */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-bottom: 1px solid var(--line);
+      }
+      .stat {
+        min-height: 112px;
+        padding: 20px;
+        border-right: 1px solid var(--line);
+        background: var(--panel);
+      }
+      .stat:last-child {
+        border-right: 0;
+      }
+      .stat strong {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--green);
+        font-size: 25px;
+        line-height: 1;
+      }
+      .stat span {
+        color: var(--dim);
+      }
+
+      /* ─── sections ──────────────────────────────────────────── */
+      .sec {
+        padding: clamp(42px, 6vw, 68px) 40px;
+        border-bottom: 1px solid var(--line);
+      }
+      .sec-head {
+        margin-bottom: 28px;
+      }
+      .hash {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 14px;
+        font-size: 12px;
+        color: var(--dim);
+      }
+      .hash .mk {
+        color: var(--green);
+        font-weight: 700;
+      }
+      .hash .nm {
+        color: var(--txt);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .hash .rule {
+        flex: 1;
+        border-top: 1px dashed var(--line-2);
+        transform: translateY(-3px);
+      }
+      .band {
+        background: var(--bg);
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        display: grid;
+        gap: 14px;
+      }
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .card {
+        padding: 20px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+      }
+      .card.soft {
+        background: var(--panel-2);
+      }
+      .card.green {
+        border-color: var(--green);
+      }
+      .card.amber {
+        border-color: var(--amber);
+      }
+      .card.cyan {
+        border-color: var(--cyan);
+      }
+      .card p:last-child,
+      .card ul:last-child {
+        margin-bottom: 0;
+      }
+      .card p,
+      .card li {
+        color: var(--dim);
+      }
+      .card strong {
+        color: var(--txt);
+      }
+
+      .tag {
+        display: block;
+        width: fit-content;
+        margin-bottom: 10px;
+        color: var(--green);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .quote {
+        color: var(--txt);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+      .quote cite {
+        display: block;
+        margin-top: 12px;
+        color: var(--green);
+        font-style: normal;
+      }
+
+      .before-after {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 14px;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .arrow-box {
+        color: var(--green);
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .number {
+        display: inline-grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        margin-bottom: 14px;
+        border: 1px solid var(--line-2);
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+        gap: 26px;
+        align-items: start;
+      }
+
+      .tlist {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .tlist li {
+        margin: 0;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--dim);
+      }
+      .tlist li::before {
+        content: "▸ ";
+        color: var(--green);
+      }
+
+      .authors {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .author {
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+      }
+      .author img {
+        width: 92px;
+        height: 92px;
+        border: 1px solid var(--line);
+        object-fit: cover;
+        background: var(--bg);
+      }
+
+      .price-box {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.62fr);
+        gap: 18px;
+        align-items: stretch;
+      }
+      .price {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: baseline;
+        margin: 22px 0;
+      }
+      .price strong {
+        color: var(--green);
+        font-size: clamp(46px, 6vw, 72px);
+        line-height: 1;
+      }
+      .price span {
+        color: var(--dim);
+      }
+
+      details {
+        padding: 18px 0;
+        border-top: 1px solid var(--line);
+      }
+      details:first-of-type {
+        border-top: 0;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--txt);
+        font-size: 16px;
+        font-weight: 700;
+        list-style: none;
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      summary::before {
+        content: "+";
+        color: var(--green);
+        font-weight: 700;
+      }
+      details[open] summary::before {
+        content: "−";
+      }
+      details p {
+        max-width: 860px;
+        margin: 10px 0 0 20px;
+        color: var(--dim);
+      }
+
+      /* ─── proof: screenshots grid (masonry) ─────────────────── */
+      .screens {
+        columns: 3 260px;
+        column-gap: 14px;
+        margin-top: 20px;
+      }
+      .screen-card {
+        break-inside: avoid;
+        margin: 0 0 14px;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background: var(--panel);
+      }
+      .screen-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* ─── reviews autoscroll carousel ───────────────────────── */
+      .reviews {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 16px 0;
+        margin-top: 20px;
+        container-type: inline-size;
+      }
+      .rev-track {
+        display: flex;
+        gap: 14px;
+        width: max-content;
+        align-items: center;
+        padding: 0 7px;
+        animation: revScroll 90s linear infinite;
+      }
+      .reviews:hover .rev-track {
+        animation-play-state: paused;
+      }
+      .rev-card {
+        flex: 0 0 auto;
+        line-height: 0;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background: var(--bg);
+      }
+      /* each screenshot scales proportionally to fit inside (½ carousel width
+         × max height), touching whichever edge comes first — never cropped. */
+      .rev-card img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-height: 460px;
+        max-width: 380px;
+        max-width: 50cqw;
+      }
+      @keyframes revScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .rev-track {
+          animation: none;
+        }
+        .reviews {
+          overflow-x: auto;
+        }
+      }
+
+      .final {
+        border-bottom: 0;
+      }
+      .footer-line {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 16px 40px 22px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      /* ─── responsive ────────────────────────────────────────── */
+      @media (max-width: 1080px) {
+        .tabs {
+          display: none;
+        }
+        .hero-main,
+        .split,
+        .price-box {
+          grid-template-columns: 1fr;
+        }
+        .stats,
+        .grid-4,
+        .grid-3 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 720px) {
+        .page {
+          padding: 10px;
+        }
+        .win-bar {
+          flex-wrap: wrap;
+        }
+        .title,
+        .path {
+          display: none;
+        }
+        .join-btn {
+          margin-left: auto;
+        }
+        .hero,
+        .sec {
+          padding: 34px 18px;
+        }
+        .hero-title {
+          align-items: flex-start;
+          gap: 14px;
+        }
+        .hero-logo {
+          width: 58px;
+          height: 58px;
+        }
+        .lead {
+          font-size: 13px;
+        }
+        .stats,
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .authors,
+        .before-after {
+          grid-template-columns: 1fr;
+        }
+        .stat {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .stat:last-child {
+          border-bottom: 0;
+        }
+        .arrow-box {
+          transform: rotate(90deg);
+          justify-self: start;
+        }
+        .author {
+          grid-template-columns: 1fr;
+        }
+        .screens {
+          columns: 1;
+        }
+        .rev-track {
+          padding: 0;
+        }
+        .rev-card img {
+          max-height: 70vh;
+          max-width: 100cqw;
+        }
+        .footer-line {
+          padding: 14px 18px 20px;
+        }
+      }
+    </style>
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "1022924580268547");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1022924580268547&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="page">
+      <div class="win">
+        <header class="win-bar">
+          <div class="dots" aria-hidden="true">
+            <span class="dot r"></span><span class="dot y"></span
+            ><span class="dot g"></span>
+          </div>
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            <svg
+              class="tt-icon tt-sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"
+              ></path>
+            </svg>
+            <svg
+              class="tt-icon tt-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+            </svg>
+          </button>
+          <nav class="lang-switch" aria-label="Language">
+            <a class="ls-opt" data-loc="uk" hreflang="uk" href="/swe/uk.html"
+              >UK</a
+            >
+            <a
+              class="ls-opt on"
+              data-loc="en"
+              hreflang="en"
+              href="/swe/en.html"
+              aria-current="true"
+              >EN</a
+            >
+            <a class="ls-opt" data-loc="ru" hreflang="ru" href="/swe/ru.html"
+              >RU</a
+            >
+          </nav>
+          <img class="win-logo" src="/assets/nexttick-logo.png" alt="" />
+          <span class="title">nexttick</span>
+          <span class="path">~/guild/middle.md</span>
+          <nav class="tabs" aria-label="nav">
+            <a class="tab on" href="#top" data-tab>Middle developer</a>
+            <a class="tab" href="#authors" data-tab>The authors</a>
+            <a class="tab" href="#rhythm" data-tab>The rhythm</a>
+            <a class="tab" href="#price" data-tab>What's in $50</a>
+            <a class="tab" href="#faq" data-tab>FAQ</a>
+          </nav>
+          <a
+            class="join-btn"
+            data-cta-location="header"
+            href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="jb-dot"></span>Join<span class="jb-arrow">→</span>
+          </a>
+        </header>
+
+        <main id="top">
+          <!-- HERO -->
+          <section class="hero">
+            <div class="prompt-line">
+              <span class="arrow">$</span>
+              <span class="cmd">cat</span>
+              <span class="arg">./middle-developer.txt</span>
+              <span class="flag">--quiet</span>
+              <span class="blink">▍</span>
+            </div>
+            <div class="hero-main">
+              <div>
+                <div class="hero-title">
+                  <img
+                    class="hero-logo"
+                    src="/assets/nexttick-logo.png"
+                    alt="nexttick"
+                  />
+                  <div>
+                    <p class="eyebrow">Middle developer</p>
+                    <h1>Become an engineer who can't be replaced</h1>
+                  </div>
+                </div>
+                <p class="lead">
+                  just 15 minutes at a time, without stepping away from work
+                </p>
+                <div class="hero-actions">
+                  <a
+                    class="join-btn join-btn-lg"
+                    data-cta-location="hero"
+                    href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <span class="jb-dot"></span>Join the guild<span
+                      class="jb-arrow"
+                      >→</span
+                    >
+                  </a>
+                </div>
+                <p class="micro">
+                  $50/mo · cancel anytime · 800 engineers already inside
+                </p>
+              </div>
+              <aside class="hero-video" aria-label="NextTick">
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/nW8g4Y6otWM?rel=0"
+                    title="NextTick"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </aside>
+            </div>
+          </section>
+
+          <!-- STATS -->
+          <div class="stats" aria-label="stats">
+            <div class="stat">
+              <strong>10,000+</strong><span>engineers taught</span>
+            </div>
+            <div class="stat">
+              <strong>800</strong><span>members already in the guild</span>
+            </div>
+            <div class="stat">
+              <strong>9 in 10</strong
+              ><span>stay and renew their subscription</span>
+            </div>
+            <div class="stat">
+              <strong>$50/mo</strong><span>cancel anytime</span>
+            </div>
+          </div>
+
+          <!-- RISK -->
+          <section class="sec" id="risk">
+            <div class="sec-head">
+              <h2>
+                You're good at your job. And that's exactly why you're at risk.
+              </h2>
+              <p class="lead">
+                Execution is getting cheaper: more and more, AI writes the code.
+                What stays valuable is the person who takes a task, closes it,
+                and can defend the decision — in front of the team lead,
+                management, at an architecture meeting. NextTick is a guild of
+                engineers where you train exactly that in the background, inside
+                your work week. The first result comes within the first 7 days.
+              </p>
+            </div>
+            <div class="before-after">
+              <article class="card soft">
+                <span class="tag">Before the guild:</span>
+                <p class="quote">“I'm stuck and I don't understand why”</p>
+              </article>
+              <div class="arrow-box" aria-hidden="true">→</div>
+              <article class="card green">
+                <span class="tag">With the guild:</span>
+                <p class="quote">
+                  “took the task → closed it → I can defend the decision in
+                  front of anyone”
+                </p>
+              </article>
+            </div>
+            <div class="cta-row">
+              <a
+                class="join-btn"
+                data-cta-location="risk"
+                href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="jb-dot"></span>Join the guild<span class="jb-arrow"
+                  >→</span
+                >
+              </a>
+            </div>
+          </section>
+
+          <!-- AUTHORS -->
+          <section class="sec" id="authors">
+            <div class="sec-head">
+              <span class="hash"
+                ><span class="mk">##</span><span class="nm">The authors</span
+                ><span class="rule"></span
+              ></span>
+              <h2>The guild is led by seasoned engineers</h2>
+            </div>
+            <div class="authors">
+              <article class="card author cyan">
+                <img src="/assets/author-ilya.png" alt="Illya Klymov" />
+                <div>
+                  <h3>Illya Klymov</h3>
+                  <p>
+                    Staff Frontend Engineer at GitLab · Google Developer Expert
+                    · founder of JavaScript.ninja · HolyJS speaker · 15+ years
+                    in the industry
+                  </p>
+                </div>
+              </article>
+              <article class="card author amber">
+                <img src="/assets/author-timur.png" alt="Timur Shemsedinov" />
+                <div>
+                  <h3>Timur Shemsedinov</h3>
+                  <p>
+                    CTO at Metatech · chief architect of Metarhia · lecturer at
+                    KPI · author of 350+ open lectures · 30+ years of experience
+                  </p>
+                </div>
+              </article>
+            </div>
+            <p class="micro">
+              10,000+ engineers taught · 800 members already in the guild · 9 in
+              10 stay and renew their subscription
+            </p>
+          </section>
+
+          <!-- PAIN -->
+          <section class="sec band">
+            <div class="sec-head">
+              <h2>“I'm stuck. And I don't understand why”</h2>
+              <p class="lead">Sound familiar?</p>
+            </div>
+            <div class="grid-2">
+              <ul class="tlist">
+                <li>
+                  My knowledge seems fine. I get the work done, I can handle
+                  whatever's required.
+                </li>
+                <li>I can figure out a new topic on my own.</li>
+                <li>I'm valued, but there's no sense of movement.</li>
+                <li>
+                  The seniors around me are different somehow, but that
+                  “something” is hard to name.
+                </li>
+              </ul>
+              <ul class="tlist">
+                <li>
+                  I study on my own — articles, courses, videos — and I suspect
+                  I'm learning the wrong things.
+                </li>
+                <li>
+                  I stew in my own thoughts: no one reviews my code, there's
+                  nothing to compare it to.
+                </li>
+                <li>
+                  And on top of it all — the AI chaos dropped on our heads: it's
+                  unclear what to learn and what's actually serious.
+                </li>
+              </ul>
+            </div>
+            <p class="lead" style="margin-top: 20px">
+              If you recognized yourself in at least three of these — that's not
+              impostor syndrome talking. It's the absence of an environment and
+              feedback. On your own, this shift is almost impossible to find.
+            </p>
+          </section>
+
+          <!-- WHY -->
+          <section class="sec">
+            <div class="sec-head">
+              <h2>It's not about you. What people pay for is changing</h2>
+              <p class="lead">
+                A junior with AI covers tasks from below. A senior covers them
+                from above — by saying “we're solving the wrong problem.” The
+                middle developer ends up in between: writes good, reliable code,
+                knows the codebase. But all of that is execution. And execution
+                is getting cheaper faster than you can reach your next
+                performance review.
+              </p>
+            </div>
+            <div class="grid-2">
+              <article class="card green">
+                <p class="quote">
+                  “Middle developers are vulnerable not because they work badly.
+                  They're vulnerable because they work well in exactly the layer
+                  that's losing value. It's not a sentence. It's a
+                  diagnosis”<cite>— Illya Klymov</cite>
+                </p>
+              </article>
+              <article class="card amber">
+                <p class="quote">
+                  And when stack ranking kicks in at your company — “you'll be
+                  counted, whether you want it or not.” The one who stands out
+                  won't be the one who writes code faster. Code no longer sets
+                  anyone apart.
+                </p>
+              </article>
+              <article class="card cyan">
+                <p class="quote">
+                  “Code, knowledge and access to tools have all gotten cheaper.
+                  The only things gaining value are clarity of opinion and the
+                  quality of decisions”<cite>— Timur Shemsedinov</cite>
+                </p>
+              </article>
+            </div>
+            <div class="cta-row">
+              <a
+                class="join-btn"
+                data-cta-location="why"
+                href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="jb-dot"></span>Join the guild<span class="jb-arrow"
+                  >→</span
+                >
+              </a>
+            </div>
+          </section>
+
+          <!-- RHYTHM -->
+          <section class="sec" id="rhythm">
+            <div class="split">
+              <div class="sec-head">
+                <h2>
+                  You're not signing up for a course. You're subscribing to a
+                  rhythm.
+                </h2>
+                <p class="lead">
+                  Courses can't keep up with the industry, and no one has time
+                  for four-hour lectures — not you, not us. So the format is
+                  different: background learning, built into your work week.
+                </p>
+              </div>
+              <div class="grid-2">
+                <article class="card green">
+                  <h3>3 videos a week</h3>
+                  <p>
+                    15 minutes each: agentic development, architecture,
+                    engineering communication. Concentrated, no drawn-out clips
+                    — whenever it suits you: over lunch, on the go, on weekends.
+                  </p>
+                </article>
+                <article class="card cyan">
+                  <h3>Every one comes with an action</h3>
+                  <p>
+                    one idea and a task to apply in your real project today.
+                    Members apply it right after watching and share what came of
+                    it.
+                  </p>
+                </article>
+                <article class="card amber">
+                  <h3>800 engineers alongside you</h3>
+                  <p>
+                    in a member's words: “a community of responsible engineers
+                    who think about growth.” Reviews of your cases, feedback
+                    from Illya, Timur and peers on the same trajectory. You're
+                    not alone.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <!-- CHANGES -->
+          <section class="sec band">
+            <div class="sec-head">
+              <h2>What changes when you keep the rhythm:</h2>
+            </div>
+            <ul class="tlist">
+              <li>
+                You take a task — close it — know why. Confidence instead of
+                guessing.
+              </li>
+              <li>
+                The AI chaos stops being chaos: you understand what to learn,
+                what to adopt and what to ignore.
+              </li>
+              <li>
+                You defend refactoring and tech decisions to management — in the
+                language of time and money.
+              </li>
+              <li>
+                You get invited to architecture discussions, not just to
+                execution.
+              </li>
+              <li>
+                You become someone who's hard to replace, even when AI writes
+                the code.
+              </li>
+            </ul>
+          </section>
+
+          <!-- WEEKS -->
+          <section class="sec" id="weeks">
+            <div class="sec-head">
+              <h2>
+                The first result — in the first week. Here's what happens over
+                four weeks
+              </h2>
+            </div>
+            <div class="grid-4">
+              <article class="card green">
+                <span class="number">01</span>
+                <h3>Week 1 — Why, not what: the context behind decisions.</h3>
+                <p>
+                  Video → task: take one architectural decision in your project
+                  that you treat as a given, and find its constraint. Result:
+                  the first decision you can explain and defend.
+                </p>
+              </article>
+              <article class="card amber">
+                <span class="number">02</span>
+                <h3>
+                  Week 2 — The language of consequences: how to sell technical
+                  decisions.
+                </h3>
+                <p>
+                  Video → task: reframe one piece of tech debt in terms of time
+                  and money, not “the code is bad.” Result: an argument your
+                  manager hears the first time.
+                </p>
+              </article>
+              <article class="card cyan">
+                <span class="number">03</span>
+                <h3>
+                  Week 3 — The prompt is an interface to thinking: decomposition
+                  for an agent.
+                </h3>
+                <p>
+                  Video → task: run one real task through a decomposition that
+                  leaves the agent nothing to guess. Result: the task closes
+                  faster — and you understand why.
+                </p>
+              </article>
+              <article class="card">
+                <span class="number">04</span>
+                <h3>
+                  Week 4 — Vertical slices and the proactive status update.
+                </h3>
+                <p>
+                  Video → task: break a 3+ day task into working slices and send
+                  an update before anyone asks. Result: your team lead sees
+                  someone who has the situation under control.
+                </p>
+              </article>
+            </div>
+            <p class="lead" style="margin-top: 20px">
+              From there it goes deeper: working with uncertainty, ADRs, RFCs,
+              cross-team influence. The program lives and updates along with the
+              industry.
+            </p>
+            <p class="micro">
+              We'll send the current month's program in the bot right after you
+              subscribe
+            </p>
+            <div class="cta-row">
+              <a
+                class="join-btn"
+                data-cta-location="weeks"
+                href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="jb-dot"></span>Join the guild<span class="jb-arrow"
+                  >→</span
+                >
+              </a>
+            </div>
+          </section>
+
+          <!-- PROOF: quotes + screenshots + carousel -->
+          <section class="sec" id="proof">
+            <div class="sec-head">
+              <span class="hash"
+                ><span class="mk">##</span
+                ><span class="nm">Cases & reviews</span
+                ><span class="rule"></span
+              ></span>
+              <h2>What changed for those already inside</h2>
+            </div>
+            <div class="grid-2">
+              <article class="card quote green">
+                <span class="tag">After a month:</span>“The company owner kept
+                dumping 5–10 thousand-line MRs on us uncontrollably. A month
+                later I managed to solve it — without the Guild I wouldn't have
+                reached a happy ending”<cite>— guild member</cite>
+              </article>
+              <article class="card quote">
+                <span class="tag">After a week:</span>“After the video on code
+                review I rewrote 80% of my PR comments: instead of «this isn't
+                ok» — questions «why like this, are there other ways». The PR
+                author said it really helped his prioritization. And for the
+                praise — a separate thank you”<cite>— guild member</cite>
+              </article>
+              <article class="card quote amber">
+                <span class="tag">Two hours after the video:</span>“Right on
+                time: two hours after watching — the situation came up
+                immediately. An argument with the CTO about tests ended with
+                each of us understanding the other's side — the advice from the
+                materials went straight into action”<cite>— guild member</cite>
+              </article>
+              <article class="card quote cyan">
+                <span class="tag">The main thing:</span>“This month the Guild
+                gave me — I'm not afraid to say it — confidence that you can
+                take control of all this AI chaos dropped on our heads. And the
+                chance to be part of a community — to feel you're not alone in
+                this fight”<cite>— guild member</cite>
+              </article>
+            </div>
+
+            <!-- screenshots proof -->
+            <div class="hash" style="margin-top: 34px">
+              <span class="mk">##</span
+              ><span class="nm">Screenshots from the chats</span
+              ><span class="rule"></span>
+            </div>
+            <div class="screens">
+              <figure class="screen-card">
+                <img
+                  src="/assets/results/res-1.webp"
+                  alt="Screenshot from the guild"
+                  loading="lazy"
+                />
+              </figure>
+              <figure class="screen-card">
+                <img
+                  src="/assets/results/res-2.webp"
+                  alt="Screenshot from the guild"
+                  loading="lazy"
+                />
+              </figure>
+              <figure class="screen-card">
+                <img
+                  src="/assets/results/res-3.webp"
+                  alt="Screenshot from the guild"
+                  loading="lazy"
+                />
+              </figure>
+              <figure class="screen-card">
+                <img
+                  src="/assets/results/res-4.webp"
+                  alt="Screenshot from the guild"
+                  loading="lazy"
+                />
+              </figure>
+              <figure class="screen-card">
+                <img
+                  src="/assets/results/res-5.webp"
+                  alt="Screenshot from the guild"
+                  loading="lazy"
+                />
+              </figure>
+              <figure class="screen-card">
+                <img
+                  src="/assets/results/res-6.webp"
+                  alt="Screenshot from the guild"
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+
+            <!-- reviews carousel -->
+            <div class="hash" style="margin-top: 34px">
+              <span class="mk">##</span><span class="nm">Member reviews</span
+              ><span class="rule"></span>
+            </div>
+            <div class="reviews" aria-label="Member reviews">
+              <div class="rev-track">
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-01.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-02.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-03.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-04.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-05.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-06.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-07.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-08.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-09.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-10.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-11.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-12.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-13.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-14.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-15.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-16.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-17.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card">
+                  <img
+                    src="/assets/reviews/rev-18.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-01.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-02.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-03.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-04.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-05.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-06.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-07.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-08.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-09.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-10.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-11.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-12.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-13.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-14.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-15.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-16.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-17.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rev-card" aria-hidden="true">
+                  <img
+                    src="/assets/reviews/rev-18.webp"
+                    alt="Guild member review"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+            <p class="micro">
+              From a member survey: “What would you change in the Guild? — I
+              don't see anything yet. Just one request: keep going.” And 9 in 10
+              renew their subscription every month.
+            </p>
+          </section>
+
+          <!-- WHAT'S INCLUDED -->
+          <section class="sec band">
+            <div class="sec-head">
+              <span class="hash"
+                ><span class="mk">##</span
+                ><span class="nm">What's in the subscription</span
+                ><span class="rule"></span
+              ></span>
+              <h2>It adapts to your free time</h2>
+            </div>
+            <div class="grid-3">
+              <article class="card green">
+                <h3>Got 2 hours a week</h3>
+                <p>
+                  3 videos of 15 minutes each + tasks to apply. The core of the
+                  guild — that alone is enough to shift.
+                </p>
+              </article>
+              <article class="card amber">
+                <h3>Got 4 hours</h3>
+                <p>
+                  + expert reviews of your cases (anonymous, on a live call) and
+                  a digest of discussions — 1,200 chat messages compressed into
+                  a 10-minute read. In a member's words: “the chat digests are a
+                  really cool idea.”
+                </p>
+              </article>
+              <article class="card cyan">
+                <h3>Got 6+ hours</h3>
+                <p>
+                  + a private community with Illya and experts on hand, plus
+                  audio streams on “what this means for us” whenever something
+                  happens in the industry.
+                </p>
+              </article>
+            </div>
+            <p class="lead" style="margin-top: 20px">
+              It all comes in one subscription. How much you take is up to your
+              workload.
+            </p>
+          </section>
+
+          <!-- FILTER -->
+          <section class="sec">
+            <div class="split">
+              <div>
+                <span class="hash"
+                  ><span class="mk">##</span
+                  ><span class="nm">Member filter</span
+                  ><span class="rule"></span
+                ></span>
+                <h2>First — who this is NOT for</h2>
+              </div>
+              <div class="grid-2">
+                <article class="card">
+                  <ul>
+                    <li>
+                      Looking for a course that hands you fully finished answers
+                      — this isn't it. Here we discuss the options for answering
+                      your specific question.
+                    </li>
+                    <li>Just want to add a line to your résumé — not here.</li>
+                    <li>
+                      Not ready to try new things in your real project —
+                      definitely not here. Growing faster than the market means
+                      experimenting with the unknown.
+                    </li>
+                  </ul>
+                </article>
+                <article class="card green">
+                  <h3>Who it's built for</h3>
+                  <p>
+                    for middle+ developers who get that it's not about a new
+                    framework. Who see that execution is getting cheaper and
+                    want to reach the level where judgment counts. And who are
+                    ready to work surrounded by people on the same trajectory.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <!-- PRICE -->
+          <section class="sec" id="price">
+            <div class="price-box">
+              <div>
+                <h2>What's in $50:</h2>
+                <div class="price">
+                  <strong>$50</strong>
+                  <span>/mo</span>
+                </div>
+                <p class="lead">
+                  Altogether this would cost $2,000+ a year as separate courses
+                  and consultations. A guild subscription is $50 a month.
+                  Cancels in one click.
+                </p>
+              </div>
+              <div class="card green">
+                <ul>
+                  <li>
+                    The “3 videos a week” system — agentic development,
+                    architecture, engineering communication. 15 minutes each,
+                    concentrated, every one ending with a task for your real
+                    project. (comparable course: $500+/year)
+                  </li>
+                  <li>
+                    Expert reviews of your cases — your real situation,
+                    anonymous, on a live call. (an engineer's hour of
+                    consulting: at least $200–400)
+                  </li>
+                  <li>
+                    Digest of discussions — 1,200 chat messages compressed into
+                    a 10-minute read. In a member's words: “the digests are a
+                    really cool idea.” (savings: ~3 hours/week)
+                  </li>
+                  <li>
+                    A private community of 800 engineers — “a community of
+                    responsible engineers who think about growth.” The feedback
+                    70% of developers say they lack. (priceless — 70% of
+                    developers don't have this at all)
+                  </li>
+                  <li>
+                    Audio streams “what this means for us” — when something
+                    happens in the industry, within days you know what it
+                    changes for you. (a reaction speed no course gives)
+                  </li>
+                  <li>
+                    Access to all past and future releases — the program updates
+                    along with the industry.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="cta-row">
+              <a
+                class="join-btn join-btn-lg"
+                data-cta-location="pricing"
+                href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="jb-dot"></span>Join the guild<span class="jb-arrow"
+                  >→</span
+                >
+              </a>
+            </div>
+            <p class="micro">
+              payment and access through the Telegram bot · your first videos
+              right after subscribing
+            </p>
+          </section>
+
+          <!-- FAQ -->
+          <section class="sec" id="faq">
+            <div class="sec-head">
+              <span class="hash"
+                ><span class="mk">##</span><span class="nm">FAQ</span
+                ><span class="rule"></span
+              ></span>
+              <h2>Questions you might have</h2>
+            </div>
+            <details open>
+              <summary>I don't have time for yet another course.</summary>
+              <p>
+                That's why the format is 15-minute videos and tasks inside your
+                current work, not on top of it. The clips aren't drawn out —
+                concentrated delivery, a minimum rhythm of 2 hours a week
+                including applying it.
+              </p>
+            </details>
+            <details>
+              <summary>Is this just another AI course?</summary>
+              <p>
+                No. Everyone teaches AI tools — that's a baseline, not a
+                differentiator. The guild is about the layer above: judgment,
+                architecture, communication. The things AI won't do for you.
+              </p>
+            </details>
+            <details>
+              <summary>
+                I'm a junior / I'm a senior — is it too early / too late for me?
+              </summary>
+              <p>
+                The core is middle+. For a junior it gives a system for growth
+                without wandering; for a senior, tracks on influence, ADRs, RFCs
+                and cross-team work. The content is tagged by level.
+              </p>
+            </details>
+            <details>
+              <summary>What if it doesn't click?</summary>
+              <p>
+                Cancel in one click in the same bot. Worst case — you spent $50
+                and watched materials for a month. Best case — you stopped being
+                replaceable.
+              </p>
+            </details>
+          </section>
+
+          <!-- FINAL -->
+          <section class="sec final">
+            <div class="price-box">
+              <div>
+                <h2>Become someone who's hard to replace</h2>
+                <p class="lead">
+                  Code has lost value — judgment has gained it. In six months
+                  you'll either be an engineer who keeps the AI chaos under
+                  control, who gets invited to decisions and won't be cut in the
+                  first stack ranking — or the same old plateau you stew in
+                  alone. The first result takes a week. The first step takes a
+                  second.
+                </p>
+                <div class="cta-row">
+                  <a
+                    class="join-btn join-btn-lg"
+                    data-cta-location="final"
+                    href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=website"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <span class="jb-dot"></span>Join the guild<span
+                      class="jb-arrow"
+                      >→</span
+                    >
+                  </a>
+                </div>
+                <p class="micro">
+                  $50/mo · cancel anytime · 800 engineers already inside ·
+                  you're not alone
+                </p>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <footer class="footer-line">
+          <span>nexttick — guild of engineers</span>
+          <span>$50/mo · cancel anytime · 800 engineers already inside</span>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      // Theme toggle
+      (function () {
+        const btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        const meta = document.querySelector('meta[name="theme-color"]');
+        btn.addEventListener("click", () => {
+          const cur =
+            document.documentElement.getAttribute("data-theme") === "light"
+              ? "light"
+              : "dark";
+          const next = cur === "light" ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem("theme", next);
+          } catch (e) {}
+          if (meta)
+            meta.setAttribute(
+              "content",
+              next === "light" ? "#ffffff" : "#0b0d0f",
+            );
+        });
+      })();
+
+      // Scroll-spy for the topbar tabs
+      (function () {
+        const tabs = Array.from(document.querySelectorAll(".win-bar .tab"));
+        if (!tabs.length || !("IntersectionObserver" in window)) return;
+        const secs = tabs
+          .map((t) => document.querySelector(t.getAttribute("href")))
+          .filter(Boolean);
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (!e.isIntersecting) return;
+              tabs.forEach((t) =>
+                t.classList.toggle(
+                  "on",
+                  t.getAttribute("href") === "#" + e.target.id,
+                ),
+              );
+            });
+          },
+          { rootMargin: "-45% 0px -50% 0px" },
+        );
+        secs.forEach((s) => io.observe(s));
+      })();
+
+      // Push CTA clicks to dataLayer for GTM
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest("a.join-btn");
+        if (!a) return;
+        dataLayer.push({
+          event: "cta_click",
+          cta_location: a.dataset.ctaLocation || "unknown",
+          cta_text: a.textContent.trim().replace(/\s+/g, " "),
+          link_url: a.href,
+        });
+      });
+    </script>
+    <script src="/assets/nt-attribution.js?v=1"></script>
+    <script>
+      (function () {
+        var LOCS = ["uk", "en", "ru"];
+        var PAGE_LOC = "en";
+        try {
+          localStorage.setItem("lang", PAGE_LOC);
+        } catch (e) {}
+        document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            var loc = a.getAttribute("data-loc");
+            if (LOCS.indexOf(loc) < 0) return;
+            try {
+              localStorage.setItem("lang", loc);
+            } catch (e) {}
+            location.href =
+              "/swe/" + loc + ".html" + location.search + location.hash;
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

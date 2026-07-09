@@ -1,0 +1,21 @@
+{
+  "name": "nexttick-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NextTick.it static site — page-based Eta templating with pinned-Prettier committed output.",
+  "baselineSha": "268cb44479a7b302d4443bf894da7e4a69da5048",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "build:legal": "python3 tools/build-legal.py",
+    "canary": "node tools/canary.mjs",
+    "build:all": "npm run build && npm run build:legal",
+    "test": "node tools/verify-structure.mjs && node tools/verify-attribution.mjs && node tools/verify-parity.mjs && node tools/verify-translated.mjs && node tools/verify-legal.mjs && python3 tools/verify-i18n.py",
+    "verify": "npm run build:all && npm test"
+  },
+  "dependencies": {
+    "eta": "3.5.0",
+    "node-html-parser": "9.0.0",
+    "prettier": "3.6.2"
+  }
+}

@@ -1,0 +1,30 @@
+<%
+/* Client language switcher (shared by every chrome page). Persists the chosen
+   locale — the sniff stubs read localStorage "lang" — then navigates to the
+   PAGE-BASED URL for the clicked locale. Include data:
+     loc          -> current locale (written to localStorage on load)
+     switchPrefix -> target URL prefix: "" (home) -> /<loc>.html ;
+                     "all/" -> /all/<loc>.html ; "<page>/" -> /<page>/<loc>.html
+   NOTE: the old lang-based logic spliced /<loc>/ into location.pathname, which
+   computes a WRONG URL under page-based hosting (e.g. /all/en.html -> /uk/all/en.html).
+   The target is built directly from switchPrefix instead. */
+%>
+(function () {
+  var LOCS = ["uk", "en", "ru"];
+  var PAGE_LOC = "<%= loc %>";
+  try {
+    localStorage.setItem("lang", PAGE_LOC);
+  } catch (e) {}
+  document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      var loc = a.getAttribute("data-loc");
+      if (LOCS.indexOf(loc) < 0) return;
+      try {
+        localStorage.setItem("lang", loc);
+      } catch (e) {}
+      location.href =
+        "/<%= switchPrefix %>" + loc + ".html" + location.search + location.hash;
+    });
+  });
+})();

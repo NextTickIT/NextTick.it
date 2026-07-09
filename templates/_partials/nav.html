@@ -1,0 +1,16 @@
+<%
+/* Sticky header + primary CTA. Include data:
+     navCta  -> per-locale CTA label
+     channel -> attribution source_channel for the bot link (analytics.attribution) */
+%>
+<header>
+  <div class="container nav">
+    <div class="logo">nexttick<span>_</span></div>
+    <a
+      class="cta-small"
+      data-cta-location="header"
+      href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&amp;source_channel=<%= channel %>"
+      ><%~ navCta %></a
+    >
+  </div>
+</header>

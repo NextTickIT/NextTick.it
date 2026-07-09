@@ -1,0 +1,17 @@
+<%
+/* Shared SEO meta scaffold — structurally identical on every chrome page; only
+   the per-locale title/description text and the URL slug differ. Include data:
+     loc         -> current locale ("en" | "ru" | "uk")
+     title       -> per-locale <title> text
+     description -> per-locale meta description text
+     urlBase     -> canonical/hreflang base, e.g. "https://nexttick.it/all/"
+                    (home passes "https://nexttick.it/")
+   charset/viewport/favicon vary per page, so they stay in the page template. */
+%>
+<title><%~ title %></title>
+<meta name="description" content="<%~ description %>" />
+<link rel="canonical" href="<%= urlBase %><%= loc %>.html" />
+<link rel="alternate" hreflang="uk" href="<%= urlBase %>uk.html" />
+<link rel="alternate" hreflang="en" href="<%= urlBase %>en.html" />
+<link rel="alternate" hreflang="ru" href="<%= urlBase %>ru.html" />
+<link rel="alternate" hreflang="x-default" href="<%= urlBase %>uk.html" />

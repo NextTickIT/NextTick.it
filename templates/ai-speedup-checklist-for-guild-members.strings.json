@@ -1,0 +1,2744 @@
+{
+  "en": {
+    "title": "100 points: AI agents in development",
+    "description": "100 points for adopting AI agents in development — a practical checklist from the engineers of the NextTick guild.",
+    "headerH1": "Effective adoption of <span>AI agents</span> in development",
+    "headerMeta": "Last updated 23 May 2026",
+    "langSwitchLabel": "Language",
+    "resetBtn": "↺ Reset",
+    "searchPlaceholder": "Search items...",
+    "confirmReset": "Reset all progress?",
+    "noResults": "Nothing found. Try a different query.",
+    "dtH3": "⚡ Do you need a framework?",
+    "dtBtnYes": "Yes →",
+    "dtBtnNo": "No →",
+    "dtQ0": "Are 3+ developers on the team actively using agents?",
+    "dtNote0": "Count everyone who writes prompts and runs agents in their workflow.",
+    "dtQ1": "Need prompt and workflow standardization across the whole team?",
+    "dtNote1": "Want everyone to use the same agent roles, the same slash commands, the same templates?",
+    "dtQ2": "Need TDD-first enforcement — the agent can't skip tests?",
+    "dtNote2": "Want a strict workflow: test first, then code, no exceptions?",
+    "dtQ3": "Does the project span the full cycle (idea → PM → architecture → code → QA)?",
+    "dtNote3": "Need specialized agent personas: PM, Architect, Developer, QA?",
+    "dtBtnYesBmad": "Yes — BMAD →",
+    "dtBtnNoOmcc": "No — oh-my-claudecode →",
+    "dtQ4": "Are you a solo dev who wants to work like a virtual team?",
+    "dtNote4": "CEO/Designer/QA modes in one tool — that's gstack.",
+    "dtBtnYesGstack": "Yes — gstack →",
+    "dtBtnNoBare": "No — bare tool →",
+    "dtDescSuperpowers": "The agent physically can't skip the planning/testing phases. TDD, YAGNI, DRY enforcement out of the box. 93K+ stars, officially in the Claude Code marketplace.\n",
+    "dtStartOver": "← Start over",
+    "dtQ6": "Is this an experiment / PoC, or do you want full customization of the flow?",
+    "dtBtnYesBare": "Yes — bare tool →",
+    "dtBtnNoGstack": "No — gstack →",
+    "dtDescBmad": "Breakthrough Method for Agile AI-Driven Development. 12+ specialized agents, quality gates, from specs to production. Works with Claude, GPT, Gemini.\n",
+    "dtDescOmcc": "Teams-first multi-agent orchestration. 19 specialized agents, 36 skills, zero learning curve, task decomposition → execution → verification.\n",
+    "dtDescGstack": "23 specialized skills, 8 power tools, CEO/Designer/QA/EngManager roles. 71K+ stars, fast browser (100–200ms), Apache 2.0.\n",
+    "dtDescBare": "Maximum flexibility, minimal overhead. Custom CLAUDE.md + slash commands + hooks give you everything you need. Add a framework when you feel concrete pain — not before.",
+    "sections": [
+      {
+        "id": 1,
+        "cls": "s1",
+        "title": "Frameworks and ecosystem",
+        "subtitle": "oh-my-claudecode · superpowers · BMAD · GStack · Mastra",
+        "items": [
+          {
+            "title": "Don't install a framework by default — use the decision tree above",
+            "desc": "Frameworks give you structure but add overhead: extra dependencies, slash command conflicts, abstractions over tools you don't understand yet. Use the decision tree above to choose deliberately, not because \"everyone does it\". Add a framework when you feel concrete pain — not before.",
+            "tags": [
+              "strategy"
+            ]
+          },
+          {
+            "title": "oh-my-claudecode: multi-agent orchestration for teamwork",
+            "desc": "A teams-first framework with 19 specialized agents and 36 skills. Automatically decomposes a task into phases: planning → execution → verification → iteration. Zero learning curve — installs via a slash command from the marketplace. Links: <a href=\"https://github.com/yeachan-heo/oh-my-claudecode\" target=\"_blank\">github.com/yeachan-heo/oh-my-claudecode</a> · <a href=\"https://yeachan-heo.github.io/oh-my-claudecode-website/\" target=\"_blank\">website</a>",
+            "tags": [
+              "framework",
+              "team"
+            ]
+          },
+          {
+            "title": "superpowers: TDD-first enforcement — the agent can't skip tests",
+            "desc": "The only framework that covers the entire development cycle. The agent literally can't write code before tests, and enforces YAGNI and DRY. 93K+ GitHub stars, in the official Claude Code marketplace since January 2026. The principle: don't make the agent smarter, enforce the discipline we've built over decades. <a href=\"https://github.com/obra/superpowers\" target=\"_blank\">github.com/obra/superpowers</a>",
+            "tags": [
+              "framework",
+              "TDD"
+            ]
+          },
+          {
+            "title": "BMAD Method: agile AI-driven development with quality gates and specialized agents",
+            "desc": "Breakthrough Method for Agile AI-Driven Development — the full cycle from idea to production. 12+ expert agents (PM, Architect, Developer, UX Designer, QA) work in a single session. Replaces \"vibe coding\" with structured specs, persistent artifacts, and quality gates. Works with Claude, GPT, Gemini, Grok. <a href=\"https://github.com/bmad-code-org/BMAD-METHOD\" target=\"_blank\">github.com/bmad-code-org/BMAD-METHOD</a> · <a href=\"https://github.com/24601/BMAD-AT-CLAUDE\" target=\"_blank\">Claude Code port</a>",
+            "tags": [
+              "framework",
+              "agile"
+            ]
+          },
+          {
+            "title": "gstack (Garry Tan): turns a single developer into a virtual dev team",
+            "desc": "The personal Claude Code setup of the Y Combinator CEO. 23 specialized skills, 8 power tools, CEO/Designer/Engineering Manager/QA/Release Manager roles. The built-in browser runs 20x faster than Claude in Chrome (100–200ms after startup). 71K+ stars in the first 48 hours. Apache 2.0. <a href=\"https://github.com/garrytan/gstack\" target=\"_blank\">github.com/garrytan/gstack</a>",
+            "tags": [
+              "framework",
+              "solo"
+            ]
+          },
+          {
+            "title": "Mastra: TypeScript-native agent framework with full type safety",
+            "desc": "If you write agents programmatically, Mastra gives you workflow steps, Zod schemas for everything, typed tool inputs, and built-in integration with the Vercel AI SDK. Everything out of the box: memory, RAG, observability. Ideal for a production TypeScript backend. <a href=\"https://mastra.ai\" target=\"_blank\">mastra.ai</a> · <a href=\"https://www.generative.inc/mastra-ai-the-complete-guide-to-the-typescript-agent-framework-2026\" target=\"_blank\">full guide</a>",
+            "tags": [
+              "TypeScript",
+              "production"
+            ]
+          },
+          {
+            "title": "Vercel AI SDK: production-ready streaming and structured output for JS/TS agents",
+            "desc": "A provider-agnostic SDK that works with Claude, OpenAI, and Gemini through a single API. <code>generateObject()</code> gives 100% type-safe structured output, <code>streamText()</code> for streaming. Use it instead of raw API calls — easier to migrate between models. <a href=\"https://ai-sdk.dev\" target=\"_blank\">ai-sdk.dev</a> · <a href=\"https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data\" target=\"_blank\">structured data docs</a>",
+            "tags": [
+              "TypeScript",
+              "SDK"
+            ]
+          },
+          {
+            "title": "OpenAI Agents SDK for TypeScript: if you use Codex/GPT models",
+            "desc": "The official TypeScript SDK from OpenAI with automatic JSON Schema generation from TypeScript functions and Zod validation. Function tools, handoffs, guardrails. Supports parallel tool calls and MCP servers. <a href=\"https://openai.github.io/openai-agents-js/\" target=\"_blank\">openai.github.io/openai-agents-js</a>",
+            "tags": [
+              "OpenAI",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "Don't mix incompatible frameworks without analyzing conflicts",
+            "desc": "GStack + Superpowers + GSD can conflict over slash commands, duplicate skills, and create a non-obvious execution order. Before combining them, read their CLAUDE.md files and check for command overlaps. A detailed compatibility breakdown: <a href=\"https://dev.to/imaginex/a-claude-code-skills-stack-how-to-combine-superpowers-gstack-and-gsd-without-the-chaos-44b3\" target=\"_blank\">dev.to: combining frameworks</a>",
+            "tags": [
+              "compatibility"
+            ]
+          },
+          {
+            "title": "Build your own \"micro-framework\" from CLAUDE.md + custom slash commands + hooks",
+            "desc": "For most solo projects, a set of: <code>CLAUDE.md</code> with project rules + <code>.claude/commands/</code> with reusable workflows + 2-3 PostToolUse hooks for lint/format — is a full-fledged framework without anyone else's overhead. Start here, move to an off-the-shelf framework when you outgrow it.",
+            "tags": [
+              "customization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "cls": "s2",
+        "title": "Advanced setup: Hooks, Permissions, Worktrees",
+        "subtitle": "lifecycle events · git isolation · team policies",
+        "items": [
+          {
+            "title": "PreToolUse hook: block dangerous operations before they run",
+            "desc": "Hooks are shell commands or HTTP endpoints that run automatically in the agent's lifecycle. <code>PreToolUse</code> runs before every Bash/Write call. Return a non-zero exit code to block the operation and send an explanation to the agent. Ideal for: forbidding file deletion outside tmp/, validating that the agent doesn't touch prod configs. <a href=\"https://code.claude.com/docs/en/hooks\" target=\"_blank\">code.claude.com/docs/hooks</a>",
+            "tags": [
+              "hooks",
+              "security"
+            ]
+          },
+          {
+            "title": "PostToolUse hook: auto-format and lint after every edit",
+            "desc": "Run Prettier/ESLint automatically after every <code>Write</code> tool call — the agent never leaves unformatted code. Example: <code>{\"PostToolUse\": {\"Write\": \"prettier --write $CLAUDE_TOOL_INPUT_FILE_PATH\"}}</code>. You can add a TypeScript type-check after every edit of .ts files.",
+            "tags": [
+              "hooks",
+              "quality"
+            ]
+          },
+          {
+            "title": "Async hooks: don't block the agent on background tasks",
+            "desc": "Add <code>async: true</code> to the hook config — it runs in the background without stopping the agent loop. Useful for: sending metrics, Slack notifications, writing audit logs. Released in January 2026. <a href=\"https://claudefa.st/blog/tools/hooks/hooks-guide\" target=\"_blank\">full guide to all 12 lifecycle events</a>",
+            "tags": [
+              "hooks",
+              "async"
+            ]
+          },
+          {
+            "title": "HTTP hooks: centralized validation policies for the whole team",
+            "desc": "Instead of a local script, a hook can send a POST to your server. This lets you: keep team-wide rules in one place, audit all agent actions centrally, and dynamically update rules without changing each developer's config. <a href=\"https://www.pixelmojo.io/blogs/claude-code-hooks-production-quality-ci-cd-patterns\" target=\"_blank\">production hooks patterns</a>",
+            "tags": [
+              "hooks",
+              "team"
+            ]
+          },
+          {
+            "title": "Git worktrees: parallel agents in one repo without file conflicts",
+            "desc": "Each agent in its own worktree — edits in one session don't affect another session's files. Launch: <code>claude --worktree</code>. You can run an agent on a feature branch while another agent fixes a bug in main. Built-in support in the Claude Code CLI (added in 2025). <a href=\"https://code.claude.com/docs/en/worktrees\" target=\"_blank\">code.claude.com/docs/worktrees</a>",
+            "tags": [
+              "worktrees",
+              "parallelism"
+            ]
+          },
+          {
+            "title": "isolation: worktree in a custom subagent's frontmatter",
+            "desc": "Add <code>isolation: worktree</code> to the YAML frontmatter when creating a custom subagent — each run automatically gets its own git worktree. The worktree is cleaned up if the agent made no changes, otherwise it returns the path and branch name. Ideal for the parallel fan-out pattern.",
+            "tags": [
+              "subagent",
+              "isolation"
+            ]
+          },
+          {
+            "title": "CLAUDE.md hierarchy: global → project → subfolder for granular control",
+            "desc": "<code>~/.claude/CLAUDE.md</code> → global preferences (code style, favorite tools). <code>project/CLAUDE.md</code> → project rules (architecture, naming, anti-patterns). <code>src/api/CLAUDE.md</code> → subfolder specifics. Each level supplements but does not replace the one above. Keep each file < 200 lines.",
+            "tags": [
+              "CLAUDE.md",
+              "config"
+            ]
+          },
+          {
+            "title": "Fine-tuning permissions: least-privilege principle for the agent",
+            "desc": "<code>allowedTools</code> and <code>deniedTools</code> in <code>settings.json</code> or a subagent's frontmatter. A code-review agent shouldn't have Bash access. A deploy agent shouldn't edit source files. Minimal privileges = fewer accidental breakages and easier auditing of actions. <a href=\"https://code.claude.com/docs/en/hooks\" target=\"_blank\">docs</a>",
+            "tags": [
+              "security",
+              "config"
+            ]
+          },
+          {
+            "title": "Custom slash commands as reusable team workflows",
+            "desc": "Create <code>.claude/commands/review.md</code> → <code>/review</code> runs your standardized code-review process. <code>/deploy</code>, <code>/test</code>, <code>/standup</code> — all of these can be committed to the repo and shared with the team via git. The prompt in the file supports <code>$ARGUMENTS</code> for parameters.",
+            "tags": [
+              "slash commands",
+              "team"
+            ]
+          },
+          {
+            "title": "disler/claude-code-hooks-mastery: 5 production hooks from scratch to learn from",
+            "desc": "The best practical resource on hooks with real examples. Covers: auto-commit hook, test-runner hook, security scanner, format enforcer, notification hook. Each with an explanation of the pattern and edge cases. <a href=\"https://github.com/disler/claude-code-hooks-mastery\" target=\"_blank\">github.com/disler/claude-code-hooks-mastery</a>",
+            "tags": [
+              "hooks",
+              "examples"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "cls": "s3",
+        "title": "MCP vs CLI: choice and integration architecture",
+        "subtitle": "typescript-sdk · transport · composition · security",
+        "items": [
+          {
+            "title": "The key rule for choosing: MCP for state and tools, CLI for scripts and CI",
+            "desc": "MCP is justified when you need: persistent state between calls (auth sessions, cursors), complex tools with rich types, team-wide reusability, integration with a specific service (GitHub, Slack, DB). A CLI pipe is justified for: one-off scripts, CI/CD tasks, quick experimentation. Don't build an MCP where <code>claude -p</code> is enough.",
+            "tags": [
+              "architecture"
+            ]
+          },
+          {
+            "title": "The official TypeScript SDK is the only right way to write MCP servers",
+            "desc": "It gives you full types for messages, negotiation, tools, and resources. STDIO, Streamable HTTP, and SSE transports out of the box. Don't reinvent the wheel with raw JSON-RPC. <a href=\"https://github.com/modelcontextprotocol/typescript-sdk\" target=\"_blank\">github.com/modelcontextprotocol/typescript-sdk</a> · <a href=\"https://modelcontextprotocol.io/docs/develop/build-server\" target=\"_blank\">official documentation</a>",
+            "tags": [
+              "TypeScript",
+              "MCP"
+            ]
+          },
+          {
+            "title": "STDIO vs Streamable HTTP: SSE is deprecated — use the right transport",
+            "desc": "STDIO — for local connections (Claude Desktop, Claude Code). Streamable HTTP — for remote/cloud MCP servers. SSE as a standalone transport is officially deprecated. Many old tutorials teach SSE — check that they're current. <a href=\"https://pockit.tools/blog/building-custom-mcp-servers-typescript-complete-guide/\" target=\"_blank\">2026 guide</a>",
+            "tags": [
+              "transport",
+              "MCP"
+            ]
+          },
+          {
+            "title": "Never use console.log() in a STDIO MCP server",
+            "desc": "In the STDIO transport, stdout is used for JSON-RPC messages. Any <code>console.log()</code> corrupts the protocol and breaks the server. Use only <code>console.error()</code> (writes to stderr) or log to a file. This trips up every newcomer at least once. <a href=\"https://nearform.com/digital-community/implementing-model-context-protocol-mcp-tips-tricks-and-pitfalls/\" target=\"_blank\">tips & pitfalls</a>",
+            "tags": [
+              "MCP",
+              "mistakes"
+            ]
+          },
+          {
+            "title": "MCP tool descriptions are prompting, not documentation",
+            "desc": "Claude uses a tool's description to decide when and how to use it. Write it like a prompt: \"Use this tool when you need...\" with input examples. A bad description = the tool goes unused or gets used incorrectly even if the code is perfect. <a href=\"https://www.freecodecamp.org/news/how-to-build-a-custom-mcp-server-with-typescript-a-handbook-for-developers/\" target=\"_blank\">full handbook</a>",
+            "tags": [
+              "prompting",
+              "MCP"
+            ]
+          },
+          {
+            "title": "MCP Sessions: cache expensive operations across tool calls in one session",
+            "desc": "Sessions let an MCP server keep state across multiple tool calls of one conversation. Use them for: reusing auth tokens, storing pagination cursors, caching the results of expensive queries, user-specific configuration. Significantly reduces latency and cost.",
+            "tags": [
+              "MCP",
+              "state"
+            ]
+          },
+          {
+            "title": "Test an MCP server's business logic separately from the MCP wrapper",
+            "desc": "Write unit tests for <code>fetchUserData()</code>, <code>parseResponse()</code>, and other functions as regular Node.js code — without MCP context. Test the MCP layer separately to check serialization and error handling. This speeds up development and simplifies debugging.",
+            "tags": [
+              "testing",
+              "MCP"
+            ]
+          },
+          {
+            "title": "Rate limiting, input validation, and timeouts are mandatory in production MCP",
+            "desc": "Without rate limiting, the agent can DDoS your own service by calling a tool in a loop. Without input validation — prompt injection through data. Without timeouts — the agent hangs forever. Minimum set: Zod validation + <code>AbortController</code> timeout + request counter. <a href=\"https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices\" target=\"_blank\">security best practices</a>",
+            "tags": [
+              "security",
+              "production"
+            ]
+          },
+          {
+            "title": "MCP composition: multiple servers in one config for a \"superagent\"",
+            "desc": "In <code>claude_desktop_config.json</code> or <code>.claude/settings.json</code> you can connect dozens of MCP servers at once. GitHub MCP + Linear MCP + PostgreSQL MCP + Slack MCP = an agent that sees the whole stack. Watch for tool-name conflicts between servers.",
+            "tags": [
+              "MCP",
+              "architecture"
+            ]
+          },
+          {
+            "title": "Attacks via MCP: prompt injection through tool descriptions and data",
+            "desc": "A real case: an attacker creates a GitHub issue with malicious instructions → an agent with GitHub MCP reads the issue and executes the instructions. CVE-2025-53110 and CVE-2025-53109 in Filesystem MCP allowed escaping the sandbox. Never pass user-supplied data into MCP tools without sanitization. <a href=\"https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/\" target=\"_blank\">Simon Willison: MCP prompt injection</a>",
+            "tags": [
+              "security",
+              "attacks"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "cls": "s4",
+        "title": "Programmatic invocation and embedding agents into systems",
+        "subtitle": "claude -p · Agent SDK · headless · microservices · Codex CLI",
+        "items": [
+          {
+            "title": "claude -p: run an agent from a script without the interactive interface",
+            "desc": "<code>claude -p \"find and fix the bug in auth.ts\" --allowedTools \"Read,Edit,Bash\"</code> — the agent does the task and exits. The foundation of all headless pipelines. Supports <code>--output-format json</code> for machine-readable output with cost/duration metrics. <a href=\"https://code.claude.com/docs/en/headless\" target=\"_blank\">code.claude.com/docs/headless</a>",
+            "tags": [
+              "CLI",
+              "headless"
+            ]
+          },
+          {
+            "title": "--output-format json: structured output for automation",
+            "desc": "Returns an object <code>{result, cost_usd, duration_ms, num_turns}</code>. Parse it in Node.js: <code>const {result, cost_usd} = JSON.parse(execSync(\"claude -p ...\").toString())</code>. Log cost to a DB, build spend analytics, trigger alerts when thresholds are exceeded.",
+            "tags": [
+              "CLI",
+              "automation"
+            ]
+          },
+          {
+            "title": "Agent SDK TypeScript/Python: the same tools as in Claude Code, in your code",
+            "desc": "The SDK gives programmatic access to the agent loop, all tools, and context management. Use it for: embedding an agent into an existing service, custom orchestrators, complex multi-step workflows with business logic between steps. <a href=\"https://platform.claude.com/docs/en/agent-sdk/overview\" target=\"_blank\">platform.claude.com/docs/agent-sdk</a>",
+            "tags": [
+              "SDK",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "AGENTS.md in OpenAI Codex CLI: the CLAUDE.md equivalent for Codex pipelines",
+            "desc": "The Codex CLI reads <code>AGENTS.md</code> at the repo root to understand project context. Supports MCP servers and parallel tool calls. Use it for: CI tasks, scheduled jobs, agents in GitHub Actions. <code>npm install -g @openai/codex</code> → <code>codex -p \"task\" --full-auto</code>. <a href=\"https://github.com/openai/codex\" target=\"_blank\">github.com/openai/codex</a>",
+            "tags": [
+              "Codex",
+              "CLI"
+            ]
+          },
+          {
+            "title": "Agent as a microservice: event-driven architecture with queues",
+            "desc": "Webhook event → queue (SQS/BullMQ) → worker reads the task → <code>claude -p</code> or an SDK call → result → callback/webhook. The agent is stateless, scales horizontally, and is isolated from the main application. The pattern is ideal for: async code review, automatic documentation, batch processing.",
+            "tags": [
+              "architecture",
+              "microservices"
+            ]
+          },
+          {
+            "title": "Run several agents in parallel via Promise.all()",
+            "desc": "<code>await Promise.all([claude(\"-p\", \"fix auth bug\"), claude(\"-p\", \"update docs\"), claude(\"-p\", \"write tests\")])</code> — three agents work in parallel. Each in its own worktree to avoid file conflicts. Control concurrency with <code>p-limit</code> so you don't hit rate limits.",
+            "tags": [
+              "parallelism",
+              "Node.js"
+            ]
+          },
+          {
+            "title": "Pass large context through files, not through stdin",
+            "desc": "To pass hundreds of KB of context, create a temporary file and tell the agent to read it: <code>claude -p \"read /tmp/context.md and do the task\"</code>. Piping through stdin works well for small data; for large data, files are more reliable and cheaper (they don't duplicate tokens in CLI args).",
+            "tags": [
+              "context",
+              "optimization"
+            ]
+          },
+          {
+            "title": "Claude Code GitHub Actions: an agent right in the CI/CD pipeline",
+            "desc": "Official integration: the agent runs on every PR, can read the diff, run tests, and leave review comments. Configured via a YAML workflow. Billed since June 2026 through a separate Agent SDK credit on Pro/Max/Team plans. <a href=\"https://code.claude.com/docs/en/headless\" target=\"_blank\">docs</a> · <a href=\"https://dev.to/rajeshroyal/headless-mode-unleash-ai-in-your-cicd-pipeline-1imm\" target=\"_blank\">CI/CD guide</a>",
+            "tags": [
+              "CI/CD",
+              "GitHub Actions"
+            ]
+          },
+          {
+            "title": "Error handling and a retry strategy for headless agents",
+            "desc": "The agent can fail due to rate limits, timeout, or invalid output. Pattern: exponential backoff (1s → 2s → 4s → 8s), max 3 attempts, circuit breaker after 5 consecutive failures, fallback to a simpler task or human escalation. Don't let the pipeline hang forever.",
+            "tags": [
+              "reliability",
+              "error handling"
+            ]
+          },
+          {
+            "title": "Observability for headless agents: log cost, duration, num_turns",
+            "desc": "Every headless call via <code>--output-format json</code> returns metrics. Collect them in a time-series store (Prometheus/InfluxDB), visualize in Grafana. Track: average cost per task, P95 duration, failure rate, token usage by task type. That's how you find the most expensive operations.",
+            "tags": [
+              "observability",
+              "metrics"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "cls": "s5",
+        "title": "Subagents: decomposition, parallelism, orchestration",
+        "subtitle": "Task tool · fan-out · orchestrator→worker · handoffs",
+        "items": [
+          {
+            "title": "The Task tool is the core primitive for launching subagents from an orchestrator",
+            "desc": "Task(subagent_name, prompt) launches an isolated agent instance with its own context window. It returns the result to the orchestrator. You can run them in parallel: multiple Task calls in one turn run concurrently. <a href=\"https://claudelog.com/mechanics/task-agent-tools/\" target=\"_blank\">ClaudeLog: Task/Agent Tools</a> · <a href=\"https://code.claude.com/docs/en/sub-agents\" target=\"_blank\">official documentation</a>",
+            "tags": [
+              "subagents",
+              "Task tool"
+            ]
+          },
+          {
+            "title": "Orchestrator→worker pattern: Opus thinks, Sonnet/Haiku does",
+            "desc": "An Opus 4 orchestrator decomposes the task, understands dependencies, and resolves complex architectural questions. Sonnet 4 / Haiku 4 workers perform clearly scoped tasks. Saves 60-80% in cost with no loss of quality on the workers — they work from well-described tasks. <a href=\"https://claudefa.st/blog/guide/agents/sub-agent-best-practices\" target=\"_blank\">sub-agent best practices</a>",
+            "tags": [
+              "pattern",
+              "cost"
+            ]
+          },
+          {
+            "title": "Fan-out pattern: parallel processing of independent units of work",
+            "desc": "50 components to refactor → the orchestrator launches 50 parallel subagents, each handling its own component → results converge in the orchestrator for the final merge. Applicability condition: the tasks are independent (no shared state, no execution order). <a href=\"https://turion.ai/blog/claude-code-multi-agents-subagents-guide/\" target=\"_blank\">multi-agents guide</a>",
+            "tags": [
+              "pattern",
+              "parallelism"
+            ]
+          },
+          {
+            "title": "Shared task list as a coordination primitive — agents don't talk directly",
+            "desc": "Agents read and write to a shared <code>tasks.json</code> file via filesystem tools. Atomic operations: \"took task X\" → \"finished task X, result in output/X.md\". No direct communication between agents → no deadlocks, easier debugging. <a href=\"https://www.mindstudio.ai/blog/claude-code-agent-teams-parallel-shared-task-list\" target=\"_blank\">Agent Teams Deep Dive</a>",
+            "tags": [
+              "coordination",
+              "pattern"
+            ]
+          },
+          {
+            "title": "Subagent context isolation: each gets only what it needs",
+            "desc": "Don't pass the orchestrator's entire history into a subagent. Assemble a minimal context: the task description + the needed files + the expected output format. Less context = less confusion + fewer tokens. A subagent shouldn't know about the other tasks of a parallel fan-out.",
+            "tags": [
+              "context",
+              "optimization"
+            ]
+          },
+          {
+            "title": "Handoffs: how to correctly pass state between sequential agents",
+            "desc": "An explicit state file: agent 1 writes <code>stage1_output.md</code> with a structured result, agent 2 reads it at the start of its work. Use frontmatter with metadata: <code>status, completed_at, next_steps</code>. This is the chain-of-responsibility pattern — each agent continues from a clear point.",
+            "tags": [
+              "pattern",
+              "handoffs"
+            ]
+          },
+          {
+            "title": "Worktree isolation for subagents: safe parallelism in git",
+            "desc": "Add <code>isolation: worktree</code> to a custom subagent's frontmatter → each run automatically creates a separate git worktree. Several agents edit different parts of the code at once without file conflicts. After they finish, the orchestrator decides how to merge the changes. <a href=\"https://code.claude.com/docs/en/worktrees\" target=\"_blank\">worktrees docs</a>",
+            "tags": [
+              "worktrees",
+              "subagents"
+            ]
+          },
+          {
+            "title": "Custom subagents in .claude/agents/: build a team of specialists",
+            "desc": "YAML frontmatter defines: <code>name, model, tools, system_prompt, isolation</code>. Example: <code>frontend-agent</code> with access only to <code>src/components/</code>, <code>api-agent</code> with access to <code>src/api/</code>. Specialization reduces the chance of accidental changes in the wrong places.",
+            "tags": [
+              "config",
+              "specialization"
+            ]
+          },
+          {
+            "title": "When you do NOT need subagents: overhead exceeds the benefit",
+            "desc": "Launching a subagent involves: initializing a new context window, reading CLAUDE.md, setting up tools. For a task under 2 minutes long, this overhead can exceed the execution time. Rule: a subagent is justified if the task takes > 5 minutes or if you need true parallelism.",
+            "tags": [
+              "anti-pattern"
+            ]
+          },
+          {
+            "title": "Debugging multi-agent workflows: each subagent writes to its own log",
+            "desc": "Instruct each subagent: \"first write to <code>logs/{agent_name}.md</code>: the task, plan, progress, result\". At the end the orchestrator reads all the logs and builds the full picture. On an error you immediately see which agent it happened on and why. <a href=\"https://github.com/wshobson/agents\" target=\"_blank\">example: wshobson/agents orchestration</a>",
+            "tags": [
+              "debugging",
+              "observability"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "cls": "s6",
+        "title": "Agent context and memory",
+        "subtitle": "CLAUDE.md · compaction · memory tool · context poisoning",
+        "items": [
+          {
+            "title": "CLAUDE.md < 200 lines: length is inversely proportional to compliance",
+            "desc": "The longer CLAUDE.md is, the worse the agent follows the rules — it simply loses them in the long context. Keep it < 200 lines, only the critically important. Remove everything that can be read from the project code. Review regularly: if a rule hasn't been broken in 3 months — delete it. <a href=\"https://code.claude.com/docs/en/memory\" target=\"_blank\">code.claude.com/docs/memory</a>",
+            "tags": [
+              "CLAUDE.md",
+              "best practice"
+            ]
+          },
+          {
+            "title": "CLAUDE.md is a contract: write what you CAN'T do, not only what you can",
+            "desc": "Negative instructions work better than positive ones in long sessions. A \"Never do:\" block with concrete anti-patterns (\"don't use any\", \"don't change package.json without an explicit request\", \"don't delete tests\") is more effective than vague positive rules.",
+            "tags": [
+              "CLAUDE.md",
+              "prompting"
+            ]
+          },
+          {
+            "title": "/compact: compress context without losing the gist in long sessions",
+            "desc": "<code>/compact</code> makes Claude summarize the conversation history into key facts and decisions while preserving the working context. Use it proactively every ~50 turns or when you see response quality degrade — a sign of a context window overflow.",
+            "tags": [
+              "context",
+              "optimization"
+            ]
+          },
+          {
+            "title": "Context poisoning: how erroneous data in context breaks the agent",
+            "desc": "If the agent got an incorrect result from a tool (a bug in the code, the wrong file) and didn't explicitly fix it, the \"poisoned\" fact stays in the context and affects all subsequent decisions. Symptom: the agent reproduces the same error over and over. Solution: an explicit fix or /compact with a recompute.",
+            "tags": [
+              "context",
+              "bugs"
+            ]
+          },
+          {
+            "title": "Memory tool: persistent storage between sessions",
+            "desc": "An API-level tool that lets the agent write and read files between sessions. The agent itself decides what is important to remember. Use it for: long-term projects where the agent must know decisions made a week ago, accumulating knowledge about the codebase. <a href=\"https://platform.claude.com/docs/en/managed-agents/memory\" target=\"_blank\">platform.claude.com/docs/memory</a>",
+            "tags": [
+              "memory",
+              "persistence"
+            ]
+          },
+          {
+            "title": "Auto-memory in Claude Code: the agent updates its own project notes",
+            "desc": "Claude Code automatically records learned preferences and patterns into memory files without manually editing CLAUDE.md. The agent accumulates knowledge about the codebase across sessions. Valuable for long-term projects: in a month the agent knows the architecture better than a new developer. <a href=\"https://www.mindstudio.ai/blog/what-is-claude-code-auto-memory\" target=\"_blank\">what auto-memory is</a>",
+            "tags": [
+              "memory",
+              "auto"
+            ]
+          },
+          {
+            "title": "Tool result clearing: remove stale results from context",
+            "desc": "Large bash outputs, files read an hour ago — they still take up tokens in the context. The context engineering API lets you explicitly delete specific tool results. For long sessions this reduces cost and improves quality. <a href=\"https://platform.claude.com/cookbook/tool-use-context-engineering-context-engineering-tools\" target=\"_blank\">Context Engineering Cookbook</a>",
+            "tags": [
+              "context",
+              "optimization"
+            ]
+          },
+          {
+            "title": "Pass state between sessions through a structured state file",
+            "desc": "At the end of a session, write <code>session_state.json</code>: current status, decisions made, next steps, important findings. At the start of the next session: \"read session_state.json and continue the work\". More reliable than relying on auto-memory for critical data.",
+            "tags": [
+              "persistence",
+              "pattern"
+            ]
+          },
+          {
+            "title": "Context engineering: design what the agent SEES, not only what you say",
+            "desc": "The principle: the agent makes decisions based on everything in its context window. If incorrect information or extra noise gets in, quality drops. Deliberately construct the context: include relevant files explicitly, exclude irrelevant ones, structure the order of information. <a href=\"https://platform.claude.com/cookbook/tool-use-context-engineering-context-engineering-tools\" target=\"_blank\">cookbook</a>",
+            "tags": [
+              "context",
+              "architecture"
+            ]
+          },
+          {
+            "title": "Use --resume and --continue to recover interrupted sessions",
+            "desc": "<code>claude --continue</code> continues the last session, <code>claude --resume SESSION_ID</code> restores a specific one. Critical for long agent tasks that can get interrupted: deploys, refactoring a large codebase, a long research workflow.",
+            "tags": [
+              "sessions",
+              "reliability"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "cls": "s7",
+        "title": "Prompting specifically for agents",
+        "subtitle": "system prompts · XML tags · few-shot · tool use · slash commands",
+        "items": [
+          {
+            "title": "A prompt for an agent ≠ a prompt for a chatbot: different goals, different patterns",
+            "desc": "A chatbot prompt → \"you are a helpful assistant\". An agent prompt → \"you perform task X, use tools Y, output the result in format Z, and stop when W\". An agent needs: clear tools, stopping conditions, an output format, and limits of authority — not a personality and tone.",
+            "tags": [
+              "prompting",
+              "principles"
+            ]
+          },
+          {
+            "title": "XML tags for structuring complex agent prompts",
+            "desc": "Claude natively understands XML structure: <code>&lt;context&gt;...&lt;/context&gt;</code>, <code>&lt;task&gt;...&lt;/task&gt;</code>, <code>&lt;constraints&gt;...&lt;/constraints&gt;</code>, <code>&lt;output_format&gt;...&lt;/output_format&gt;</code>. Tags help separate the roles of different parts of the prompt and reduce \"confusion\" with long instructions. <a href=\"https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview\" target=\"_blank\">Anthropic prompting guide</a>",
+            "tags": [
+              "prompting",
+              "XML"
+            ]
+          },
+          {
+            "title": "Few-shot examples to teach correct tool usage",
+            "desc": "Show 2-3 examples of the correct tool-call flow: \"first read the file, then edit only the needed part\". This sharply reduces the number of incorrect tool calls when the agent is unsure how to use a tool in your specific context. Especially important for custom MCP tools.",
+            "tags": [
+              "prompting",
+              "few-shot"
+            ]
+          },
+          {
+            "title": "Negative instructions are more effective than positive ones for boundary enforcement",
+            "desc": "\"Don't edit files outside the <code>src/</code> directory\" works better than \"edit only <code>src/</code>\". Claude follows a list of explicit prohibitions at the start of the prompt better than vague positive rules. Create a \"Never:\" block in your CLAUDE.md.",
+            "tags": [
+              "prompting",
+              "boundaries"
+            ]
+          },
+          {
+            "title": "Stopping conditions are mandatory: without them the agent improves forever",
+            "desc": "\"Once all tests pass — stop and report the result.\" Without an explicit stopping condition the agent keeps iterating, adding \"improvements\", refactoring things nobody asked for. An explicit stopping condition is one of the most important elements of an agent prompt.",
+            "tags": [
+              "prompting",
+              "control"
+            ]
+          },
+          {
+            "title": "Task decomposition in the prompt: numbered steps beat \"do everything\"",
+            "desc": "\"1. First read the files in src/auth/ 2. Find every use of the deprecated API 3. Update each one 4. Run the tests 5. Return the list of changed files\" → more predictable than \"update auth\". The agent follows an explicit workflow instead of inventing its own.",
+            "tags": [
+              "prompting",
+              "structure"
+            ]
+          },
+          {
+            "title": "Extended thinking: turn it on for complex architectural decisions",
+            "desc": "Thinking mode gives the agent a token budget to reason before answering. For complex tasks (an architectural choice, debugging a hard bug, code review) the quality is noticeably higher. For simple tasks it's extra cost. Tune the thinking budget by task type.",
+            "tags": [
+              "thinking",
+              "quality"
+            ]
+          },
+          {
+            "title": "Slash commands as standardized prompt templates for the team",
+            "desc": "<code>.claude/commands/review.md</code> holds the full code-review prompt with your standards. <code>/review $ARGUMENTS</code> passes a PR number or a file. The team uses the same level of review — no variance in quality from developer to developer.",
+            "tags": [
+              "team",
+              "standards"
+            ]
+          },
+          {
+            "title": "Version your prompts in git: a prompt is code, not magic",
+            "desc": "Keep important prompts in <code>.claude/</code> or a separate repo. Tag versions on changes. Write a changelog: \"v2: added a constraint for TypeScript strict mode\". This lets you roll back on a quality regression and understand exactly what changed.",
+            "tags": [
+              "practice",
+              "versioning"
+            ]
+          },
+          {
+            "title": "Iterative refinement: document what worked right in CLAUDE.md",
+            "desc": "When you find a wording that works better than the previous one — add it to CLAUDE.md right away. Build a pattern: ran the agent → evaluated the result → improved the prompt → recorded what worked. In a month you'll have a battle-tested set of instructions for your specific project.",
+            "tags": [
+              "practice",
+              "iteration"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "cls": "s8",
+        "title": "Predictability and determinism of generation",
+        "subtitle": "Zod · structured output · TypeScript contracts · validation",
+        "items": [
+          {
+            "title": "Zod schemas as a contract between agent and system: parse, don't trust",
+            "desc": "<code>const schema = z.object({files: z.array(z.string()), summary: z.string().max(200)})</code> → <code>schema.parseAsync(output)</code>. The agent either returns a valid object or the system knows about the error. No surprises in production. Zod is the de-facto standard in the TypeScript AI ecosystem. <a href=\"https://workos.com/blog/zod-for-typescript\" target=\"_blank\">Zod for TypeScript AI dev</a>",
+            "tags": [
+              "Zod",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "generateObject() from the Vercel AI SDK: 100% type-safe structured output",
+            "desc": "<code>const {object} = await generateObject({model, schema: z.object({...}), prompt})</code> — returns a typed object, and the provider uses constrained decoding where possible. Never parse JSON from a string by hand when this API exists. <a href=\"https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data\" target=\"_blank\">ai-sdk.dev/docs/generating-structured-data</a>",
+            "tags": [
+              "Vercel AI SDK",
+              "structured output"
+            ]
+          },
+          {
+            "title": "Paste TypeScript interfaces right into the prompt: the agent generates compatible code",
+            "desc": "Include in the prompt: \"Here are the types in use: <code>[paste the interface]</code>. Generate code compatible with these types\". The agent sees the real types from the codebase → the code compiles on the first try in 90% of cases instead of 50%.",
+            "tags": [
+              "TypeScript",
+              "prompting"
+            ]
+          },
+          {
+            "title": "OpenAI Structured Outputs: constrained decoding guarantees valid JSON",
+            "desc": "For the Codex CLI and GPT models, Structured Outputs (not function calling) constrains decoding → the JSON is always valid and always matches the schema. Claude uses a prompt-based approach + Zod validation after — in the Vercel AI SDK this is abstracted away automatically. <a href=\"https://dev.to/whoffagents/openai-structured-outputs-vs-zod-which-to-use-for-llm-response-validation-in-2026-366m\" target=\"_blank\">Structured Outputs vs Zod 2026</a>",
+            "tags": [
+              "OpenAI",
+              "structured output"
+            ]
+          },
+          {
+            "title": "Explicit output format instructions: strip the markdown wrapper that breaks parsing",
+            "desc": "\"Return ONLY valid JSON with no markdown blocks, no comments, no explanations.\" The most common cause of broken parsing is the agent wrapping JSON in ```json ... ```. An explicit instruction solves it. For extra reliability: strip markdown blocks before parsing.",
+            "tags": [
+              "prompting",
+              "parsing"
+            ]
+          },
+          {
+            "title": "Retry with a refined prompt on invalid output",
+            "desc": "Zod fail → extract the validation error → add it to the retry prompt: \"The previous response was invalid: {zodError}. Fix it and return only JSON again.\" Max 3 attempts with exponential backoff. After 3 failures — escalate to a human or fall back. Never fail silently.",
+            "tags": [
+              "retry",
+              "reliability"
+            ]
+          },
+          {
+            "title": "Temperature control: 0 for code, higher for creative tasks",
+            "desc": "Temperature 0 → deterministic output, minimal variation, ideal for generating code, JSON, structured data. Temperature 0.5-0.7 → for writing documentation, commit messages, explanations. Some frameworks force a temperature for different task types.",
+            "tags": [
+              "temperature",
+              "determinism"
+            ]
+          },
+          {
+            "title": "viteval: test agent output in CI like regular code",
+            "desc": "A Vitest-style API for LLM evals: define scorers, local datasets, assertions on output quality. <code>expect(output).toMatchSchema(schema)</code>, <code>expect(score).toBeGreaterThan(0.8)</code>. Run it in GitHub Actions — fail the PR on a regression. <a href=\"https://github.com/viteval/viteval\" target=\"_blank\">github.com/viteval/viteval</a>",
+            "tags": [
+              "testing",
+              "CI"
+            ]
+          },
+          {
+            "title": "Thinking mode for complex tasks: an explicit reasoning budget",
+            "desc": "Extended thinking (Claude) / reasoning (OpenAI) gives the model tokens to \"think out loud\" before the final answer. For multi-step reasoning, complex architectural decisions, debugging non-trivial bugs — the quality is substantially higher. Tune the budget: higher budget → better quality → more expensive.",
+            "tags": [
+              "thinking",
+              "quality"
+            ]
+          },
+          {
+            "title": "Machine-readable error handling: the agent reports errors in a structured way",
+            "desc": "Instead of \"something went wrong\" in free text: instruct the agent to return <code>{success: false, error: {code: \"FILE_NOT_FOUND\", file: \"...\", suggestion: \"...\"}}</code>. The system handles different error types automatically without parsing natural language.",
+            "tags": [
+              "error handling",
+              "structured"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "cls": "s9",
+        "title": "Evaluations and testing of agent workflows (JS/TS)",
+        "subtitle": "promptfoo · viteval · golden datasets · trace-based · CI",
+        "items": [
+          {
+            "title": "promptfoo: the industry standard for LLM evals, used by OpenAI and Anthropic",
+            "desc": "YAML configs to define providers, prompts, and assertions. CLI and TypeScript API. Quality comparison across models, red teaming (50+ vulnerability types), CI/CD integration. In March 2026 OpenAI announced an acquisition — the de-facto standard. <a href=\"https://github.com/promptfoo/promptfoo\" target=\"_blank\">github.com/promptfoo/promptfoo</a> · <a href=\"https://www.promptfoo.dev/docs/integrations/ci-cd/\" target=\"_blank\">CI/CD integration</a>",
+            "tags": [
+              "evals",
+              "CI"
+            ]
+          },
+          {
+            "title": "viteval: a Vitest-style eval framework — a familiar API for JS developers",
+            "desc": "If you already use Vitest, the viteval API will be instantly familiar. Local datasets, a scorer framework, CI integration. Run LLM evals the same way as unit tests. <a href=\"https://github.com/viteval/viteval\" target=\"_blank\">github.com/viteval/viteval</a>",
+            "tags": [
+              "evals",
+              "Vitest"
+            ]
+          },
+          {
+            "title": "agentest: Vitest for testing AI agents with mock tool calls",
+            "desc": "Fills the \"deterministic agent testing\" gap: it intercepts the agent's tool calls, lets you replace them with mock responses, and make assertions on the whole trajectory (which tools it called, in what order, with what arguments) — not just on the final text. <a href=\"https://dev.to/raffael_p/agentest-vitest-style-e2e-testing-for-ai-agents-44j1\" target=\"_blank\">agentest guide</a>",
+            "tags": [
+              "testing",
+              "mocks"
+            ]
+          },
+          {
+            "title": "Golden dataset: your source of truth for regression testing",
+            "desc": "A set: input + expected_output + acceptable_variance. At least 50 examples covering the happy path, edge cases, known hard cases. Version it in git. On every prompt change, run a full eval against the golden set — if the score drops → a regression. <a href=\"https://www.getmaxim.ai/articles/building-a-golden-dataset-for-ai-evaluation-a-step-by-step-guide/\" target=\"_blank\">how to build a golden dataset</a>",
+            "tags": [
+              "evals",
+              "dataset"
+            ]
+          },
+          {
+            "title": "Trace-based evals: evaluate the agent's path, not only the final result",
+            "desc": "The agent reached the right answer the wrong way → that's a problem for production reliability. Record the whole trajectory: which files it read, which commands it ran, how many iterations. Evaluate: minimality (no extra tool calls), correctness (the right sequence), efficiency (no duplicate operations).",
+            "tags": [
+              "evals",
+              "traces"
+            ]
+          },
+          {
+            "title": "LangSmith + Vitest: parameterized tests over a dataset",
+            "desc": "<code>ls.test.each(dataset)(\"test case\", async ({input, expected}) => {...})</code> — a familiar pattern that works in the regular Vitest test runner. Useful if you already use LangChain/LangSmith for agent tracing. <a href=\"https://docs.langchain.com/langsmith/vitest-jest\" target=\"_blank\">LangSmith Vitest integration</a>",
+            "tags": [
+              "LangSmith",
+              "Vitest"
+            ]
+          },
+          {
+            "title": "Regression CI: evals in GitHub Actions on every PR with prompts",
+            "desc": "If a PR changes CLAUDE.md, .claude/commands/, or the system prompt → an eval suite runs automatically against the golden dataset. Fail when score < threshold → can't merge. Prompts stop being \"magic\" — they become code with regression protection. <a href=\"https://www.promptfoo.dev/docs/integrations/ci-cd/\" target=\"_blank\">promptfoo CI/CD docs</a>",
+            "tags": [
+              "CI/CD",
+              "regression"
+            ]
+          },
+          {
+            "title": "Assertions on a range, not on an exact match: test non-deterministic code",
+            "desc": "<code>expect(score).toBeGreaterThan(0.8)</code> instead of <code>expect(output).toBe(exact)</code>. LLM output varies — test quality, not specific words. For structured data (a JSON schema) → exact matching is OK. For text responses → a similarity score or rule-based assertions.",
+            "tags": [
+              "testing",
+              "assertions"
+            ]
+          },
+          {
+            "title": "Unit tests for the agent's tools, separate from the agent loop",
+            "desc": "Test <code>fetchUserData()</code>, <code>parseGitDiff()</code>, <code>validateSchema()</code> with regular Vitest tests without running the agent. Fast, cheap, deterministic. Test the agent loop separately with integration tests. Don't mix the testing levels.",
+            "tags": [
+              "unit tests",
+              "isolation"
+            ]
+          },
+          {
+            "title": "Production monitoring: runtime evals via sampling 10% of requests",
+            "desc": "Run 10% of real requests asynchronously through the eval pipeline → quality metrics in real time. Alerts on degradation: if the score drops by 15% over the last 100 requests → a notification. This is the only way to learn about a production regression before users notice it.",
+            "tags": [
+              "production",
+              "monitoring"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "cls": "s10",
+        "title": "Token and cost optimization",
+        "subtitle": "RTK · prompt caching · context-mode · model selection · /compact",
+        "items": [
+          {
+            "title": "RTK: a CLI proxy that cuts token consumption by 60–90% on frequent commands",
+            "desc": "A single Rust binary with no dependencies. It intercepts the agent's shell commands (git status, ls, cat) and returns cached or compressed results instead of the full output. Radically reduces tokens on filesystem and git operations. <a href=\"https://github.com/rtk-ai/rtk\" target=\"_blank\">github.com/rtk-ai/rtk</a>",
+            "tags": [
+              "RTK",
+              "tokens"
+            ]
+          },
+          {
+            "title": "context-mode in RTK: smart analysis of which parts of the context are actually needed",
+            "desc": "RTK analyzes the agent context and trims parts that don't affect the current task. Unlike a plain /compact that summarizes everything, context-mode is more surgically precise — it keeps the maximum relevant information at the minimum token cost. <a href=\"https://github.com/rtk-ai/rtk\" target=\"_blank\">github.com/rtk-ai/rtk</a>",
+            "tags": [
+              "RTK",
+              "context"
+            ]
+          },
+          {
+            "title": "Prompt caching: 90% savings on repeated system prompts",
+            "desc": "Claude prompt caching: cached tokens cost $0.30/M instead of $3.00/M — a 90% saving. The cache works on a prefix match. Mandatory for all agents with long system prompts (CLAUDE.md + documentation + instructions). Enabled automatically in the Claude API when a cache_control header is present. <a href=\"https://introl.com/blog/prompt-caching-infrastructure-llm-cost-latency-reduction-guide-2025\" target=\"_blank\">prompt caching guide</a>",
+            "tags": [
+              "caching",
+              "cost"
+            ]
+          },
+          {
+            "title": "Cache-friendly prompt structure: static content at the start, dynamic at the end",
+            "desc": "A cache hit only happens on a prefix match. Rule: system prompt + documentation + examples (static) → at the start. The dynamic user request → at the end. Never insert a timestamp or request ID into the middle of the system prompt — it invalidates the cache.",
+            "tags": [
+              "caching",
+              "architecture"
+            ]
+          },
+          {
+            "title": "Model selection strategy: don't use Opus where Haiku is enough",
+            "desc": "Haiku: formatting, lint-fix, simple refactoring, boilerplate code, translation → ~100x cheaper than Opus. Sonnet: ordinary coding tasks, review, documentation. Opus: architectural decisions, complex debugging, multi-step reasoning. The orchestrator-worker pattern maximizes this saving.",
+            "tags": [
+              "models",
+              "cost"
+            ]
+          },
+          {
+            "title": "/compact instead of a restart: keep context across long sessions",
+            "desc": "<code>/compact</code> summarizes the history and continues the session with the preserved context. An alternative to a restart that loses all progress. Use it proactively before the context window fills up — once it's full, response quality degrades to restart levels.",
+            "tags": [
+              "optimization",
+              "context"
+            ]
+          },
+          {
+            "title": "Parallel subagents save time but cost more tokens",
+            "desc": "In parallel: 5 subagents × 10K tokens each = 50K tokens in 2 minutes. Sequentially: 50K tokens in 10 minutes. Time is expensive for interactive tasks — use parallelism. For batch overnight jobs with a cost budget → sequential is cheaper. Choose deliberately.",
+            "tags": [
+              "subagents",
+              "trade-offs"
+            ]
+          },
+          {
+            "title": "Remove large tool results from context after use",
+            "desc": "You read a 500-line file, did the task → that file is no longer needed in the context but takes up thousands of tokens until the end of the session. Regularly clear the \"junk\" via the tool result clearing API or a forced /compact. Especially important for agents that read many files.",
+            "tags": [
+              "context",
+              "tokens"
+            ]
+          },
+          {
+            "title": "Measure the cost of every workflow via --output-format json",
+            "desc": "The <code>cost_usd</code> field in the JSON output of <code>claude -p</code>. Log it to a DB by workflow_type. The top 10 most expensive operations are your optimization queue. Often one workflow costs 80% of the whole budget, and optimizing it solves everything.",
+            "tags": [
+              "metrics",
+              "cost"
+            ]
+          },
+          {
+            "title": "LLMLingua: compress prompts up to 20x for long contexts",
+            "desc": "Microsoft Research training-free prompt compression. Preserves key information while compressing 4-20x. Useful for: RAG context with large documents, long code snippets in the prompt, historical data. Use it when you need to pass a lot of context but have few tokens. <a href=\"https://github.com/microsoft/LLMLingua\" target=\"_blank\">github.com/microsoft/LLMLingua</a>",
+            "tags": [
+              "compression",
+              "tokens"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ru": {
+    "title": "100 пунктов: ИИ-агенты в разработке",
+    "description": "100 пунктов внедрения ИИ-агентов в разработку — практический чеклист от инженеров гильдии NextTick.",
+    "headerH1": "Эффективное внедрение <span>ИИ-агентов</span> в разработку",
+    "headerMeta": "Дата последнего обновления 23 мая 2026",
+    "langSwitchLabel": "Язык",
+    "resetBtn": "↺ Сбросить",
+    "searchPlaceholder": "Поиск по пунктам...",
+    "confirmReset": "Сбросить весь прогресс?",
+    "noResults": "Ничего не найдено. Попробуй другой запрос.",
+    "dtH3": "⚡ Тебе нужен фреймворк?",
+    "dtBtnYes": "Да →",
+    "dtBtnNo": "Нет →",
+    "dtQ0": "В команде 3+ разработчика активно используют агентов?",
+    "dtNote0": "Учитывай всех кто пишет промпты и запускает агентов в рабочем процессе.",
+    "dtQ1": "Нужна стандартизация промптов и workflow на уровне всей команды?",
+    "dtNote1": "Хочешь чтобы все использовали одни и те же роли агентов, одни slash commands, одни шаблоны?",
+    "dtQ2": "Нужен TDD-first enforcement — агент не может пропустить тесты?",
+    "dtNote2": "Хочешь жёсткий workflow: сначала тест, потом код, без исключений?",
+    "dtQ3": "Проект охватывает полный цикл (идея → PM → архитектура → код → QA)?",
+    "dtNote3": "Нужны специализированные агент-персонажи: PM, Architect, Developer, QA?",
+    "dtBtnYesBmad": "Да — BMAD →",
+    "dtBtnNoOmcc": "Нет — oh-my-claudecode →",
+    "dtQ4": "Ты solo dev и хочешь работать как виртуальная команда?",
+    "dtNote4": "CEO/Designer/QA режимы в одном инструменте — это gstack.",
+    "dtBtnYesGstack": "Да — gstack →",
+    "dtBtnNoBare": "Нет — bare tool →",
+    "dtDescSuperpowers": "Агент физически не может пропустить planning/testing фазы. TDD, YAGNI, DRY enforcement из коробки. 93K+ звёзд, официально в Claude Code marketplace.\n",
+    "dtStartOver": "← Пройти снова",
+    "dtQ6": "Это эксперимент / PoC или ты хочешь полную кастомизацию flow?",
+    "dtBtnYesBare": "Да — bare tool →",
+    "dtBtnNoGstack": "Нет — gstack →",
+    "dtDescBmad": "Breakthrough Method for Agile AI-Driven Development. 12+ специализированных агентов, quality gates, от specs до production. Работает с Claude, GPT, Gemini.\n",
+    "dtDescOmcc": "Teams-first multi-agent orchestration. 19 специализированных агентов, 36 скиллов, zero learning curve, task decomposition → execution → verification.\n",
+    "dtDescGstack": "23 специализированных скилла, 8 power tools, роли CEO/Designer/QA/EngManager. 71K+ звёзд, быстрый браузер (100–200ms), Apache 2.0.\n",
+    "dtDescBare": "Максимальная гибкость, минимальный overhead. Кастомные CLAUDE.md + slash commands + hooks дадут тебе всё нужное. Добавляй фреймворк когда ощутишь конкретную боль — не раньше.",
+    "sections": [
+      {
+        "id": 1,
+        "cls": "s1",
+        "title": "Фреймворки и экосистема",
+        "subtitle": "oh-my-claudecode · superpowers · BMAD · GStack · Mastra",
+        "items": [
+          {
+            "title": "Не устанавливай фреймворк по умолчанию — используй decision tree выше",
+            "desc": "Фреймворки дают структуру но добавляют overhead: лишние зависимости, конфликты slash commands, абстракции поверх инструментов которые ты ещё не понял. Используй decision tree выше чтобы выбрать осознанно, а не потому что \"все так делают\". Добавляй фреймворк когда почувствуешь конкретную боль — не раньше.",
+            "tags": [
+              "стратегия"
+            ]
+          },
+          {
+            "title": "oh-my-claudecode: multi-agent orchestration для командной работы",
+            "desc": "Teams-first фреймворк с 19 специализированными агентами и 36 скиллами. Автоматически декомпозирует задачу на фазы: planning → execution → verification → iteration. Zero learning curve — устанавливается через slash command из marketplace. Ссылки: <a href=\"https://github.com/yeachan-heo/oh-my-claudecode\" target=\"_blank\">github.com/yeachan-heo/oh-my-claudecode</a> · <a href=\"https://yeachan-heo.github.io/oh-my-claudecode-website/\" target=\"_blank\">сайт</a>",
+            "tags": [
+              "фреймворк",
+              "команда"
+            ]
+          },
+          {
+            "title": "superpowers: TDD-first enforcement — агент не может пропустить тесты",
+            "desc": "Единственный фреймворк который охватывает весь цикл разработки. Агент буквально не может написать код до тестов, принудительно соблюдает YAGNI и DRY. 93K+ GitHub звёзд, в официальном marketplace Claude Code с января 2026. Принцип: не делать агента умнее, а enforce дисциплину которую строили десятилетиями. <a href=\"https://github.com/obra/superpowers\" target=\"_blank\">github.com/obra/superpowers</a>",
+            "tags": [
+              "фреймворк",
+              "TDD"
+            ]
+          },
+          {
+            "title": "BMAD Method: agile AI-driven development с quality gates и специализированными агентами",
+            "desc": "Breakthrough Method for Agile AI-Driven Development — полный цикл от идеи до production. 12+ агентов-экспертов (PM, Architect, Developer, UX Designer, QA) работают в одной сессии. Заменяет \"vibe coding\" на структурированные specs, persistent artifacts и quality gates. Работает с Claude, GPT, Gemini, Grok. <a href=\"https://github.com/bmad-code-org/BMAD-METHOD\" target=\"_blank\">github.com/bmad-code-org/BMAD-METHOD</a> · <a href=\"https://github.com/24601/BMAD-AT-CLAUDE\" target=\"_blank\">порт под Claude Code</a>",
+            "tags": [
+              "фреймворк",
+              "agile"
+            ]
+          },
+          {
+            "title": "gstack (Garry Tan): превращает одного разработчика в виртуальную dev-команду",
+            "desc": "Личный Claude Code setup CEO Y Combinator. 23 специализированных скилла, 8 power tools, роли CEO/Designer/Engineering Manager/QA/Release Manager. Встроенный браузер работает в 20 раз быстрее Claude in Chrome (100–200ms после старта). 71K+ звёзд за первые 48 часов. Apache 2.0. <a href=\"https://github.com/garrytan/gstack\" target=\"_blank\">github.com/garrytan/gstack</a>",
+            "tags": [
+              "фреймворк",
+              "solo"
+            ]
+          },
+          {
+            "title": "Mastra: TypeScript-native agent framework с полной типобезопасностью",
+            "desc": "Если пишешь агентов программно — Mastra даёт workflow steps, Zod schemas для всего, typed tool inputs, встроенную интеграцию с Vercel AI SDK. Всё из коробки: память, RAG, observability. Идеален для production TypeScript бэкенда. <a href=\"https://mastra.ai\" target=\"_blank\">mastra.ai</a> · <a href=\"https://www.generative.inc/mastra-ai-the-complete-guide-to-the-typescript-agent-framework-2026\" target=\"_blank\">полный guide</a>",
+            "tags": [
+              "TypeScript",
+              "production"
+            ]
+          },
+          {
+            "title": "Vercel AI SDK: production-ready streaming и structured output для JS/TS агентов",
+            "desc": "Provider-agnostic SDK который работает с Claude, OpenAI, Gemini через единый API. <code>generateObject()</code> даёт 100% типобезопасный structured output, <code>streamText()</code> для streaming. Используй вместо прямых API вызовов — легче мигрировать между моделями. <a href=\"https://ai-sdk.dev\" target=\"_blank\">ai-sdk.dev</a> · <a href=\"https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data\" target=\"_blank\">structured data docs</a>",
+            "tags": [
+              "TypeScript",
+              "SDK"
+            ]
+          },
+          {
+            "title": "OpenAI Agents SDK для TypeScript: если используешь Codex/GPT модели",
+            "desc": "Официальный TypeScript SDK от OpenAI с автоматической генерацией JSON Schema из TypeScript функций и Zod-валидацией. Function tools, handoffs, guardrails. Поддерживает параллельные tool calls и MCP серверы. <a href=\"https://openai.github.io/openai-agents-js/\" target=\"_blank\">openai.github.io/openai-agents-js</a>",
+            "tags": [
+              "OpenAI",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "Не смешивай несовместимые фреймворки без анализа конфликтов",
+            "desc": "GStack + Superpowers + GSD могут конфликтовать по slash commands, дублировать скиллы, создавать неочевидный порядок выполнения. Прежде чем комбинировать — читай их CLAUDE.md и проверяй пересечения команд. Детальный разбор совместимости: <a href=\"https://dev.to/imaginex/a-claude-code-skills-stack-how-to-combine-superpowers-gstack-and-gsd-without-the-chaos-44b3\" target=\"_blank\">dev.to: combining frameworks</a>",
+            "tags": [
+              "совместимость"
+            ]
+          },
+          {
+            "title": "Создавай собственный \"микрофреймворк\" из CLAUDE.md + custom slash commands + hooks",
+            "desc": "Для большинства solo проектов набор из: <code>CLAUDE.md</code> с правилами проекта + <code>.claude/commands/</code> с переиспользуемыми workflow + 2-3 PostToolUse hooks для lint/format — это полноценный фреймворк без чужого overhead. Начни здесь, переходи на готовый фреймворк когда перерастёшь.",
+            "tags": [
+              "кастомизация"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "cls": "s2",
+        "title": "Продвинутый сетап: Hooks, Permissions, Worktrees",
+        "subtitle": "lifecycle events · git isolation · team policies",
+        "items": [
+          {
+            "title": "PreToolUse hook: блокируй опасные операции до выполнения",
+            "desc": "Hooks — shell команды или HTTP endpoints которые автоматически запускаются в lifecycle агента. <code>PreToolUse</code> выполняется перед каждым Bash/Write вызовом. Верни exit code != 0 чтобы заблокировать операцию и отправить объяснение агенту. Идеально для: запрета удаления файлов вне tmp/, валидации что агент не меняет prod конфиги. <a href=\"https://code.claude.com/docs/en/hooks\" target=\"_blank\">code.claude.com/docs/hooks</a>",
+            "tags": [
+              "hooks",
+              "безопасность"
+            ]
+          },
+          {
+            "title": "PostToolUse hook: авто-форматирование и lint после каждого edit",
+            "desc": "Запускай Prettier/ESLint автоматически после каждого <code>Write</code> tool call — агент никогда не оставит неотформатированный код. Пример: <code>{\"PostToolUse\": {\"Write\": \"prettier --write $CLAUDE_TOOL_INPUT_FILE_PATH\"}}</code>. Можно добавить TypeScript type-check после каждого редактирования .ts файлов.",
+            "tags": [
+              "hooks",
+              "quality"
+            ]
+          },
+          {
+            "title": "Async hooks: не блокируй агента на фоновых задачах",
+            "desc": "Добавь <code>async: true</code> в конфиг hook — он выполнится в фоне не останавливая агентный loop. Полезно для: отправки метрик, нотификаций в Slack, записи аудит-логов. Вышло в январе 2026. <a href=\"https://claudefa.st/blog/tools/hooks/hooks-guide\" target=\"_blank\">полный guide по всем 12 lifecycle events</a>",
+            "tags": [
+              "hooks",
+              "async"
+            ]
+          },
+          {
+            "title": "HTTP hooks: централизованные политики валидации для всей команды",
+            "desc": "Вместо локального скрипта hook может отправить POST на твой сервер. Это позволяет: иметь team-wide правила в одном месте, аудитировать все действия агентов централизованно, динамически обновлять правила без изменения конфига у каждого разработчика. <a href=\"https://www.pixelmojo.io/blogs/claude-code-hooks-production-quality-ci-cd-patterns\" target=\"_blank\">production hooks patterns</a>",
+            "tags": [
+              "hooks",
+              "команда"
+            ]
+          },
+          {
+            "title": "Git worktrees: параллельные агенты в одном репо без конфликтов файлов",
+            "desc": "Каждый агент в своём worktree — правки в одной сессии не затрагивают файлы другой. Запуск: <code>claude --worktree</code>. Можно запустить агента на feature branch пока другой агент фиксит баг в main. Встроенная поддержка в Claude Code CLI (появилась в 2025). <a href=\"https://code.claude.com/docs/en/worktrees\" target=\"_blank\">code.claude.com/docs/worktrees</a>",
+            "tags": [
+              "worktrees",
+              "параллелизм"
+            ]
+          },
+          {
+            "title": "isolation: worktree в frontmatter custom subagent",
+            "desc": "Добавь <code>isolation: worktree</code> в YAML frontmatter при создании кастомного субагента — каждый запуск автоматически получает собственный git worktree. Worktree очищается если агент не сделал изменений, иначе возвращает путь и имя branch. Идеально для параллельного fan-out паттерна.",
+            "tags": [
+              "subagent",
+              "isolation"
+            ]
+          },
+          {
+            "title": "Иерархия CLAUDE.md: global → project → subfolder для гранулярного контроля",
+            "desc": "<code>~/.claude/CLAUDE.md</code> → глобальные предпочтения (стиль кода, любимые инструменты). <code>project/CLAUDE.md</code> → правила проекта (архитектура, naming, anti-patterns). <code>src/api/CLAUDE.md</code> → специфика подпапки. Каждый уровень дополняет но не заменяет верхний. Держи каждый файл < 200 строк.",
+            "tags": [
+              "CLAUDE.md",
+              "конфиг"
+            ]
+          },
+          {
+            "title": "Тонкая настройка permissions: принцип минимальных прав для агента",
+            "desc": "<code>allowedTools</code> и <code>deniedTools</code> в <code>settings.json</code> или frontmatter субагента. Агент для code review не должен иметь доступ к Bash. Агент для деплоя не должен редактировать исходники. Минимальные права = меньше случайных поломок и проще аудит действий. <a href=\"https://code.claude.com/docs/en/hooks\" target=\"_blank\">docs</a>",
+            "tags": [
+              "безопасность",
+              "конфиг"
+            ]
+          },
+          {
+            "title": "Custom slash commands как переиспользуемые командные workflow",
+            "desc": "Создай <code>.claude/commands/review.md</code> → <code>/review</code> запускает твой стандартизированный процесс code review. <code>/deploy</code>, <code>/test</code>, <code>/standup</code> — всё это можно зафиксировать в репо и шарить с командой через git. Промпт в файле поддерживает <code>$ARGUMENTS</code> для параметров.",
+            "tags": [
+              "slash commands",
+              "команда"
+            ]
+          },
+          {
+            "title": "disler/claude-code-hooks-mastery: 5 production hooks с нуля для изучения",
+            "desc": "Лучший практический ресурс по hooks с реальными примерами. Покрывает: auto-commit hook, test-runner hook, security scanner, format enforcer, notification hook. Каждый с объяснением паттерна и edge cases. <a href=\"https://github.com/disler/claude-code-hooks-mastery\" target=\"_blank\">github.com/disler/claude-code-hooks-mastery</a>",
+            "tags": [
+              "hooks",
+              "примеры"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "cls": "s3",
+        "title": "MCP vs CLI: выбор и архитектура интеграции",
+        "subtitle": "typescript-sdk · transport · composition · security",
+        "items": [
+          {
+            "title": "Ключевое правило выбора: MCP для состояния и инструментов, CLI для скриптов и CI",
+            "desc": "MCP оправдан когда нужно: постоянное состояние между вызовами (auth сессии, cursors), сложные инструменты с богатыми типами, командная переиспользуемость, интеграция с конкретным сервисом (GitHub, Slack, БД). CLI pipe оправдан для: one-off скриптов, CI/CD задач, быстрого экспериментирования. Не создавай MCP там где хватит <code>claude -p</code>.",
+            "tags": [
+              "архитектура"
+            ]
+          },
+          {
+            "title": "Официальный TypeScript SDK — единственный правильный способ писать MCP серверы",
+            "desc": "Даёт полные типы для сообщений, negotiation, инструментов и ресурсов. STDIO, Streamable HTTP и SSE транспорты из коробки. Не изобретай велосипед с сырым JSON-RPC. <a href=\"https://github.com/modelcontextprotocol/typescript-sdk\" target=\"_blank\">github.com/modelcontextprotocol/typescript-sdk</a> · <a href=\"https://modelcontextprotocol.io/docs/develop/build-server\" target=\"_blank\">официальная документация</a>",
+            "tags": [
+              "TypeScript",
+              "MCP"
+            ]
+          },
+          {
+            "title": "STDIO vs Streamable HTTP: SSE deprecated — используй правильный транспорт",
+            "desc": "STDIO — для локальных connections (Claude Desktop, Claude Code). Streamable HTTP — для remote/cloud MCP серверов. SSE как самостоятельный транспорт официально deprecated. Многие старые туториалы учат SSE — проверяй актуальность. <a href=\"https://pockit.tools/blog/building-custom-mcp-servers-typescript-complete-guide/\" target=\"_blank\">2026 guide</a>",
+            "tags": [
+              "транспорт",
+              "MCP"
+            ]
+          },
+          {
+            "title": "Никогда не используй console.log() в STDIO MCP сервере",
+            "desc": "stdout в STDIO транспорте используется для JSON-RPC сообщений. Любой <code>console.log()</code> коррумпирует протокол и ломает сервер. Только <code>console.error()</code> (пишет в stderr) или логирование в файл. Это ломает каждого новичка хотя бы один раз. <a href=\"https://nearform.com/digital-community/implementing-model-context-protocol-mcp-tips-tricks-and-pitfalls/\" target=\"_blank\">tips & pitfalls</a>",
+            "tags": [
+              "MCP",
+              "ошибки"
+            ]
+          },
+          {
+            "title": "Описания инструментов MCP — это промптинг, а не документация",
+            "desc": "Claude использует описание инструмента чтобы решить когда и как его применять. Пиши как промпт: \"Используй этот инструмент когда нужно...\" с примерами входных данных. Плохое описание = инструмент не используется или используется неправильно даже если код идеален. <a href=\"https://www.freecodecamp.org/news/how-to-build-a-custom-mcp-server-with-typescript-a-handbook-for-developers/\" target=\"_blank\">полный handbook</a>",
+            "tags": [
+              "промптинг",
+              "MCP"
+            ]
+          },
+          {
+            "title": "MCP Sessions: кэшируй дорогие операции между tool calls одной сессии",
+            "desc": "Sessions позволяют MCP серверу хранить состояние через несколько tool calls одного разговора. Используй для: переиспользования auth токенов, хранения pagination cursors, кэширования результатов дорогих запросов, user-specific конфигурации. Существенно снижает latency и стоимость.",
+            "tags": [
+              "MCP",
+              "state"
+            ]
+          },
+          {
+            "title": "Тестируй бизнес-логику MCP сервера отдельно от MCP-обёртки",
+            "desc": "Пиши unit тесты для <code>fetchUserData()</code>, <code>parseResponse()</code> и других функций как обычный Node.js код — без MCP контекста. Тестируй MCP-слой отдельно для проверки сериализации и error handling. Это ускоряет разработку и упрощает дебаггинг.",
+            "tags": [
+              "тестирование",
+              "MCP"
+            ]
+          },
+          {
+            "title": "Rate limiting, input validation и таймауты — обязательны в production MCP",
+            "desc": "Без rate limiting агент может устроить DDoS твоему же сервису вызывая инструмент в цикле. Без input validation — prompt injection через данные. Без таймаутов — агент зависнет навсегда. Минимальный набор: Zod validation + <code>AbortController</code> timeout + request counter. <a href=\"https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices\" target=\"_blank\">security best practices</a>",
+            "tags": [
+              "безопасность",
+              "production"
+            ]
+          },
+          {
+            "title": "MCP композиция: несколько серверов в одном конфиге для \"суперагента\"",
+            "desc": "В <code>claude_desktop_config.json</code> или <code>.claude/settings.json</code> можно подключить десятки MCP серверов одновременно. GitHub MCP + Linear MCP + PostgreSQL MCP + Slack MCP = агент который видит весь стек. Следи за конфликтами имён инструментов между серверами.",
+            "tags": [
+              "MCP",
+              "архитектура"
+            ]
+          },
+          {
+            "title": "Атаки через MCP: prompt injection через tool descriptions и данные",
+            "desc": "Реальный кейс: злоумышленник создаёт GitHub issue с вредоносными инструкциями → агент с GitHub MCP читает issue и выполняет инструкции. CVE-2025-53110 и CVE-2025-53109 в Filesystem MCP позволяли выйти за sandbox. Никогда не передавай user-supplied data в MCP инструменты без санитизации. <a href=\"https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/\" target=\"_blank\">Simon Willison: MCP prompt injection</a>",
+            "tags": [
+              "безопасность",
+              "атаки"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "cls": "s4",
+        "title": "Программный вызов и встраивание агентов в системы",
+        "subtitle": "claude -p · Agent SDK · headless · microservices · Codex CLI",
+        "items": [
+          {
+            "title": "claude -p: запуск агента из скрипта без интерактивного интерфейса",
+            "desc": "<code>claude -p \"найди и исправь баг в auth.ts\" --allowedTools \"Read,Edit,Bash\"</code> — агент выполняет задачу и завершается. Основа всех headless пайплайнов. Поддерживает <code>--output-format json</code> для машиночитаемого вывода с cost/duration метриками. <a href=\"https://code.claude.com/docs/en/headless\" target=\"_blank\">code.claude.com/docs/headless</a>",
+            "tags": [
+              "CLI",
+              "headless"
+            ]
+          },
+          {
+            "title": "--output-format json: структурированный вывод для автоматизации",
+            "desc": "Возвращает объект <code>{result, cost_usd, duration_ms, num_turns}</code>. Парси в Node.js: <code>const {result, cost_usd} = JSON.parse(execSync(\"claude -p ...\").toString())</code>. Логируй стоимость в БД, стройте аналитику расходов, триггери алерты при превышении порогов.",
+            "tags": [
+              "CLI",
+              "автоматизация"
+            ]
+          },
+          {
+            "title": "Agent SDK TypeScript/Python: те же инструменты что в Claude Code, в твоём коде",
+            "desc": "SDK даёт programmatic доступ к агентному loop, всем инструментам и управлению контекстом. Используй для: встраивания агента в существующий сервис, кастомных оркестраторов, сложных multi-step workflows с бизнес-логикой между шагами. <a href=\"https://platform.claude.com/docs/en/agent-sdk/overview\" target=\"_blank\">platform.claude.com/docs/agent-sdk</a>",
+            "tags": [
+              "SDK",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "AGENTS.md в OpenAI Codex CLI: аналог CLAUDE.md для Codex пайплайнов",
+            "desc": "Codex CLI читает <code>AGENTS.md</code> в корне репо для понимания контекста проекта. Поддерживает MCP серверы и параллельные tool calls. Используй для: CI задач, scheduled jobs, агентов в GitHub Actions. <code>npm install -g @openai/codex</code> → <code>codex -p \"task\" --full-auto</code>. <a href=\"https://github.com/openai/codex\" target=\"_blank\">github.com/openai/codex</a>",
+            "tags": [
+              "Codex",
+              "CLI"
+            ]
+          },
+          {
+            "title": "Агент как микросервис: event-driven архитектура с очередями",
+            "desc": "Webhook event → очередь (SQS/BullMQ) → worker читает задачу → <code>claude -p</code> или SDK call → результат → callback/webhook. Агент stateless, горизонтально масштабируется, изолирован от основного приложения. Паттерн идеален для: async code review, автоматической документации, batch обработки.",
+            "tags": [
+              "архитектура",
+              "microservices"
+            ]
+          },
+          {
+            "title": "Параллельный запуск нескольких агентов через Promise.all()",
+            "desc": "<code>await Promise.all([claude(\"-p\", \"fix auth bug\"), claude(\"-p\", \"update docs\"), claude(\"-p\", \"write tests\")])</code> — три агента работают параллельно. Каждый в своём worktree чтобы избежать конфликтов файлов. Управляй параллелизмом через <code>p-limit</code> чтобы не упереться в rate limits.",
+            "tags": [
+              "параллелизм",
+              "Node.js"
+            ]
+          },
+          {
+            "title": "Передача большого контекста через файлы, не через stdin",
+            "desc": "Для передачи сотен KB контекста создай временный файл и укажи агенту его прочитать: <code>claude -p \"прочитай /tmp/context.md и выполни задачу\"</code>. Pipe через stdin хорошо работает для небольших данных, для больших — файлы надёжнее и дешевле (не дублируют токены в CLI args).",
+            "tags": [
+              "контекст",
+              "оптимизация"
+            ]
+          },
+          {
+            "title": "Claude Code GitHub Actions: агент прямо в CI/CD пайплайне",
+            "desc": "Официальная интеграция: агент запускается на каждый PR, может читать diff, запускать тесты, оставлять review comments. Настраивается через YAML workflow. Биллинг с июня 2026 через отдельный Agent SDK кредит в Pro/Max/Team планах. <a href=\"https://code.claude.com/docs/en/headless\" target=\"_blank\">docs</a> · <a href=\"https://dev.to/rajeshroyal/headless-mode-unleash-ai-in-your-cicd-pipeline-1imm\" target=\"_blank\">CI/CD guide</a>",
+            "tags": [
+              "CI/CD",
+              "GitHub Actions"
+            ]
+          },
+          {
+            "title": "Обработка ошибок и retry стратегия для headless агентов",
+            "desc": "Агент может упасть из-за rate limits, timeout, невалидного output. Паттерн: exponential backoff (1s → 2s → 4s → 8s), max 3 попытки, circuit breaker после 5 подряд failures, fallback на более простую задачу или human escalation. Не позволяй пайплайну зависнуть навсегда.",
+            "tags": [
+              "надёжность",
+              "error handling"
+            ]
+          },
+          {
+            "title": "Observability для headless агентов: логируй cost, duration, num_turns",
+            "desc": "Каждый headless вызов через <code>--output-format json</code> возвращает метрики. Собирай в time-series (Prometheus/InfluxDB), визуализируй в Grafana. Отслеживай: средний cost per task, P95 duration, failure rate, token usage по типам задач. Так найдёшь самые дорогие операции.",
+            "tags": [
+              "observability",
+              "метрики"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "cls": "s5",
+        "title": "Субагенты: декомпозиция, параллелизм, оркестрация",
+        "subtitle": "Task tool · fan-out · orchestrator→worker · handoffs",
+        "items": [
+          {
+            "title": "Task tool — основной примитив для запуска субагентов из оркестратора",
+            "desc": "Task(subagent_name, prompt) запускает изолированный экземпляр агента с собственным context window. Возвращает результат в оркестратор. Можно запускать параллельно: несколько Task calls в одном turn выполняются конкурентно. <a href=\"https://claudelog.com/mechanics/task-agent-tools/\" target=\"_blank\">ClaudeLog: Task/Agent Tools</a> · <a href=\"https://code.claude.com/docs/en/sub-agents\" target=\"_blank\">официальная документация</a>",
+            "tags": [
+              "субагенты",
+              "Task tool"
+            ]
+          },
+          {
+            "title": "Паттерн оркестратор→воркер: Opus думает, Sonnet/Haiku делает",
+            "desc": "Оркестратор на Opus 4 декомпозирует задачу, понимает зависимости, решает сложные архитектурные вопросы. Воркеры на Sonnet 4 / Haiku 4 выполняют чётко очерченные задачи. Экономия 60-80% стоимости без потери качества на воркерах — они работают с хорошо описанными задачами. <a href=\"https://claudefa.st/blog/guide/agents/sub-agent-best-practices\" target=\"_blank\">sub-agent best practices</a>",
+            "tags": [
+              "паттерн",
+              "стоимость"
+            ]
+          },
+          {
+            "title": "Fan-out паттерн: параллельная обработка независимых единиц работы",
+            "desc": "50 компонентов для рефакторинга → оркестратор запускает 50 параллельных субагентов, каждый обрабатывает свой компонент → результаты сходятся в оркестраторе для финального merge. Условие применимости: задачи независимы (нет shared state, нет порядка выполнения). <a href=\"https://turion.ai/blog/claude-code-multi-agents-subagents-guide/\" target=\"_blank\">multi-agents guide</a>",
+            "tags": [
+              "паттерн",
+              "параллелизм"
+            ]
+          },
+          {
+            "title": "Shared task list как coordination primitive — агенты не общаются напрямую",
+            "desc": "Агенты читают и пишут в общий <code>tasks.json</code> файл через filesystem инструменты. Атомарные операции: \"взял задачу X в работу\" → \"завершил задачу X, результат в output/X.md\". Нет прямой коммуникации между агентами → нет deadlocks, проще дебаггинг. <a href=\"https://www.mindstudio.ai/blog/claude-code-agent-teams-parallel-shared-task-list\" target=\"_blank\">Agent Teams Deep Dive</a>",
+            "tags": [
+              "координация",
+              "паттерн"
+            ]
+          },
+          {
+            "title": "Изоляция контекста субагентов: каждый получает только нужное",
+            "desc": "Не передавай всю историю оркестратора в субагент. Формируй минимальный контекст: описание задачи + нужные файлы + формат ожидаемого вывода. Меньше контекста = меньше confusion + меньше токенов. Субагент не должен знать про другие задачи параллельного fan-out.",
+            "tags": [
+              "контекст",
+              "оптимизация"
+            ]
+          },
+          {
+            "title": "Handoffs: как правильно передавать состояние между последовательными агентами",
+            "desc": "Explicit state файл: агент 1 пишет <code>stage1_output.md</code> со структурированным результатом, агент 2 читает его в начале работы. Используй frontmatter с metadata: <code>status, completed_at, next_steps</code>. Это chain of responsibility паттерн — каждый агент продолжает с чёткой точки.",
+            "tags": [
+              "паттерн",
+              "handoffs"
+            ]
+          },
+          {
+            "title": "Worktree isolation для субагентов: безопасный параллелизм в git",
+            "desc": "Добавь <code>isolation: worktree</code> в frontmatter кастомного субагента → каждый запуск автоматически создаёт отдельный git worktree. Несколько агентов редактируют разные части кода одновременно без file conflicts. После завершения оркестратор решает как мержить изменения. <a href=\"https://code.claude.com/docs/en/worktrees\" target=\"_blank\">worktrees docs</a>",
+            "tags": [
+              "worktrees",
+              "субагенты"
+            ]
+          },
+          {
+            "title": "Custom subagents в .claude/agents/: создай команду специалистов",
+            "desc": "YAML frontmatter определяет: <code>name, model, tools, system_prompt, isolation</code>. Пример: <code>frontend-agent</code> с доступом только к <code>src/components/</code>, <code>api-agent</code> с доступом к <code>src/api/</code>. Специализация уменьшает вероятность случайных изменений в неправильных местах.",
+            "tags": [
+              "конфиг",
+              "специализация"
+            ]
+          },
+          {
+            "title": "Когда НЕ нужны субагенты: overhead превышает выгоду",
+            "desc": "Запуск субагента включает: инициализацию нового context window, чтение CLAUDE.md, установку инструментов. Для задачи длиной < 2 минут это overhead может превышать время выполнения. Правило: субагент оправдан если задача занимает > 5 минут или если нужна истинная параллельность.",
+            "tags": [
+              "анти-паттерн"
+            ]
+          },
+          {
+            "title": "Дебаггинг multi-agent workflows: каждый субагент пишет в свой лог",
+            "desc": "Инструктируй каждого субагента: \"сначала запиши в <code>logs/{agent_name}.md</code>: задачу, план, прогресс, результат\". Оркестратор в конце читает все логи и строит полную картину. При ошибке ты сразу видишь на каком агенте она произошла и почему. <a href=\"https://github.com/wshobson/agents\" target=\"_blank\">пример: wshobson/agents orchestration</a>",
+            "tags": [
+              "debugging",
+              "observability"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "cls": "s6",
+        "title": "Контекст и память агента",
+        "subtitle": "CLAUDE.md · compaction · memory tool · context poisoning",
+        "items": [
+          {
+            "title": "CLAUDE.md < 200 строк: длина обратно пропорциональна соблюдению",
+            "desc": "Чем длиннее CLAUDE.md тем хуже агент следует правилам — просто теряет в длинном контексте. Держи < 200 строк, только критически важное. Убери всё что можно прочитать из кода проекта. Проверяй регулярно: если правило не нарушалось 3 месяца — удали его. <a href=\"https://code.claude.com/docs/en/memory\" target=\"_blank\">code.claude.com/docs/memory</a>",
+            "tags": [
+              "CLAUDE.md",
+              "best practice"
+            ]
+          },
+          {
+            "title": "CLAUDE.md — это контракт: пиши что НЕЛЬЗЯ, не только что можно",
+            "desc": "Негативные инструкции работают лучше позитивных в длинных сессиях. Блок \"Никогда не делай:\" с конкретными anti-patterns (\"не используй any\", \"не изменяй package.json без явного запроса\", \"не удаляй тесты\") эффективнее размытых позитивных правил.",
+            "tags": [
+              "CLAUDE.md",
+              "промптинг"
+            ]
+          },
+          {
+            "title": "/compact: сжатие контекста без потери сути при длинных сессиях",
+            "desc": "<code>/compact</code> заставляет Claude суммаризировать историю разговора в ключевые факты и решения, сохраняя рабочий контекст. Используй проактивно каждые ~50 turns или когда видишь деградацию качества ответов — признак переполнения context window.",
+            "tags": [
+              "контекст",
+              "оптимизация"
+            ]
+          },
+          {
+            "title": "Context poisoning: как ошибочные данные в контексте ломают агента",
+            "desc": "Если агент получил неверный результат от инструмента (баг в коде, неправильный файл) и не исправил это явно — \"отравленный\" факт остаётся в контексте и влияет на все последующие решения. Симптом: агент раз за разом воспроизводит одну ошибку. Решение: явное исправление или /compact с пересчётом.",
+            "tags": [
+              "контекст",
+              "баги"
+            ]
+          },
+          {
+            "title": "Memory tool: персистентное хранилище между сессиями",
+            "desc": "API-level инструмент который позволяет агенту писать и читать файлы между сессиями. Агент сам решает что важно запомнить. Используй для: долгосрочных проектов где агент должен знать решения принятые неделю назад, накопления знаний о кодовой базе. <a href=\"https://platform.claude.com/docs/en/managed-agents/memory\" target=\"_blank\">platform.claude.com/docs/memory</a>",
+            "tags": [
+              "память",
+              "персистентность"
+            ]
+          },
+          {
+            "title": "Auto-memory в Claude Code: агент сам обновляет заметки о проекте",
+            "desc": "Claude Code автоматически записывает выученные предпочтения и паттерны в memory файлы без ручного редактирования CLAUDE.md. Агент накапливает знания о кодовой базе через сессии. Ценно для долгосрочных проектов: через месяц агент знает архитектуру лучше нового разработчика. <a href=\"https://www.mindstudio.ai/blog/what-is-claude-code-auto-memory\" target=\"_blank\">что такое auto-memory</a>",
+            "tags": [
+              "память",
+              "auto"
+            ]
+          },
+          {
+            "title": "Tool result clearing: убирай старые результаты из контекста",
+            "desc": "Большие bash outputs, файлы прочитанные час назад — они всё ещё занимают токены в контексте. Context engineering API позволяет явно удалять конкретные tool results. Для долгих сессий это снижает стоимость и улучшает quality. <a href=\"https://platform.claude.com/cookbook/tool-use-context-engineering-context-engineering-tools\" target=\"_blank\">Context Engineering Cookbook</a>",
+            "tags": [
+              "контекст",
+              "оптимизация"
+            ]
+          },
+          {
+            "title": "Передача состояния между сессиями через структурированный state файл",
+            "desc": "В конце сессии пиши <code>session_state.json</code>: текущий статус, принятые решения, следующие шаги, важные находки. В начале следующей сессии: \"прочитай session_state.json и продолжи работу\". Более надёжно чем полагаться на auto-memory для критичных данных.",
+            "tags": [
+              "персистентность",
+              "паттерн"
+            ]
+          },
+          {
+            "title": "Context engineering: проектируй что агент ВИДИТ, не только что говоришь",
+            "desc": "Принцип: агент принимает решения на основе всего что в его context window. Если туда попала неверная информация или лишний шум — качество падает. Специально конструируй контекст: включай релевантные файлы явно, исключай нерелевантные, структурируй порядок информации. <a href=\"https://platform.claude.com/cookbook/tool-use-context-engineering-context-engineering-tools\" target=\"_blank\">cookbook</a>",
+            "tags": [
+              "контекст",
+              "архитектура"
+            ]
+          },
+          {
+            "title": "Используй --resume и --continue для восстановления прерванных сессий",
+            "desc": "<code>claude --continue</code> продолжает последнюю сессию, <code>claude --resume SESSION_ID</code> восстанавливает конкретную. Критично для длинных агентных задач которые могут прерваться: деплой, рефакторинг большой кодовой базы, длинный исследовательский workflow.",
+            "tags": [
+              "сессии",
+              "надёжность"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "cls": "s7",
+        "title": "Промптинг специфически для агентов",
+        "subtitle": "system prompts · XML теги · few-shot · tool use · slash commands",
+        "items": [
+          {
+            "title": "Промпт для агента ≠ промпт для чатбота: разные цели, разные паттерны",
+            "desc": "Чатбот промпт → \"ты полезный ассистент\". Агент промпт → \"ты выполняешь задачу X, используешь инструменты Y, выводишь результат в формате Z, останавливаешься когда W\". Агенту нужны: чёткие инструменты, условия завершения, формат вывода, пределы полномочий — не личность и тон.",
+            "tags": [
+              "промптинг",
+              "принципы"
+            ]
+          },
+          {
+            "title": "XML-теги для структурирования сложных агентных промптов",
+            "desc": "Claude нативно понимает XML структуру: <code>&lt;context&gt;...&lt;/context&gt;</code>, <code>&lt;task&gt;...&lt;/task&gt;</code>, <code>&lt;constraints&gt;...&lt;/constraints&gt;</code>, <code>&lt;output_format&gt;...&lt;/output_format&gt;</code>. Теги помогают разделить роли разных частей промпта и снижают \"путаницу\" при длинных инструкциях. <a href=\"https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview\" target=\"_blank\">Anthropic prompting guide</a>",
+            "tags": [
+              "промптинг",
+              "XML"
+            ]
+          },
+          {
+            "title": "Few-shot примеры для обучения правильному использованию инструментов",
+            "desc": "Покажи 2-3 примера правильного tool call flow: \"сначала прочитай файл, потом отредактируй только нужную часть\". Резко снижает количество неправильных tool calls когда агент не уверен как использовать инструмент в твоём специфическом контексте. Особенно важно для кастомных MCP инструментов.",
+            "tags": [
+              "промптинг",
+              "few-shot"
+            ]
+          },
+          {
+            "title": "Негативные инструкции эффективнее позитивных для boundary enforcement",
+            "desc": "\"Не редактируй файлы вне директории <code>src/</code>\" работает лучше чем \"редактируй только <code>src/</code>\". Список explicit запретов в начале промпта Claude соблюдает лучше чем размытые позитивные правила. Создай блок \"Никогда:\" в своём CLAUDE.md.",
+            "tags": [
+              "промптинг",
+              "границы"
+            ]
+          },
+          {
+            "title": "Условия завершения обязательны: без них агент улучшает бесконечно",
+            "desc": "\"После того как все тесты проходят — остановись и сообщи результат.\" Без явного условия завершения агент продолжает итерировать, добавлять \"улучшения\", рефакторить то что не просили. Явный stopping condition — один из самых важных элементов агентного промпта.",
+            "tags": [
+              "промптинг",
+              "управление"
+            ]
+          },
+          {
+            "title": "Декомпозиция задачи в промпте: нумерованные шаги лучше \"сделай всё\"",
+            "desc": "\"1. Сначала прочитай файлы в src/auth/ 2. Найди все места использования устаревшего API 3. Обнови каждое место 4. Запусти тесты 5. Верни список изменённых файлов\" → предсказуемее чем \"обнови auth\". Агент следует explicit workflow, не изобретает свой.",
+            "tags": [
+              "промптинг",
+              "структура"
+            ]
+          },
+          {
+            "title": "Extended thinking: включай для сложных архитектурных решений",
+            "desc": "Thinking mode даёт агенту бюджет токенов на рассуждения перед ответом. Для сложных задач (архитектурный выбор, дебаггинг сложного бага, code review) качество заметно выше. Для простых задач — лишняя стоимость. Настраивай budget thinking по типу задачи.",
+            "tags": [
+              "thinking",
+              "качество"
+            ]
+          },
+          {
+            "title": "Slash commands как стандартизированные промпт-шаблоны для команды",
+            "desc": "<code>.claude/commands/review.md</code> содержит полный промпт для code review с твоими стандартами. <code>/review $ARGUMENTS</code> передаёт PR число или файл. Команда использует одинаковый уровень review — нет разброса в качестве от разработчика к разработчику.",
+            "tags": [
+              "команда",
+              "стандарты"
+            ]
+          },
+          {
+            "title": "Версионируй промпты в git: промпт — это код, не магия",
+            "desc": "Храни важные промпты в <code>.claude/</code> или отдельном репо. Тегируй версии при изменениях. Пиши changelog: \"v2: добавили constraint на TypeScript strict mode\". Это позволяет откатиться при регрессии качества и понять что именно изменилось.",
+            "tags": [
+              "практика",
+              "версионирование"
+            ]
+          },
+          {
+            "title": "Итеративный рефайнинг: документируй что сработало прямо в CLAUDE.md",
+            "desc": "Когда нашёл формулировку которая работает лучше предыдущей — сразу добавляй в CLAUDE.md. Создай паттерн: запустил агента → оценил результат → улучшил промпт → зафиксировал что сработало. Через месяц у тебя будет battle-tested набор инструкций для твоего конкретного проекта.",
+            "tags": [
+              "практика",
+              "итерации"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "cls": "s8",
+        "title": "Предсказуемость и детерминизм генерации",
+        "subtitle": "Zod · structured output · TypeScript contracts · validation",
+        "items": [
+          {
+            "title": "Zod схемы как контракт между агентом и системой: парсинг вместо доверия",
+            "desc": "<code>const schema = z.object({files: z.array(z.string()), summary: z.string().max(200)})</code> → <code>schema.parseAsync(output)</code>. Агент либо возвращает валидный объект, либо система знает об ошибке. Никаких сюрпризов в production. Zod — стандарт де-факто в TypeScript AI экосистеме. <a href=\"https://workos.com/blog/zod-for-typescript\" target=\"_blank\">Zod for TypeScript AI dev</a>",
+            "tags": [
+              "Zod",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "generateObject() из Vercel AI SDK: 100% типобезопасный structured output",
+            "desc": "<code>const {object} = await generateObject({model, schema: z.object({...}), prompt})</code> — возвращает типизированный объект, провайдер использует constrained decoding где возможно. Никогда не парси JSON из string вручную когда есть этот API. <a href=\"https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data\" target=\"_blank\">ai-sdk.dev/docs/generating-structured-data</a>",
+            "tags": [
+              "Vercel AI SDK",
+              "structured output"
+            ]
+          },
+          {
+            "title": "Вставляй TypeScript interfaces прямо в промпт: агент генерирует совместимый код",
+            "desc": "Включи в промпт: \"Вот используемые типы: <code>[вставь interface]</code>. Генерируй код совместимый с этими типами\". Агент видит реальные типы из кодовой базы → код компилируется с первого раза в 90% случаев вместо 50%.",
+            "tags": [
+              "TypeScript",
+              "промптинг"
+            ]
+          },
+          {
+            "title": "OpenAI Structured Outputs: constrained decoding гарантирует валидный JSON",
+            "desc": "Для Codex CLI и GPT моделей Structured Outputs (не function calling) ограничивает декодирование → JSON всегда валиден, схема всегда соответствует. Claude использует prompt-based подход + Zod validation after — в Vercel AI SDK это абстрагировано автоматически. <a href=\"https://dev.to/whoffagents/openai-structured-outputs-vs-zod-which-to-use-for-llm-response-validation-in-2026-366m\" target=\"_blank\">Structured Outputs vs Zod 2026</a>",
+            "tags": [
+              "OpenAI",
+              "structured output"
+            ]
+          },
+          {
+            "title": "Явные output format инструкции: убирай markdown обёртку которая ломает парсинг",
+            "desc": "\"Верни ТОЛЬКО валидный JSON без markdown блоков, без комментариев, без объяснений.\" Самая частая причина сломанного парсинга — агент оборачивает JSON в ```json ... ```. Explicit инструкция решает проблему. Для дополнительной надёжности: strip markdown блоки перед парсингом.",
+            "tags": [
+              "промптинг",
+              "парсинг"
+            ]
+          },
+          {
+            "title": "Retry с уточнённым промптом при невалидном output",
+            "desc": "Zod fail → извлеки ошибку валидации → добавь в retry промпт: \"Предыдущий ответ невалиден: {zodError}. Исправь и верни снова только JSON.\" Max 3 попытки с exponential backoff. После 3 failures — escalate к человеку или fallback. Никогда не падай молча.",
+            "tags": [
+              "retry",
+              "надёжность"
+            ]
+          },
+          {
+            "title": "Temperature управление: 0 для кода, выше для творческих задач",
+            "desc": "Temperature 0 → детерминированный вывод, минимум вариаций, идеально для генерации кода, JSON, структурированных данных. Temperature 0.5-0.7 → для написания документации, коммент-сообщений, объяснений. Некоторые фреймворки принудительно устанавливают temperature для разных типов задач.",
+            "tags": [
+              "temperature",
+              "детерминизм"
+            ]
+          },
+          {
+            "title": "viteval: тестируй агентный output в CI как обычный код",
+            "desc": "Vitest-style API для LLM evals: определяй scorers, локальные датасеты, assertions на качество вывода. <code>expect(output).toMatchSchema(schema)</code>, <code>expect(score).toBeGreaterThan(0.8)</code>. Запускай в GitHub Actions — fail PR если регрессия. <a href=\"https://github.com/viteval/viteval\" target=\"_blank\">github.com/viteval/viteval</a>",
+            "tags": [
+              "тестирование",
+              "CI"
+            ]
+          },
+          {
+            "title": "Thinking mode для сложных задач: явный budget на рассуждения",
+            "desc": "Extended thinking (Claude) / reasoning (OpenAI) даёт модели токены на \"размышление вслух\" перед финальным ответом. Для multi-step reasoning, сложных архитектурных решений, дебаггинга нетривиальных багов — качество существенно выше. Настраивай budget: выше budget → лучше качество → дороже.",
+            "tags": [
+              "thinking",
+              "качество"
+            ]
+          },
+          {
+            "title": "Маши-readable error handling: агент сообщает об ошибках структурированно",
+            "desc": "Вместо \"что-то пошло не так\" в свободном тексте: инструктируй агента возвращать <code>{success: false, error: {code: \"FILE_NOT_FOUND\", file: \"...\", suggestion: \"...\"}}</code>. Система автоматически обрабатывает разные типы ошибок без парсинга натурального языка.",
+            "tags": [
+              "error handling",
+              "structured"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "cls": "s9",
+        "title": "Эвалуации и тестирование агентных workflows (JS/TS)",
+        "subtitle": "promptfoo · viteval · golden datasets · trace-based · CI",
+        "items": [
+          {
+            "title": "promptfoo: отраслевой стандарт для LLM evals, используют OpenAI и Anthropic",
+            "desc": "YAML конфиги для определения провайдеров, промптов и assertions. CLI и TypeScript API. Сравнение качества между моделями, red teaming (50+ типов уязвимостей), CI/CD интеграция. В марте 2026 OpenAI анонсировал приобретение — de-facto стандарт. <a href=\"https://github.com/promptfoo/promptfoo\" target=\"_blank\">github.com/promptfoo/promptfoo</a> · <a href=\"https://www.promptfoo.dev/docs/integrations/ci-cd/\" target=\"_blank\">CI/CD интеграция</a>",
+            "tags": [
+              "evals",
+              "CI"
+            ]
+          },
+          {
+            "title": "viteval: Vitest-style eval framework — знакомый API для JS разработчиков",
+            "desc": "Если ты уже используешь Vitest — viteval API будет мгновенно понятен. Локальные датасеты, scorer framework, CI интеграция. Запускай LLM evals так же как unit тесты. <a href=\"https://github.com/viteval/viteval\" target=\"_blank\">github.com/viteval/viteval</a>",
+            "tags": [
+              "evals",
+              "Vitest"
+            ]
+          },
+          {
+            "title": "agentest: Vitest для тестирования AI агентов с mock tool calls",
+            "desc": "Заполняет gap \"детерминированное тестирование агентов\": перехватывает tool calls агента, позволяет подменять их mock ответами, делать assertions на весь trajectory (какие инструменты вызвал, в каком порядке, с какими аргументами) — не только на финальный текст. <a href=\"https://dev.to/raffael_p/agentest-vitest-style-e2e-testing-for-ai-agents-44j1\" target=\"_blank\">agentest guide</a>",
+            "tags": [
+              "тестирование",
+              "mocks"
+            ]
+          },
+          {
+            "title": "Golden dataset: твой источник правды для регрессионного тестирования",
+            "desc": "Набор: input + expected_output + acceptable_variance. Минимум 50 примеров покрывающих happy path, edge cases, известные сложные случаи. Версионируй в git. При каждом изменении промпта гоняй полный eval против golden set — если score упал → регрессия. <a href=\"https://www.getmaxim.ai/articles/building-a-golden-dataset-for-ai-evaluation-a-step-by-step-guide/\" target=\"_blank\">как строить golden dataset</a>",
+            "tags": [
+              "evals",
+              "dataset"
+            ]
+          },
+          {
+            "title": "Trace-based evals: оценивай путь агента, не только финальный результат",
+            "desc": "Агент пришёл к правильному ответу неправильным путём → это проблема для production надёжности. Записывай весь trajectory: какие файлы прочитал, какие команды выполнил, сколько iterations. Оценивай: minimality (нет лишних tool calls), correctness (правильная последовательность), efficiency (нет дублирующихся операций).",
+            "tags": [
+              "evals",
+              "traces"
+            ]
+          },
+          {
+            "title": "LangSmith + Vitest: параметризованные тесты на датасете",
+            "desc": "<code>ls.test.each(dataset)(\"test case\", async ({input, expected}) => {...})</code> — знакомый паттерн, работает в обычном Vitest test runner. Полезно если уже используешь LangChain/LangSmith для трейсинга агентов. <a href=\"https://docs.langchain.com/langsmith/vitest-jest\" target=\"_blank\">LangSmith Vitest интеграция</a>",
+            "tags": [
+              "LangSmith",
+              "Vitest"
+            ]
+          },
+          {
+            "title": "Regression CI: evals в GitHub Actions на каждый PR с промптами",
+            "desc": "Если PR меняет CLAUDE.md, .claude/commands/, system prompt → автоматически запускается eval suite против golden dataset. Fail при score < threshold → нельзя мержить. Промпты перестают быть \"магией\" — становятся кодом с регрессионной защитой. <a href=\"https://www.promptfoo.dev/docs/integrations/ci-cd/\" target=\"_blank\">promptfoo CI/CD docs</a>",
+            "tags": [
+              "CI/CD",
+              "regression"
+            ]
+          },
+          {
+            "title": "Assertions на диапазон, не на точное совпадение: тестируй недетерминированный код",
+            "desc": "<code>expect(score).toBeGreaterThan(0.8)</code> вместо <code>expect(output).toBe(exact)</code>. LLM output вариативен — тестируй качество, а не конкретные слова. Для структурированных данных (JSON схема) → exact matching OK. Для текстовых ответов → similarity score или rule-based assertions.",
+            "tags": [
+              "тестирование",
+              "assertions"
+            ]
+          },
+          {
+            "title": "Unit тесты для инструментов агента отдельно от агентного loop",
+            "desc": "Тестируй <code>fetchUserData()</code>, <code>parseGitDiff()</code>, <code>validateSchema()</code> обычными Vitest тестами без запуска агента. Быстрые, дешёвые, детерминированные. Агентный loop тестируй отдельно интеграционными тестами. Не мешай уровни тестирования.",
+            "tags": [
+              "unit tests",
+              "изоляция"
+            ]
+          },
+          {
+            "title": "Production monitoring: runtime evals через sampling 10% запросов",
+            "desc": "10% реальных запросов асинхронно прогоняй через eval pipeline → метрики качества в реальном времени. Алерты при деградации: если score упал на 15% за последние 100 запросов → нотификация. Это единственный способ узнать о production регрессии до того как её заметят пользователи.",
+            "tags": [
+              "production",
+              "monitoring"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "cls": "s10",
+        "title": "Оптимизация токенов и стоимости",
+        "subtitle": "RTK · prompt caching · context-mode · model selection · /compact",
+        "items": [
+          {
+            "title": "RTK: CLI proxy снижает потребление токенов на 60–90% на частых командах",
+            "desc": "Single Rust binary без зависимостей. Перехватывает shell команды агента (git status, ls, cat) и возвращает кэшированные или сжатые результаты вместо полного вывода. Радикально снижает токены на операциях с файловой системой и git. <a href=\"https://github.com/rtk-ai/rtk\" target=\"_blank\">github.com/rtk-ai/rtk</a>",
+            "tags": [
+              "RTK",
+              "токены"
+            ]
+          },
+          {
+            "title": "context-mode в RTK: умный анализ какие части контекста реально нужны",
+            "desc": "RTK анализирует агентный контекст и отсекает части которые не влияют на текущую задачу. В отличие от простого /compact который суммаризирует всё, context-mode более хирургически точен — сохраняет максимум релевантной информации при минимуме токенов. <a href=\"https://github.com/rtk-ai/rtk\" target=\"_blank\">github.com/rtk-ai/rtk</a>",
+            "tags": [
+              "RTK",
+              "контекст"
+            ]
+          },
+          {
+            "title": "Prompt caching: 90% экономия на повторяющихся системных промптах",
+            "desc": "Claude prompt caching: cached tokens стоят $0.30/M вместо $3.00/M — экономия 90%. Cache работает при совпадении prefix. Обязателен для всех агентов с длинными system prompts (CLAUDE.md + документация + инструкции). Включается автоматически в Claude API при наличии cache_control header. <a href=\"https://introl.com/blog/prompt-caching-infrastructure-llm-cost-latency-reduction-guide-2025\" target=\"_blank\">prompt caching guide</a>",
+            "tags": [
+              "caching",
+              "стоимость"
+            ]
+          },
+          {
+            "title": "Cache-friendly структура промпта: статика в начале, динамика в конце",
+            "desc": "Cache hit происходит только при совпадении prefix. Правило: system prompt + документация + примеры (статика) → начало. Динамический запрос пользователя → конец. Никогда не вставляй timestamp или request ID в середину системного промпта — это инвалидирует кэш.",
+            "tags": [
+              "caching",
+              "архитектура"
+            ]
+          },
+          {
+            "title": "Стратегия выбора модели: не используй Opus там где хватит Haiku",
+            "desc": "Haiku: форматирование, lint-fix, простой рефакторинг, шаблонный код, перевод → ~100x дешевле Opus. Sonnet: обычные coding задачи, review, документация. Opus: архитектурные решения, сложный дебаггинг, multi-step reasoning. Оркестратор-воркер паттерн максимизирует эту экономию.",
+            "tags": [
+              "модели",
+              "стоимость"
+            ]
+          },
+          {
+            "title": "/compact вместо рестарта: сохраняй контекст при длинных сессиях",
+            "desc": "<code>/compact</code> суммаризирует историю и продолжает сессию с сохранённым контекстом. Альтернатива рестарту который теряет весь прогресс. Используй проактивно до того как context window заполнится — при заполнении качество ответов деградирует до рестарта.",
+            "tags": [
+              "оптимизация",
+              "контекст"
+            ]
+          },
+          {
+            "title": "Параллельные субагенты экономят время но стоят больше токенов",
+            "desc": "Параллельно: 5 субагентов × 10K токенов каждый = 50K токенов за 2 минуты. Последовательно: 50K токенов за 10 минут. Время дорого для интерактивных задач — используй параллельность. Для batch ночных задач с ценовым бюджетом → последовательно дешевле. Выбирай осознанно.",
+            "tags": [
+              "субагенты",
+              "trade-offs"
+            ]
+          },
+          {
+            "title": "Убирай большие tool results из контекста после использования",
+            "desc": "Прочитал 500-строчный файл, выполнил задачу → этот файл больше не нужен в контексте но занимает тысячи токенов до конца сессии. Через tool result clearing API или принудительный /compact регулярно очищай \"мусор\". Особенно важно для агентов которые читают много файлов.",
+            "tags": [
+              "контекст",
+              "токены"
+            ]
+          },
+          {
+            "title": "Измеряй стоимость каждого workflow через --output-format json",
+            "desc": "Поле <code>cost_usd</code> в JSON output <code>claude -p</code>. Логируй в БД по workflow_type. Топ-10 самых дорогих операций — это твоя очередь оптимизации. Часто один workflow стоит 80% всего бюджета, и его оптимизация решает всё.",
+            "tags": [
+              "метрики",
+              "стоимость"
+            ]
+          },
+          {
+            "title": "LLMLingua: сжатие промптов до 20x для длинных контекстов",
+            "desc": "Microsoft Research training-free prompt compression. Сохраняет ключевую информацию при сжатии в 4-20 раз. Полезно для: RAG контекста с большими документами, длинных code snippets в промпте, исторических данных. Используй когда нужно передать много контекста но токенов мало. <a href=\"https://github.com/microsoft/LLMLingua\" target=\"_blank\">github.com/microsoft/LLMLingua</a>",
+            "tags": [
+              "сжатие",
+              "токены"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "uk": {
+    "title": "100 пунктів: AI-агенти в розробці",
+    "description": "100 пунктів впровадження AI-агентів у розробку — практичний чекліст від інженерів гільдії NextTick.",
+    "headerH1": "Ефективне впровадження <span>AI-агентів</span> у розробку",
+    "headerMeta": "Дата останнього оновлення 23 травня 2026",
+    "langSwitchLabel": "Мова",
+    "resetBtn": "↺ Скинути",
+    "searchPlaceholder": "Пошук по пунктах...",
+    "confirmReset": "Скинути весь прогрес?",
+    "noResults": "Нічого не знайдено. Спробуй інший запит.",
+    "dtH3": "⚡ Тобі потрібен фреймворк?",
+    "dtBtnYes": "Так →",
+    "dtBtnNo": "Ні →",
+    "dtQ0": "У команді 3+ розробники активно використовують агентів?",
+    "dtNote0": "Враховуй усіх, хто пише промпти й запускає агентів у робочому процесі.",
+    "dtQ1": "Потрібна стандартизація промптів і workflow на рівні всієї команди?",
+    "dtNote1": "Хочеш, щоб усі використовували ті самі ролі агентів, ті самі slash commands, ті самі шаблони?",
+    "dtQ2": "Потрібен TDD-first enforcement — агент не може пропустити тести?",
+    "dtNote2": "Хочеш жорсткий workflow: спершу тест, потім код, без винятків?",
+    "dtQ3": "Проєкт охоплює повний цикл (ідея → PM → архітектура → код → QA)?",
+    "dtNote3": "Потрібні спеціалізовані агенти-персонажі: PM, Architect, Developer, QA?",
+    "dtBtnYesBmad": "Так — BMAD →",
+    "dtBtnNoOmcc": "Ні — oh-my-claudecode →",
+    "dtQ4": "Ти solo dev і хочеш працювати як віртуальна команда?",
+    "dtNote4": "CEO/Designer/QA режими в одному інструменті — це gstack.",
+    "dtBtnYesGstack": "Так — gstack →",
+    "dtBtnNoBare": "Ні — bare tool →",
+    "dtDescSuperpowers": "Агент фізично не може пропустити planning/testing фази. TDD, YAGNI, DRY enforcement з коробки. 93K+ зірок, офіційно в Claude Code marketplace.\n",
+    "dtStartOver": "← Пройти знову",
+    "dtQ6": "Це експеримент / PoC чи ти хочеш повну кастомізацію flow?",
+    "dtBtnYesBare": "Так — bare tool →",
+    "dtBtnNoGstack": "Ні — gstack →",
+    "dtDescBmad": "Breakthrough Method for Agile AI-Driven Development. 12+ спеціалізованих агентів, quality gates, від specs до production. Працює з Claude, GPT, Gemini.\n",
+    "dtDescOmcc": "Teams-first multi-agent orchestration. 19 спеціалізованих агентів, 36 скілів, zero learning curve, task decomposition → execution → verification.\n",
+    "dtDescGstack": "23 спеціалізовані скіли, 8 power tools, ролі CEO/Designer/QA/EngManager. 71K+ зірок, швидкий браузер (100–200ms), Apache 2.0.\n",
+    "dtDescBare": "Максимальна гнучкість, мінімальний overhead. Кастомні CLAUDE.md + slash commands + hooks дадуть тобі все потрібне. Додавай фреймворк, коли відчуєш конкретний біль — не раніше.",
+    "sections": [
+      {
+        "id": 1,
+        "cls": "s1",
+        "title": "Фреймворки та екосистема",
+        "subtitle": "oh-my-claudecode · superpowers · BMAD · GStack · Mastra",
+        "items": [
+          {
+            "title": "Не встановлюй фреймворк за замовчуванням — використовуй decision tree вище",
+            "desc": "Фреймворки дають структуру, але додають overhead: зайві залежності, конфлікти slash commands, абстракції поверх інструментів, які ти ще не зрозумів. Використовуй decision tree вище, щоб обрати усвідомлено, а не тому що \"всі так роблять\". Додавай фреймворк, коли відчуєш конкретний біль — не раніше.",
+            "tags": [
+              "стратегія"
+            ]
+          },
+          {
+            "title": "oh-my-claudecode: multi-agent orchestration для командної роботи",
+            "desc": "Teams-first фреймворк з 19 спеціалізованими агентами та 36 скілами. Автоматично декомпозує задачу на фази: planning → execution → verification → iteration. Zero learning curve — встановлюється через slash command з marketplace. Посилання: <a href=\"https://github.com/yeachan-heo/oh-my-claudecode\" target=\"_blank\">github.com/yeachan-heo/oh-my-claudecode</a> · <a href=\"https://yeachan-heo.github.io/oh-my-claudecode-website/\" target=\"_blank\">сайт</a>",
+            "tags": [
+              "фреймворк",
+              "команда"
+            ]
+          },
+          {
+            "title": "superpowers: TDD-first enforcement — агент не може пропустити тести",
+            "desc": "Єдиний фреймворк, який охоплює весь цикл розробки. Агент буквально не може написати код до тестів, примусово дотримується YAGNI і DRY. 93K+ GitHub зірок, в офіційному marketplace Claude Code з січня 2026. Принцип: не робити агента розумнішим, а enforce дисципліну, яку будували десятиліттями. <a href=\"https://github.com/obra/superpowers\" target=\"_blank\">github.com/obra/superpowers</a>",
+            "tags": [
+              "фреймворк",
+              "TDD"
+            ]
+          },
+          {
+            "title": "BMAD Method: agile AI-driven development з quality gates і спеціалізованими агентами",
+            "desc": "Breakthrough Method for Agile AI-Driven Development — повний цикл від ідеї до production. 12+ агентів-експертів (PM, Architect, Developer, UX Designer, QA) працюють в одній сесії. Замінює \"vibe coding\" на структуровані specs, persistent artifacts і quality gates. Працює з Claude, GPT, Gemini, Grok. <a href=\"https://github.com/bmad-code-org/BMAD-METHOD\" target=\"_blank\">github.com/bmad-code-org/BMAD-METHOD</a> · <a href=\"https://github.com/24601/BMAD-AT-CLAUDE\" target=\"_blank\">порт під Claude Code</a>",
+            "tags": [
+              "фреймворк",
+              "agile"
+            ]
+          },
+          {
+            "title": "gstack (Garry Tan): перетворює одного розробника на віртуальну dev-команду",
+            "desc": "Особистий Claude Code setup CEO Y Combinator. 23 спеціалізовані скіли, 8 power tools, ролі CEO/Designer/Engineering Manager/QA/Release Manager. Вбудований браузер працює у 20 разів швидше за Claude in Chrome (100–200ms після старту). 71K+ зірок за перші 48 годин. Apache 2.0. <a href=\"https://github.com/garrytan/gstack\" target=\"_blank\">github.com/garrytan/gstack</a>",
+            "tags": [
+              "фреймворк",
+              "solo"
+            ]
+          },
+          {
+            "title": "Mastra: TypeScript-native agent framework з повною типобезпекою",
+            "desc": "Якщо пишеш агентів програмно — Mastra дає workflow steps, Zod schemas для всього, typed tool inputs, вбудовану інтеграцію з Vercel AI SDK. Усе з коробки: пам'ять, RAG, observability. Ідеальний для production TypeScript бекенду. <a href=\"https://mastra.ai\" target=\"_blank\">mastra.ai</a> · <a href=\"https://www.generative.inc/mastra-ai-the-complete-guide-to-the-typescript-agent-framework-2026\" target=\"_blank\">повний guide</a>",
+            "tags": [
+              "TypeScript",
+              "production"
+            ]
+          },
+          {
+            "title": "Vercel AI SDK: production-ready streaming і structured output для JS/TS агентів",
+            "desc": "Provider-agnostic SDK, який працює з Claude, OpenAI, Gemini через єдиний API. <code>generateObject()</code> дає 100% типобезпечний structured output, <code>streamText()</code> для streaming. Використовуй замість прямих API-викликів — легше мігрувати між моделями. <a href=\"https://ai-sdk.dev\" target=\"_blank\">ai-sdk.dev</a> · <a href=\"https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data\" target=\"_blank\">structured data docs</a>",
+            "tags": [
+              "TypeScript",
+              "SDK"
+            ]
+          },
+          {
+            "title": "OpenAI Agents SDK для TypeScript: якщо використовуєш Codex/GPT моделі",
+            "desc": "Офіційний TypeScript SDK від OpenAI з автоматичною генерацією JSON Schema з TypeScript-функцій і Zod-валідацією. Function tools, handoffs, guardrails. Підтримує паралельні tool calls і MCP-сервери. <a href=\"https://openai.github.io/openai-agents-js/\" target=\"_blank\">openai.github.io/openai-agents-js</a>",
+            "tags": [
+              "OpenAI",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "Не змішуй несумісні фреймворки без аналізу конфліктів",
+            "desc": "GStack + Superpowers + GSD можуть конфліктувати по slash commands, дублювати скіли, створювати неочевидний порядок виконання. Перш ніж комбінувати — читай їхні CLAUDE.md і перевіряй перетини команд. Детальний розбір сумісності: <a href=\"https://dev.to/imaginex/a-claude-code-skills-stack-how-to-combine-superpowers-gstack-and-gsd-without-the-chaos-44b3\" target=\"_blank\">dev.to: combining frameworks</a>",
+            "tags": [
+              "сумісність"
+            ]
+          },
+          {
+            "title": "Створюй власний \"мікрофреймворк\" із CLAUDE.md + custom slash commands + hooks",
+            "desc": "Для більшості solo проєктів набір із: <code>CLAUDE.md</code> з правилами проєкту + <code>.claude/commands/</code> з багаторазовими workflow + 2-3 PostToolUse hooks для lint/format — це повноцінний фреймворк без чужого overhead. Почни тут, переходь на готовий фреймворк, коли переростеш.",
+            "tags": [
+              "кастомізація"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "cls": "s2",
+        "title": "Просунутий сетап: Hooks, Permissions, Worktrees",
+        "subtitle": "lifecycle events · git isolation · team policies",
+        "items": [
+          {
+            "title": "PreToolUse hook: блокуй небезпечні операції до виконання",
+            "desc": "Hooks — shell-команди або HTTP endpoints, які автоматично запускаються в lifecycle агента. <code>PreToolUse</code> виконується перед кожним Bash/Write викликом. Поверни exit code != 0, щоб заблокувати операцію та надіслати пояснення агенту. Ідеально для: заборони видалення файлів поза tmp/, валідації, що агент не змінює prod-конфіги. <a href=\"https://code.claude.com/docs/en/hooks\" target=\"_blank\">code.claude.com/docs/hooks</a>",
+            "tags": [
+              "hooks",
+              "безпека"
+            ]
+          },
+          {
+            "title": "PostToolUse hook: авто-форматування і lint після кожного edit",
+            "desc": "Запускай Prettier/ESLint автоматично після кожного <code>Write</code> tool call — агент ніколи не залишить невідформатований код. Приклад: <code>{\"PostToolUse\": {\"Write\": \"prettier --write $CLAUDE_TOOL_INPUT_FILE_PATH\"}}</code>. Можна додати TypeScript type-check після кожного редагування .ts файлів.",
+            "tags": [
+              "hooks",
+              "quality"
+            ]
+          },
+          {
+            "title": "Async hooks: не блокуй агента на фонових задачах",
+            "desc": "Додай <code>async: true</code> в конфіг hook — він виконається у фоні, не зупиняючи агентний loop. Корисно для: надсилання метрик, нотифікацій у Slack, запису аудит-логів. Вийшло в січні 2026. <a href=\"https://claudefa.st/blog/tools/hooks/hooks-guide\" target=\"_blank\">повний guide по всіх 12 lifecycle events</a>",
+            "tags": [
+              "hooks",
+              "async"
+            ]
+          },
+          {
+            "title": "HTTP hooks: централізовані політики валідації для всієї команди",
+            "desc": "Замість локального скрипта hook може надіслати POST на твій сервер. Це дозволяє: мати team-wide правила в одному місці, аудитувати всі дії агентів централізовано, динамічно оновлювати правила без зміни конфіга в кожного розробника. <a href=\"https://www.pixelmojo.io/blogs/claude-code-hooks-production-quality-ci-cd-patterns\" target=\"_blank\">production hooks patterns</a>",
+            "tags": [
+              "hooks",
+              "команда"
+            ]
+          },
+          {
+            "title": "Git worktrees: паралельні агенти в одному репо без конфліктів файлів",
+            "desc": "Кожен агент у своєму worktree — правки в одній сесії не зачіпають файли іншої. Запуск: <code>claude --worktree</code>. Можна запустити агента на feature branch, поки інший агент фіксить баг у main. Вбудована підтримка в Claude Code CLI (з'явилася у 2025). <a href=\"https://code.claude.com/docs/en/worktrees\" target=\"_blank\">code.claude.com/docs/worktrees</a>",
+            "tags": [
+              "worktrees",
+              "паралелізм"
+            ]
+          },
+          {
+            "title": "isolation: worktree у frontmatter custom subagent",
+            "desc": "Додай <code>isolation: worktree</code> в YAML frontmatter при створенні кастомного субагента — кожен запуск автоматично отримує власний git worktree. Worktree очищається, якщо агент не зробив змін, інакше повертає шлях та ім'я branch. Ідеально для паралельного fan-out патерна.",
+            "tags": [
+              "subagent",
+              "isolation"
+            ]
+          },
+          {
+            "title": "Ієрархія CLAUDE.md: global → project → subfolder для гранулярного контролю",
+            "desc": "<code>~/.claude/CLAUDE.md</code> → глобальні налаштування (стиль коду, улюблені інструменти). <code>project/CLAUDE.md</code> → правила проєкту (архітектура, naming, anti-patterns). <code>src/api/CLAUDE.md</code> → специфіка підпапки. Кожен рівень доповнює, але не замінює верхній. Тримай кожен файл < 200 рядків.",
+            "tags": [
+              "CLAUDE.md",
+              "конфіг"
+            ]
+          },
+          {
+            "title": "Тонке налаштування permissions: принцип мінімальних прав для агента",
+            "desc": "<code>allowedTools</code> і <code>deniedTools</code> в <code>settings.json</code> або frontmatter субагента. Агент для code review не повинен мати доступ до Bash. Агент для деплою не повинен редагувати вихідники. Мінімальні права = менше випадкових поломок і простіший аудит дій. <a href=\"https://code.claude.com/docs/en/hooks\" target=\"_blank\">docs</a>",
+            "tags": [
+              "безпека",
+              "конфіг"
+            ]
+          },
+          {
+            "title": "Custom slash commands як багаторазові командні workflow",
+            "desc": "Створи <code>.claude/commands/review.md</code> → <code>/review</code> запускає твій стандартизований процес code review. <code>/deploy</code>, <code>/test</code>, <code>/standup</code> — усе це можна зафіксувати в репо й шарити з командою через git. Промпт у файлі підтримує <code>$ARGUMENTS</code> для параметрів.",
+            "tags": [
+              "slash commands",
+              "команда"
+            ]
+          },
+          {
+            "title": "disler/claude-code-hooks-mastery: 5 production hooks з нуля для вивчення",
+            "desc": "Найкращий практичний ресурс по hooks з реальними прикладами. Покриває: auto-commit hook, test-runner hook, security scanner, format enforcer, notification hook. Кожен з поясненням патерна і edge cases. <a href=\"https://github.com/disler/claude-code-hooks-mastery\" target=\"_blank\">github.com/disler/claude-code-hooks-mastery</a>",
+            "tags": [
+              "hooks",
+              "приклади"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "cls": "s3",
+        "title": "MCP vs CLI: вибір та архітектура інтеграції",
+        "subtitle": "typescript-sdk · transport · composition · security",
+        "items": [
+          {
+            "title": "Ключове правило вибору: MCP для стану та інструментів, CLI для скриптів і CI",
+            "desc": "MCP виправданий, коли потрібно: постійний стан між викликами (auth-сесії, cursors), складні інструменти з багатими типами, командна багаторазовість, інтеграція з конкретним сервісом (GitHub, Slack, БД). CLI pipe виправданий для: one-off скриптів, CI/CD задач, швидкого експериментування. Не створюй MCP там, де вистачить <code>claude -p</code>.",
+            "tags": [
+              "архітектура"
+            ]
+          },
+          {
+            "title": "Офіційний TypeScript SDK — єдиний правильний спосіб писати MCP-сервери",
+            "desc": "Дає повні типи для повідомлень, negotiation, інструментів і ресурсів. STDIO, Streamable HTTP і SSE транспорти з коробки. Не винаходь велосипед із сирим JSON-RPC. <a href=\"https://github.com/modelcontextprotocol/typescript-sdk\" target=\"_blank\">github.com/modelcontextprotocol/typescript-sdk</a> · <a href=\"https://modelcontextprotocol.io/docs/develop/build-server\" target=\"_blank\">офіційна документація</a>",
+            "tags": [
+              "TypeScript",
+              "MCP"
+            ]
+          },
+          {
+            "title": "STDIO vs Streamable HTTP: SSE deprecated — використовуй правильний транспорт",
+            "desc": "STDIO — для локальних connections (Claude Desktop, Claude Code). Streamable HTTP — для remote/cloud MCP-серверів. SSE як самостійний транспорт офіційно deprecated. Багато старих туторіалів вчать SSE — перевіряй актуальність. <a href=\"https://pockit.tools/blog/building-custom-mcp-servers-typescript-complete-guide/\" target=\"_blank\">2026 guide</a>",
+            "tags": [
+              "транспорт",
+              "MCP"
+            ]
+          },
+          {
+            "title": "Ніколи не використовуй console.log() у STDIO MCP-сервері",
+            "desc": "stdout у STDIO транспорті використовується для JSON-RPC повідомлень. Будь-який <code>console.log()</code> псує протокол і ламає сервер. Тільки <code>console.error()</code> (пише в stderr) або логування у файл. Це ламає кожного новачка хоча б раз. <a href=\"https://nearform.com/digital-community/implementing-model-context-protocol-mcp-tips-tricks-and-pitfalls/\" target=\"_blank\">tips & pitfalls</a>",
+            "tags": [
+              "MCP",
+              "помилки"
+            ]
+          },
+          {
+            "title": "Описи інструментів MCP — це промптинг, а не документація",
+            "desc": "Claude використовує опис інструмента, щоб вирішити, коли і як його застосувати. Пиши як промпт: \"Використовуй цей інструмент, коли потрібно...\" з прикладами вхідних даних. Поганий опис = інструмент не використовується або використовується неправильно, навіть якщо код ідеальний. <a href=\"https://www.freecodecamp.org/news/how-to-build-a-custom-mcp-server-with-typescript-a-handbook-for-developers/\" target=\"_blank\">повний handbook</a>",
+            "tags": [
+              "промптинг",
+              "MCP"
+            ]
+          },
+          {
+            "title": "MCP Sessions: кешуй дорогі операції між tool calls однієї сесії",
+            "desc": "Sessions дозволяють MCP-серверу зберігати стан через кілька tool calls однієї розмови. Використовуй для: повторного використання auth-токенів, зберігання pagination cursors, кешування результатів дорогих запитів, user-specific конфігурації. Суттєво знижує latency і вартість.",
+            "tags": [
+              "MCP",
+              "state"
+            ]
+          },
+          {
+            "title": "Тестуй бізнес-логіку MCP-сервера окремо від MCP-обгортки",
+            "desc": "Пиши unit-тести для <code>fetchUserData()</code>, <code>parseResponse()</code> та інших функцій як звичайний Node.js код — без MCP-контексту. Тестуй MCP-шар окремо для перевірки серіалізації та error handling. Це пришвидшує розробку і спрощує дебагінг.",
+            "tags": [
+              "тестування",
+              "MCP"
+            ]
+          },
+          {
+            "title": "Rate limiting, input validation і таймаути — обов'язкові в production MCP",
+            "desc": "Без rate limiting агент може влаштувати DDoS твоєму ж сервісу, викликаючи інструмент у циклі. Без input validation — prompt injection через дані. Без таймаутів — агент зависне назавжди. Мінімальний набір: Zod validation + <code>AbortController</code> timeout + request counter. <a href=\"https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices\" target=\"_blank\">security best practices</a>",
+            "tags": [
+              "безпека",
+              "production"
+            ]
+          },
+          {
+            "title": "MCP композиція: кілька серверів в одному конфігу для \"суперагента\"",
+            "desc": "У <code>claude_desktop_config.json</code> або <code>.claude/settings.json</code> можна підключити десятки MCP-серверів одночасно. GitHub MCP + Linear MCP + PostgreSQL MCP + Slack MCP = агент, який бачить весь стек. Стеж за конфліктами імен інструментів між серверами.",
+            "tags": [
+              "MCP",
+              "архітектура"
+            ]
+          },
+          {
+            "title": "Атаки через MCP: prompt injection через tool descriptions і дані",
+            "desc": "Реальний кейс: зловмисник створює GitHub issue зі шкідливими інструкціями → агент із GitHub MCP читає issue і виконує інструкції. CVE-2025-53110 і CVE-2025-53109 у Filesystem MCP дозволяли вийти за sandbox. Ніколи не передавай user-supplied data в MCP-інструменти без санітизації. <a href=\"https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/\" target=\"_blank\">Simon Willison: MCP prompt injection</a>",
+            "tags": [
+              "безпека",
+              "атаки"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "cls": "s4",
+        "title": "Програмний виклик і вбудовування агентів у системи",
+        "subtitle": "claude -p · Agent SDK · headless · microservices · Codex CLI",
+        "items": [
+          {
+            "title": "claude -p: запуск агента зі скрипта без інтерактивного інтерфейсу",
+            "desc": "<code>claude -p \"знайди та виправ баг у auth.ts\" --allowedTools \"Read,Edit,Bash\"</code> — агент виконує задачу й завершується. Основа всіх headless пайплайнів. Підтримує <code>--output-format json</code> для машиночитаного виводу з cost/duration метриками. <a href=\"https://code.claude.com/docs/en/headless\" target=\"_blank\">code.claude.com/docs/headless</a>",
+            "tags": [
+              "CLI",
+              "headless"
+            ]
+          },
+          {
+            "title": "--output-format json: структурований вивід для автоматизації",
+            "desc": "Повертає об'єкт <code>{result, cost_usd, duration_ms, num_turns}</code>. Парси в Node.js: <code>const {result, cost_usd} = JSON.parse(execSync(\"claude -p ...\").toString())</code>. Логуй вартість у БД, будуй аналітику витрат, тригер алерти при перевищенні порогів.",
+            "tags": [
+              "CLI",
+              "автоматизація"
+            ]
+          },
+          {
+            "title": "Agent SDK TypeScript/Python: ті самі інструменти, що в Claude Code, у твоєму коді",
+            "desc": "SDK дає programmatic доступ до агентного loop, усіх інструментів і керування контекстом. Використовуй для: вбудовування агента в наявний сервіс, кастомних оркестраторів, складних multi-step workflows з бізнес-логікою між кроками. <a href=\"https://platform.claude.com/docs/en/agent-sdk/overview\" target=\"_blank\">platform.claude.com/docs/agent-sdk</a>",
+            "tags": [
+              "SDK",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "AGENTS.md в OpenAI Codex CLI: аналог CLAUDE.md для Codex-пайплайнів",
+            "desc": "Codex CLI читає <code>AGENTS.md</code> у корені репо для розуміння контексту проєкту. Підтримує MCP-сервери та паралельні tool calls. Використовуй для: CI задач, scheduled jobs, агентів у GitHub Actions. <code>npm install -g @openai/codex</code> → <code>codex -p \"task\" --full-auto</code>. <a href=\"https://github.com/openai/codex\" target=\"_blank\">github.com/openai/codex</a>",
+            "tags": [
+              "Codex",
+              "CLI"
+            ]
+          },
+          {
+            "title": "Агент як мікросервіс: event-driven архітектура з чергами",
+            "desc": "Webhook event → черга (SQS/BullMQ) → worker читає задачу → <code>claude -p</code> або SDK call → результат → callback/webhook. Агент stateless, горизонтально масштабується, ізольований від основного застосунку. Патерн ідеальний для: async code review, автоматичної документації, batch обробки.",
+            "tags": [
+              "архітектура",
+              "microservices"
+            ]
+          },
+          {
+            "title": "Паралельний запуск кількох агентів через Promise.all()",
+            "desc": "<code>await Promise.all([claude(\"-p\", \"fix auth bug\"), claude(\"-p\", \"update docs\"), claude(\"-p\", \"write tests\")])</code> — три агенти працюють паралельно. Кожен у своєму worktree, щоб уникнути конфліктів файлів. Керуй паралелізмом через <code>p-limit</code>, щоб не впертися в rate limits.",
+            "tags": [
+              "паралелізм",
+              "Node.js"
+            ]
+          },
+          {
+            "title": "Передача великого контексту через файли, не через stdin",
+            "desc": "Для передачі сотень KB контексту створи тимчасовий файл і вкажи агенту його прочитати: <code>claude -p \"прочитай /tmp/context.md і виконай задачу\"</code>. Pipe через stdin добре працює для невеликих даних, для великих — файли надійніші й дешевші (не дублюють токени в CLI args).",
+            "tags": [
+              "контекст",
+              "оптимізація"
+            ]
+          },
+          {
+            "title": "Claude Code GitHub Actions: агент прямо в CI/CD пайплайні",
+            "desc": "Офіційна інтеграція: агент запускається на кожен PR, може читати diff, запускати тести, залишати review comments. Налаштовується через YAML workflow. Білінг з червня 2026 через окремий Agent SDK кредит у Pro/Max/Team планах. <a href=\"https://code.claude.com/docs/en/headless\" target=\"_blank\">docs</a> · <a href=\"https://dev.to/rajeshroyal/headless-mode-unleash-ai-in-your-cicd-pipeline-1imm\" target=\"_blank\">CI/CD guide</a>",
+            "tags": [
+              "CI/CD",
+              "GitHub Actions"
+            ]
+          },
+          {
+            "title": "Обробка помилок і retry-стратегія для headless агентів",
+            "desc": "Агент може впасти через rate limits, timeout, невалідний output. Патерн: exponential backoff (1s → 2s → 4s → 8s), max 3 спроби, circuit breaker після 5 поспіль failures, fallback на простішу задачу або human escalation. Не дозволяй пайплайну зависнути назавжди.",
+            "tags": [
+              "надійність",
+              "error handling"
+            ]
+          },
+          {
+            "title": "Observability для headless агентів: логуй cost, duration, num_turns",
+            "desc": "Кожен headless виклик через <code>--output-format json</code> повертає метрики. Збирай у time-series (Prometheus/InfluxDB), візуалізуй у Grafana. Відстежуй: середній cost per task, P95 duration, failure rate, token usage за типами задач. Так знайдеш найдорожчі операції.",
+            "tags": [
+              "observability",
+              "метрики"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "cls": "s5",
+        "title": "Субагенти: декомпозиція, паралелізм, оркестрація",
+        "subtitle": "Task tool · fan-out · orchestrator→worker · handoffs",
+        "items": [
+          {
+            "title": "Task tool — основний примітив для запуску субагентів з оркестратора",
+            "desc": "Task(subagent_name, prompt) запускає ізольований екземпляр агента з власним context window. Повертає результат в оркестратор. Можна запускати паралельно: кілька Task calls в одному turn виконуються конкурентно. <a href=\"https://claudelog.com/mechanics/task-agent-tools/\" target=\"_blank\">ClaudeLog: Task/Agent Tools</a> · <a href=\"https://code.claude.com/docs/en/sub-agents\" target=\"_blank\">офіційна документація</a>",
+            "tags": [
+              "субагенти",
+              "Task tool"
+            ]
+          },
+          {
+            "title": "Патерн оркестратор→воркер: Opus думає, Sonnet/Haiku робить",
+            "desc": "Оркестратор на Opus 4 декомпозує задачу, розуміє залежності, вирішує складні архітектурні питання. Воркери на Sonnet 4 / Haiku 4 виконують чітко окреслені задачі. Економія 60-80% вартості без втрати якості на воркерах — вони працюють із добре описаними задачами. <a href=\"https://claudefa.st/blog/guide/agents/sub-agent-best-practices\" target=\"_blank\">sub-agent best practices</a>",
+            "tags": [
+              "патерн",
+              "вартість"
+            ]
+          },
+          {
+            "title": "Fan-out патерн: паралельна обробка незалежних одиниць роботи",
+            "desc": "50 компонентів для рефакторингу → оркестратор запускає 50 паралельних субагентів, кожен обробляє свій компонент → результати сходяться в оркестраторі для фінального merge. Умова застосовності: задачі незалежні (немає shared state, немає порядку виконання). <a href=\"https://turion.ai/blog/claude-code-multi-agents-subagents-guide/\" target=\"_blank\">multi-agents guide</a>",
+            "tags": [
+              "патерн",
+              "паралелізм"
+            ]
+          },
+          {
+            "title": "Shared task list як coordination primitive — агенти не спілкуються напряму",
+            "desc": "Агенти читають і пишуть у спільний <code>tasks.json</code> файл через filesystem-інструменти. Атомарні операції: \"взяв задачу X у роботу\" → \"завершив задачу X, результат в output/X.md\". Немає прямої комунікації між агентами → немає deadlocks, простіший дебагінг. <a href=\"https://www.mindstudio.ai/blog/claude-code-agent-teams-parallel-shared-task-list\" target=\"_blank\">Agent Teams Deep Dive</a>",
+            "tags": [
+              "координація",
+              "патерн"
+            ]
+          },
+          {
+            "title": "Ізоляція контексту субагентів: кожен отримує тільки потрібне",
+            "desc": "Не передавай усю історію оркестратора в субагент. Формуй мінімальний контекст: опис задачі + потрібні файли + формат очікуваного виводу. Менше контексту = менше confusion + менше токенів. Субагент не повинен знати про інші задачі паралельного fan-out.",
+            "tags": [
+              "контекст",
+              "оптимізація"
+            ]
+          },
+          {
+            "title": "Handoffs: як правильно передавати стан між послідовними агентами",
+            "desc": "Explicit state файл: агент 1 пише <code>stage1_output.md</code> зі структурованим результатом, агент 2 читає його на початку роботи. Використовуй frontmatter з metadata: <code>status, completed_at, next_steps</code>. Це chain of responsibility патерн — кожен агент продовжує з чіткої точки.",
+            "tags": [
+              "патерн",
+              "handoffs"
+            ]
+          },
+          {
+            "title": "Worktree isolation для субагентів: безпечний паралелізм у git",
+            "desc": "Додай <code>isolation: worktree</code> в frontmatter кастомного субагента → кожен запуск автоматично створює окремий git worktree. Кілька агентів редагують різні частини коду одночасно без file conflicts. Після завершення оркестратор вирішує, як мержити зміни. <a href=\"https://code.claude.com/docs/en/worktrees\" target=\"_blank\">worktrees docs</a>",
+            "tags": [
+              "worktrees",
+              "субагенти"
+            ]
+          },
+          {
+            "title": "Custom subagents у .claude/agents/: створи команду спеціалістів",
+            "desc": "YAML frontmatter визначає: <code>name, model, tools, system_prompt, isolation</code>. Приклад: <code>frontend-agent</code> з доступом тільки до <code>src/components/</code>, <code>api-agent</code> з доступом до <code>src/api/</code>. Спеціалізація зменшує ймовірність випадкових змін у неправильних місцях.",
+            "tags": [
+              "конфіг",
+              "спеціалізація"
+            ]
+          },
+          {
+            "title": "Коли НЕ потрібні субагенти: overhead перевищує вигоду",
+            "desc": "Запуск субагента включає: ініціалізацію нового context window, читання CLAUDE.md, встановлення інструментів. Для задачі тривалістю < 2 хвилин цей overhead може перевищувати час виконання. Правило: субагент виправданий, якщо задача займає > 5 хвилин або якщо потрібна справжня паралельність.",
+            "tags": [
+              "анти-патерн"
+            ]
+          },
+          {
+            "title": "Дебагінг multi-agent workflows: кожен субагент пише у свій лог",
+            "desc": "Інструктуй кожного субагента: \"спершу запиши в <code>logs/{agent_name}.md</code>: задачу, план, прогрес, результат\". Оркестратор наприкінці читає всі логи й будує повну картину. При помилці ти одразу бачиш, на якому агенті вона сталася і чому. <a href=\"https://github.com/wshobson/agents\" target=\"_blank\">приклад: wshobson/agents orchestration</a>",
+            "tags": [
+              "debugging",
+              "observability"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "cls": "s6",
+        "title": "Контекст і пам'ять агента",
+        "subtitle": "CLAUDE.md · compaction · memory tool · context poisoning",
+        "items": [
+          {
+            "title": "CLAUDE.md < 200 рядків: довжина обернено пропорційна дотриманню",
+            "desc": "Що довший CLAUDE.md, то гірше агент дотримується правил — просто губить їх у довгому контексті. Тримай < 200 рядків, тільки критично важливе. Прибери все, що можна прочитати з коду проєкту. Перевіряй регулярно: якщо правило не порушувалося 3 місяці — видали його. <a href=\"https://code.claude.com/docs/en/memory\" target=\"_blank\">code.claude.com/docs/memory</a>",
+            "tags": [
+              "CLAUDE.md",
+              "best practice"
+            ]
+          },
+          {
+            "title": "CLAUDE.md — це контракт: пиши, що НЕ МОЖНА, не тільки що можна",
+            "desc": "Негативні інструкції працюють краще за позитивні в довгих сесіях. Блок \"Ніколи не роби:\" з конкретними anti-patterns (\"не використовуй any\", \"не змінюй package.json без явного запиту\", \"не видаляй тести\") ефективніший за розмиті позитивні правила.",
+            "tags": [
+              "CLAUDE.md",
+              "промптинг"
+            ]
+          },
+          {
+            "title": "/compact: стиснення контексту без втрати суті при довгих сесіях",
+            "desc": "<code>/compact</code> змушує Claude підсумувати історію розмови в ключові факти й рішення, зберігаючи робочий контекст. Використовуй проактивно кожні ~50 turns або коли бачиш деградацію якості відповідей — ознака переповнення context window.",
+            "tags": [
+              "контекст",
+              "оптимізація"
+            ]
+          },
+          {
+            "title": "Context poisoning: як помилкові дані в контексті ламають агента",
+            "desc": "Якщо агент отримав неправильний результат від інструмента (баг у коді, неправильний файл) і не виправив це явно — \"отруєний\" факт залишається в контексті й впливає на всі подальші рішення. Симптом: агент раз за разом відтворює одну помилку. Рішення: явне виправлення або /compact з перерахунком.",
+            "tags": [
+              "контекст",
+              "баги"
+            ]
+          },
+          {
+            "title": "Memory tool: персистентне сховище між сесіями",
+            "desc": "API-level інструмент, який дозволяє агенту писати й читати файли між сесіями. Агент сам вирішує, що важливо запам'ятати. Використовуй для: довгострокових проєктів, де агент має знати рішення, прийняті тиждень тому, накопичення знань про кодову базу. <a href=\"https://platform.claude.com/docs/en/managed-agents/memory\" target=\"_blank\">platform.claude.com/docs/memory</a>",
+            "tags": [
+              "пам'ять",
+              "персистентність"
+            ]
+          },
+          {
+            "title": "Auto-memory у Claude Code: агент сам оновлює нотатки про проєкт",
+            "desc": "Claude Code автоматично записує вивчені налаштування та патерни в memory-файли без ручного редагування CLAUDE.md. Агент накопичує знання про кодову базу через сесії. Цінно для довгострокових проєктів: за місяць агент знає архітектуру краще за нового розробника. <a href=\"https://www.mindstudio.ai/blog/what-is-claude-code-auto-memory\" target=\"_blank\">що таке auto-memory</a>",
+            "tags": [
+              "пам'ять",
+              "auto"
+            ]
+          },
+          {
+            "title": "Tool result clearing: прибирай старі результати з контексту",
+            "desc": "Великі bash outputs, файли, прочитані годину тому — вони все ще займають токени в контексті. Context engineering API дозволяє явно видаляти конкретні tool results. Для довгих сесій це знижує вартість і покращує quality. <a href=\"https://platform.claude.com/cookbook/tool-use-context-engineering-context-engineering-tools\" target=\"_blank\">Context Engineering Cookbook</a>",
+            "tags": [
+              "контекст",
+              "оптимізація"
+            ]
+          },
+          {
+            "title": "Передача стану між сесіями через структурований state-файл",
+            "desc": "Наприкінці сесії пиши <code>session_state.json</code>: поточний статус, прийняті рішення, наступні кроки, важливі знахідки. На початку наступної сесії: \"прочитай session_state.json і продовж роботу\". Надійніше, ніж покладатися на auto-memory для критичних даних.",
+            "tags": [
+              "персистентність",
+              "патерн"
+            ]
+          },
+          {
+            "title": "Context engineering: проєктуй, що агент БАЧИТЬ, не тільки що кажеш",
+            "desc": "Принцип: агент приймає рішення на основі всього, що в його context window. Якщо туди потрапила неправильна інформація або зайвий шум — якість падає. Спеціально конструюй контекст: включай релевантні файли явно, виключай нерелевантні, структуруй порядок інформації. <a href=\"https://platform.claude.com/cookbook/tool-use-context-engineering-context-engineering-tools\" target=\"_blank\">cookbook</a>",
+            "tags": [
+              "контекст",
+              "архітектура"
+            ]
+          },
+          {
+            "title": "Використовуй --resume і --continue для відновлення перерваних сесій",
+            "desc": "<code>claude --continue</code> продовжує останню сесію, <code>claude --resume SESSION_ID</code> відновлює конкретну. Критично для довгих агентних задач, які можуть перерватися: деплой, рефакторинг великої кодової бази, довгий дослідницький workflow.",
+            "tags": [
+              "сесії",
+              "надійність"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "cls": "s7",
+        "title": "Промптинг спеціально для агентів",
+        "subtitle": "system prompts · XML теги · few-shot · tool use · slash commands",
+        "items": [
+          {
+            "title": "Промпт для агента ≠ промпт для чатбота: різні цілі, різні патерни",
+            "desc": "Чатбот-промпт → \"ти корисний асистент\". Агент-промпт → \"ти виконуєш задачу X, використовуєш інструменти Y, виводиш результат у форматі Z, зупиняєшся, коли W\". Агенту потрібні: чіткі інструменти, умови завершення, формат виводу, межі повноважень — не особистість і тон.",
+            "tags": [
+              "промптинг",
+              "принципи"
+            ]
+          },
+          {
+            "title": "XML-теги для структурування складних агентних промптів",
+            "desc": "Claude нативно розуміє XML-структуру: <code>&lt;context&gt;...&lt;/context&gt;</code>, <code>&lt;task&gt;...&lt;/task&gt;</code>, <code>&lt;constraints&gt;...&lt;/constraints&gt;</code>, <code>&lt;output_format&gt;...&lt;/output_format&gt;</code>. Теги допомагають розділити ролі різних частин промпту й знижують \"плутанину\" при довгих інструкціях. <a href=\"https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview\" target=\"_blank\">Anthropic prompting guide</a>",
+            "tags": [
+              "промптинг",
+              "XML"
+            ]
+          },
+          {
+            "title": "Few-shot приклади для навчання правильному використанню інструментів",
+            "desc": "Покажи 2-3 приклади правильного tool call flow: \"спершу прочитай файл, потім відредагуй тільки потрібну частину\". Різко знижує кількість неправильних tool calls, коли агент не впевнений, як використати інструмент у твоєму специфічному контексті. Особливо важливо для кастомних MCP-інструментів.",
+            "tags": [
+              "промптинг",
+              "few-shot"
+            ]
+          },
+          {
+            "title": "Негативні інструкції ефективніші за позитивні для boundary enforcement",
+            "desc": "\"Не редагуй файли поза директорією <code>src/</code>\" працює краще, ніж \"редагуй тільки <code>src/</code>\". Список explicit заборон на початку промпту Claude дотримується краще, ніж розмиті позитивні правила. Створи блок \"Ніколи:\" у своєму CLAUDE.md.",
+            "tags": [
+              "промптинг",
+              "межі"
+            ]
+          },
+          {
+            "title": "Умови завершення обов'язкові: без них агент покращує нескінченно",
+            "desc": "\"Після того як усі тести проходять — зупинись і повідом результат.\" Без явної умови завершення агент продовжує ітерувати, додавати \"покращення\", рефакторити те, що не просили. Явний stopping condition — один із найважливіших елементів агентного промпту.",
+            "tags": [
+              "промптинг",
+              "керування"
+            ]
+          },
+          {
+            "title": "Декомпозиція задачі в промпті: нумеровані кроки краще, ніж \"зроби все\"",
+            "desc": "\"1. Спершу прочитай файли в src/auth/ 2. Знайди всі місця використання застарілого API 3. Онови кожне місце 4. Запусти тести 5. Поверни список змінених файлів\" → передбачуваніше, ніж \"онови auth\". Агент дотримується explicit workflow, не винаходить свій.",
+            "tags": [
+              "промптинг",
+              "структура"
+            ]
+          },
+          {
+            "title": "Extended thinking: вмикай для складних архітектурних рішень",
+            "desc": "Thinking mode дає агенту бюджет токенів на роздуми перед відповіддю. Для складних задач (архітектурний вибір, дебагінг складного бага, code review) якість помітно вища. Для простих задач — зайва вартість. Налаштовуй budget thinking за типом задачі.",
+            "tags": [
+              "thinking",
+              "якість"
+            ]
+          },
+          {
+            "title": "Slash commands як стандартизовані промпт-шаблони для команди",
+            "desc": "<code>.claude/commands/review.md</code> містить повний промпт для code review з твоїми стандартами. <code>/review $ARGUMENTS</code> передає номер PR або файл. Команда використовує однаковий рівень review — немає розкиду в якості від розробника до розробника.",
+            "tags": [
+              "команда",
+              "стандарти"
+            ]
+          },
+          {
+            "title": "Версіонуй промпти в git: промпт — це код, не магія",
+            "desc": "Зберігай важливі промпти в <code>.claude/</code> або окремому репо. Тегуй версії при змінах. Пиши changelog: \"v2: додали constraint на TypeScript strict mode\". Це дозволяє відкотитися при регресії якості й зрозуміти, що саме змінилося.",
+            "tags": [
+              "практика",
+              "версіонування"
+            ]
+          },
+          {
+            "title": "Ітеративний рефайнінг: документуй, що спрацювало, прямо в CLAUDE.md",
+            "desc": "Коли знайшов формулювання, яке працює краще за попереднє — одразу додавай у CLAUDE.md. Створи патерн: запустив агента → оцінив результат → покращив промпт → зафіксував, що спрацювало. За місяць у тебе буде battle-tested набір інструкцій для твого конкретного проєкту.",
+            "tags": [
+              "практика",
+              "ітерації"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "cls": "s8",
+        "title": "Передбачуваність і детермінізм генерації",
+        "subtitle": "Zod · structured output · TypeScript contracts · validation",
+        "items": [
+          {
+            "title": "Zod-схеми як контракт між агентом і системою: парсинг замість довіри",
+            "desc": "<code>const schema = z.object({files: z.array(z.string()), summary: z.string().max(200)})</code> → <code>schema.parseAsync(output)</code>. Агент або повертає валідний об'єкт, або система знає про помилку. Жодних сюрпризів у production. Zod — стандарт де-факто в TypeScript AI-екосистемі. <a href=\"https://workos.com/blog/zod-for-typescript\" target=\"_blank\">Zod for TypeScript AI dev</a>",
+            "tags": [
+              "Zod",
+              "TypeScript"
+            ]
+          },
+          {
+            "title": "generateObject() з Vercel AI SDK: 100% типобезпечний structured output",
+            "desc": "<code>const {object} = await generateObject({model, schema: z.object({...}), prompt})</code> — повертає типізований об'єкт, провайдер використовує constrained decoding де можливо. Ніколи не парси JSON зі string вручну, коли є цей API. <a href=\"https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data\" target=\"_blank\">ai-sdk.dev/docs/generating-structured-data</a>",
+            "tags": [
+              "Vercel AI SDK",
+              "structured output"
+            ]
+          },
+          {
+            "title": "Вставляй TypeScript interfaces прямо в промпт: агент генерує сумісний код",
+            "desc": "Включи в промпт: \"Ось використовувані типи: <code>[встав interface]</code>. Генеруй код, сумісний із цими типами\". Агент бачить реальні типи з кодової бази → код компілюється з першого разу у 90% випадків замість 50%.",
+            "tags": [
+              "TypeScript",
+              "промптинг"
+            ]
+          },
+          {
+            "title": "OpenAI Structured Outputs: constrained decoding гарантує валідний JSON",
+            "desc": "Для Codex CLI і GPT моделей Structured Outputs (не function calling) обмежує декодування → JSON завжди валідний, схема завжди відповідає. Claude використовує prompt-based підхід + Zod validation after — у Vercel AI SDK це абстраговано автоматично. <a href=\"https://dev.to/whoffagents/openai-structured-outputs-vs-zod-which-to-use-for-llm-response-validation-in-2026-366m\" target=\"_blank\">Structured Outputs vs Zod 2026</a>",
+            "tags": [
+              "OpenAI",
+              "structured output"
+            ]
+          },
+          {
+            "title": "Явні output format інструкції: прибирай markdown-обгортку, яка ламає парсинг",
+            "desc": "\"Поверни ТІЛЬКИ валідний JSON без markdown-блоків, без коментарів, без пояснень.\" Найчастіша причина зламаного парсингу — агент обгортає JSON у ```json ... ```. Explicit інструкція вирішує проблему. Для додаткової надійності: strip markdown-блоки перед парсингом.",
+            "tags": [
+              "промптинг",
+              "парсинг"
+            ]
+          },
+          {
+            "title": "Retry з уточненим промптом при невалідному output",
+            "desc": "Zod fail → витягни помилку валідації → додай у retry-промпт: \"Попередня відповідь невалідна: {zodError}. Виправ і поверни знову тільки JSON.\" Max 3 спроби з exponential backoff. Після 3 failures — escalate до людини або fallback. Ніколи не падай мовчки.",
+            "tags": [
+              "retry",
+              "надійність"
+            ]
+          },
+          {
+            "title": "Temperature керування: 0 для коду, вище для творчих задач",
+            "desc": "Temperature 0 → детермінований вивід, мінімум варіацій, ідеально для генерації коду, JSON, структурованих даних. Temperature 0.5-0.7 → для написання документації, коментарів, пояснень. Деякі фреймворки примусово встановлюють temperature для різних типів задач.",
+            "tags": [
+              "temperature",
+              "детермінізм"
+            ]
+          },
+          {
+            "title": "viteval: тестуй агентний output у CI як звичайний код",
+            "desc": "Vitest-style API для LLM evals: визначай scorers, локальні датасети, assertions на якість виводу. <code>expect(output).toMatchSchema(schema)</code>, <code>expect(score).toBeGreaterThan(0.8)</code>. Запускай у GitHub Actions — fail PR, якщо регресія. <a href=\"https://github.com/viteval/viteval\" target=\"_blank\">github.com/viteval/viteval</a>",
+            "tags": [
+              "тестування",
+              "CI"
+            ]
+          },
+          {
+            "title": "Thinking mode для складних задач: явний budget на роздуми",
+            "desc": "Extended thinking (Claude) / reasoning (OpenAI) дає моделі токени на \"роздуми вголос\" перед фінальною відповіддю. Для multi-step reasoning, складних архітектурних рішень, дебагінгу нетривіальних багів — якість суттєво вища. Налаштовуй budget: вищий budget → краща якість → дорожче.",
+            "tags": [
+              "thinking",
+              "якість"
+            ]
+          },
+          {
+            "title": "Machine-readable error handling: агент повідомляє про помилки структуровано",
+            "desc": "Замість \"щось пішло не так\" у вільному тексті: інструктуй агента повертати <code>{success: false, error: {code: \"FILE_NOT_FOUND\", file: \"...\", suggestion: \"...\"}}</code>. Система автоматично обробляє різні типи помилок без парсингу природної мови.",
+            "tags": [
+              "error handling",
+              "structured"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "cls": "s9",
+        "title": "Евалуації та тестування агентних workflows (JS/TS)",
+        "subtitle": "promptfoo · viteval · golden datasets · trace-based · CI",
+        "items": [
+          {
+            "title": "promptfoo: галузевий стандарт для LLM evals, використовують OpenAI і Anthropic",
+            "desc": "YAML-конфіги для визначення провайдерів, промптів і assertions. CLI і TypeScript API. Порівняння якості між моделями, red teaming (50+ типів вразливостей), CI/CD інтеграція. У березні 2026 OpenAI анонсував придбання — de-facto стандарт. <a href=\"https://github.com/promptfoo/promptfoo\" target=\"_blank\">github.com/promptfoo/promptfoo</a> · <a href=\"https://www.promptfoo.dev/docs/integrations/ci-cd/\" target=\"_blank\">CI/CD інтеграція</a>",
+            "tags": [
+              "evals",
+              "CI"
+            ]
+          },
+          {
+            "title": "viteval: Vitest-style eval framework — знайомий API для JS-розробників",
+            "desc": "Якщо ти вже використовуєш Vitest — viteval API буде миттєво зрозумілий. Локальні датасети, scorer framework, CI-інтеграція. Запускай LLM evals так само, як unit-тести. <a href=\"https://github.com/viteval/viteval\" target=\"_blank\">github.com/viteval/viteval</a>",
+            "tags": [
+              "evals",
+              "Vitest"
+            ]
+          },
+          {
+            "title": "agentest: Vitest для тестування AI-агентів із mock tool calls",
+            "desc": "Заповнює gap \"детерміноване тестування агентів\": перехоплює tool calls агента, дозволяє підміняти їх mock-відповідями, робити assertions на весь trajectory (які інструменти викликав, у якому порядку, з якими аргументами) — не тільки на фінальний текст. <a href=\"https://dev.to/raffael_p/agentest-vitest-style-e2e-testing-for-ai-agents-44j1\" target=\"_blank\">agentest guide</a>",
+            "tags": [
+              "тестування",
+              "mocks"
+            ]
+          },
+          {
+            "title": "Golden dataset: твоє джерело правди для регресійного тестування",
+            "desc": "Набір: input + expected_output + acceptable_variance. Мінімум 50 прикладів, що покривають happy path, edge cases, відомі складні випадки. Версіонуй у git. При кожній зміні промпту ганяй повний eval проти golden set — якщо score впав → регресія. <a href=\"https://www.getmaxim.ai/articles/building-a-golden-dataset-for-ai-evaluation-a-step-by-step-guide/\" target=\"_blank\">як будувати golden dataset</a>",
+            "tags": [
+              "evals",
+              "dataset"
+            ]
+          },
+          {
+            "title": "Trace-based evals: оцінюй шлях агента, не тільки фінальний результат",
+            "desc": "Агент дійшов до правильної відповіді неправильним шляхом → це проблема для production-надійності. Записуй весь trajectory: які файли прочитав, які команди виконав, скільки iterations. Оцінюй: minimality (немає зайвих tool calls), correctness (правильна послідовність), efficiency (немає дублюючих операцій).",
+            "tags": [
+              "evals",
+              "traces"
+            ]
+          },
+          {
+            "title": "LangSmith + Vitest: параметризовані тести на датасеті",
+            "desc": "<code>ls.test.each(dataset)(\"test case\", async ({input, expected}) => {...})</code> — знайомий патерн, працює у звичайному Vitest test runner. Корисно, якщо вже використовуєш LangChain/LangSmith для трейсингу агентів. <a href=\"https://docs.langchain.com/langsmith/vitest-jest\" target=\"_blank\">LangSmith Vitest інтеграція</a>",
+            "tags": [
+              "LangSmith",
+              "Vitest"
+            ]
+          },
+          {
+            "title": "Regression CI: evals у GitHub Actions на кожен PR із промптами",
+            "desc": "Якщо PR змінює CLAUDE.md, .claude/commands/, system prompt → автоматично запускається eval suite проти golden dataset. Fail при score < threshold → не можна мержити. Промпти перестають бути \"магією\" — стають кодом із регресійним захистом. <a href=\"https://www.promptfoo.dev/docs/integrations/ci-cd/\" target=\"_blank\">promptfoo CI/CD docs</a>",
+            "tags": [
+              "CI/CD",
+              "regression"
+            ]
+          },
+          {
+            "title": "Assertions на діапазон, не на точний збіг: тестуй недетермінований код",
+            "desc": "<code>expect(score).toBeGreaterThan(0.8)</code> замість <code>expect(output).toBe(exact)</code>. LLM output варіативний — тестуй якість, а не конкретні слова. Для структурованих даних (JSON-схема) → exact matching OK. Для текстових відповідей → similarity score або rule-based assertions.",
+            "tags": [
+              "тестування",
+              "assertions"
+            ]
+          },
+          {
+            "title": "Unit-тести для інструментів агента окремо від агентного loop",
+            "desc": "Тестуй <code>fetchUserData()</code>, <code>parseGitDiff()</code>, <code>validateSchema()</code> звичайними Vitest-тестами без запуску агента. Швидкі, дешеві, детерміновані. Агентний loop тестуй окремо інтеграційними тестами. Не змішуй рівні тестування.",
+            "tags": [
+              "unit tests",
+              "ізоляція"
+            ]
+          },
+          {
+            "title": "Production monitoring: runtime evals через sampling 10% запитів",
+            "desc": "10% реальних запитів асинхронно проганяй через eval pipeline → метрики якості в реальному часі. Алерти при деградації: якщо score впав на 15% за останні 100 запитів → нотифікація. Це єдиний спосіб дізнатися про production-регресію до того, як її помітять користувачі.",
+            "tags": [
+              "production",
+              "monitoring"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "cls": "s10",
+        "title": "Оптимізація токенів і вартості",
+        "subtitle": "RTK · prompt caching · context-mode · model selection · /compact",
+        "items": [
+          {
+            "title": "RTK: CLI proxy знижує споживання токенів на 60–90% на частих командах",
+            "desc": "Single Rust binary без залежностей. Перехоплює shell-команди агента (git status, ls, cat) і повертає кешовані або стиснені результати замість повного виводу. Радикально знижує токени на операціях із файловою системою та git. <a href=\"https://github.com/rtk-ai/rtk\" target=\"_blank\">github.com/rtk-ai/rtk</a>",
+            "tags": [
+              "RTK",
+              "токени"
+            ]
+          },
+          {
+            "title": "context-mode у RTK: розумний аналіз, які частини контексту реально потрібні",
+            "desc": "RTK аналізує агентний контекст і відсікає частини, які не впливають на поточну задачу. На відміну від простого /compact, який підсумовує все, context-mode хірургічно точніший — зберігає максимум релевантної інформації при мінімумі токенів. <a href=\"https://github.com/rtk-ai/rtk\" target=\"_blank\">github.com/rtk-ai/rtk</a>",
+            "tags": [
+              "RTK",
+              "контекст"
+            ]
+          },
+          {
+            "title": "Prompt caching: 90% економія на повторюваних системних промптах",
+            "desc": "Claude prompt caching: cached tokens коштують $0.30/M замість $3.00/M — економія 90%. Cache працює при збігу prefix. Обов'язковий для всіх агентів із довгими system prompts (CLAUDE.md + документація + інструкції). Вмикається автоматично в Claude API за наявності cache_control header. <a href=\"https://introl.com/blog/prompt-caching-infrastructure-llm-cost-latency-reduction-guide-2025\" target=\"_blank\">prompt caching guide</a>",
+            "tags": [
+              "caching",
+              "вартість"
+            ]
+          },
+          {
+            "title": "Cache-friendly структура промпту: статика на початку, динаміка в кінці",
+            "desc": "Cache hit відбувається тільки при збігу prefix. Правило: system prompt + документація + приклади (статика) → початок. Динамічний запит користувача → кінець. Ніколи не вставляй timestamp або request ID у середину системного промпту — це інвалідує кеш.",
+            "tags": [
+              "caching",
+              "архітектура"
+            ]
+          },
+          {
+            "title": "Стратегія вибору моделі: не використовуй Opus там, де вистачить Haiku",
+            "desc": "Haiku: форматування, lint-fix, простий рефакторинг, шаблонний код, переклад → ~100x дешевше за Opus. Sonnet: звичайні coding задачі, review, документація. Opus: архітектурні рішення, складний дебагінг, multi-step reasoning. Оркестратор-воркер патерн максимізує цю економію.",
+            "tags": [
+              "моделі",
+              "вартість"
+            ]
+          },
+          {
+            "title": "/compact замість рестарту: зберігай контекст при довгих сесіях",
+            "desc": "<code>/compact</code> підсумовує історію й продовжує сесію зі збереженим контекстом. Альтернатива рестарту, який втрачає весь прогрес. Використовуй проактивно до того, як context window заповниться — при заповненні якість відповідей деградує до рестарту.",
+            "tags": [
+              "оптимізація",
+              "контекст"
+            ]
+          },
+          {
+            "title": "Паралельні субагенти економлять час, але коштують більше токенів",
+            "desc": "Паралельно: 5 субагентів × 10K токенів кожен = 50K токенів за 2 хвилини. Послідовно: 50K токенів за 10 хвилин. Час дорогий для інтерактивних задач — використовуй паралельність. Для batch нічних задач із ціновим бюджетом → послідовно дешевше. Обирай усвідомлено.",
+            "tags": [
+              "субагенти",
+              "trade-offs"
+            ]
+          },
+          {
+            "title": "Прибирай великі tool results із контексту після використання",
+            "desc": "Прочитав 500-рядковий файл, виконав задачу → цей файл більше не потрібен у контексті, але займає тисячі токенів до кінця сесії. Через tool result clearing API або примусовий /compact регулярно очищай \"сміття\". Особливо важливо для агентів, які читають багато файлів.",
+            "tags": [
+              "контекст",
+              "токени"
+            ]
+          },
+          {
+            "title": "Вимірюй вартість кожного workflow через --output-format json",
+            "desc": "Поле <code>cost_usd</code> у JSON output <code>claude -p</code>. Логуй у БД за workflow_type. Топ-10 найдорожчих операцій — це твоя черга оптимізації. Часто один workflow коштує 80% усього бюджету, і його оптимізація вирішує все.",
+            "tags": [
+              "метрики",
+              "вартість"
+            ]
+          },
+          {
+            "title": "LLMLingua: стиснення промптів до 20x для довгих контекстів",
+            "desc": "Microsoft Research training-free prompt compression. Зберігає ключову інформацію при стисненні в 4-20 разів. Корисно для: RAG-контексту з великими документами, довгих code snippets у промпті, історичних даних. Використовуй, коли потрібно передати багато контексту, але токенів мало. <a href=\"https://github.com/microsoft/LLMLingua\" target=\"_blank\">github.com/microsoft/LLMLingua</a>",
+            "tags": [
+              "стиснення",
+              "токени"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
