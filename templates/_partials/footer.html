@@ -1,20 +1,68 @@
 <%
-/* Footer with logo, tagline, and the ls-opt language switch. Include data:
-     loc          -> current locale (marks the active anchor "on" + aria-current)
-     footerTagline-> per-locale tagline text
-     switchPrefix -> URL prefix for lang-switch targets:
-                     "all/" -> /all/<loc>.html ; "" (home) -> /<loc>.html */
+/* Shared site footer for the Eta "guild" chrome pages (index, all, swe).
+   ONE component: markup + its own scoped, theme-aware CSS + the localized legal
+   labels, so every page renders an identical footer from a single source.
+   Include data:
+     loc     -> current locale ("en" | "ru" | "uk"); selects the legal labels
+     tagline -> per-page footer tagline (raw HTML allowed)
+   The offer/privacy hrefs are the locale-agnostic redirect stubs (/offer.html,
+   /privacy.html) which forward to the visitor's saved language. The footer does
+   NOT include a language switcher — every page already has one in its top bar.
+   Colors are self-scoped (--sf-*) instead of the pages' own --muted/--dim vars,
+   whose values are inconsistent across index/all/swe; a [data-theme="light"]
+   override keeps both themes correct. */
+const _legal = ({
+  en: { offer: "Offer", privacy: "Privacy Policy" },
+  uk: { offer: "Оферта", privacy: "Конфіденційність" },
+  ru: { offer: "Оферта", privacy: "Конфиденциальность" },
+})[loc] || { offer: "Offer", privacy: "Privacy Policy" };
 %>
-<footer>
-  <div class="container row">
-    <div class="logo" style="font-size: 15px">nexttick<span>_</span></div>
-    <span><%~ footerTagline %></span>
-    <span class="lang-switch" style="margin-left: auto">
-      <a class="ls-opt<% if (loc === "uk") { %> on<% } %>" data-loc="uk" hreflang="uk" href="/<%= switchPrefix %>uk.html"<% if (loc === "uk") { %> aria-current="true"<% } %>>UK</a>
-      ·
-      <a class="ls-opt<% if (loc === "en") { %> on<% } %>" data-loc="en" hreflang="en" href="/<%= switchPrefix %>en.html"<% if (loc === "en") { %> aria-current="true"<% } %>>EN</a>
-      ·
-      <a class="ls-opt<% if (loc === "ru") { %> on<% } %>" data-loc="ru" hreflang="ru" href="/<%= switchPrefix %>ru.html"<% if (loc === "ru") { %> aria-current="true"<% } %>>RU</a>
+<style>
+  .site-footer {
+    --sf-fg: #888d92;
+    --sf-strong: #d6d8da;
+    padding: 26px 0 30px;
+    font-size: 12px;
+  }
+  [data-theme="light"] .site-footer {
+    --sf-fg: #59636e;
+    --sf-strong: #1f2328;
+  }
+  .site-footer-inner {
+    width: min(960px, calc(100% - 40px));
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 20px;
+    color: var(--sf-fg);
+  }
+  .site-footer .sf-legal {
+    margin-left: auto;
+    display: flex;
+    gap: 16px;
+  }
+  .site-footer a {
+    color: var(--sf-fg);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease;
+  }
+  .site-footer a:hover {
+    color: var(--sf-strong);
+  }
+  @media (max-width: 560px) {
+    .site-footer .sf-legal {
+      margin-left: 0;
+    }
+  }
+</style>
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <span class="sf-tagline"><%~ tagline %></span>
+    <span class="sf-legal">
+      <a href="/offer.html"><%~ _legal.offer %></a>
+      <a href="/privacy.html"><%~ _legal.privacy %></a>
     </span>
   </div>
 </footer>

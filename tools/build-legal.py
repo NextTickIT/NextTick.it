@@ -454,7 +454,8 @@ PAGE = """<!doctype html>
         </main>
         <footer class="legal-footer">
           <a href="/%%LOC%%.html">%%F_HOME%%</a>
-          <a href="/%%OTHER_SLUG%%/%%LOC%%.html">%%F_OTHER%%</a>
+          <a href="/offer/%%LOC%%.html">%%F_OFFER%%</a>
+          <a href="/privacy/%%LOC%%.html">%%F_PRIVACY%%</a>
           <span class="lf-copy">%%F_COPY%%</span>
         </footer>
       </div>
@@ -512,7 +513,6 @@ def build():
         recs = paragraphs(docx_path)
         uk_half, ru_half = split_halves(recs, cfg["ru_split"])
         halves = {"uk": uk_half, "ru": ru_half}
-        other_slug = "privacy" if slug == "offer" else "offer"
         for loc, half in halves.items():
             # Stage 1: docx records -> Markdown intermediate (written to disk).
             md = records_to_md(half)
@@ -527,7 +527,6 @@ def build():
                 .replace("%%LANG%%", loc)
                 .replace("%%LOC%%", loc)
                 .replace("%%SLUG%%", slug)
-                .replace("%%OTHER_SLUG%%", other_slug)
                 .replace("%%TITLE%%", esc(s["title"]))
                 .replace("%%DESC%%", esc(s["desc"]))
                 .replace("%%PATH%%", esc(s["path"]))
@@ -541,7 +540,8 @@ def build():
                 .replace("%%CUR_RU%%", ' aria-current="true"' if loc == "ru" else "")
                 .replace("%%CLARITY%%", CLARITY if slug == "offer" else "")
                 .replace("%%F_HOME%%", esc(fl["home"]))
-                .replace("%%F_OTHER%%", esc(fl[other_slug]))
+                .replace("%%F_OFFER%%", esc(fl["offer"]))
+                .replace("%%F_PRIVACY%%", esc(fl["privacy"]))
                 .replace("%%F_COPY%%", esc(fl["copy"]))
             )
             out_dir = os.path.join(ROOT, "docs", slug)

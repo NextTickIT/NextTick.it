@@ -912,18 +912,6 @@
         color: var(--bg);
       }
 
-      .footer {
-        padding: 28px 0;
-        color: var(--dim);
-        font-family: var(--mono);
-        font-size: 12px;
-      }
-
-      .footer-inner {
-        width: min(var(--max), calc(100% - 32px));
-        margin: 0 auto;
-      }
-
       @media (max-width: 900px) {
         .tabs,
         .path {
@@ -1367,9 +1355,7 @@
       </section>
     </main>
 
-        <footer class="footer">
-          <div class="footer-inner"><%~ footerText %></div>
-        </footer>
+        <%~ include("_partials/footer.html", { loc, tagline: footerText }) %>
       </div>
     </div>
 

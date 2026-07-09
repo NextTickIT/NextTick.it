@@ -985,18 +985,6 @@
         color: var(--bg);
       }
 
-      .footer {
-        padding: 28px 0;
-        color: var(--dim);
-        font-family: var(--mono);
-        font-size: 12px;
-      }
-
-      .footer-inner {
-        width: min(var(--max), calc(100% - 32px));
-        margin: 0 auto;
-      }
-
       @media (max-width: 900px) {
         .tabs,
         .path {
@@ -2108,8 +2096,54 @@
           </section>
         </main>
 
-        <footer class="footer">
-          <div class="footer-inner">nexttick / engineers' guild</div>
+        <style>
+          .site-footer {
+            --sf-fg: #888d92;
+            --sf-strong: #d6d8da;
+            padding: 26px 0 30px;
+            font-size: 12px;
+          }
+          [data-theme="light"] .site-footer {
+            --sf-fg: #59636e;
+            --sf-strong: #1f2328;
+          }
+          .site-footer-inner {
+            width: min(960px, calc(100% - 40px));
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 20px;
+            color: var(--sf-fg);
+          }
+          .site-footer .sf-legal {
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+          }
+          .site-footer a {
+            color: var(--sf-fg);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.15s ease;
+          }
+          .site-footer a:hover {
+            color: var(--sf-strong);
+          }
+          @media (max-width: 560px) {
+            .site-footer .sf-legal {
+              margin-left: 0;
+            }
+          }
+        </style>
+        <footer class="site-footer">
+          <div class="site-footer-inner">
+            <span class="sf-tagline">nexttick / engineers' guild</span>
+            <span class="sf-legal">
+              <a href="/offer.html">Offer</a>
+              <a href="/privacy.html">Privacy Policy</a>
+            </span>
+          </div>
         </footer>
       </div>
     </div>

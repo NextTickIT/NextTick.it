@@ -91,7 +91,11 @@ for (const { page, scheme, locales } of discoverChrome()) {
     // (the old `all` was the simpler green landing; it is now the guildia-v2
     // redesign) — exempt them from same-locale byte acceptance (cross-locale
     // parity + live-path still apply).
-    if (page !== "swe" && page !== "all") {
+    // `index` carries a post-migration content edit (offer/privacy links added to
+    // the colophon footer), so it legitimately diverges from the 268cb44 snapshot
+    // and is likewise exempt from same-locale byte acceptance; cross-locale parity,
+    // i18n residue, and live-path existence still guard it.
+    if (page !== "swe" && page !== "all" && page !== "index") {
       const res = byteDiffFiles(p, BASELINE_SHA, baselineOldPath(page, loc));
       if (!res.ok) {
         fail(

@@ -2004,14 +2004,6 @@
         color: var(--muted);
       }
 
-      .colophon {
-        padding: 14px 38px 32px;
-        color: var(--muted);
-        font-size: 10.5px;
-        display: flex;
-        justify-content: space-between;
-      }
-
       /* ─── Gated sections (case-reviews / digest / community) ─────────── */
 
       /* Hide gated sections that the current tier doesn't unlock */
@@ -2478,13 +2470,6 @@
         }
         .cta h2 {
           font-size: 28px;
-        }
-
-        .colophon {
-          padding: 12px 18px 22px;
-          flex-direction: column;
-          gap: 4px;
-          align-items: flex-start;
         }
       }
 
@@ -3249,10 +3234,55 @@
           </div>
         </section>
 
-        <div class="colophon">
-          <span>nexttick — гильдия инженеров</span>
-          <span>роадмап</span>
-        </div>
+        <style>
+          .site-footer {
+            --sf-fg: #888d92;
+            --sf-strong: #d6d8da;
+            padding: 26px 0 30px;
+            font-size: 12px;
+          }
+          [data-theme="light"] .site-footer {
+            --sf-fg: #59636e;
+            --sf-strong: #1f2328;
+          }
+          .site-footer-inner {
+            width: min(960px, calc(100% - 40px));
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 20px;
+            color: var(--sf-fg);
+          }
+          .site-footer .sf-legal {
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+          }
+          .site-footer a {
+            color: var(--sf-fg);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.15s ease;
+          }
+          .site-footer a:hover {
+            color: var(--sf-strong);
+          }
+          @media (max-width: 560px) {
+            .site-footer .sf-legal {
+              margin-left: 0;
+            }
+          }
+        </style>
+        <footer class="site-footer">
+          <div class="site-footer-inner">
+            <span class="sf-tagline">nexttick — гильдия инженеров</span>
+            <span class="sf-legal">
+              <a href="/offer.html">Оферта</a>
+              <a href="/privacy.html">Конфиденциальность</a>
+            </span>
+          </div>
+        </footer>
       </div>
     </div>
 
