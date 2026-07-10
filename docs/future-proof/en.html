@@ -1,0 +1,2242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-M74P6CSD");
+    </script>
+    <!-- End Google Tag Manager -->
+    <title>Next Tick — an engineers' guild for middle developers</title>
+    <meta
+      name="description"
+      content="The Next Tick guild — a closed environment for middle developers: architecture, AI-agents, and communication. Three topics a week, workshops, digests, live calls. $50/mo."
+    />
+    <link rel="canonical" href="https://nexttick.it/future-proof/en.html" />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://nexttick.it/future-proof/uk.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/future-proof/en.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://nexttick.it/future-proof/ru.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/future-proof/uk.html"
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0b0d0f" />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1TYEB7YFP5");
+    </script>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "x5houryvs2");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0d0f;
+        --bg-2: #111417;
+        --surface: #151a1e;
+        --surface-2: #1c2227;
+        --line: #2b333a;
+        --text: #eef2f3;
+        --muted: #a0a8ad;
+        --dim: #7e8890;
+        --green: #70e48a;
+        --green-2: #2caa55;
+        --red: #ff6259;
+        --amber: #f0b94d;
+        --mono:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        --sans:
+          "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        --max: 1160px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.55;
+      }
+
+      /* Some viewers repaint html/body white — background is set explicitly per block */
+      html,
+      main,
+      section,
+      header.hero,
+      .footer {
+        background-color: var(--bg);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(11, 13, 15, 0.85);
+        backdrop-filter: blur(14px);
+      }
+
+      .nav-inner {
+        width: min(var(--max), calc(100% - 32px));
+        height: 64px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .brand {
+        font-family: var(--mono);
+        font-size: 14px;
+        color: #ffffff;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .nav-links a {
+        text-decoration: none;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .btn {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid rgba(112, 228, 138, 0.55);
+        border-radius: 8px;
+        padding: 11px 18px;
+        background: var(--green);
+        color: #061008;
+        font-weight: 800;
+        text-decoration: none;
+        box-shadow: 0 12px 30px rgba(44, 170, 85, 0.22);
+      }
+
+      .btn:hover {
+        background: #8bf0a0;
+      }
+
+      .btn.secondary {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.18);
+        color: var(--text);
+        box-shadow: none;
+      }
+
+      .btn.secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .hero {
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-height: 78vh;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+        background:
+          radial-gradient(
+            900px 480px at 85% 10%,
+            rgba(112, 228, 138, 0.07),
+            transparent 60%
+          ),
+          radial-gradient(
+            700px 420px at 10% 90%,
+            rgba(112, 228, 138, 0.05),
+            transparent 60%
+          ),
+          var(--bg);
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+        padding: 76px 0 58px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        border: 1px solid rgba(112, 228, 138, 0.28);
+        border-radius: 999px;
+        padding: 7px 11px;
+        background: rgba(112, 228, 138, 0.08);
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 0 5px rgba(112, 228, 138, 0.12);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 940px;
+        margin-bottom: 22px;
+        font-size: clamp(40px, 6.6vw, 78px);
+        line-height: 1;
+      }
+
+      .lead {
+        max-width: 780px;
+        margin-bottom: 30px;
+        color: #d9e0e2;
+        font-size: 21px;
+        line-height: 1.48;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .hero-facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        max-width: 860px;
+        color: #cdd5d9;
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .hero-facts span {
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        padding: 7px 10px;
+        background: rgba(0, 0, 0, 0.55);
+      }
+
+      section {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .section-inner {
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+        padding: 82px 0;
+      }
+
+      .section-label {
+        margin-bottom: 14px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        max-width: 920px;
+        margin-bottom: 22px;
+        font-size: clamp(30px, 4.5vw, 54px);
+        line-height: 1.05;
+      }
+
+      .section-copy {
+        max-width: 820px;
+        color: var(--muted);
+        font-size: 19px;
+      }
+
+      .band {
+        background: var(--bg-2);
+      }
+
+      .insight {
+        background: #101311;
+      }
+
+      .statement {
+        max-width: 900px;
+        color: var(--muted);
+        font-size: 22px;
+      }
+
+      .statement strong {
+        color: var(--text);
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+        gap: 46px;
+        align-items: start;
+      }
+
+      .list {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .list li,
+      .card,
+      .objection,
+      .author,
+      .price-box,
+      .dialog,
+      .review {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        background: var(--surface);
+      }
+
+      .list li {
+        display: flex;
+        gap: 12px;
+        padding: 15px 16px;
+        color: #dce3e5;
+      }
+
+      .mark {
+        flex: 0 0 auto;
+        color: var(--green);
+        font-family: var(--mono);
+      }
+
+      .not-for .section-label,
+      .not-for .mark {
+        color: var(--red);
+      }
+
+      .not-for {
+        background: #160f0f;
+      }
+
+      /* Formula */
+      .formula {
+        margin: 34px 0 26px;
+        padding: 26px 24px;
+        border: 1px solid rgba(112, 228, 138, 0.35);
+        border-radius: 8px;
+        background: rgba(112, 228, 138, 0.06);
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: clamp(18px, 3vw, 30px);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-align: center;
+      }
+
+      .formula-grid,
+      .inside-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .values {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .card .k {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .card p strong {
+        color: #dfe6e8;
+      }
+
+      .card.hl {
+        border-color: rgba(240, 185, 77, 0.45);
+        background: rgba(240, 185, 77, 0.05);
+      }
+
+      .card.hl .k {
+        color: var(--amber);
+      }
+
+      /* Demo: dialogs */
+      .dialogs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 34px;
+      }
+
+      .dialog {
+        padding: 20px;
+      }
+
+      .dialog.bad {
+        border-left: 3px solid var(--red);
+      }
+
+      .dialog.good {
+        border-left: 3px solid var(--green);
+      }
+
+      .dialog .tag {
+        display: block;
+        margin-bottom: 12px;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--dim);
+        text-transform: uppercase;
+      }
+
+      .dialog.bad .tag {
+        color: var(--red);
+      }
+
+      .dialog.good .tag {
+        color: var(--green);
+      }
+
+      .dialog p {
+        margin: 0 0 10px;
+        color: #dce3e5;
+      }
+
+      .dialog p:last-child {
+        margin-bottom: 0;
+      }
+
+      .dialog .who {
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 12px;
+        margin-right: 6px;
+      }
+
+      .action-card {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid rgba(240, 185, 77, 0.4);
+        border-radius: 8px;
+        background: rgba(240, 185, 77, 0.06);
+        max-width: 920px;
+      }
+
+      .action-card .k {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--amber);
+        font-family: var(--mono);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .action-card p {
+        margin: 0;
+        color: #e3eaec;
+      }
+
+      .chain {
+        margin-top: 26px;
+        padding: 20px 22px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        background: var(--surface);
+        color: #dfe6e8;
+        font-family: var(--mono);
+        font-size: 15px;
+        line-height: 1.8;
+        max-width: 940px;
+      }
+
+      .chain b {
+        color: var(--green);
+        font-weight: 600;
+      }
+
+      /* Knowledge base */
+      .themes {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .theme-col h3 {
+        margin-bottom: 14px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 13px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .theme-col ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 8px;
+      }
+
+      .theme-col li {
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        background: var(--surface);
+        color: #dce3e5;
+        font-size: 14.5px;
+      }
+
+      .extras {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 22px;
+      }
+
+      /* Environment */
+      .env-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .env-grid .card strong {
+        color: #dfe6e8;
+      }
+
+      /* Authors */
+      .authors {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .author {
+        padding: 22px;
+      }
+
+      .author h3 {
+        margin-bottom: 8px;
+        font-size: 22px;
+      }
+
+      .author .role {
+        display: block;
+        margin-bottom: 12px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .author p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .author-note {
+        max-width: 880px;
+        margin: 28px 0 0;
+        padding: 18px 20px;
+        border-left: 2px solid var(--green);
+        color: #d8e0e2;
+        font-size: 18px;
+      }
+
+      /* Before / after */
+      .shift {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 34px;
+      }
+
+      /* Reviews */
+      .reviews {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .review {
+        padding: 20px;
+        min-height: 150px;
+        border-style: dashed;
+        color: var(--dim);
+        font-size: 15px;
+      }
+
+      /* Objections */
+      .objections {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .objection {
+        padding: 20px;
+      }
+
+      .objection strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--amber);
+      }
+
+      .objection p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      /* Final */
+      .final {
+        background: #0f1411;
+      }
+
+      .price-box {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 22px;
+        align-items: center;
+        margin-top: 34px;
+        padding: 26px;
+        background: linear-gradient(
+          135deg,
+          rgba(112, 228, 138, 0.13),
+          rgba(255, 255, 255, 0.03)
+        );
+      }
+
+      .price {
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 42px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .price small {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .choice {
+        margin-top: 24px;
+        max-width: 860px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .choice strong {
+        color: var(--text);
+      }
+
+      .footer {
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      /* Language switcher — sits in the sticky nav, stays visible on mobile */
+      .lang-switch {
+        display: flex;
+        gap: 4px;
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .lang-switch .ls-opt {
+        padding: 5px 7px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 6px;
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .lang-switch .ls-opt:hover {
+        color: var(--text);
+      }
+
+      .lang-switch .ls-opt.on {
+        color: var(--green);
+        border-color: rgba(112, 228, 138, 0.4);
+      }
+
+      /* Authors: photos */
+      .author-head {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+
+      .author-head h3 {
+        margin-bottom: 4px;
+      }
+
+      .author-head .role {
+        margin-bottom: 0;
+      }
+
+      .author-photo {
+        flex: 0 0 auto;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        object-fit: cover;
+        background: var(--bg);
+      }
+
+      /* Reviews: horizontal-masonry carousel. Every card shares one width, so
+         each review's height is proportional to its aspect ratio; the reviews
+         are pre-packed into balanced-height columns (capacity = the tallest
+         single review), then the columns auto-scroll sideways in a seamless CSS
+         marquee (columns duplicated once for the infinite loop). Because the
+         packing is width-independent, the same layout balances on desktop
+         (cards ~half the container) and mobile (cards ~full width). */
+      .rec-carousel {
+        position: relative;
+        overflow: hidden;
+        margin-top: 34px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        padding: 16px;
+        container-type: inline-size;
+      }
+
+      .rec-track {
+        display: flex;
+        gap: 14px;
+        width: max-content;
+        align-items: flex-start;
+        animation: recScroll 120s linear infinite;
+      }
+
+      .rec-carousel:hover .rec-track {
+        animation-play-state: paused;
+      }
+
+      .rec-col {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 48cqw;
+      }
+
+      .rec-card {
+        line-height: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--bg-2);
+      }
+
+      .rec-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      @keyframes recScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .rec-track {
+          animation: none;
+        }
+        .rec-carousel {
+          overflow-x: auto;
+        }
+      }
+
+      .retention {
+        margin-top: 18px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 15px;
+      }
+
+      /* Soft CTA: AI-checklist lead magnet (content copied from the all page,
+         styled here in this page's own look). */
+      .checklist-block {
+        max-width: 920px;
+        margin-top: 40px;
+        padding: 28px 26px;
+        border: 1px solid rgba(112, 228, 138, 0.28);
+        border-radius: 8px;
+        background: rgba(112, 228, 138, 0.05);
+      }
+
+      .checklist-block h3 {
+        margin-bottom: 12px;
+        font-size: 24px;
+      }
+
+      .checklist-block p {
+        margin-bottom: 12px;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .checklist-block ul {
+        display: grid;
+        gap: 8px;
+        margin: 0 0 24px;
+        padding-left: 20px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .checklist-block p:last-child {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        h1 {
+          font-size: 44px;
+        }
+
+        .lead,
+        .section-copy {
+          font-size: 18px;
+        }
+
+        .statement {
+          font-size: 19px;
+        }
+
+        .split,
+        .formula-grid,
+        .inside-grid,
+        .values,
+        .dialogs,
+        .themes,
+        .extras,
+        .env-grid,
+        .authors,
+        .shift,
+        .reviews,
+        .objections,
+        .price-box {
+          grid-template-columns: 1fr;
+        }
+
+        .price {
+          font-size: 34px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .nav-inner,
+        .hero-inner,
+        .section-inner,
+        .footer {
+          width: min(var(--max), calc(100% - 22px));
+        }
+
+        h1 {
+          font-size: 38px;
+        }
+
+        h2 {
+          font-size: 30px;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        /* Nav wraps to two rows: brand + language switch on row 1, a slim
+           full-width CTA on row 2 (avoids the cramped single-row squeeze). */
+        .nav-inner {
+          height: auto;
+          flex-wrap: wrap;
+          padding: 10px 0;
+          row-gap: 10px;
+        }
+
+        .nav-inner .btn {
+          flex-basis: 100%;
+          min-height: 38px;
+          padding: 8px 16px;
+          box-shadow: none;
+        }
+
+        /* Mobile: each review column spans (almost) the whole container, so one
+           review reads full-width; a sliver of the next column hints the scroll. */
+        .rec-col {
+          width: 92cqw;
+        }
+      }
+    </style>
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "1022924580268547");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1022924580268547&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <nav class="nav" aria-label="Primary navigation">
+      <div class="nav-inner">
+        <a class="brand" href="#top">nexttick / guild</a>
+        <div class="nav-links">
+          <a href="#why">Why now</a>
+          <a href="#how">The mechanism</a>
+          <a href="#inside">What's inside</a>
+          <a href="#base">The base</a>
+          <a href="#join">Join</a>
+        </div>
+        <nav class="lang-switch" aria-label="Language">
+          <a
+            class="ls-opt"
+            data-loc="uk"
+            hreflang="uk"
+            href="/future-proof/uk.html"
+            >UK</a
+          >
+          <a
+            class="ls-opt on"
+            data-loc="en"
+            hreflang="en"
+            href="/future-proof/en.html"
+            aria-current="true"
+            >EN</a
+          >
+          <a
+            class="ls-opt"
+            data-loc="ru"
+            hreflang="ru"
+            href="/future-proof/ru.html"
+            >RU</a
+          >
+        </nav>
+        <a
+          class="btn"
+          data-cta-location="header"
+          href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:future-proof"
+          target="_blank"
+          rel="noopener"
+          >Join the guild</a
+        >
+      </div>
+    </nav>
+
+    <main id="top">
+      <!-- SCREEN 1: HERO -->
+      <header class="hero">
+        <div class="hero-inner">
+          <div class="eyebrow">
+            <span class="dot"></span> closed engineers' guild · middle / middle+
+          </div>
+          <h1>Knowledge piles up. Your level&nbsp;— doesn't.</h1>
+          <p class="lead">
+            You close your tasks, people value you, you can do whatever's
+            needed. Yet the seniors around you are different somehow — and that
+            "somehow" is hard to name. The Next Tick guild is a closed
+            environment where middles close exactly that gap: architecture,
+            AI-agents, and communication. Alongside your work, not on top of it.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="btn"
+              data-cta-location="hero"
+              href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:future-proof"
+              target="_blank"
+              rel="noopener"
+              >Join the guild</a
+            >
+            <a class="btn secondary" href="#checklist">Grab the checklist</a>
+            <a class="btn secondary" href="#how">How it works</a>
+          </div>
+          <div class="hero-facts">
+            <span>10,000+ engineers trained by the authors</span>
+            <span>800+ already inside</span>
+            <span>40+ materials in the base</span>
+            <span>$50/mo</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SCREEN 2: DIAGNOSIS — the middle at risk -->
+      <section id="why">
+        <div class="section-inner split">
+          <div>
+            <div class="section-label">Why now</div>
+            <h2>
+              If your company runs stack ranking tomorrow — who gets cut first?
+            </h2>
+            <p class="section-copy">
+              Not the junior: they're cheap and, with AI, close tasks faster
+              than a year ago. Not the senior: they're the one who says "we're
+              solving the wrong problem" — and that's worth more right now than
+              the code that gets written.
+            </p>
+            <p class="section-copy">
+              The middle has grown enough to cost a lot — but not enough to
+              justify it. They write good code. They know the codebase. They're
+              reliable. But all of that is execution. And execution is getting
+              cheaper faster than you can reach your next performance review.
+            </p>
+            <p class="section-copy">
+              <strong style="color: var(--text)"
+                >You're vulnerable not because you work badly. But because you
+                work well in exactly the layer that's losing its value. This
+                isn't a sentence — it's a diagnosis. And a diagnosis can be
+                treated.</strong
+              >
+            </p>
+          </div>
+          <ul class="list" aria-label="How it feels from the inside">
+            <li>
+              <span class="mark">—</span
+              ><span
+                >My knowledge seems fine. I get the work done, I can do
+                whatever's needed.</span
+              >
+            </li>
+            <li>
+              <span class="mark">—</span
+              ><span
+                >I figure out new things on my own. I've mastered the patterns
+                and reproduce them efficiently.</span
+              >
+            </li>
+            <li>
+              <span class="mark">—</span
+              ><span
+                >People value me. But the feeling of moving forward — not so
+                much.</span
+              >
+            </li>
+            <li>
+              <span class="mark">—</span
+              ><span
+                >The seniors around me are different somehow, but that "somehow"
+                is hard to name.</span
+              >
+            </li>
+            <li>
+              <span class="mark">—</span
+              ><span
+                >A suspicion: it's not about how much I know. But what it is
+                about — unclear.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: MANIFESTO -->
+      <section class="insight">
+        <div class="section-inner">
+          <div class="section-label">What changed</div>
+          <h2>The stronger one today isn't whoever writes code faster.</h2>
+          <p class="statement">
+            It's whoever better understands: <strong>what</strong> exactly to
+            do, <strong>why</strong> this way, under which
+            <strong>constraints</strong>, with which
+            <strong>consequences</strong> — and how to explain it to people, the
+            team, and AI. Code became cheap raw material. Judgment is what's
+            getting more valuable. And here's the fork: either you're an
+            engineer who sets the tasks and owns the decisions — or you're a
+            code-generation operator. The operator doesn't survive stack
+            ranking.
+          </p>
+        </div>
+      </section>
+
+      <!-- SCREEN 4: MECHANISM — the formula -->
+      <section id="how" class="band">
+        <div class="section-inner">
+          <div class="section-label">The mechanism</div>
+          <h2>A recipe you can't drop a single word from.</h2>
+          <p class="section-copy">
+            For you to be the one chosen when it's time to decide "who to
+            promote and who to cut," you need one thing — and it's been proven
+            on real careers, not in theory:
+          </p>
+          <div class="formula">regularly deliver a lot of visible results</div>
+          <div class="formula-grid">
+            <div class="card">
+              <span class="k">Regularly → architecture</span>
+              <p>
+                With AI, your productivity peaks at the start, then everything
+                bogs down: the agent mimics the project's chaos and multiplies
+                it. Only architecture lets you hold the pace for months.
+                <strong
+                  >Good architecture is the kind that lets you defer
+                  irreversible decisions for as long as possible.</strong
+                >
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">A lot → AI-agents</span>
+              <p>
+                The "a lot of results via overtime" path leads to burnout. The
+                only alternative is agents. But they deliver "a lot" only for
+                someone who can
+                <strong
+                  >frame a task so the agent solves it instead of
+                  guessing.</strong
+                >
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">Visible → communication</span>
+              <p>
+                You can lay down a brilliant platform and still get cut —
+                because your manager didn't understand your value.
+                <strong
+                  >Visibility isn't self-promotion. It's a skill, and it's
+                  available to introverts:</strong
+                >
+                what matters is the efficiency of your communication, not the
+                volume.
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">Results → solving problems</span>
+              <p>
+                A result isn't code. A result is a solved business problem.
+                Clarify the requirement, pick a solution that fits the
+                constraints, see it through, and show the link to the goal.
+                <strong
+                  >That's exactly what gets evaluated when they decide who to
+                  keep.</strong
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 5: DEMO — a topic fragment -->
+      <section>
+        <div class="section-inner">
+          <div class="section-label">Try it on yourself</div>
+          <h2>
+            A fragment of one topic from the base. Right now, in three minutes.
+          </h2>
+          <p class="section-copy">
+            The topic is called "The stakeholders' language: translating from
+            technical" — it's already inside. Here's a typical conversation
+            about tech debt, and the same conversation after one shift.
+          </p>
+          <div class="dialogs">
+            <div class="dialog bad">
+              <span class="tag">As usual</span>
+              <p>
+                <span class="who">you:</span>We need to refactor this module.
+              </p>
+              <p><span class="who">PM:</span>Why?</p>
+              <p><span class="who">you:</span>The code is bad.</p>
+              <p><span class="who">PM:</span>But the features work, right?</p>
+              <p><span class="who">you:</span>Well, yeah, but…</p>
+              <p><span class="who">PM:</span>Then we'll wait.</p>
+            </div>
+            <div class="dialog good">
+              <span class="tag">After the shift</span>
+              <p>
+                <span class="who">you:</span>We need to refactor this module.
+              </p>
+              <p><span class="who">PM:</span>Why?</p>
+              <p>
+                <span class="who">you:</span>Every new feature here takes 3
+                times longer. The last one — 4 days instead of a day and a half.
+                The next one from the backlog will take a week instead of two
+                days if we don't fix it.
+              </p>
+            </div>
+          </div>
+          <p class="section-copy" style="margin-top: 22px">
+            This isn't an evil PM. It's a person who wasn't handed the
+            information in the right format. You talked about code — but a
+            manager knows how to count time. The conversation was lost before it
+            began.
+          </p>
+          <div class="action-card">
+            <span class="k">Action for today</span>
+            <p>
+              Take one piece of tech debt that annoys you. Frame a single
+              sentence: "Because of [technical problem], every time we [action],
+              we lose [time]." That's how every topic in the guild works: a
+              compressed concept → a task in your project → the difference is
+              visible within the same week.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 5.5: HOW THE GUILD WAS DESIGNED -->
+      <section class="insight">
+        <div class="section-inner">
+          <div class="section-label">How the guild was designed</div>
+          <h2>Over a year of development — around three values.</h2>
+          <p class="section-copy">
+            We weren't building "another course." We designed a product around
+            what actually matters to a busy engineer — and we checked every
+            decision inside it against these three things:
+          </p>
+          <div class="values">
+            <div class="card">
+              <span class="k">01 · Simplicity</span>
+              <p>
+                Simple to absorb, simple to fit into your week, simple to buy.
+                Compact topics instead of two-hour lectures — and $50 a month
+                instead of a marathon-course price tag.
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">02 · Results</span>
+              <p>
+                Every topic and every track leads to a result: you watched →
+                applied it on your own project → saw the difference. Not
+                "listened," but did.
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">03 · Novelty</span>
+              <p>
+                What courses and books don't give you: AI-era practices and
+                topics that appear in response to what's happening in the
+                industry right now.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 6: WHAT'S INSIDE — product hierarchy -->
+      <section id="inside" class="band">
+        <div class="section-inner">
+          <div class="section-label">What's inside</div>
+          <h2>What the subscription is made of.</h2>
+          <p class="section-copy">
+            The core is the topics. Everything else is the environment around
+            them. This isn't a course: there's no "A→B→C" sequence, you can
+            start on any week, there's nothing to catch up on.
+          </p>
+          <div class="inside-grid" style="margin-top: 34px">
+            <div class="card">
+              <span class="k">01 · Three topics every week</span>
+              <p>
+                A topic is a learning product about one thing:
+                <strong
+                  >a maximally compressed concept plus a concrete task for the
+                  week</strong
+                >
+                — not synthetic, but an action in your actual work project. One
+                topic per track: architecture, AI-agents, communication.
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">02 · Workshops</span>
+              <p>
+                The application-architecture workshop (led by Timur), the
+                AI-agent-taming workshop, and the effective-communication
+                workshop (led by Illya).
+                <strong>This is where problems get discussed by track</strong> —
+                you ask a question about your own case and get a breakdown.
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">03 · Digests</span>
+              <p>
+                A summary of the day and a summary of the week: the key
+                takeaways from the workshops.
+                <strong>You can read only these — and stay in context.</strong>
+                Something grabs you — you dive into the specific discussion via
+                the link.
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">04 · Two live calls a month</span>
+              <p>
+                With Illya and with Timur, by track. Your own cases,
+                uncomfortable questions, live breakdowns.
+                <strong>Recordings stay in the base</strong> — nothing burns up.
+              </p>
+            </div>
+          </div>
+          <div class="chain">
+            anatomy of a topic: compressed concept <b>→</b> key takeaways
+            <b>→</b> a task in your project <b>→</b> exercises by difficulty
+            level <b>→</b> extra materials <b>→</b> a question to the workshop
+            if you're stuck
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 7: KNOWLEDGE BASE -->
+      <section id="base">
+        <div class="section-inner">
+          <div class="section-label">Knowledge base</div>
+          <h2>This is already inside. It opens on day one.</h2>
+          <p class="section-copy">
+            The subscription isn't a "start-from-zero stream." You step into a
+            living library of 40+ topics, calls, and broadcasts — and every week
+            three new topics appear in it. Here are real titles from the base:
+          </p>
+          <div class="themes">
+            <div class="theme-col">
+              <h3>Architecture</h3>
+              <ul>
+                <li>Architecture Decision Records</li>
+                <li>
+                  Why do you end up rewriting code from scratch? The whole truth
+                  about NFR
+                </li>
+                <li>Is your system growing vertically or horizontally?</li>
+                <li>Every time you open this file, the company loses money</li>
+                <li>RFC: not instead of, but alongside ADR</li>
+                <li>Refactoring: how to convince management?</li>
+                <li>Design docs: what to write, for whom, and when</li>
+                <li>
+                  Rewrite, Refactoring, Migrations — mistakes that cost
+                  companies millions
+                </li>
+                <li>Acceptance Criteria</li>
+                <li>Dictionary</li>
+              </ul>
+            </div>
+            <div class="theme-col">
+              <h3>AI-agents</h3>
+              <ul>
+                <li>
+                  Why does AI write you garbage? (and how to fix it in 5
+                  minutes)
+                </li>
+                <li>3 modes of working with an agent</li>
+                <li>Agentic loops: stopping in order to move faster</li>
+                <li>Reviewing AI code</li>
+                <li>
+                  More powerful means better? Choosing the model and the
+                  reasoning level
+                </li>
+                <li>Rewriting a project from scratch with Claude Code</li>
+                <li>Making sense of vibe-coded messes</li>
+                <li>Vibe-coding, frontend, and new features</li>
+                <li>AI and architecture</li>
+                <li>AI track "Autonomous systems"</li>
+              </ul>
+            </div>
+            <div class="theme-col">
+              <h3>Communication</h3>
+              <ul>
+                <li>A senior has no authority, but plenty of influence</li>
+                <li>The stakeholders' language: translating from technical</li>
+                <li>Feedback that actually gets heard</li>
+                <li>Disagree and commitment</li>
+                <li>Estimates vs Commitments: feeling the difference</li>
+                <li>"No" as an engineer's tool</li>
+                <li>The art of status updates</li>
+                <li>Escalation: when and how to raise a problem</li>
+                <li>Tasks that never end</li>
+              </ul>
+            </div>
+          </div>
+          <div class="extras">
+            <div class="card hl">
+              <span class="k">The closed course "Effective TypeScript"</span>
+              <p>
+                The full course inside the subscription.
+                <strong
+                  >It's not publicly available and isn't sold
+                  separately.</strong
+                >
+                Not "TypeScript for TypeScript's sake" — a foundation:
+                understanding what to demand from AI-agents, where to look
+                during review, and what to expect from the system.
+              </p>
+            </div>
+            <div class="card">
+              <span class="k">Recordings, notes, audio</span>
+              <p>
+                Recordings of architecture and communication calls, monthly
+                notes, audio broadcasts: "Friday thoughts on the AI era," "AI
+                again, layoffs again: a different take," "Consulting for
+                engineers — how it works."
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 8: ENVIRONMENT -->
+      <section class="band">
+        <div class="section-inner">
+          <div class="section-label">The environment</div>
+          <h2>
+            This isn't "access to materials." It's a place people already live
+            in.
+          </h2>
+          <p class="section-copy">
+            800+ engineers, hundreds online on an ordinary workday. Want to go
+            fast — go alone. Want to go far — go with people heading the same
+            way.
+          </p>
+          <div class="env-grid">
+            <div class="card">
+              <strong>The founders are inside.</strong>
+              <p>
+                Timur and Illya answer in the workshops personally — today, not
+                "in a recording from two years ago."
+              </p>
+            </div>
+            <div class="card">
+              <strong>The "Dumb questions" thread.</strong>
+              <p>
+                A separate place where any question is fine. Asking here doesn't
+                cost you your reputation the way it does on your team.
+              </p>
+            </div>
+            <div class="card">
+              <strong>The wins thread.</strong>
+              <p>
+                Defended a refactor, passed a review without pain, got a
+                promotion — post it here. Other people's shifts show you where
+                yours is.
+              </p>
+            </div>
+            <div class="card">
+              <strong>Nothing gets lost.</strong>
+              <p>
+                Digests, notes, and navigation: any breakdown or answer can
+                still be found a month later.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 9: AUTHORS -->
+      <section>
+        <div class="section-inner">
+          <div class="section-label">Who leads it</div>
+          <h2>One looks from above. The other — from the inside.</h2>
+          <div class="authors">
+            <article class="author">
+              <div class="author-head">
+                <img
+                  class="author-photo"
+                  src="/assets/author-timur.png"
+                  alt="Timur Shemsedinov"
+                  loading="lazy"
+                />
+                <div>
+                  <h3>Timur Shemsedinov</h3>
+                  <span class="role">C-level view · architecture</span>
+                </div>
+              </div>
+              <p>
+                CTO at Metatech, chief architect of the open-source platform
+                Metarhia, lecturer at KPI, author of 350+ open lectures on
+                Node.js and software engineering. If you learned Node.js in
+                Russian — there's a good chance you've already learned from him
+                and just didn't know it. For years he's been responsible for
+                keeping teams productive and code from degenerating — and he
+                sees what an engineer looks like through the eyes of the person
+                making decisions about them.
+              </p>
+            </article>
+            <article class="author">
+              <div class="author-head">
+                <img
+                  class="author-photo"
+                  src="/assets/author-ilya.png"
+                  alt="Illya Klymov"
+                  loading="lazy"
+                />
+                <div>
+                  <h3>Illya Klymov</h3>
+                  <span class="role"
+                    >view from inside · communication and AI</span
+                  >
+                </div>
+              </div>
+              <p>
+                Staff Frontend Engineer at GitLab, Google Developer Expert,
+                founder of JavaScript.ninja, HolyJS speaker. Seven years in
+                hands-on development — by choice: he lives in the same reality
+                you do — tasks, reviews, managers, battles over decisions. He
+                shares not the theory of influence but his own reflection: how
+                it actually works at GitLab right now.
+              </p>
+            </article>
+          </div>
+          <p class="author-note">
+            Architecture without communication doesn't take off. Communication
+            without depth is hot air. These are two legs: it's very hard to run
+            fast if one is shorter than the other. Over the years, more than
+            10,000 engineers have gone through Illya's and Timur's training.
+          </p>
+        </div>
+      </section>
+
+      <!-- SCREEN 10: RESULT -->
+      <section class="insight">
+        <div class="section-inner">
+          <div class="section-label">The result</div>
+          <h2>What actually changes.</h2>
+          <div class="shift">
+            <div class="dialog bad">
+              <span class="tag">Before</span>
+              <p>
+                I do a lot. I learn a lot. I'm tired. My level doesn't change —
+                and it's unclear why.
+              </p>
+            </div>
+            <div class="dialog good">
+              <span class="tag">After</span>
+              <p>
+                I understand better what to do and why. I make decisions faster.
+                Fewer dead ends. Faster growth — and I can see what's driving
+                it.
+              </p>
+            </div>
+          </div>
+          <div class="chain">
+            you see better <b>→</b> you decide better <b>→</b> you influence
+            more <b>→</b> people trust you more <b>→</b> you take on harder
+            contexts <b>→</b> you actually move up a level
+          </div>
+          <p class="section-copy" style="margin-top: 22px">
+            We don't promise "you'll become a senior in 30 days." Career growth
+            is a side effect of a different order of thinking. Our job is to
+            shorten your path: less chaos, fewer dead ends, and less wasted
+            blood than we had.
+          </p>
+        </div>
+      </section>
+
+      <!-- SCREEN 11: REVIEWS — real screenshots from assets/reviews -->
+      <section class="band">
+        <div class="section-inner">
+          <div class="section-label">Reviews</div>
+          <h2>Words from people already inside.</h2>
+          <div class="rec-carousel" aria-label="Review from a guild member">
+            <div class="rec-track">
+              <div class="rec-col">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-12.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-09.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-10.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-16.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-14.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-04.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-13.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-07.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-02.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-18.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-05.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-01.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-06.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-03.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-11.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-15.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-17.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-08.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col" aria-hidden="true">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-12.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col" aria-hidden="true">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-09.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-10.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col" aria-hidden="true">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-16.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-14.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col" aria-hidden="true">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-04.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-13.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col" aria-hidden="true">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-07.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-02.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col" aria-hidden="true">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-18.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-05.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-01.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col" aria-hidden="true">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-06.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-03.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-11.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="rec-col" aria-hidden="true">
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-15.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-17.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rec-card">
+                  <img
+                    src="/assets/reviews/rev-08.webp"
+                    alt="Review from a guild member"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 12: NOT FOR EVERYONE -->
+      <section class="not-for">
+        <div class="section-inner split">
+          <div>
+            <div class="section-label">Honestly</div>
+            <h2>Who it won't suit.</h2>
+            <p class="section-copy">
+              We talk about real cases and we expect your real cases. Every
+              topic ends with an action in your actual work context. Without
+              that, it doesn't work.
+            </p>
+          </div>
+          <ul class="list" aria-label="Who the guild won't suit">
+            <li>
+              <span class="mark">×</span
+              ><span
+                >Looking for a course with fully prepared answers — not here.
+                Looking for a place to concretely discuss the options for your
+                case — here.</span
+              >
+            </li>
+            <li>
+              <span class="mark">×</span
+              ><span>Want to just add a line to your resume — not here.</span>
+            </li>
+            <li>
+              <span class="mark">×</span
+              ><span
+                >Not ready to try something new on your actual work project,
+                even if it seems strange — definitely not here.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SCREEN 13: OBJECTIONS -->
+      <section>
+        <div class="section-inner">
+          <div class="section-label">Doubts</div>
+          <h2>What people usually ask before joining.</h2>
+          <div class="objections">
+            <div class="objection">
+              <strong>I don't have time to study</strong>
+              <p>
+                That's why the topics are compressed to the limit and the task
+                is built into your work week. This isn't a "second job" — it's a
+                different way of doing the first one.
+              </p>
+            </div>
+            <div class="objection">
+              <strong>I've started courses and quit</strong>
+              <p>
+                There's nothing to "quit" here: there's no A→B→C sequence.
+                Dropped off for two weeks — you come back to a fresh topic. The
+                digests will bring you back into context in five minutes.
+              </p>
+            </div>
+            <div class="objection">
+              <strong>AI will teach me everything anyway</strong>
+              <p>
+                AI is a baseline — everyone has it. The differentiator is
+                judgment: what to do, why, under which constraints. That's what
+                we build. Otherwise you're not an engineer with AI, you're its
+                operator.
+              </p>
+            </div>
+            <div class="objection">
+              <strong>Is it worth $50</strong>
+              <p>
+                The subscription question isn't "how much material is in there,"
+                but what your 20 minutes a week turn into. If they change the
+                quality of your decisions and your trajectory — the subscription
+                paid off. If they don't — unsubscribe, it's one click.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 14: OFFER -->
+      <section id="join" class="final">
+        <div class="section-inner">
+          <div class="section-label">Join</div>
+          <h2>$50 a month. Our skin is on the line.</h2>
+          <p class="section-copy">
+            We deliberately don't sell you a $2000 course with a "30-day
+            refund." A subscription is more honest: every month you decide for
+            yourself whether this knowledge is worth its price. The moment we
+            start slacking — you unsubscribe, and we see it immediately. Our job
+            is to make the answer every month be "worth more than I pay."
+          </p>
+          <div class="price-box">
+            <div>
+              <div class="price">$50 <small>/ month</small></div>
+              <p class="section-copy" style="margin-bottom: 0">
+                Three topics a week, workshops, digests, two live calls a month
+                — and the whole base from day one: 40+ materials and the closed
+                course "Effective TypeScript." Entry is through a bot, payment
+                takes a couple of minutes.
+              </p>
+            </div>
+            <a
+              class="btn"
+              data-cta-location="offer"
+              href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:future-proof"
+              target="_blank"
+              rel="noopener"
+            >
+              Join the guild
+            </a>
+          </div>
+          <p class="choice">
+            There won't be any timers or "last spots." The choice is simpler:
+            <strong
+              >if not now — in six months you'll be right where you are
+              today.</strong
+            >
+            It's up to you.
+          </p>
+          <p class="retention">
+            90% of members keep their subscription after 4 months.
+          </p>
+          <div class="checklist-block" id="checklist">
+            <h3>Want to take a closer look first?</h3>
+            <p>
+              We've put together a checklist for working with AI that helps you
+              see where AI really can speed up development 2–5× and where it
+              quietly creates code-quality problems.
+            </p>
+            <p>The checklist has practical questions for a developer:</p>
+            <ul>
+              <li>what you can delegate to AI;</li>
+              <li>what's better to keep for yourself;</li>
+              <li>how to verify the result;</li>
+              <li>how not to miss architectural mistakes;</li>
+              <li>when AI-generated code needs especially careful review.</li>
+            </ul>
+            <p>
+              <a
+                class="btn"
+                data-cta-location="checklist"
+                href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:future-proof"
+                target="_blank"
+                rel="noopener"
+                >AI workflow checklist</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <style>
+      .site-footer {
+        --sf-fg: #888d92;
+        --sf-strong: #d6d8da;
+        padding: 26px 0 30px;
+        font-size: 12px;
+      }
+      [data-theme="light"] .site-footer {
+        --sf-fg: #59636e;
+        --sf-strong: #1f2328;
+      }
+      .site-footer-inner {
+        width: min(960px, calc(100% - 40px));
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 20px;
+        color: var(--sf-fg);
+      }
+      .site-footer .sf-legal {
+        margin-left: auto;
+        display: flex;
+        gap: 16px;
+      }
+      .site-footer a {
+        color: var(--sf-fg);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color 0.15s ease;
+      }
+      .site-footer a:hover {
+        color: var(--sf-strong);
+      }
+      @media (max-width: 560px) {
+        .site-footer .sf-legal {
+          margin-left: 0;
+        }
+      }
+    </style>
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span class="sf-tagline">nexttick — an engineers' guild</span>
+        <span class="sf-legal">
+          <a href="/offer.html">Offer</a>
+          <a href="/privacy.html">Privacy Policy</a>
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      // Track join (bot) + free-channel clicks in Google (GTM dataLayer + GA4).
+      // Runs after nt-attribution.js has patched the bot href (capture phase),
+      // so link_url carries the full source_channel + UTM/attribution payload.
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest("a");
+        if (!a) return;
+        var href = a.href || "";
+        var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
+        var isChannel = href.indexOf("t.me/") !== -1;
+        if (!isBot && !isChannel) return;
+        var evt = isBot ? "cta_click" : "channel_click";
+        var payload = {
+          event: evt,
+          cta_location:
+            a.dataset.ctaLocation || (isChannel ? "free-channel" : "unknown"),
+          cta_text: a.textContent.trim().replace(/\s+/g, " "),
+          link_url: a.href,
+        };
+        window.dataLayer.push(payload);
+        if (typeof window.gtag === "function") {
+          window.gtag("event", evt, {
+            cta_location: payload.cta_location,
+            cta_text: payload.cta_text,
+            link_url: payload.link_url,
+          });
+        }
+      });
+    </script>
+    <script src="/assets/nt-attribution.js?v=1"></script>
+    <script>
+      (function () {
+        var LOCS = ["uk", "en", "ru"];
+        var PAGE_LOC = "en";
+        try {
+          localStorage.setItem("lang", PAGE_LOC);
+        } catch (e) {}
+        document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            var loc = a.getAttribute("data-loc");
+            if (LOCS.indexOf(loc) < 0) return;
+            try {
+              localStorage.setItem("lang", loc);
+            } catch (e) {}
+            location.href =
+              "/future-proof/" +
+              loc +
+              ".html" +
+              location.search +
+              location.hash;
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

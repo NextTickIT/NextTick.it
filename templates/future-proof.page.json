@@ -1,0 +1,13 @@
+{
+  "template": "future-proof.html",
+  "strings": "future-proof.strings.json",
+  "outputScheme": "dir",
+  "locales": ["en", "ru", "uk"],
+  "analytics": {
+    "gtm": true,
+    "ga4": true,
+    "clarity": true,
+    "pixel": true,
+    "attribution": "website:future-proof"
+  }
+}

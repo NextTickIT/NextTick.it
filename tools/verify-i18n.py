@@ -14,6 +14,7 @@ SURFACES = {
     "home": "",
     "swe": "swe/",
     "all": "all/",
+    "future-proof": "future-proof/",
     "ai-speedup-checklist": "ai-speedup-checklist/",
     "ai-speedup-checklist-for-guild-members": "ai-speedup-checklist-for-guild-members/",
 }

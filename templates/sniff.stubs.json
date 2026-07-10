@@ -10,7 +10,11 @@
         "base": "/",
         "ext": ".html",
         "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
-        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
       }
     },
     {
@@ -22,7 +26,11 @@
         "base": "/swe/",
         "ext": ".html",
         "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
-        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
       }
     },
     {
@@ -34,7 +42,43 @@
         "base": "/all/",
         "ext": ".html",
         "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
-        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
+      }
+    },
+    {
+      "out": "future-proof.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/future-proof/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
+      }
+    },
+    {
+      "out": "future-proof/index.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/future-proof/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
       }
     },
     {
@@ -46,7 +90,11 @@
         "base": "/ai-speedup-checklist/",
         "ext": ".html",
         "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
-        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
       }
     },
     {
@@ -58,7 +106,11 @@
         "base": "/ai-speedup-checklist-for-guild-members/",
         "ext": ".html",
         "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
-        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
       }
     },
     {
@@ -94,7 +146,11 @@
         "base": "/ai-speedup-checklist/",
         "ext": ".html",
         "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
-        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
       }
     },
     {
@@ -106,7 +162,11 @@
         "base": "/ai-speedup-checklist-for-guild-members/",
         "ext": ".html",
         "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
-        "noscript_labels": { "uk": "Українська", "en": "English", "ru": "Русский" }
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
       }
     }
   ]
