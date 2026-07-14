@@ -2101,7 +2101,7 @@
                 href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:future-proof"
                 target="_blank"
                 rel="noopener"
-                >AI workflow по чеклисту</a
+                >Чеклист по AI Workflow</a
               >
             </p>
           </div>
@@ -2169,7 +2169,8 @@
         if (!a) return;
         var href = a.href || "";
         var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
-        var isChannel = href.indexOf("t.me/") !== -1;
+        var isChannel =
+          href.indexOf("t.me/") !== -1 || href.indexOf("telegram.me/") !== -1;
         if (!isBot && !isChannel) return;
         var evt = isBot ? "cta_click" : "channel_click";
         var payload = {

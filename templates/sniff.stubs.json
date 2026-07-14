@@ -82,6 +82,38 @@
       }
     },
     {
+      "out": "middle.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/middle/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
+      }
+    },
+    {
+      "out": "middle/index.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/middle/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
+      }
+    },
+    {
       "out": "ai-speedup-checklist.html",
       "data": {
         "title": "NextTick",

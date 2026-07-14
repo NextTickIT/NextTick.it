@@ -149,14 +149,33 @@
     link.href = url.toString(); // idempotent: set() re-read from the live href
   }
 
+  // In-app / mobile WebViews (Telegram, Instagram, Facebook, …) frequently do
+  // NOT act on a target="_blank" tap — the bot CTA looks dead / "not followed".
+  // On those, force the link to open in the SAME view by dropping target, so the
+  // SendPulse → Telegram deep link actually fires. Desktop keeps its new tab
+  // (target left intact there), so there is no regression for working browsers.
+  var IN_APP =
+    /Android|iPhone|iPad|iPod|Mobile|Telegram|Instagram|FBAN|FBAV|FB_IAB|Line\/|Twitter|OKApp|VKClient/i.test(
+      navigator.userAgent || "",
+    );
+  function sameView(link) {
+    if (IN_APP && link.getAttribute("target")) link.removeAttribute("target");
+  }
+
   // best-effort at load
-  document.querySelectorAll(BOT).forEach(patch);
+  document.querySelectorAll(BOT).forEach(function (l) {
+    patch(l);
+    sameView(l);
+  });
   // Authoritative: capture-phase delegation survives render() re-injecting CTAs.
   document.addEventListener(
     "click",
     function (e) {
       var link = e.target.closest && e.target.closest(BOT);
-      if (link) patch(link);
+      if (link) {
+        patch(link);
+        sameView(link);
+      }
     },
     true,
   );

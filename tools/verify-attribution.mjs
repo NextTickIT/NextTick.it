@@ -45,6 +45,12 @@ const PAGE_DEFS = [
     start: "6a4f770343a30de13e0cbfbc",
   },
   {
+    dir: "middle",
+    files: ["middle/en.html", "middle/ru.html", "middle/uk.html"],
+    channel: "website:middle",
+    start: "6a4f770343a30de13e0cbfbc",
+  },
+  {
     dir: "ai-speedup-checklist",
     files: ["ai-speedup-checklist/en.html", "ai-speedup-checklist/ru.html", "ai-speedup-checklist/uk.html"],
     channel: "conf",
@@ -241,7 +247,7 @@ if (selected.some((d) => d.dir === "all")) {
 // lang-switch <script> modernization.
 {
   const CHROME = new Set([
-    "", "swe", "all", "future-proof", "ai-speedup-checklist", "ai-speedup-checklist-for-guild-members",
+    "", "swe", "all", "future-proof", "middle", "ai-speedup-checklist", "ai-speedup-checklist-for-guild-members",
   ]);
   const chromeDefs = selected.filter((d) => CHROME.has(d.dir));
   if (chromeDefs.length) {

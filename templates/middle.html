@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
     <% if (analytics.gtm) { %><%~ include("_partials/analytics/gtm.html") %><% } %>
-    <%~ include("_partials/head.html", { loc, title, description, urlBase: "https://nexttick.it/all/" }) %>
+    <%~ include("_partials/head.html", { loc, title, description, urlBase: "https://nexttick.it/middle/" }) %>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
@@ -252,7 +252,7 @@
         font-size: 12px;
       }
 
-      /* language switch (page-based /all/<loc>.html) */
+      /* language switch (page-based /middle/<loc>.html) */
       .lang-switch {
         display: inline-flex;
         gap: 2px;
@@ -488,15 +488,16 @@
       }
 
       .list li,
-      .quote,
-      .track,
+      .card,
+      .dialog,
+      .quote-band,
       .fit-item,
       .objection,
       .author,
       .price-box,
-      .signal,
+      .magnet,
       .load-card,
-      .review {
+      .faq-item {
         border: 1px solid var(--line);
         background: var(--surface);
       }
@@ -531,14 +532,9 @@
         font-family: var(--mono);
       }
 
-      .statement {
-        max-width: none;
-        color: var(--muted);
-        font-size: 22px;
-      }
-
-      .statement strong {
-        color: var(--text);
+      .not-for .section-label,
+      .not-for .mark {
+        color: var(--red);
       }
 
       .ticks {
@@ -555,97 +551,232 @@
         color: var(--text);
       }
 
-      .tracks {
+      /* Cards (mechanism / inside / weeks / base extras) */
+      .card {
+        padding: 20px;
+      }
+
+      .card .k {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .card p strong {
+        color: var(--text);
+      }
+
+      .card.hl {
+        border-color: var(--amber);
+      }
+
+      .card.hl .k {
+        color: var(--amber);
+      }
+
+      .formula-grid,
+      .inside-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .formula {
+        margin: 34px 0 26px;
+        padding: 26px 24px;
+        border: 1px solid var(--green);
+        background: var(--surface);
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: clamp(18px, 3vw, 28px);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-align: center;
+      }
+
+      /* Before / after dialogs */
+      .dialogs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 30px;
+      }
+
+      .dialog {
+        padding: 20px;
+      }
+
+      .dialog.bad {
+        border-left: 3px solid var(--red);
+      }
+
+      .dialog.good {
+        border-left: 3px solid var(--green);
+      }
+
+      .dialog .tag {
+        display: block;
+        margin-bottom: 12px;
+        font-family: var(--mono);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .dialog.bad .tag {
+        color: var(--red);
+      }
+
+      .dialog.good .tag {
+        color: var(--green);
+      }
+
+      .dialog p {
+        margin: 0;
+        color: var(--text);
+      }
+
+      /* Attributed quote */
+      .quote-band {
+        margin: 26px 0 0;
+        padding: 18px 20px;
+        border-left: 2px solid var(--green);
+        color: var(--text);
+        font-size: 18px;
+        font-style: italic;
+      }
+
+      .quote-band small {
+        display: block;
+        margin-top: 8px;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 12px;
+        font-style: normal;
+      }
+
+      /* Lead magnet */
+      .magnet {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 22px;
+        align-items: center;
+        margin-top: 34px;
+        padding: 26px;
+        border-color: var(--green);
+      }
+
+      .magnet h3 {
+        margin-bottom: 10px;
+        font-size: 24px;
+      }
+
+      .magnet p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .chain {
+        margin-top: 26px;
+        padding: 20px 22px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 15px;
+        line-height: 1.8;
+      }
+
+      .chain b {
+        color: var(--green);
+        font-weight: 600;
+      }
+
+      /* First month: weeks */
+      .weeks {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .weeks .card .k {
+        color: var(--amber);
+      }
+
+      /* Knowledge base */
+      .themes {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 18px;
         margin-top: 34px;
       }
 
-      .track {
-        padding: 24px;
-        min-height: 250px;
-      }
-
-      .track .num {
-        display: block;
-        margin-bottom: 34px;
-        color: var(--dim);
+      .theme-col h3 {
+        margin-bottom: 14px;
+        color: var(--green);
         font-family: var(--mono);
-        font-size: 12px;
+        font-size: 13px;
+        text-transform: uppercase;
+        font-weight: 600;
       }
 
-      .track h3 {
-        margin-bottom: 12px;
-        font-size: 24px;
-      }
-
-      .track p {
-        margin-bottom: 0;
-        color: var(--muted);
-      }
-
-      .month {
+      .theme-col ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 34px;
+        gap: 8px;
       }
 
-      .month-item {
+      .theme-col li {
+        padding: 10px 12px;
         border: 1px solid var(--line);
-        padding: 18px;
         background: var(--surface);
+        color: var(--text);
+        font-size: 14.5px;
       }
 
-      .month-item strong {
-        display: block;
-        margin-bottom: 8px;
-      }
-
-      .month-item span {
-        color: var(--muted);
-      }
-
-      .fit-grid {
+      .extras {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 14px;
-        margin-top: 34px;
+        margin-top: 22px;
       }
 
-      .fit-item {
-        padding: 20px;
-        color: var(--text);
-      }
-
-      .not-for .section-label,
-      .not-for .mark {
-        color: var(--red);
-      }
-
-      .quote-grid {
+      /* Load 2/4/6 */
+      .load-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 14px;
         margin-top: 34px;
       }
 
-      .quote {
+      .load-card {
         padding: 20px;
-        color: var(--text);
-        font-size: 16px;
       }
 
-      .quote::before {
-        content: "“";
+      .load-card .hrs {
         display: block;
+        margin-bottom: 10px;
         color: var(--green);
-        font-family: Georgia, serif;
-        font-size: 42px;
-        line-height: 0.8;
+        font-family: var(--mono);
+        font-size: 13px;
       }
 
+      .load-card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      /* Authors */
       .authors {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -673,87 +804,24 @@
         font-size: 22px;
       }
 
+      .author .role {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
       .author p {
         margin-bottom: 0;
         color: var(--muted);
       }
 
-      .author-quote {
-        max-width: none;
-        margin: 30px 0 0;
-        padding: 18px 20px;
-        border: 1px solid var(--line);
-        color: var(--text);
-        font-size: 18px;
-        font-style: italic;
-      }
-
-      .author-quote small {
-        display: block;
-        margin-top: 8px;
-        color: var(--dim);
-        font-family: var(--mono);
-        font-size: 12px;
-        font-style: normal;
-      }
-
-      .load-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 34px;
-      }
-
-      .load-card {
-        padding: 20px;
-      }
-
-      .load-card .hrs {
-        display: block;
-        margin-bottom: 10px;
-        color: var(--green);
-        font-family: var(--mono);
-        font-size: 13px;
-      }
-
-      .load-card p {
-        margin: 0;
-        color: var(--muted);
-      }
-
-      .signals {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 34px;
-      }
-
-      .signal {
-        padding: 20px;
-        color: var(--text);
-      }
-
-      .signal.key {
-        border-color: var(--green);
-        background: var(--surface);
-      }
-
-      .reviews {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 34px;
-      }
-
-      .review {
-        padding: 20px;
-        min-height: 150px;
-        border-style: dashed;
-        color: var(--dim);
-        font-size: 15px;
-      }
-
-      /* ── recommendations carousel — balanced-height column masonry (rev-*.webp) ── */
+      /* Reviews: horizontal-masonry carousel — reviews pre-packed into balanced-
+         height columns (capacity = the tallest single review), then the columns
+         auto-scroll sideways in a seamless CSS marquee (columns duplicated once
+         for the infinite loop). Width-independent, so it balances on desktop
+         (~half the container) and mobile (~full width). */
       .rec-carousel {
         position: relative;
         overflow: hidden;
@@ -815,47 +883,16 @@
         }
       }
 
-      /* ── ADDED: chat screenshots grid (res-*.webp masonry) ── */
-      .shots {
-        columns: 3 260px;
-        column-gap: 14px;
-        margin-top: 34px;
+      /* Price */
+      .stack {
+        margin-top: 30px;
       }
 
-      .shot {
-        break-inside: avoid;
-        margin: 0 0 14px;
-        border: 1px solid var(--line);
-        overflow: hidden;
-        background: var(--surface);
-      }
-
-      .shot img {
-        display: block;
-        width: 100%;
-        height: auto;
-      }
-
-      .objections {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 34px;
-      }
-
-      .objection {
-        padding: 20px;
-      }
-
-      .objection strong {
-        display: block;
-        margin-bottom: 8px;
-        color: var(--amber);
-      }
-
-      .objection p {
-        margin-bottom: 0;
-        color: var(--muted);
+      .stack .list li span:last-child em {
+        color: var(--dim);
+        font-style: normal;
+        font-family: var(--mono);
+        font-size: 13px;
       }
 
       .price-box {
@@ -866,7 +903,6 @@
         margin-top: 34px;
         padding: 26px;
         border-color: var(--green);
-        background: var(--surface);
       }
 
       .price {
@@ -883,36 +919,47 @@
         font-weight: 500;
       }
 
-      .soft-cta {
-        margin-top: 26px;
+      /* FAQ */
+      .faq {
+        display: grid;
+        gap: 12px;
+        margin-top: 34px;
+      }
+
+      .faq-item summary {
+        padding: 15px 16px;
+        cursor: pointer;
+        color: var(--text);
+        font-weight: 600;
+        list-style: none;
+      }
+
+      .faq-item summary::before {
+        content: "+";
+        margin-right: 12px;
+        color: var(--green);
+        font-family: var(--mono);
+      }
+
+      .faq-item[open] summary::before {
+        content: "–";
+      }
+
+      .faq-item p {
+        margin: 0;
+        padding: 0 16px 16px 40px;
+        color: var(--muted);
+      }
+
+      .choice {
+        margin-top: 24px;
         max-width: none;
         color: var(--muted);
-        font-size: 16px;
-        scroll-margin-top: 56px;
+        font-size: 18px;
       }
 
-      .soft-cta h3 {
-        margin-bottom: 10px;
+      .choice strong {
         color: var(--text);
-        font-size: 20px;
-      }
-
-      .soft-cta ul {
-        margin: 10px 0 12px;
-        padding-left: 18px;
-      }
-
-      .soft-cta li {
-        margin-bottom: 4px;
-      }
-
-      .soft-cta a:not(.btn) {
-        color: var(--green);
-      }
-
-      .soft-cta .btn {
-        margin-top: 6px;
-        color: var(--bg);
       }
 
       @media (max-width: 900px) {
@@ -930,22 +977,22 @@
         }
 
         .lead,
-        .section-copy,
-        .statement {
+        .section-copy {
           font-size: 18px;
         }
 
         .split,
-        .tracks,
-        .month,
-        .fit-grid,
-        .quote-grid,
+        .formula-grid,
+        .inside-grid,
+        .dialogs,
+        .weeks,
+        .themes,
+        .extras,
+        .load-grid,
         .authors,
         .objections,
         .price-box,
-        .load-grid,
-        .signals,
-        .reviews {
+        .magnet {
           grid-template-columns: 1fr;
         }
 
@@ -956,17 +1003,9 @@
         .price {
           font-size: 34px;
         }
-
-        .shots {
-          columns: 1;
-        }
       }
 
       @media (max-width: 560px) {
-        .nav-inner {
-          width: min(var(--max), calc(100% - 22px));
-        }
-
         .hero-inner,
         .section-inner,
         .footer {
@@ -989,6 +1028,8 @@
           grid-template-columns: 1fr;
         }
 
+        /* Mobile: each review column spans (almost) the whole container, so one
+           review reads full-width; a sliver of the next column hints the scroll. */
         .rec-col {
           width: 92cqw;
         }
@@ -1001,7 +1042,8 @@
       const joinHref =
         "https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&source_channel=" +
         analytics.attribution;
-      const shots = ["res-1", "res-2", "res-3", "res-4", "res-5", "res-6"];
+      /* Reviews pre-packed into balanced-height columns (LPT bin-pack by aspect
+         ratio, capacity = the tallest single review) for a horizontal masonry. */
       const reviewCols = [
         ["rev-12"],
         ["rev-09", "rev-10"],
@@ -1047,326 +1089,382 @@
             </svg>
           </button>
           <nav class="lang-switch" aria-label="Language">
-            <a class="ls-opt<% if (loc === "uk") { %> on<% } %>" data-loc="uk" hreflang="uk" href="/all/uk.html"<% if (loc === "uk") { %> aria-current="true"<% } %>>UK</a>
-            <a class="ls-opt<% if (loc === "en") { %> on<% } %>" data-loc="en" hreflang="en" href="/all/en.html"<% if (loc === "en") { %> aria-current="true"<% } %>>EN</a>
-            <a class="ls-opt<% if (loc === "ru") { %> on<% } %>" data-loc="ru" hreflang="ru" href="/all/ru.html"<% if (loc === "ru") { %> aria-current="true"<% } %>>RU</a>
+            <a class="ls-opt<% if (loc === "uk") { %> on<% } %>" data-loc="uk" hreflang="uk" href="/middle/uk.html"<% if (loc === "uk") { %> aria-current="true"<% } %>>UK</a>
+            <a class="ls-opt<% if (loc === "en") { %> on<% } %>" data-loc="en" hreflang="en" href="/middle/en.html"<% if (loc === "en") { %> aria-current="true"<% } %>>EN</a>
+            <a class="ls-opt<% if (loc === "ru") { %> on<% } %>" data-loc="ru" hreflang="ru" href="/middle/ru.html"<% if (loc === "ru") { %> aria-current="true"<% } %>>RU</a>
           </nav>
-          <span class="title">nexttick</span>
+          <span class="title"><%~ brand %></span>
           <span class="path">~/guild/nexttick.md</span>
-          <nav class="tabs" aria-label="nav">
-            <a class="tab on" href="#inside" data-tab><%~ navLink1 %></a>
-            <a class="tab" href="#month" data-tab><%~ navLink2 %></a>
-            <a class="tab" href="#result" data-tab><%~ navLink3 %></a>
-            <a class="tab" href="#join" data-tab><%~ navLink4 %></a>
+          <nav class="tabs" aria-label="<%~ navAria %>">
+            <a class="tab on" href="#checklist" data-tab><%~ navChecklist %></a>
+            <a class="tab" href="#how" data-tab><%~ navHow %></a>
+            <a class="tab" href="#base" data-tab><%~ navBase %></a>
+            <a class="tab" href="#price" data-tab><%~ navPrice %></a>
           </nav>
-          <a class="btn" data-cta-location="header" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ navCta %></a>
+          <a class="btn" data-cta-location="header" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ ctaJoin %></a>
         </header>
 
-    <main id="top">
-      <!-- SCREEN 1: HERO -->
-      <header class="hero">
-        <div class="hero-inner">
-          <div class="eyebrow"><span class="dot"></span> <%~ heroEyebrow %></div>
-          <h1><%~ heroH1 %></h1>
-          <p class="lead"><%~ heroLead %></p>
-          <div class="hero-actions">
-            <a class="btn" data-cta-location="hero" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ heroCta1 %></a>
-            <a class="btn secondary" href="#checklist"><%~ ctaChecklist %></a>
-          </div>
-          <div class="hero-facts">
-            <span><%~ heroFact1 %></span>
-            <span><%~ heroFact2 %></span>
-            <span><%~ heroFact3 %></span>
-            <span><%~ heroFact4 %></span>
-            <span><%~ heroFact5 %></span>
-          </div>
-        </div>
-      </header>
-
-      <!-- SCREEN 2: AUTHORS + NUMBERS -->
-      <section class="band" id="authors">
-        <div class="section-inner">
-          <div class="section-label"><%~ authorsLabel %></div>
-          <h2><%~ authorsH2 %></h2>
-          <p class="section-copy"><%~ authorsCopy %></p>
-          <div class="authors">
-            <article class="author acc-cyan">
-              <img src="/assets/author-ilya.png" alt="<%~ ilyaName %>" />
-              <div>
-                <h3><%~ ilyaName %></h3>
-                <p><%~ ilyaBio %></p>
+        <main id="top">
+          <!-- SCREEN 1: HERO -->
+          <header class="hero">
+            <div class="hero-inner">
+              <div class="eyebrow"><span class="dot"></span> <%~ heroEyebrow %></div>
+              <h1><%~ heroH1 %></h1>
+              <p class="lead"><%~ heroLead %></p>
+              <div class="hero-actions">
+                <a class="btn" data-cta-location="hero" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ ctaEnter %></a>
+                <a class="btn secondary" href="#checklist"><%~ heroCtaChecklist %></a>
               </div>
-            </article>
-            <article class="author acc-amber">
-              <img src="/assets/author-timur.png" alt="<%~ timurName %>" />
-              <div>
-                <h3><%~ timurName %></h3>
-                <p><%~ timurBio %></p>
+              <div class="hero-facts">
+                <span><%~ heroFact1 %></span>
+                <span><%~ heroFact2 %></span>
+                <span><%~ heroFact3 %></span>
+                <span><%~ heroFact4 %></span>
               </div>
-            </article>
-          </div>
-          <blockquote class="author-quote"><%~ authorsQuote %><small><%~ authorsQuoteSrc %></small></blockquote>
-        </div>
-      </section>
+            </div>
+          </header>
 
-      <!-- SCREEN 2.5: MISSION -->
-      <section>
-        <div class="section-inner">
-          <div class="section-label"><%~ missionLabel %></div>
-          <h2><%~ missionH2 %></h2>
-          <p class="statement">
-            <%~ missionStatement %> <strong><%~ missionStatementEmph %></strong>
-          </p>
-          <p class="section-copy"><%~ missionSign %></p>
-        </div>
-      </section>
+          <!-- SCREEN 2: PAIN — recognition -->
+          <section>
+            <div class="section-inner split">
+              <div>
+                <div class="section-label"><%~ painLabel %></div>
+                <h2><%~ painH2 %></h2>
+                <p class="section-copy"><%~ painCopy %></p>
+              </div>
+              <ul class="list" aria-label="<%~ painListAria %>">
+                <li><span class="mark">—</span><span><%~ painLi1 %></span></li>
+                <li><span class="mark">—</span><span><%~ painLi2 %></span></li>
+                <li><span class="mark">—</span><span><%~ painLi3 %></span></li>
+                <li><span class="mark">—</span><span><%~ painLi4 %></span></li>
+                <li><span class="mark">—</span><span><%~ painLi5 %></span></li>
+                <li><span class="mark">—</span><span><%~ painLi6 %></span></li>
+              </ul>
+            </div>
+          </section>
 
-      <!-- SCREEN 3: WHY NOW -->
-      <section>
-        <div class="section-inner split">
-          <div>
-            <div class="section-label"><%~ whyLabel %></div>
-            <h2><%~ whyH2 %></h2>
-            <p class="section-copy"><%~ whyCopy1 %></p>
-            <p class="section-copy"><%~ whyCopy2 %></p>
-          </div>
-          <ul class="list" aria-label="What AI does not decide for the engineer">
-            <li><span class="mark">01</span><span><%~ whyLi1 %></span></li>
-            <li><span class="mark">02</span><span><%~ whyLi2 %></span></li>
-            <li><span class="mark">03</span><span><%~ whyLi3 %></span></li>
-            <li><span class="mark">04</span><span><%~ whyLi4 %></span></li>
-            <li><span class="mark">05</span><span><%~ whyLi5 %></span></li>
-            <li><span class="mark">06</span><span><%~ whyLi6 %></span></li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- SCREEN 5: ENVIRONMENT -->
-      <section class="insight">
-        <div class="section-inner">
-          <div class="section-label"><%~ envLabel %></div>
-          <h2><%~ envH2 %></h2>
-          <p class="statement">
-            <%~ envStatPre %> <strong><%~ envStatEmph %></strong><%~ envStatPost %>
-          </p>
-          <div class="ticks">
-            <div><%~ envTick1 %></div>
-            <div><%~ envTick2 %></div>
-            <div><%~ envTick3 %></div>
-            <div><%~ envTick4 %></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 6: WHAT'S INSIDE -->
-      <section id="inside" class="band">
-        <div class="section-inner">
-          <div class="section-label"><%~ insideLabel %></div>
-          <h2><%~ insideH2 %></h2>
-          <p class="section-copy"><%~ insideCopy %></p>
-          <div class="month">
-            <div class="month-item"><strong><%~ inside1H %></strong><span><%~ inside1P %></span></div>
-            <div class="month-item"><strong><%~ inside2H %></strong><span><%~ inside2P %></span></div>
-            <div class="month-item"><strong><%~ inside3H %></strong><span><%~ inside3P %></span></div>
-            <div class="month-item"><strong><%~ inside4H %></strong><span><%~ inside4P %></span></div>
-            <div class="month-item"><strong><%~ inside5H %></strong><span><%~ inside5P %></span></div>
-            <div class="month-item"><strong><%~ inside6H %></strong><span><%~ inside6P %></span></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 7: TRACKS -->
-      <section id="tracks">
-        <div class="section-inner">
-          <div class="section-label"><%~ tracksLabel %></div>
-          <h2><%~ tracksH2 %></h2>
-          <div class="tracks">
-            <article class="track acc-green">
-              <span class="num">01 / architecture</span>
-              <h3><%~ track1H %></h3>
-              <p><%~ track1P %></p>
-            </article>
-            <article class="track acc-cyan">
-              <span class="num">02 / agents</span>
-              <h3><%~ track2H %></h3>
-              <p><%~ track2P %></p>
-            </article>
-            <article class="track acc-amber">
-              <span class="num">03 / communication</span>
-              <h3><%~ track3H %></h3>
-              <p><%~ track3P %></p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 8: LOAD 2/4/6 -->
-      <section>
-        <div class="section-inner">
-          <div class="section-label"><%~ loadLabel %></div>
-          <h2><%~ loadH2 %></h2>
-          <p class="section-copy"><%~ loadCopy %></p>
-          <div class="load-grid">
-            <div class="load-card acc-green"><span class="hrs"><%~ load1H %></span><p><%~ load1P %></p></div>
-            <div class="load-card acc-amber"><span class="hrs"><%~ load2H %></span><p><%~ load2P %></p></div>
-            <div class="load-card acc-cyan"><span class="hrs"><%~ load3H %></span><p><%~ load3P %></p></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 9: FIRST MONTH -->
-      <section id="month" class="band">
-        <div class="section-inner">
-          <div class="section-label"><%~ monthLabel %></div>
-          <h2><%~ monthH2 %></h2>
-          <div class="fit-grid">
-            <div class="fit-item"><strong><%~ month1H %></strong> <%~ month1P %></div>
-            <div class="fit-item"><strong><%~ month2H %></strong> <%~ month2P %></div>
-            <div class="fit-item"><strong><%~ month3H %></strong> <%~ month3P %></div>
-            <div class="fit-item"><strong><%~ month4H %></strong> <%~ month4P %></div>
-            <div class="fit-item"><strong><%~ month5H %></strong> <%~ month5P %></div>
-            <div class="fit-item"><strong><%~ month6H %></strong> <%~ month6P %></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 10: RESULT -->
-      <section id="result">
-        <div class="section-inner">
-          <div class="section-label"><%~ resultLabel %></div>
-          <h2><%~ resultH2 %></h2>
-          <p class="section-copy"><%~ resultCopy %></p>
-          <div class="shots">
-            <% shots.forEach(function (s) { %>
-            <figure class="shot">
-              <img src="/assets/results/<%= s %>.webp" alt="<%~ screensAlt %>" loading="lazy" />
-            </figure>
-            <% }) %>
-          </div>
-          <div class="signals">
-            <div class="signal key"><%~ resultKey %></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 11: RECOMMENDATIONS CAROUSEL (added; replaces the empty reviews placeholder slots) -->
-      <section class="band" id="reviews">
-        <div class="section-inner">
-          <div class="section-label"><%~ reviewsLabel %></div>
-          <h2><%~ reviewsH2 %></h2>
-          <p class="section-copy"><%~ reviewsCopy %></p>
-          <div class="rec-carousel" aria-label="Member recommendations">
-            <div class="rec-track">
-              <% for (var pass = 0; pass < 2; pass++) { %> <%
-              reviewCols.forEach(function (col) { %>
-              <div class="rec-col"<% if (pass === 1) { %> aria-hidden="true"<% } %>>
-                <% col.forEach(function (r) { %>
-                <div class="rec-card">
-                  <img src="/assets/reviews/<%= r %>.webp" alt="<%~ reviewsAlt %>" loading="lazy" />
+          <!-- SCREEN 3: RISK — amplification + quotes -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label"><%~ riskLabel %></div>
+              <h2><%~ riskH2 %></h2>
+              <p class="section-copy"><%~ riskCopy %></p>
+              <blockquote class="quote-band">
+                <%~ riskQuote1 %><small><%~ riskQuote1Author %></small>
+              </blockquote>
+              <blockquote class="quote-band">
+                <%~ riskQuote2 %><small><%~ riskQuote2Author %></small>
+              </blockquote>
+              <div class="dialogs">
+                <div class="dialog bad">
+                  <span class="tag"><%~ riskBadTag %></span>
+                  <p><%~ riskBad %></p>
                 </div>
+                <div class="dialog good">
+                  <span class="tag"><%~ riskGoodTag %></span>
+                  <p><%~ riskGood %></p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 4: LEAD MAGNET -->
+          <section id="checklist">
+            <div class="section-inner">
+              <div class="section-label"><%~ magnetLabel %></div>
+              <h2><%~ magnetH2 %></h2>
+              <p class="section-copy"><%~ magnetCopy %></p>
+              <div class="magnet acc-green">
+                <div>
+                  <h3><%~ magnetCardH3 %></h3>
+                  <p><%~ magnetCardP %></p>
+                </div>
+                <a class="btn" data-cta-location="checklist" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ magnetCta %></a>
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 5: MECHANISM — the formula -->
+          <section id="how">
+            <div class="section-inner">
+              <div class="section-label"><%~ howLabel %></div>
+              <h2><%~ howH2 %></h2>
+              <p class="section-copy"><%~ howCopy %></p>
+              <div class="formula"><%~ howFormula %></div>
+              <div class="formula-grid">
+                <div class="card acc-green">
+                  <span class="k"><%~ howCard1K %></span>
+                  <p><%~ howCard1P %></p>
+                </div>
+                <div class="card acc-cyan">
+                  <span class="k"><%~ howCard2K %></span>
+                  <p><%~ howCard2P %></p>
+                </div>
+                <div class="card acc-magenta">
+                  <span class="k"><%~ howCard3K %></span>
+                  <p><%~ howCard3P %></p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k"><%~ howCard4K %></span>
+                  <p><%~ howCard4P %></p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 6: WHAT'S INSIDE -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label"><%~ insideLabel %></div>
+              <h2><%~ insideH2 %></h2>
+              <p class="section-copy"><%~ insideCopy %></p>
+              <div class="inside-grid" style="margin-top: 34px">
+                <div class="card">
+                  <span class="k"><%~ in1K %></span>
+                  <p><%~ in1P %></p>
+                </div>
+                <div class="card">
+                  <span class="k"><%~ in2K %></span>
+                  <p><%~ in2P %></p>
+                </div>
+                <div class="card">
+                  <span class="k"><%~ in3K %></span>
+                  <p><%~ in3P %></p>
+                </div>
+                <div class="card">
+                  <span class="k"><%~ in4K %></span>
+                  <p><%~ in4P %></p>
+                </div>
+              </div>
+              <div class="chain"><%~ insideChain %></div>
+            </div>
+          </section>
+
+          <!-- SCREEN 7: FOUR WEEKS -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label"><%~ weeksLabel %></div>
+              <h2><%~ weeksH2 %></h2>
+              <div class="weeks">
+                <div class="card acc-amber">
+                  <span class="k"><%~ week1K %></span>
+                  <p><%~ week1P %></p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k"><%~ week2K %></span>
+                  <p><%~ week2P %></p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k"><%~ week3K %></span>
+                  <p><%~ week3P %></p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k"><%~ week4K %></span>
+                  <p><%~ week4P %></p>
+                </div>
+              </div>
+              <p class="section-copy" style="margin-top: 22px"><%~ weeksCopy %></p>
+            </div>
+          </section>
+
+          <!-- SCREEN 8: KNOWLEDGE BASE + TypeScript -->
+          <section id="base">
+            <div class="section-inner">
+              <div class="section-label"><%~ baseLabel %></div>
+              <h2><%~ baseH2 %></h2>
+              <p class="section-copy"><%~ baseCopy %></p>
+              <div class="themes">
+                <div class="theme-col">
+                  <h3><%~ baseArchH3 %></h3>
+                  <ul>
+                    <% baseArchItems.forEach(function (t) { %><li><%~ t %></li><% }) %>
+                  </ul>
+                </div>
+                <div class="theme-col">
+                  <h3><%~ baseAiH3 %></h3>
+                  <ul>
+                    <% baseAiItems.forEach(function (t) { %><li><%~ t %></li><% }) %>
+                  </ul>
+                </div>
+                <div class="theme-col">
+                  <h3><%~ baseCommH3 %></h3>
+                  <ul>
+                    <% baseCommItems.forEach(function (t) { %><li><%~ t %></li><% }) %>
+                  </ul>
+                </div>
+              </div>
+              <div class="extras">
+                <div class="card hl">
+                  <span class="k"><%~ extraTsK %></span>
+                  <p><%~ extraTsP %></p>
+                </div>
+                <div class="card">
+                  <span class="k"><%~ extraRecK %></span>
+                  <p><%~ extraRecP %></p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 9: LOAD -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label"><%~ loadLabel %></div>
+              <h2><%~ loadH2 %></h2>
+              <div class="load-grid">
+                <div class="load-card acc-green">
+                  <span class="hrs"><%~ load1K %></span>
+                  <p><%~ load1P %></p>
+                </div>
+                <div class="load-card acc-amber">
+                  <span class="hrs"><%~ load2K %></span>
+                  <p><%~ load2P %></p>
+                </div>
+                <div class="load-card acc-cyan">
+                  <span class="hrs"><%~ load3K %></span>
+                  <p><%~ load3P %></p>
+                </div>
+              </div>
+              <p class="section-copy" style="margin-top: 22px"><%~ loadCopy %></p>
+            </div>
+          </section>
+
+          <!-- SCREEN 10: RESULT -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label"><%~ resultLabel %></div>
+              <h2><%~ resultH2 %></h2>
+              <div class="ticks">
+                <% resultTicks.forEach(function (t) { %><div><%~ t %></div><% }) %>
+              </div>
+              <p class="section-copy" style="margin-top: 24px"><%~ resultCopy %></p>
+            </div>
+          </section>
+
+          <!-- SCREEN 11: REVIEWS — real screenshots from assets/reviews -->
+          <section id="reviews">
+            <div class="section-inner">
+              <div class="section-label"><%~ reviewsLabel %></div>
+              <h2><%~ reviewsH2 %></h2>
+              <div class="rec-carousel" aria-label="<%~ reviewsAlt %>">
+                <div class="rec-track">
+                  <% for (var pass = 0; pass < 2; pass++) { %> <%
+                  reviewCols.forEach(function (col) { %>
+                  <div class="rec-col"<% if (pass === 1) { %> aria-hidden="true"<% } %>>
+                    <% col.forEach(function (r) { %>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/<%= r %>.webp"
+                        alt="<%~ reviewsAlt %>"
+                        loading="lazy"
+                      />
+                    </div>
+                    <% }) %>
+                  </div>
+                  <% }) %> <% } %>
+                </div>
+              </div>
+              <p class="section-copy" style="margin-top: 24px"><%~ reviewsSurveyP %></p>
+              <p class="section-copy" style="margin-top: 14px"><%~ reviewsSoftCta %></p>
+            </div>
+          </section>
+
+          <!-- SCREEN 12: AUTHORS -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label"><%~ authorsLabel %></div>
+              <h2><%~ authorsH2 %></h2>
+              <div class="authors">
+                <article class="author acc-amber">
+                  <img src="/assets/author-timur.png" alt="<%~ timurName %>" loading="lazy" />
+                  <div>
+                    <h3><%~ timurName %></h3>
+                    <span class="role"><%~ timurRole %></span>
+                    <p><%~ timurBio %></p>
+                  </div>
+                </article>
+                <article class="author acc-cyan">
+                  <img src="/assets/author-ilya.png" alt="<%~ ilyaName %>" loading="lazy" />
+                  <div>
+                    <h3><%~ ilyaName %></h3>
+                    <span class="role"><%~ ilyaRole %></span>
+                    <p><%~ ilyaBio %></p>
+                  </div>
+                </article>
+              </div>
+              <p class="section-copy" style="margin-top: 24px"><%~ authorsCopy %></p>
+            </div>
+          </section>
+
+          <!-- SCREEN 13: NOT FOR EVERYONE -->
+          <section class="not-for">
+            <div class="section-inner split">
+              <div>
+                <div class="section-label"><%~ notForLabel %></div>
+                <h2><%~ notForH2 %></h2>
+                <p class="section-copy"><%~ notForP %></p>
+              </div>
+              <ul class="list" aria-label="<%~ notForAria %>">
+                <li><span class="mark">×</span><span><%~ nf1 %></span></li>
+                <li><span class="mark">×</span><span><%~ nf2 %></span></li>
+                <li><span class="mark">×</span><span><%~ nf3 %></span></li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- SCREEN 14: PRICE — value stack -->
+          <section id="price">
+            <div class="section-inner">
+              <div class="section-label"><%~ priceLabel %></div>
+              <h2><%~ priceH2 %></h2>
+              <ul class="list stack">
+                <% priceStack.forEach(function (item, i) { %>
+                <li><span class="mark"><%= String(i + 1).padStart(2, "0") %></span><span><%~ item %></span></li>
+                <% }) %>
+              </ul>
+              <div class="price-box">
+                <div>
+                  <div class="price"><%~ priceValue %> <small><%~ priceUnit %></small></div>
+                  <p class="section-copy" style="margin-bottom: 0"><%~ priceDesc %></p>
+                </div>
+                <a class="btn" data-cta-location="offer" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ ctaJoin %></a>
+              </div>
+              <p class="section-copy" style="margin-top: 16px"><%~ priceCopy %></p>
+            </div>
+          </section>
+
+          <!-- SCREEN 15: FAQ -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label"><%~ faqLabel %></div>
+              <h2><%~ faqH2 %></h2>
+              <div class="faq">
+                <% faqItems.forEach(function (f) { %>
+                <details class="faq-item">
+                  <summary><%~ f.q %></summary>
+                  <p><%~ f.a %></p>
+                </details>
                 <% }) %>
               </div>
-              <% }) %> <% } %>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <!-- SCREEN 12: WHO IT'S FOR -->
-      <section>
-        <div class="section-inner">
-          <div class="section-label"><%~ forLabel %></div>
-          <h2><%~ forH2 %></h2>
-          <div class="fit-grid">
-            <div class="fit-item"><%~ forItem1 %></div>
-            <div class="fit-item"><%~ forItem2 %></div>
-            <div class="fit-item"><%~ forItem3 %></div>
-            <div class="fit-item"><%~ forItem4 %></div>
-            <div class="fit-item"><%~ forItem5 %></div>
-            <div class="fit-item"><%~ forItem6 %></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 13: NOT FOR -->
-      <section class="not-for">
-        <div class="section-inner split">
-          <div>
-            <div class="section-label"><%~ notLabel %></div>
-            <h2><%~ notH2 %></h2>
-            <p class="section-copy"><%~ notCopy %></p>
-          </div>
-          <ul class="list" aria-label="Who the Guild is not for">
-            <li><span class="mark">×</span><span><%~ notLi1 %></span></li>
-            <li><span class="mark">×</span><span><%~ notLi2 %></span></li>
-            <li><span class="mark">×</span><span><%~ notLi3 %></span></li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- SCREEN 14: OBJECTIONS -->
-      <section>
-        <div class="section-inner">
-          <div class="section-label"><%~ objLabel %></div>
-          <h2><%~ objH2 %></h2>
-          <div class="objections">
-            <div class="objection"><strong><%~ obj1Q %></strong><p><%~ obj1A %></p></div>
-            <div class="objection"><strong><%~ obj2Q %></strong><p><%~ obj2A %></p></div>
-            <div class="objection"><strong><%~ obj3Q %></strong><p><%~ obj3A %></p></div>
-            <div class="objection"><strong><%~ obj4Q %></strong><p><%~ obj4A %></p></div>
-            <div class="objection"><strong><%~ obj5Q %></strong><p><%~ obj5A %></p></div>
-            <div class="objection"><strong><%~ obj6Q %></strong><p><%~ obj6A %></p></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 15: PRICE / FINAL -->
-      <section id="join" class="final">
-        <div class="section-inner">
-          <div class="section-label"><%~ priceLabel %></div>
-          <h2><%~ priceH2 %></h2>
-          <p class="section-copy"><%~ priceCopy %></p>
-          <div class="price-box">
-            <div>
-              <div class="price"><%~ priceValue %> <small><%~ pricePer %></small></div>
-              <p class="section-copy" style="margin-bottom: 0"><%~ priceBoxCopy %></p>
+          <!-- SCREEN 16: FINAL -->
+          <section id="join">
+            <div class="section-inner">
+              <div class="section-label"><%~ finalLabel %></div>
+              <h2><%~ finalH2 %></h2>
+              <p class="section-copy"><%~ finalCopy %></p>
+              <div class="hero-actions" style="margin-top: 26px">
+                <a class="btn" data-cta-location="final" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ ctaEnter %></a>
+                <a class="btn secondary" data-cta-location="final-checklist" href="<%= joinHref %>" target="_blank" rel="noopener"><%~ finalCtaChecklist %></a>
+              </div>
+              <p class="choice"><%~ choiceP %></p>
             </div>
-            <a
-              class="btn"
-              data-cta-location="pricing"
-              href="<%= joinHref %>"
-              target="_blank"
-              rel="noopener"
-              ><%~ priceCta %></a
-            >
-          </div>
-          <div class="soft-cta" id="checklist">
-            <h3><%~ checklistH %></h3>
-            <p><%~ checklistP1 %></p>
-            <p><%~ checklistP2 %></p>
-            <ul>
-              <li><%~ checklistLi1 %></li>
-              <li><%~ checklistLi2 %></li>
-              <li><%~ checklistLi3 %></li>
-              <li><%~ checklistLi4 %></li>
-              <li><%~ checklistLi5 %></li>
-            </ul>
-            <p>
-              <a
-                class="btn"
-                data-cta-location="checklist"
-                href="<%= joinHref %>"
-                target="_blank"
-                rel="noopener"
-                ><%~ checklistCta %></a
-              >
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
+          </section>
+        </main>
 
-        <%~ include("_partials/footer.html", { loc, tagline: footerText }) %>
+        <%~ include("_partials/footer.html", { loc, tagline: footerTagline }) %>
       </div>
     </div>
 
@@ -1453,7 +1551,7 @@
     </script>
     <% if (analytics.attribution) { %><%~ include("_partials/analytics/attribution.html") %><% } %>
     <script>
-      <%~ include("_partials/lang-switch.html", { loc, switchPrefix: "all/" }) %>
+      <%~ include("_partials/lang-switch.html", { loc, switchPrefix: "middle/" }) %>
     </script>
   </body>
 </html>

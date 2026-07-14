@@ -824,14 +824,14 @@
         font-size: 15px;
       }
 
-      /* ── ADDED: recommendations carousel (rev-*.webp autoscroll) ── */
+      /* ── recommendations carousel — balanced-height column masonry (rev-*.webp) ── */
       .rec-carousel {
         position: relative;
         overflow: hidden;
         margin-top: 34px;
         border: 1px solid var(--line);
         background: var(--surface);
-        padding: 16px 0;
+        padding: 16px;
         container-type: inline-size;
       }
 
@@ -839,17 +839,23 @@
         display: flex;
         gap: 14px;
         width: max-content;
-        align-items: center;
-        padding: 0 7px;
-        animation: recScroll 100s linear infinite;
+        align-items: flex-start;
+        animation: recScroll 120s linear infinite;
       }
 
       .rec-carousel:hover .rec-track {
         animation-play-state: paused;
       }
 
-      .rec-card {
+      .rec-col {
         flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 48cqw;
+      }
+
+      .rec-card {
         line-height: 0;
         border: 1px solid var(--line);
         overflow: hidden;
@@ -858,11 +864,8 @@
 
       .rec-card img {
         display: block;
-        width: auto;
+        width: 100%;
         height: auto;
-        max-height: 440px;
-        max-width: 360px;
-        max-width: 48cqw;
       }
 
       @keyframes recScroll {
@@ -1028,11 +1031,6 @@
         .shots {
           columns: 1;
         }
-
-        .rec-card img {
-          max-height: 70vh;
-          max-width: 88cqw;
-        }
       }
 
       @media (max-width: 560px) {
@@ -1060,6 +1058,10 @@
 
         .author {
           grid-template-columns: 1fr;
+        }
+
+        .rec-col {
+          width: 92cqw;
         }
       }
     </style>
@@ -1623,257 +1625,289 @@
               </p>
               <div class="rec-carousel" aria-label="Member recommendations">
                 <div class="rec-track">
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-01.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-12.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-02.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-09.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-10.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-03.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-16.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-14.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-04.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-04.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-13.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-05.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-07.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-02.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-06.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-18.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-05.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-01.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-07.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-06.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-03.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-11.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-08.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-15.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-17.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-08.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-09.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-12.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-10.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-09.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-10.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-11.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-16.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-14.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-12.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-04.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-13.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-13.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-07.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-02.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-14.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-18.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-05.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-01.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-15.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-06.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-03.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-11.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-16.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-17.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card">
-                    <img
-                      src="/assets/reviews/rev-18.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-01.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-02.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-03.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-04.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-05.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-06.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-07.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-08.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-09.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-10.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-11.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-12.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-13.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-14.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-15.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-16.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-17.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div class="rec-card" aria-hidden="true">
-                    <img
-                      src="/assets/reviews/rev-18.webp"
-                      alt="Рекомендація учасника Гільдії"
-                      loading="lazy"
-                    />
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-15.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-17.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-08.webp"
+                        alt="Рекомендація учасника Гільдії"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2183,7 +2217,8 @@
         if (!a) return;
         var href = a.href || "";
         var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
-        var isChannel = href.indexOf("t.me/") !== -1;
+        var isChannel =
+          href.indexOf("t.me/") !== -1 || href.indexOf("telegram.me/") !== -1;
         if (!isBot && !isChannel) return;
         var evt = isBot ? "cta_click" : "channel_click";
         var payload = {

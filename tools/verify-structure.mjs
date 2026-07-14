@@ -98,11 +98,15 @@ for (const { page, scheme, locales } of discoverChrome()) {
     // `future-proof` is a brand-new page (the guildia landing v3) with no 268cb44
     // baseline at all, so it is exempt from same-locale byte acceptance too; cross-
     // locale parity, i18n residue, and live-path existence still guard it.
+    // `middle` is a brand-new page (the "landing final" middle-funnel design) with
+    // no 268cb44 baseline either, so it is likewise exempt from same-locale byte
+    // acceptance; cross-locale parity, i18n residue, and live-path still guard it.
     if (
       page !== "swe" &&
       page !== "all" &&
       page !== "index" &&
-      page !== "future-proof"
+      page !== "future-proof" &&
+      page !== "middle"
     ) {
       const res = byteDiffFiles(p, BASELINE_SHA, baselineOldPath(page, loc));
       if (!res.ok) {

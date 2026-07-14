@@ -1,0 +1,2478 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-M74P6CSD");
+    </script>
+    <!-- End Google Tag Manager -->
+    <title>Next Tick — гильдия для JavaScript-разработчиков</title>
+    <meta
+      name="description"
+      content="Гильдия Next Tick: архитектура, работа с AI и инженерная коммуникация для JavaScript-разработчиков. 2 часа в неделю на своих рабочих задачах. $50/мес."
+    />
+    <link rel="canonical" href="https://nexttick.it/middle/ru.html" />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://nexttick.it/middle/uk.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/middle/en.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://nexttick.it/middle/ru.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/middle/uk.html"
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0b0d0f" />
+    <script>
+      /* Apply saved/system theme before paint to avoid a flash of the wrong theme. */
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var theme =
+            saved ||
+            (window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1TYEB7YFP5");
+    </script>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "x5houryvs2");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0d0f;
+        --bg-2: #111417;
+        --surface: #15191c;
+        --surface-2: #1c2126;
+        --line: #2a3138;
+        --line-2: #3a444c;
+        --text: #d6d8da;
+        --muted: #888d92;
+        --dim: #5d6469;
+        --green: #7ee787;
+        --green-2: #3fb950;
+        --green-hover: #8df29a;
+        --red: #ff7b72;
+        --amber: #e3b341;
+        --cyan: #56d4dd;
+        --magenta: #bc8cff;
+        --white: #ffffff;
+        --bg-rgb: 11, 13, 15;
+        --scan: rgba(255, 255, 255, 0.012);
+        --vignette: rgba(0, 0, 0, 0.5);
+        --dot-r: #4a2222;
+        --dot-y: #4a3a14;
+        --dot-g: #1d3a24;
+        --mono:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        --sans:
+          "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        --max: 1160px;
+      }
+
+      [data-theme="light"] {
+        color-scheme: light;
+        --bg: #ffffff;
+        --bg-2: #f6f8fa;
+        --surface: #f0f3f6;
+        --surface-2: #e7ecf1;
+        --line: #d4dae0;
+        --line-2: #b6bfc8;
+        --text: #1f2328;
+        --muted: #59636e;
+        --dim: #8b949e;
+        --green: #1a7f37;
+        --green-2: #116329;
+        --green-hover: #166b2e;
+        --red: #cf222e;
+        --amber: #9a6700;
+        --cyan: #0b7285;
+        --magenta: #8250df;
+        --white: #1f2328;
+        --bg-rgb: 255, 255, 255;
+        --scan: rgba(0, 0, 0, 0.022);
+        --vignette: rgba(0, 0, 0, 0.05);
+        --dot-r: #ff5f57;
+        --dot-y: #febc2e;
+        --dot-g: #28c840;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.55;
+        overflow-x: hidden;
+      }
+
+      /* CRT scanlines + corner vignette — terminal decoration (index.html) */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          var(--scan) 0 1px,
+          transparent 1px 3px
+        );
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 52%,
+          var(--vignette) 100%
+        );
+      }
+
+      /* Viewers (including in-app browsers) may repaint html/body white.
+         Each block sets its own background so the page always stays dark. */
+      html,
+      main,
+      section,
+      header.hero,
+      .footer {
+        background-color: var(--bg);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: 100%;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .win {
+        border: 1px solid var(--line);
+        background: var(--bg-2);
+      }
+
+      .win-bar {
+        position: sticky;
+        top: 0;
+        z-index: 80;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        min-height: 39px;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(var(--bg-rgb), 0.94);
+        backdrop-filter: blur(14px);
+        color: var(--dim);
+        font-size: 11px;
+      }
+
+      .dots {
+        display: flex;
+        gap: 6px;
+        margin-right: 6px;
+      }
+
+      .dots span {
+        width: 10px;
+        height: 10px;
+        border: 1px solid var(--line-2);
+        border-radius: 50%;
+      }
+
+      .dots .r {
+        background: var(--dot-r);
+      }
+
+      .dots .y {
+        background: var(--dot-y);
+      }
+
+      .dots .g {
+        background: var(--dot-g);
+      }
+
+      .title {
+        color: var(--text);
+        font-family: var(--mono);
+        white-space: nowrap;
+      }
+
+      .path {
+        color: var(--dim);
+        font-family: var(--mono);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 1px;
+        margin-left: auto;
+        align-self: flex-end;
+        margin-bottom: -8px;
+      }
+
+      .tab {
+        padding: 3px 10px;
+        border: 1px solid var(--line);
+        border-bottom: 0;
+        background: var(--bg-2);
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 10.5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          background 0.15s,
+          border-color 0.15s;
+      }
+
+      .tab:hover,
+      .tab.on {
+        border-color: var(--green);
+        color: var(--green);
+        background: var(--surface-2);
+      }
+
+      .win-bar .btn {
+        min-height: 0;
+        padding: 6px 13px;
+        font-size: 12px;
+      }
+
+      /* language switch (page-based /middle/<loc>.html) */
+      .lang-switch {
+        display: inline-flex;
+        gap: 2px;
+      }
+
+      .lang-switch .ls-opt {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        padding: 5px 7px;
+        border-radius: 2px;
+        color: var(--muted);
+        text-decoration: none;
+        border: 1px solid transparent;
+        opacity: 0.75;
+        transition:
+          opacity 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+      }
+
+      .lang-switch .ls-opt:hover,
+      .lang-switch .ls-opt.on {
+        opacity: 1;
+        color: var(--green);
+        border-color: var(--green);
+      }
+
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        background: var(--surface);
+        color: var(--muted);
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+      }
+
+      .theme-toggle:hover {
+        color: var(--green);
+        border-color: var(--green);
+      }
+
+      .theme-toggle .tt-icon {
+        display: none;
+        width: 14px;
+        height: 14px;
+      }
+
+      .theme-toggle .tt-sun {
+        display: block;
+      }
+
+      [data-theme="light"] .theme-toggle .tt-sun {
+        display: none;
+      }
+
+      [data-theme="light"] .theme-toggle .tt-moon {
+        display: block;
+      }
+
+      .btn {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid var(--green);
+        padding: 11px 18px;
+        background: var(--green);
+        color: var(--bg);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        background: var(--green-hover);
+      }
+
+      .btn.secondary {
+        background: var(--surface);
+        border-color: var(--line);
+        color: var(--text);
+      }
+
+      .btn.secondary:hover {
+        background: var(--surface-2);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 84vh;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+        padding: 74px 0 58px;
+      }
+
+      .hero h1,
+      .hero .lead {
+        max-width: none;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        border: 1px solid var(--green);
+        border-radius: 2px;
+        padding: 7px 11px;
+        background: var(--surface);
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: none;
+        margin-bottom: 22px;
+        font-size: clamp(42px, 7vw, 82px);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: none;
+        margin-bottom: 30px;
+        color: var(--text);
+        font-size: 21px;
+        line-height: 1.48;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .hero-facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        max-width: none;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .hero-facts span {
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        padding: 7px 10px;
+        background: var(--surface);
+      }
+
+      section {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-inner {
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+        padding: 48px 0;
+      }
+
+      .section-label {
+        margin-bottom: 14px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        max-width: none;
+        margin-bottom: 22px;
+        font-size: clamp(30px, 4.5vw, 56px);
+        line-height: 1.04;
+        letter-spacing: 0;
+      }
+
+      .section-copy {
+        max-width: none;
+        color: var(--muted);
+        font-size: 19px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+        gap: 46px;
+        align-items: start;
+      }
+
+      .list {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .list li,
+      .card,
+      .dialog,
+      .quote-band,
+      .fit-item,
+      .objection,
+      .author,
+      .price-box,
+      .magnet,
+      .load-card,
+      .faq-item {
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+
+      /* accent outlines — guild_v2 accent colors, palette-mapped */
+      .acc-green {
+        border-color: var(--green);
+      }
+      .acc-amber {
+        border-color: var(--amber);
+      }
+      .acc-cyan {
+        border-color: var(--cyan);
+      }
+      .acc-magenta {
+        border-color: var(--magenta);
+      }
+      .acc-red {
+        border-color: var(--red);
+      }
+
+      .list li {
+        display: flex;
+        gap: 12px;
+        padding: 15px 16px;
+        color: var(--text);
+      }
+
+      .mark {
+        flex: 0 0 auto;
+        color: var(--green);
+        font-family: var(--mono);
+      }
+
+      .not-for .section-label,
+      .not-for .mark {
+        color: var(--red);
+      }
+
+      .ticks {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        max-width: none;
+        margin-top: 28px;
+      }
+
+      .ticks div {
+        border: 1px solid var(--line);
+        padding: 12px 14px;
+        color: var(--text);
+      }
+
+      /* Cards (mechanism / inside / weeks / base extras) */
+      .card {
+        padding: 20px;
+      }
+
+      .card .k {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .card p strong {
+        color: var(--text);
+      }
+
+      .card.hl {
+        border-color: var(--amber);
+      }
+
+      .card.hl .k {
+        color: var(--amber);
+      }
+
+      .formula-grid,
+      .inside-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .formula {
+        margin: 34px 0 26px;
+        padding: 26px 24px;
+        border: 1px solid var(--green);
+        background: var(--surface);
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: clamp(18px, 3vw, 28px);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-align: center;
+      }
+
+      /* Before / after dialogs */
+      .dialogs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 30px;
+      }
+
+      .dialog {
+        padding: 20px;
+      }
+
+      .dialog.bad {
+        border-left: 3px solid var(--red);
+      }
+
+      .dialog.good {
+        border-left: 3px solid var(--green);
+      }
+
+      .dialog .tag {
+        display: block;
+        margin-bottom: 12px;
+        font-family: var(--mono);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .dialog.bad .tag {
+        color: var(--red);
+      }
+
+      .dialog.good .tag {
+        color: var(--green);
+      }
+
+      .dialog p {
+        margin: 0;
+        color: var(--text);
+      }
+
+      /* Attributed quote */
+      .quote-band {
+        margin: 26px 0 0;
+        padding: 18px 20px;
+        border-left: 2px solid var(--green);
+        color: var(--text);
+        font-size: 18px;
+        font-style: italic;
+      }
+
+      .quote-band small {
+        display: block;
+        margin-top: 8px;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 12px;
+        font-style: normal;
+      }
+
+      /* Lead magnet */
+      .magnet {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 22px;
+        align-items: center;
+        margin-top: 34px;
+        padding: 26px;
+        border-color: var(--green);
+      }
+
+      .magnet h3 {
+        margin-bottom: 10px;
+        font-size: 24px;
+      }
+
+      .magnet p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .chain {
+        margin-top: 26px;
+        padding: 20px 22px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 15px;
+        line-height: 1.8;
+      }
+
+      .chain b {
+        color: var(--green);
+        font-weight: 600;
+      }
+
+      /* First month: weeks */
+      .weeks {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .weeks .card .k {
+        color: var(--amber);
+      }
+
+      /* Knowledge base */
+      .themes {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .theme-col h3 {
+        margin-bottom: 14px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 13px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .theme-col ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 8px;
+      }
+
+      .theme-col li {
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+        font-size: 14.5px;
+      }
+
+      .extras {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 22px;
+      }
+
+      /* Load 2/4/6 */
+      .load-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .load-card {
+        padding: 20px;
+      }
+
+      .load-card .hrs {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+
+      .load-card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      /* Authors */
+      .authors {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .author {
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        gap: 18px;
+        align-items: center;
+        padding: 18px;
+      }
+
+      .author img {
+        width: 92px;
+        height: 92px;
+        object-fit: cover;
+        background: var(--surface-2);
+      }
+
+      .author h3 {
+        margin-bottom: 6px;
+        font-size: 22px;
+      }
+
+      .author .role {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .author p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      /* Reviews: horizontal-masonry carousel — reviews pre-packed into balanced-
+         height columns (capacity = the tallest single review), then the columns
+         auto-scroll sideways in a seamless CSS marquee (columns duplicated once
+         for the infinite loop). Width-independent, so it balances on desktop
+         (~half the container) and mobile (~full width). */
+      .rec-carousel {
+        position: relative;
+        overflow: hidden;
+        margin-top: 34px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 16px;
+        container-type: inline-size;
+      }
+
+      .rec-track {
+        display: flex;
+        gap: 14px;
+        width: max-content;
+        align-items: flex-start;
+        animation: recScroll 120s linear infinite;
+      }
+
+      .rec-carousel:hover .rec-track {
+        animation-play-state: paused;
+      }
+
+      .rec-col {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 48cqw;
+      }
+
+      .rec-card {
+        line-height: 0;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background: var(--bg-2);
+      }
+
+      .rec-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      @keyframes recScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .rec-track {
+          animation: none;
+        }
+        .rec-carousel {
+          overflow-x: auto;
+        }
+      }
+
+      /* Price */
+      .stack {
+        margin-top: 30px;
+      }
+
+      .stack .list li span:last-child em {
+        color: var(--dim);
+        font-style: normal;
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+
+      .price-box {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 22px;
+        align-items: center;
+        margin-top: 34px;
+        padding: 26px;
+        border-color: var(--green);
+      }
+
+      .price {
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 42px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .price small {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* FAQ */
+      .faq {
+        display: grid;
+        gap: 12px;
+        margin-top: 34px;
+      }
+
+      .faq-item summary {
+        padding: 15px 16px;
+        cursor: pointer;
+        color: var(--text);
+        font-weight: 600;
+        list-style: none;
+      }
+
+      .faq-item summary::before {
+        content: "+";
+        margin-right: 12px;
+        color: var(--green);
+        font-family: var(--mono);
+      }
+
+      .faq-item[open] summary::before {
+        content: "–";
+      }
+
+      .faq-item p {
+        margin: 0;
+        padding: 0 16px 16px 40px;
+        color: var(--muted);
+      }
+
+      .choice {
+        margin-top: 24px;
+        max-width: none;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .choice strong {
+        color: var(--text);
+      }
+
+      @media (max-width: 900px) {
+        .tabs,
+        .path {
+          display: none;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        h1 {
+          font-size: 46px;
+        }
+
+        .lead,
+        .section-copy {
+          font-size: 18px;
+        }
+
+        .split,
+        .formula-grid,
+        .inside-grid,
+        .dialogs,
+        .weeks,
+        .themes,
+        .extras,
+        .load-grid,
+        .authors,
+        .objections,
+        .price-box,
+        .magnet {
+          grid-template-columns: 1fr;
+        }
+
+        .ticks {
+          grid-template-columns: 1fr;
+        }
+
+        .price {
+          font-size: 34px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .hero-inner,
+        .section-inner,
+        .footer {
+          width: min(var(--max), calc(100% - 22px));
+        }
+
+        h1 {
+          font-size: 39px;
+        }
+
+        h2 {
+          font-size: 31px;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        .author {
+          grid-template-columns: 1fr;
+        }
+
+        /* Mobile: each review column spans (almost) the whole container, so one
+           review reads full-width; a sliver of the next column hints the scroll. */
+        .rec-col {
+          width: 92cqw;
+        }
+      }
+    </style>
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "1022924580268547");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1022924580268547&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="page">
+      <div class="win">
+        <header class="win-bar">
+          <div class="dots" aria-hidden="true">
+            <span class="r"></span><span class="y"></span
+            ><span class="g"></span>
+          </div>
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            <svg
+              class="tt-icon tt-sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"
+              ></path>
+            </svg>
+            <svg
+              class="tt-icon tt-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+            </svg>
+          </button>
+          <nav class="lang-switch" aria-label="Language">
+            <a class="ls-opt" data-loc="uk" hreflang="uk" href="/middle/uk.html"
+              >UK</a
+            >
+            <a class="ls-opt" data-loc="en" hreflang="en" href="/middle/en.html"
+              >EN</a
+            >
+            <a
+              class="ls-opt on"
+              data-loc="ru"
+              hreflang="ru"
+              href="/middle/ru.html"
+              aria-current="true"
+              >RU</a
+            >
+          </nav>
+          <span class="title">nexttick / гильдия</span>
+          <span class="path">~/guild/nexttick.md</span>
+          <nav class="tabs" aria-label="Основная навигация">
+            <a class="tab on" href="#checklist" data-tab>Чек-лист</a>
+            <a class="tab" href="#how" data-tab>Как устроено</a>
+            <a class="tab" href="#base" data-tab>База</a>
+            <a class="tab" href="#price" data-tab>Цена</a>
+          </nav>
+          <a
+            class="btn"
+            data-cta-location="header"
+            href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:middle"
+            target="_blank"
+            rel="noopener"
+            >Присоединиться</a
+          >
+        </header>
+
+        <main id="top">
+          <!-- SCREEN 1: HERO -->
+          <header class="hero">
+            <div class="hero-inner">
+              <div class="eyebrow">
+                <span class="dot"></span> закрытая гильдия · JavaScript · middle
+                / middle+
+              </div>
+              <h1>
+                Не учись писать код лучше. Учись делать то, за&nbsp;что платят
+                Senior-инженерам.
+              </h1>
+              <p class="lead">
+                Гильдия Next Tick для JavaScript-разработчиков: архитектура,
+                работа с AI и инженерная коммуникация. 2 часа в неделю, задания
+                — на твоём рабочем проекте, первый результат в первую же неделю.
+              </p>
+              <div class="hero-actions">
+                <a
+                  class="btn"
+                  data-cta-location="hero"
+                  href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:middle"
+                  target="_blank"
+                  rel="noopener"
+                  >Войти в гильдию</a
+                >
+                <a class="btn secondary" href="#checklist"
+                  >Забрать чек-лист «100 пунктов AI» бесплатно</a
+                >
+              </div>
+              <div class="hero-facts">
+                <span>10 000+ инженеров прошли обучение у авторов</span>
+                <span>800+ уже внутри</span>
+                <span>40+ материалов в базе</span>
+                <span>$50/мес</span>
+              </div>
+            </div>
+          </header>
+
+          <!-- SCREEN 2: PAIN — recognition -->
+          <section>
+            <div class="section-inner split">
+              <div>
+                <div class="section-label">Знакомо?</div>
+                <h2>«Я застрял. И не понимаю почему»</h2>
+                <p class="section-copy">
+                  Если узнал себя хотя бы в трёх пунктах — это не самозванец в
+                  тебе говорит. Это отсутствие среды и обратной связи. В
+                  одиночку этот сдвиг почти не нащупывается.
+                </p>
+              </div>
+              <ul class="list" aria-label="Как это ощущается">
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Со знаниями вроде всё хорошо. Работу делаю, могу всё, что
+                    требуется.</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span>Меня ценят. А ощущения движения — нет.</span>
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Сеньоры рядом чем-то отличаются, но это «что-то» сложно
+                    назвать.</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Учусь сам — статьи, курсы, видео — и подозреваю, что учу не
+                    то.</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Варюсь в собственных мыслях: мой код никто не смотрит,
+                    сравнить не с чем.</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >И поверх всего — AI-хаос: непонятно, что из этого учить и
+                    что всерьёз.</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- SCREEN 3: RISK — amplification + quotes -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label">Почему сейчас</div>
+              <h2>Ты хорошо работаешь. И именно поэтому ты в зоне риска.</h2>
+              <p class="section-copy">
+                Джун с AI закрывает задачи снизу. Сеньор закрывает сверху — тем,
+                что говорит «мы решаем не ту задачу». Мидл оказывается в
+                промежутке: хорошо пишет код, надёжный, разбирается в кодовой
+                базе. Но всё это — execution. А execution дешевеет быстрее, чем
+                ты успеваешь получить следующий перформанс-ревью. И когда в
+                компании начинается stack ranking — «вас посчитают, хотите вы
+                того или нет».
+              </p>
+              <blockquote class="quote-band">
+                «Мидлы уязвимы не потому, что плохо работают. Они уязвимы,
+                потому что хорошо работают ровно в том слое, который
+                обесценивается. Это не приговор. Это диагноз.»<small
+                  >— Илья Климов</small
+                >
+              </blockquote>
+              <blockquote class="quote-band">
+                «Код, знания и доступ к инструментам стали дешевле. Дорожает
+                только ясность мнений и качество решений.»<small
+                  >— Тимур Шемсединов</small
+                >
+              </blockquote>
+              <div class="dialogs">
+                <div class="dialog bad">
+                  <span class="tag">До гильдии</span>
+                  <p>«Я застрял и не понимаю почему».</p>
+                </div>
+                <div class="dialog good">
+                  <span class="tag">С гильдией</span>
+                  <p>
+                    «Взял задачу → закрыл → могу защитить решение перед кем
+                    угодно».
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 4: LEAD MAGNET -->
+          <section id="checklist">
+            <div class="section-inner">
+              <div class="section-label">Забери бесплатно</div>
+              <h2>Чек-лист: 100 пунктов внедрения AI-агентов в разработку.</h2>
+              <p class="section-copy">
+                Практический чек-лист от инженеров гильдии — от первых промптов
+                до командных workflow. Внутри интерактивный подбор: какой
+                фреймворк агентной разработки подходит под твою ситуацию.
+                Обновляется вместе с индустрией.
+              </p>
+              <div class="magnet acc-green">
+                <div>
+                  <h3>Чек-лист выдаёт бот — забери за минуту</h3>
+                  <p>
+                    Он же покажет, как гильдия устроена изнутри. Никаких
+                    обязательств: не зайдёт — просто оставишь себе чек-лист.
+                  </p>
+                </div>
+                <a
+                  class="btn"
+                  data-cta-location="checklist"
+                  href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:middle"
+                  target="_blank"
+                  rel="noopener"
+                  >Забрать чек-лист</a
+                >
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 5: MECHANISM — the formula -->
+          <section id="how">
+            <div class="section-inner">
+              <div class="section-label">Механизм</div>
+              <h2>Рецепт, из которого нельзя выкинуть ни одного слова.</h2>
+              <p class="section-copy">
+                Чтобы при выборе «кого повысить, а кого сократить» выбирали
+                тебя, нужно одно — и это проверено на живых карьерах, а не в
+                теории:
+              </p>
+              <div class="formula">
+                регулярно давать много видимого результата
+              </div>
+              <div class="formula-grid">
+                <div class="card acc-green">
+                  <span class="k">Регулярно → архитектура</span>
+                  <p>
+                    С AI пик продуктивности — на старте, потом всё вязнет: агент
+                    мимикрирует под хаос проекта и множит его. Держать темп
+                    месяцами позволяет только архитектура.
+                  </p>
+                </div>
+                <div class="card acc-cyan">
+                  <span class="k">Много → AI-агенты</span>
+                  <p>
+                    Путь «много через овертаймы» ведёт в выгорание. Альтернатива
+                    — агенты. Но они дают «много» только тому, кто умеет
+                    <strong
+                      >поставить задачу так, чтобы агент решал, а не
+                      угадывал.</strong
+                    >
+                  </p>
+                </div>
+                <div class="card acc-magenta">
+                  <span class="k">Видимого → коммуникация</span>
+                  <p>
+                    Можно заложить гениальную платформу и попасть под сокращение
+                    — потому что менеджер не понял твою ценность.
+                    <strong
+                      >Видимость — навык, и он доступен интроверту.</strong
+                    >
+                  </p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k">Результата → решение задач</span>
+                  <p>
+                    Результат — не код. Результат — решённая задача бизнеса.
+                    Именно это оценивают, когда решают, кого оставить.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 6: WHAT'S INSIDE -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label">Что внутри</div>
+              <h2>Ты не записываешься на курс. Ты подписываешься на ритм.</h2>
+              <p class="section-copy">
+                Курсы не успевают за индустрией, а на 4-часовые лекции нет
+                времени — ни у тебя, ни у нас. Поэтому формат другой: фоновое
+                обучение, встроенное в рабочую неделю. Нет последовательности
+                «А→Б→В» — начать можно с любой недели.
+              </p>
+              <div class="inside-grid" style="margin-top: 34px">
+                <div class="card">
+                  <span class="k">01 · Три темы каждую неделю</span>
+                  <p>
+                    Тема — обучающий продукт об одном:
+                    <strong
+                      >сжатая концепция на 15 минут плюс задание на
+                      неделю</strong
+                    >
+                    в твоём рабочем проекте. По теме на направление:
+                    архитектура, AI-агенты, коммуникация.
+                  </p>
+                </div>
+                <div class="card">
+                  <span class="k">02 · Цеха</span>
+                  <p>
+                    Цех архитектуры (ведёт Тимур), цех приручения AI-агентов и
+                    цех эффективных коммуникаций (ведёт Илья).
+                    <strong
+                      >Задал вопрос по своему кейсу — получил разбор.</strong
+                    >
+                  </p>
+                </div>
+                <div class="card">
+                  <span class="k">03 · Дайджесты</span>
+                  <p>
+                    Summary дня и недели: 1200 сообщений цехов, сжатые в 10
+                    минут чтения.
+                    <strong
+                      >Читаешь только их — и всё равно в контексте.</strong
+                    >
+                  </p>
+                </div>
+                <div class="card">
+                  <span class="k">04 · Два живых созвона в месяц</span>
+                  <p>
+                    С Ильёй и с Тимуром. Твоя рабочая ситуация — анонимно, на
+                    живом звонке. <strong>Записи остаются в базе.</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="chain">
+                анатомия темы: сжатая концепция <b>→</b> главные выводы
+                <b>→</b> задание в твоём проекте <b>→</b> упражнения по уровням
+                <b>→</b> вопрос в цех, если застрял
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 7: FOUR WEEKS -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label">Первый месяц</div>
+              <h2>
+                Первый результат — на первой неделе. Вот что произойдёт за
+                четыре.
+              </h2>
+              <div class="weeks">
+                <div class="card acc-amber">
+                  <span class="k">Неделя 1 · Контекст решений</span>
+                  <p>
+                    Видео → задание: возьми одно архитектурное решение своего
+                    проекта, которое принимаешь как данность, и найди его
+                    constraint.
+                    <strong
+                      >Результат: первое решение, которое можешь объяснить и
+                      защитить.</strong
+                    >
+                  </p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k">Неделя 2 · Язык последствий</span>
+                  <p>
+                    Видео → задание: переформулируй один элемент техдолга в
+                    терминах времени и денег, а не «код плохой».
+                    <strong
+                      >Результат: аргумент, который менеджер слышит с первого
+                      раза.</strong
+                    >
+                  </p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k"
+                    >Неделя 3 · Промпт — интерфейс к мышлению</span
+                  >
+                  <p>
+                    Видео → задание: одна рабочая задача через декомпозицию, при
+                    которой агенту нечего угадывать.
+                    <strong
+                      >Результат: задача закрыта быстрее — и ты понимаешь
+                      почему.</strong
+                    >
+                  </p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k"
+                    >Неделя 4 · Вертикальные слайсы + status update</span
+                  >
+                  <p>
+                    Видео → задание: разбей задачу 3+ дней на работающие куски и
+                    напиши апдейт до того, как спросили.
+                    <strong
+                      >Результат: тимлид видит человека, который держит
+                      ситуацию.</strong
+                    >
+                  </p>
+                </div>
+              </div>
+              <p class="section-copy" style="margin-top: 22px">
+                Дальше — глубже: работа с неопределённостью, ADR, RFC,
+                cross-team влияние. Актуальную программу месяца пришлём в боте
+                сразу после подписки.
+              </p>
+            </div>
+          </section>
+
+          <!-- SCREEN 8: KNOWLEDGE BASE + TypeScript -->
+          <section id="base">
+            <div class="section-inner">
+              <div class="section-label">База знаний</div>
+              <h2>Это уже внутри. Открывается в первый день.</h2>
+              <p class="section-copy">
+                Подписка — не «поток с нуля». Ты заходишь в библиотеку из 40+
+                тем, созвонов и эфиров — и каждую неделю в ней появляются три
+                новые темы. Реальные заголовки из базы:
+              </p>
+              <div class="themes">
+                <div class="theme-col">
+                  <h3>Архитектура</h3>
+                  <ul>
+                    <li>Architecture Decision Records</li>
+                    <li>
+                      Почему приходится переписывать код с нуля? Вся правда о
+                      NFR
+                    </li>
+                    <li>
+                      Каждый раз, когда ты открываешь этот файл, компания теряет
+                      деньги
+                    </li>
+                    <li>RFC: не вместо, а вместе ADR</li>
+                    <li>Рефакторинг: как убедить руководство?</li>
+                    <li>Design docs: что, кому и когда писать</li>
+                    <li>
+                      Rewrite, Refactoring, Migrations — ошибки, которые стоят
+                      миллионов
+                    </li>
+                  </ul>
+                </div>
+                <div class="theme-col">
+                  <h3>AI-агенты</h3>
+                  <ul>
+                    <li>
+                      Почему AI пишет вам мусор? (и как это исправить за 5
+                      минут)
+                    </li>
+                    <li>3 режима работы с агентом</li>
+                    <li>
+                      Agentic loops: останавливаться, чтобы двигаться быстрее
+                    </li>
+                    <li>Ревьювим AI-код</li>
+                    <li>
+                      Мощнее — значит лучше? Выбираем модель и уровень
+                      размышлений
+                    </li>
+                    <li>
+                      Переписываем проект с нуля с использованием Claude Code
+                    </li>
+                    <li>Разбираемся с навайбкоженным</li>
+                  </ul>
+                </div>
+                <div class="theme-col">
+                  <h3>Коммуникации</h3>
+                  <ul>
+                    <li>У сеньора нет власти, но есть влияние</li>
+                    <li>Язык стейкхолдеров: перевод с технического</li>
+                    <li>Обратная связь, которую слышат</li>
+                    <li>Несогласие и commitment</li>
+                    <li>«Нет» как инструмент инженера</li>
+                    <li>Искусство status updates</li>
+                    <li>Escalation: когда и как поднимать проблему</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="extras">
+                <div class="card hl">
+                  <span class="k">Закрытый курс «Эффективный TypeScript»</span>
+                  <p>
+                    Полный курс внутри подписки:
+                    <strong
+                      >в открытом доступе его нет и отдельно он не
+                      продаётся.</strong
+                    >
+                    Видеомодули — зачем TypeScript, вывод и сужение типов,
+                    generics и overloads, структурная типизация. К каждому видео
+                    — главные выводы и доп. материалы, упражнения из
+                    type-challenges по трём уровням сложности, разбор вопросов в
+                    чате. Это не «тайпскрипт ради тайпскрипта» — фундамент:
+                    понимать, что требовать от AI-агентов и куда смотреть при
+                    ревью.
+                  </p>
+                </div>
+                <div class="card">
+                  <span class="k">Записи, конспекты, аудио</span>
+                  <p>
+                    Записи созвонов по архитектуре и коммуникациям, конспекты по
+                    месяцам, аудио-эфиры «что это значит для нас», когда в
+                    индустрии что-то происходит: «Пятничные мысли об AI-эпохе»,
+                    «Опять AI, опять сокращения: иной взгляд».
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 9: LOAD -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label">Нагрузка</div>
+              <h2>Подстраивается под твоё свободное время.</h2>
+              <div class="load-grid">
+                <div class="load-card acc-green">
+                  <span class="hrs">Есть 2 часа в неделю</span>
+                  <p>
+                    3 темы по 15 минут + задания на внедрение. Ядро гильдии —
+                    этого уже достаточно для сдвига.
+                  </p>
+                </div>
+                <div class="load-card acc-amber">
+                  <span class="hrs">Есть 4 часа</span>
+                  <p>
+                    + разборы твоих кейсов на живых созвонах и дайджесты
+                    обсуждений — 10 минут чтения вместо 1200 сообщений.
+                  </p>
+                </div>
+                <div class="load-card acc-cyan">
+                  <span class="hrs">Есть 6+ часов</span>
+                  <p>
+                    + цеха с Ильёй, Тимуром и экспертами на связи и
+                    аудио-стримы, когда в индустрии что-то происходит.
+                  </p>
+                </div>
+              </div>
+              <p class="section-copy" style="margin-top: 22px">
+                Всё входит в одну подписку. Сколько брать — решаешь по своей
+                загрузке. Выпал на две недели — вернулся в свежую тему, догонять
+                нечего.
+              </p>
+            </div>
+          </section>
+
+          <!-- SCREEN 10: RESULT -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label">Результат</div>
+              <h2>Что меняется, если держать ритм.</h2>
+              <div class="ticks">
+                <div>
+                  Берёшь задачу — закрываешь — знаешь почему. Уверенность вместо
+                  угадывания.
+                </div>
+                <div>
+                  AI-хаос перестаёт быть хаосом: понимаешь, что учить, что
+                  внедрять и что игнорировать.
+                </div>
+                <div>
+                  Защищаешь рефакторинг и техрешения перед менеджментом — на
+                  языке времени и денег.
+                </div>
+                <div>
+                  Тебя зовут на обсуждения архитектуры, а не только на
+                  исполнение.
+                </div>
+                <div>
+                  Даёшь эстимейт с честным разделением: где уверен, а где риск.
+                </div>
+                <div>
+                  Становишься тем, кого сложно заменить, — даже когда код пишет
+                  AI.
+                </div>
+              </div>
+              <p class="section-copy" style="margin-top: 24px">
+                Мы не обещаем «станешь сеньором за 30 дней». Карьерный рост —
+                побочный эффект другого порядка решений. Наша работа — сократить
+                путь: меньше хаоса, тупиков и лишней крови, чем было у нас.
+              </p>
+            </div>
+          </section>
+
+          <!-- SCREEN 11: REVIEWS — real screenshots from assets/reviews -->
+          <section id="reviews">
+            <div class="section-inner">
+              <div class="section-label">Кейсы и отзывы</div>
+              <h2>Что изменилось у тех, кто уже внутри.</h2>
+              <div class="rec-carousel" aria-label="Отзыв участника гильдии">
+                <div class="rec-track">
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-12.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-09.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-10.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-16.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-14.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-04.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-13.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-07.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-02.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-18.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-05.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-01.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-06.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-03.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-11.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-15.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-17.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-08.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-12.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-09.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-10.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-16.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-14.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-04.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-13.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-07.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-02.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-18.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-05.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-01.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-06.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-03.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-11.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-15.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-17.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-08.webp"
+                        alt="Отзыв участника гильдии"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="section-copy" style="margin-top: 24px">
+                Из опроса участников: «Что бы ты изменил в Гильдии? — Пока не
+                вижу таких вещей. Лишь одна просьба: продолжайте». И 9 из 10
+                продлевают подписку каждый месяц.
+              </p>
+              <p class="section-copy" style="margin-top: 14px">
+                Пока не готов к подписке?
+                <a href="#checklist" style="color: var(--green)"
+                  >Забери чек-лист «100 пунктов AI»</a
+                >
+                — вернёшься, когда решишь.
+              </p>
+            </div>
+          </section>
+
+          <!-- SCREEN 12: AUTHORS -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label">Кто ведёт</div>
+              <h2>Один смотрит сверху. Другой — изнутри.</h2>
+              <div class="authors">
+                <article class="author acc-amber">
+                  <img
+                    src="/assets/author-timur.png"
+                    alt="Тимур Шемсединов"
+                    loading="lazy"
+                  />
+                  <div>
+                    <h3>Тимур Шемсединов</h3>
+                    <span class="role">взгляд C-level · архитектура</span>
+                    <p>
+                      CTO в Metatech, главный архитектор open-source платформы
+                      Metarhia, преподаватель КПИ, автор 350+ открытых лекций.
+                      Если ты учил Node.js на русском — с большой вероятностью
+                      ты уже учился у него, просто не знал об этом.
+                    </p>
+                  </div>
+                </article>
+                <article class="author acc-cyan">
+                  <img
+                    src="/assets/author-ilya.png"
+                    alt="Илья Климов"
+                    loading="lazy"
+                  />
+                  <div>
+                    <h3>Илья Климов</h3>
+                    <span class="role">взгляд изнутри · коммуникация и AI</span>
+                    <p>
+                      Staff Frontend Engineer в GitLab, Google Developer Expert,
+                      основатель JavaScript.ninja, спикер HolyJS. Варится в той
+                      же реальности, что и ты: таски, ревью, менеджеры, битвы за
+                      решения — рефлексия из GitLab прямо сейчас.
+                    </p>
+                  </div>
+                </article>
+              </div>
+              <p class="section-copy" style="margin-top: 24px">
+                Архитектура без коммуникации не взлетает. Коммуникация без
+                глубины — воздух. За годы через обучение Ильи и Тимура прошли
+                больше 10 000 инженеров.
+              </p>
+            </div>
+          </section>
+
+          <!-- SCREEN 13: NOT FOR EVERYONE -->
+          <section class="not-for">
+            <div class="section-inner split">
+              <div>
+                <div class="section-label">Фильтр участников</div>
+                <h2>Сначала — кому сюда НЕ надо.</h2>
+                <p class="section-copy">
+                  Сделано для middle+ разработчиков, которые понимают: дело не в
+                  новом фреймворке. Которые видят, что execution дешевеет, и
+                  хотят выйти на уровень, где ценится суждение.
+                </p>
+              </div>
+              <ul class="list" aria-label="Кому гильдия не подойдёт">
+                <li>
+                  <span class="mark">×</span
+                  ><span
+                    >Ищешь курс с полностью готовыми ответами — не сюда. Здесь
+                    предметно обсуждают варианты под твой кейс.</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">×</span
+                  ><span
+                    >Хочешь просто добавить строчку в резюме — не сюда.</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">×</span
+                  ><span
+                    >Не готов пробовать новое в своём рабочем проекте — точно не
+                    сюда.</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- SCREEN 14: PRICE — value stack -->
+          <section id="price">
+            <div class="section-inner">
+              <div class="section-label">Что входит в $50</div>
+              <h2>По отдельности это стоило бы $2000+ в год.</h2>
+              <ul class="list stack">
+                <li>
+                  <span class="mark">01</span
+                  ><span
+                    >Система «3 темы в неделю» — архитектура, AI-агенты,
+                    коммуникации. По 15 минут, каждая заканчивается заданием в
+                    твой рабочий проект.
+                    <em>(сопоставимый курс: $500+/год)</em></span
+                  >
+                </li>
+                <li>
+                  <span class="mark">02</span
+                  ><span
+                    >Разборы твоих кейсов — твоя рабочая ситуация, анонимно, на
+                    живом созвоне с Ильёй или Тимуром.
+                    <em>(час консультации инженера: $200–400)</em></span
+                  >
+                </li>
+                <li>
+                  <span class="mark">03</span
+                  ><span
+                    >Дайджесты обсуждений — 1200 сообщений цехов, сжатые в 10
+                    минут чтения. <em>(экономия: ~3 часа в неделю)</em></span
+                  >
+                </li>
+                <li>
+                  <span class="mark">04</span
+                  ><span
+                    >Закрытое сообщество 800+ инженеров — обратная связь, на
+                    отсутствие которой жалуются чаще всего в наших интервью с
+                    инженерами.</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">05</span
+                  ><span
+                    >Закрытый курс «Эффективный TypeScript» — отдельно не
+                    продаётся, только внутри подписки.</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">06</span
+                  ><span
+                    >Вся база с первого дня: 40+ тем, записи созвонов,
+                    конспекты, аудио-стримы. Программа обновляется вместе с
+                    индустрией.</span
+                  >
+                </li>
+              </ul>
+              <div class="price-box">
+                <div>
+                  <div class="price">$50 <small>/ месяц</small></div>
+                  <p class="section-copy" style="margin-bottom: 0">
+                    Мы специально не продаём курс за $2000 с «возвратом 30
+                    дней». Подписка честнее: каждый месяц ты сам решаешь, стоит
+                    ли это денег. Лажаем — отписываешься в один клик, и мы видим
+                    это сразу.
+                  </p>
+                </div>
+                <a
+                  class="btn"
+                  data-cta-location="offer"
+                  href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:middle"
+                  target="_blank"
+                  rel="noopener"
+                  >Присоединиться</a
+                >
+              </div>
+              <p class="section-copy" style="margin-top: 16px">
+                Оплата и доступ через телеграм-бот · первые темы сразу после
+                подписки.
+              </p>
+            </div>
+          </section>
+
+          <!-- SCREEN 15: FAQ -->
+          <section>
+            <div class="section-inner">
+              <div class="section-label">FAQ</div>
+              <h2>Вопросы, которые могут возникнуть.</h2>
+              <div class="faq">
+                <details class="faq-item">
+                  <summary>У меня нет времени на ещё одно обучение</summary>
+                  <p>
+                    Поэтому формат — 15-минутные темы и задания внутри твоей
+                    текущей работы, а не поверх неё. Минимальный ритм — 2 часа в
+                    неделю, включая внедрение.
+                  </p>
+                </details>
+                <details class="faq-item">
+                  <summary>Это очередной курс про AI?</summary>
+                  <p>
+                    Нет. AI-инструменты учат все — это baseline, а не
+                    дифференциатор. Гильдия — про слой выше: суждение,
+                    архитектура, коммуникации. То, что AI не сделает вместо
+                    тебя.
+                  </p>
+                </details>
+                <details class="faq-item">
+                  <summary>Я джун / я сеньор — мне рано / поздно?</summary>
+                  <p>
+                    Ядро — middle+. Джуну даст систему роста без блужданий,
+                    сеньору — треки про влияние, ADR, RFC и cross-team работу.
+                    Контент размечен по уровням.
+                  </p>
+                </details>
+                <details class="faq-item">
+                  <summary>А если не зайдёт?</summary>
+                  <p>
+                    Отменишь в один клик в том же боте. Худший сценарий —
+                    потратил $50 и месяц смотрел материалы. Лучший — перестал
+                    быть заменимым.
+                  </p>
+                </details>
+                <details class="faq-item">
+                  <summary>На каком языке контент?</summary>
+                  <p>
+                    Видео и материалы — на русском. Сообщество — на русском и
+                    украинском.
+                  </p>
+                </details>
+              </div>
+            </div>
+          </section>
+
+          <!-- SCREEN 16: FINAL -->
+          <section id="join">
+            <div class="section-inner">
+              <div class="section-label">Вход</div>
+              <h2>Стань тем, кого сложно заменить.</h2>
+              <p class="section-copy">
+                Код обесценился — суждение подорожало. Через полгода ты либо
+                инженер, который держит AI-хаос под контролем и которого зовут
+                на решения, — либо всё то же плато, в котором варишься один.
+                Первый результат занимает неделю. Первый шаг — секунду.
+              </p>
+              <div class="hero-actions" style="margin-top: 26px">
+                <a
+                  class="btn"
+                  data-cta-location="final"
+                  href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:middle"
+                  target="_blank"
+                  rel="noopener"
+                  >Войти в гильдию</a
+                >
+                <a
+                  class="btn secondary"
+                  data-cta-location="final-checklist"
+                  href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:middle"
+                  target="_blank"
+                  rel="noopener"
+                  >Пока только чек-лист</a
+                >
+              </div>
+              <p class="choice">
+                $50/мес · отмена в любое время · 800+ инженеров уже внутри ·
+                <strong
+                  >если не сейчас — через полгода ты там же, где
+                  сегодня.</strong
+                >
+              </p>
+            </div>
+          </section>
+        </main>
+
+        <style>
+          .site-footer {
+            --sf-fg: #888d92;
+            --sf-strong: #d6d8da;
+            padding: 26px 0 30px;
+            font-size: 12px;
+          }
+          [data-theme="light"] .site-footer {
+            --sf-fg: #59636e;
+            --sf-strong: #1f2328;
+          }
+          .site-footer-inner {
+            width: min(960px, calc(100% - 40px));
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 20px;
+            color: var(--sf-fg);
+          }
+          .site-footer .sf-legal {
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+          }
+          .site-footer a {
+            color: var(--sf-fg);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.15s ease;
+          }
+          .site-footer a:hover {
+            color: var(--sf-strong);
+          }
+          @media (max-width: 560px) {
+            .site-footer .sf-legal {
+              margin-left: 0;
+            }
+          }
+        </style>
+        <footer class="site-footer">
+          <div class="site-footer-inner">
+            <span class="sf-tagline">nexttick — гильдия инженеров</span>
+            <span class="sf-legal">
+              <a href="/offer.html">Оферта</a>
+              <a href="/privacy.html">Конфиденциальность</a>
+            </span>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      // Light/dark theme toggle.
+      (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        btn.addEventListener("click", function () {
+          var cur =
+            document.documentElement.getAttribute("data-theme") === "light"
+              ? "light"
+              : "dark";
+          var next = cur === "light" ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem("theme", next);
+          } catch (e) {}
+          if (meta)
+            meta.setAttribute(
+              "content",
+              next === "light" ? "#ffffff" : "#0b0d0f",
+            );
+        });
+      })();
+
+      // Scroll-spy: highlight the active topbar tab.
+      (function () {
+        var tabs = Array.prototype.slice.call(
+          document.querySelectorAll(".win-bar .tab"),
+        );
+        if (!tabs.length || !("IntersectionObserver" in window)) return;
+        var secs = tabs
+          .map(function (t) {
+            return document.querySelector(t.getAttribute("href"));
+          })
+          .filter(Boolean);
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              tabs.forEach(function (t) {
+                t.classList.toggle(
+                  "on",
+                  t.getAttribute("href") === "#" + e.target.id,
+                );
+              });
+            });
+          },
+          { rootMargin: "-45% 0px -50% 0px" },
+        );
+        secs.forEach(function (s) {
+          io.observe(s);
+        });
+      })();
+
+      // Track join (bot) + free-channel clicks in Google (GTM dataLayer + GA4).
+      // Runs after nt-attribution.js has patched the bot href (capture phase),
+      // so link_url carries the full source_channel + UTM/attribution payload.
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest("a");
+        if (!a) return;
+        var href = a.href || "";
+        var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
+        var isChannel =
+          href.indexOf("t.me/") !== -1 || href.indexOf("telegram.me/") !== -1;
+        if (!isBot && !isChannel) return;
+        var evt = isBot ? "cta_click" : "channel_click";
+        var payload = {
+          event: evt,
+          cta_location:
+            a.dataset.ctaLocation || (isChannel ? "free-channel" : "unknown"),
+          cta_text: a.textContent.trim().replace(/\s+/g, " "),
+          link_url: a.href,
+        };
+        window.dataLayer.push(payload);
+        if (typeof window.gtag === "function") {
+          window.gtag("event", evt, {
+            cta_location: payload.cta_location,
+            cta_text: payload.cta_text,
+            link_url: payload.link_url,
+          });
+        }
+      });
+    </script>
+    <script src="/assets/nt-attribution.js?v=1"></script>
+    <script>
+      (function () {
+        var LOCS = ["uk", "en", "ru"];
+        var PAGE_LOC = "ru";
+        try {
+          localStorage.setItem("lang", PAGE_LOC);
+        } catch (e) {}
+        document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            var loc = a.getAttribute("data-loc");
+            if (LOCS.indexOf(loc) < 0) return;
+            try {
+              localStorage.setItem("lang", loc);
+            } catch (e) {}
+            location.href =
+              "/middle/" + loc + ".html" + location.search + location.hash;
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
