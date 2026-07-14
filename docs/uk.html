@@ -181,6 +181,11 @@
         margin: 0;
         padding: 0;
       }
+      html {
+        /* Sticky win-bar offset: in-page anchors must clear the sticky header,
+           else the target lands hidden behind it and the tap reads as "dead". */
+        scroll-padding-top: 60px;
+      }
       body {
         font-family: var(--mono);
         font-size: 13px;
@@ -303,6 +308,8 @@
         color: var(--green);
         background: var(--panel-2);
         border-color: var(--green);
+        /* Active section tab is a no-op — don't register a dead click on it. */
+        pointer-events: none;
       }
 
       /* theme toggle — compact ghost button in the title bar */
@@ -360,11 +367,16 @@
         opacity: 1;
         color: var(--green);
         border-color: var(--green);
+        /* Active locale is a no-op — don't register a dead click on it. */
+        pointer-events: none;
       }
       .theme-toggle .tt-icon {
         display: none;
         width: 13px;
         height: 13px;
+        /* Clicks must land on the <button>, not the inner SVG/path (which
+           otherwise register as dead clicks on svg.tt-icon targets). */
+        pointer-events: none;
       }
       .theme-toggle .tt-sun {
         display: block;
@@ -2309,6 +2321,17 @@
           border-left: 0;
           border-right: 0;
         }
+
+        /* The win-bar wraps on mobile, so anchor targets need a larger offset. */
+        html {
+          scroll-padding-top: 84px;
+        }
+
+        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        .lang-switch .ls-opt {
+          padding: 9px 11px;
+        }
+
         .win-bar {
           padding: 7px 10px;
           gap: 6px;
@@ -3987,6 +4010,10 @@
               "content",
               next === "light" ? "#ffffff" : "#0b0d0f",
             );
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "theme_toggle", theme: next });
+          if (typeof window.gtag === "function")
+            window.gtag("event", "theme_toggle", { theme: next });
         });
       })();
 
@@ -4005,6 +4032,12 @@
             try {
               localStorage.setItem("lang", loc);
             } catch (e) {}
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "lang_switch",
+              from: PAGE_LOC,
+              to: loc,
+            });
             location.href =
               "/" + loc + ".html" + location.search + location.hash;
           });

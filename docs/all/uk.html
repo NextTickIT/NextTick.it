@@ -169,6 +169,10 @@
 
       html {
         scroll-behavior: smooth;
+        /* Sticky win-bar offset: nav-tab anchors (e.g. the Price tab -> #join)
+           must clear the sticky header, else the target lands hidden behind it
+           and the tap reads as "dead". */
+        scroll-padding-top: 60px;
       }
 
       body {
@@ -317,6 +321,11 @@
         background: var(--surface-2);
       }
 
+      .tab.on {
+        /* Active section tab is a no-op — don't register a dead click on it. */
+        pointer-events: none;
+      }
+
       .win-bar .btn {
         min-height: 0;
         padding: 6px 13px;
@@ -353,6 +362,11 @@
         border-color: var(--green);
       }
 
+      .lang-switch .ls-opt.on {
+        /* Active locale is a no-op — don't register a dead click on it. */
+        pointer-events: none;
+      }
+
       .theme-toggle {
         display: inline-flex;
         align-items: center;
@@ -379,6 +393,9 @@
         display: none;
         width: 14px;
         height: 14px;
+        /* Clicks must land on the <button>, not the inner SVG/path (which
+           otherwise register as dead clicks on svg.tt-icon targets). */
+        pointer-events: none;
       }
 
       .theme-toggle .tt-sun {
@@ -959,7 +976,6 @@
         max-width: none;
         color: var(--muted);
         font-size: 16px;
-        scroll-margin-top: 56px;
       }
 
       .soft-cta h3 {
@@ -1043,6 +1059,17 @@
         .win {
           border-left: 0;
           border-right: 0;
+        }
+
+        /* The win-bar wraps to multiple rows on mobile, so anchor targets need a
+           larger offset to clear it. */
+        html {
+          scroll-padding-top: 84px;
+        }
+
+        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        .lang-switch .ls-opt {
+          padding: 9px 11px;
         }
 
         .nav-inner {
@@ -1231,7 +1258,12 @@
                   rel="noopener"
                   >Приєднатися до Гільдії</a
                 >
-                <a class="btn secondary" href="#checklist">Забрати чекліст</a>
+                <a
+                  class="btn secondary"
+                  data-cta-location="hero-checklist"
+                  href="#checklist"
+                  >Забрати чекліст</a
+                >
               </div>
               <div class="hero-facts">
                 <span>шлях: middle → senior</span>
@@ -2192,6 +2224,10 @@
               "content",
               next === "light" ? "#ffffff" : "#0b0d0f",
             );
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "theme_toggle", theme: next });
+          if (typeof window.gtag === "function")
+            window.gtag("event", "theme_toggle", { theme: next });
         });
       })();
 
@@ -2236,8 +2272,11 @@
         var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
         var isChannel =
           href.indexOf("t.me/") !== -1 || href.indexOf("telegram.me/") !== -1;
-        if (!isBot && !isChannel) return;
-        var evt = isBot ? "cta_click" : "channel_click";
+        // Also track in-page CTA anchors (e.g. the hero checklist button) so we
+        // can spot dead/regressed CTAs in GA4 rather than via heatmaps.
+        var isCta = !!(a.dataset && a.dataset.ctaLocation);
+        if (!isBot && !isChannel && !isCta) return;
+        var evt = isChannel && !isBot ? "channel_click" : "cta_click";
         var payload = {
           event: evt,
           cta_location:
@@ -2271,6 +2310,12 @@
             try {
               localStorage.setItem("lang", loc);
             } catch (e) {}
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "lang_switch",
+              from: PAGE_LOC,
+              to: loc,
+            });
             location.href =
               "/all/" + loc + ".html" + location.search + location.hash;
           });

@@ -1935,6 +1935,12 @@
             try {
               localStorage.setItem("lang", loc);
             } catch (e) {}
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "lang_switch",
+              from: PAGE_LOC,
+              to: loc,
+            });
             location.href =
               "/ai-speedup-checklist/" +
               loc +

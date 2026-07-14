@@ -99,6 +99,9 @@
       }
       html {
         scroll-behavior: smooth;
+        /* Sticky win-bar offset: in-page anchors must clear the sticky header,
+           else the target lands hidden behind it and the tap reads as "dead". */
+        scroll-padding-top: 60px;
       }
       body {
         margin: 0;
@@ -238,6 +241,8 @@
         border-color: var(--green);
         color: var(--green);
         background: var(--panel-2);
+        /* Active section tab is a no-op — don't register a dead click on it. */
+        pointer-events: none;
       }
 
       /* theme toggle + lang switch */
@@ -265,6 +270,9 @@
         display: none;
         width: 13px;
         height: 13px;
+        /* Clicks must land on the <button>, not the inner SVG/path (which
+           otherwise register as dead clicks on svg.tt-icon targets). */
+        pointer-events: none;
       }
       .theme-toggle .tt-sun {
         display: block;
@@ -301,6 +309,8 @@
         opacity: 1;
         color: var(--green);
         border-color: var(--green);
+        /* Active locale is a no-op — don't register a dead click on it. */
+        pointer-events: none;
       }
 
       /* join button — pulsing CTA */
@@ -863,6 +873,17 @@
           border-left: 0;
           border-right: 0;
         }
+
+        /* The win-bar wraps on mobile, so anchor targets need a larger offset. */
+        html {
+          scroll-padding-top: 84px;
+        }
+
+        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        .lang-switch .ls-opt {
+          padding: 9px 11px;
+        }
+
         .win-bar {
           flex-wrap: wrap;
         }
@@ -1387,6 +1408,10 @@
           } catch (e) {}
           if (meta)
             meta.setAttribute("content", next === "light" ? "#ffffff" : "#0b0d0f");
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "theme_toggle", theme: next });
+          if (typeof window.gtag === "function")
+            window.gtag("event", "theme_toggle", { theme: next });
         });
       })();
 
@@ -1414,7 +1439,9 @@
       // Push CTA clicks to dataLayer for GTM
       window.dataLayer = window.dataLayer || [];
       document.addEventListener("click", function (e) {
-        var a = e.target.closest("a.join-btn");
+        // Track dedicated CTAs plus any in-page anchor carrying a cta-location,
+        // so dead/regressed CTAs surface in GA4 rather than via heatmaps.
+        var a = e.target.closest("a.join-btn, a[data-cta-location]");
         if (!a) return;
         dataLayer.push({
           event: "cta_click",

@@ -695,6 +695,10 @@
               "content",
               next === "light" ? "#ffffff" : "#0b0d0f",
             );
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "theme_toggle", theme: next });
+          if (typeof window.gtag === "function")
+            window.gtag("event", "theme_toggle", { theme: next });
         });
       })();
 

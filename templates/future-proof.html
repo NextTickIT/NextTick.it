@@ -45,6 +45,9 @@
 
       html {
         scroll-behavior: smooth;
+        /* Sticky nav offset: in-page anchors must clear the sticky header, else
+           the target lands hidden under the nav and the tap reads as "dead". */
+        scroll-padding-top: 76px;
       }
 
       body {
@@ -693,6 +696,8 @@
       .lang-switch .ls-opt.on {
         color: var(--green);
         border-color: rgba(112, 228, 138, 0.4);
+        /* Active locale is a no-op — don't register a dead click on it. */
+        pointer-events: none;
       }
 
       /* Authors: photos */
@@ -890,6 +895,17 @@
           padding: 24px 0 40px;
         }
 
+        /* The nav wraps to two rows on mobile (~2× taller), so anchor targets
+           need a larger offset to clear it. */
+        html {
+          scroll-padding-top: 104px;
+        }
+
+        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        .lang-switch .ls-opt {
+          padding: 10px 12px;
+        }
+
         h1 {
           font-size: 38px;
         }
@@ -987,8 +1003,8 @@
               rel="noopener"
               ><%~ ctaJoin %></a
             >
-            <a class="btn secondary" href="#checklist"><%~ ctaChecklist %></a>
-            <a class="btn secondary" href="#how"><%~ ctaHow %></a>
+            <a class="btn secondary" data-cta-location="hero-checklist" href="#checklist"><%~ ctaChecklist %></a>
+            <a class="btn secondary" data-cta-location="hero-how" href="#how"><%~ ctaHow %></a>
           </div>
           <div class="hero-facts">
             <span><%~ heroFact1 %></span>
@@ -1411,8 +1427,11 @@
         var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
         var isChannel =
           href.indexOf("t.me/") !== -1 || href.indexOf("telegram.me/") !== -1;
-        if (!isBot && !isChannel) return;
-        var evt = isBot ? "cta_click" : "channel_click";
+        // Also track in-page CTA anchors (e.g. the hero checklist/how buttons)
+        // so we can spot dead/regressed CTAs in GA4 rather than via heatmaps.
+        var isCta = !!(a.dataset && a.dataset.ctaLocation);
+        if (!isBot && !isChannel && !isCta) return;
+        var evt = isChannel && !isBot ? "channel_click" : "cta_click";
         var payload = {
           event: evt,
           cta_location:
