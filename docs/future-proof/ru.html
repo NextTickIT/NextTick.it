@@ -967,6 +967,12 @@
           width: min(var(--max), calc(100% - 22px));
         }
 
+        /* Tighten the hero's top gap on mobile — the desktop top padding leaves
+           a large empty band under the sticky nav on small screens. */
+        .hero-inner {
+          padding: 24px 0 40px;
+        }
+
         h1 {
           font-size: 38px;
         }

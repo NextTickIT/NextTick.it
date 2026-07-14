@@ -854,8 +854,14 @@
         }
       }
       @media (max-width: 720px) {
+        /* Mobile: drop the window frame's side padding + side borders so content
+           runs full-bleed. The desktop "window" chrome only steals width here. */
         .page {
-          padding: 10px;
+          padding: 0;
+        }
+        .win {
+          border-left: 0;
+          border-right: 0;
         }
         .win-bar {
           flex-wrap: wrap;

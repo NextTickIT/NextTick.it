@@ -1006,10 +1006,27 @@
       }
 
       @media (max-width: 560px) {
+        /* Mobile: drop the window frame's side padding + side borders so content
+           runs full-bleed. The desktop "window" chrome only steals width here. */
+        .page {
+          padding: 0;
+        }
+
+        .win {
+          border-left: 0;
+          border-right: 0;
+        }
+
         .hero-inner,
         .section-inner,
         .footer {
           width: min(var(--max), calc(100% - 22px));
+        }
+
+        /* Tighten the hero's top gap on mobile — the desktop top padding leaves
+           a large empty band under the sticky nav on small screens. */
+        .hero-inner {
+          padding: 24px 0 40px;
         }
 
         h1 {

@@ -2302,8 +2302,12 @@
 
       /* ─── Mobile ───────────────────────────────────────────────── */
       @media (max-width: 900px) {
+        /* Mobile: drop the window frame's side gap + side borders so content
+           runs full-bleed. The desktop "window" chrome only steals width here. */
         .win {
-          margin: 12px;
+          margin: 0;
+          border-left: 0;
+          border-right: 0;
         }
         .win-bar {
           padding: 7px 10px;
