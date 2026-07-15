@@ -465,6 +465,14 @@
         color: var(--green);
         font-family: var(--mono);
         font-size: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.15s ease;
+      }
+
+      /* Hero badge is a link to "who it's for" — signal it's interactive. */
+      a.eyebrow:hover {
+        opacity: 0.8;
       }
 
       .dot {
@@ -1101,12 +1109,18 @@
         /* The win-bar wraps to multiple rows on mobile, so anchor targets need a
            larger offset to clear it. */
         html {
-          scroll-padding-top: 84px;
+          scroll-padding-top: 108px;
         }
 
-        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        /* ≥44×44px touch target (WCAG 2.5.5) so mobile taps don't miss. */
         .lang-switch .ls-opt {
-          padding: 9px 11px;
+          min-width: 44px;
+          min-height: 44px;
+          padding: 0 10px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
         }
 
         .hero-inner,
@@ -1133,8 +1147,10 @@
           width: 100%;
         }
 
+        /* Keep the author card two-column on mobile (photo left, text to its
+           right) — top-aligned so a tall bio reads cleanly beside the photo. */
         .author {
-          grid-template-columns: 1fr;
+          align-items: start;
         }
 
         /* Mobile: each review column spans (almost) the whole container, so one
@@ -1272,10 +1288,10 @@
           <!-- SCREEN 1: HERO -->
           <header class="hero">
             <div class="hero-inner">
-              <div class="eyebrow">
-                <span class="dot"></span> закрита гільдія · JavaScript · middle
-                / middle+
-              </div>
+              <a class="eyebrow" href="#who"
+                ><span class="dot"></span> закрита гільдія · JavaScript · middle
+                / middle+</a
+              >
               <h1>
                 Не вчись писати код краще. Вчись робити те, за&nbsp;що платять
                 Senior-інженерам.
@@ -1797,6 +1813,8 @@
                       <img
                         src="/assets/reviews/rev-12.webp"
                         alt="Відгук учасника гільдії"
+                        width="489"
+                        height="511"
                         loading="lazy"
                       />
                     </div>
@@ -1806,6 +1824,8 @@
                       <img
                         src="/assets/reviews/rev-09.webp"
                         alt="Відгук учасника гільдії"
+                        width="926"
+                        height="727"
                         loading="lazy"
                       />
                     </div>
@@ -1813,6 +1833,8 @@
                       <img
                         src="/assets/reviews/rev-10.webp"
                         alt="Відгук учасника гільдії"
+                        width="951"
+                        height="175"
                         loading="lazy"
                       />
                     </div>
@@ -1822,6 +1844,8 @@
                       <img
                         src="/assets/reviews/rev-16.webp"
                         alt="Відгук учасника гільдії"
+                        width="944"
+                        height="735"
                         loading="lazy"
                       />
                     </div>
@@ -1829,6 +1853,8 @@
                       <img
                         src="/assets/reviews/rev-14.webp"
                         alt="Відгук учасника гільдії"
+                        width="814"
+                        height="151"
                         loading="lazy"
                       />
                     </div>
@@ -1838,6 +1864,8 @@
                       <img
                         src="/assets/reviews/rev-04.webp"
                         alt="Відгук учасника гільдії"
+                        width="928"
+                        height="646"
                         loading="lazy"
                       />
                     </div>
@@ -1845,6 +1873,8 @@
                       <img
                         src="/assets/reviews/rev-13.webp"
                         alt="Відгук учасника гільдії"
+                        width="934"
+                        height="228"
                         loading="lazy"
                       />
                     </div>
@@ -1854,6 +1884,8 @@
                       <img
                         src="/assets/reviews/rev-07.webp"
                         alt="Відгук учасника гільдії"
+                        width="821"
+                        height="443"
                         loading="lazy"
                       />
                     </div>
@@ -1861,6 +1893,8 @@
                       <img
                         src="/assets/reviews/rev-02.webp"
                         alt="Відгук учасника гільдії"
+                        width="1020"
+                        height="292"
                         loading="lazy"
                       />
                     </div>
@@ -1870,6 +1904,8 @@
                       <img
                         src="/assets/reviews/rev-18.webp"
                         alt="Відгук учасника гільдії"
+                        width="928"
+                        height="453"
                         loading="lazy"
                       />
                     </div>
@@ -1877,6 +1913,8 @@
                       <img
                         src="/assets/reviews/rev-05.webp"
                         alt="Відгук учасника гільдії"
+                        width="926"
+                        height="290"
                         loading="lazy"
                       />
                     </div>
@@ -1884,6 +1922,8 @@
                       <img
                         src="/assets/reviews/rev-01.webp"
                         alt="Відгук учасника гільдії"
+                        width="1072"
+                        height="152"
                         loading="lazy"
                       />
                     </div>
@@ -1893,6 +1933,8 @@
                       <img
                         src="/assets/reviews/rev-06.webp"
                         alt="Відгук учасника гільдії"
+                        width="614"
+                        height="292"
                         loading="lazy"
                       />
                     </div>
@@ -1900,6 +1942,8 @@
                       <img
                         src="/assets/reviews/rev-03.webp"
                         alt="Відгук учасника гільдії"
+                        width="902"
+                        height="314"
                         loading="lazy"
                       />
                     </div>
@@ -1907,6 +1951,8 @@
                       <img
                         src="/assets/reviews/rev-11.webp"
                         alt="Відгук учасника гільдії"
+                        width="818"
+                        height="90"
                         loading="lazy"
                       />
                     </div>
@@ -1916,6 +1962,8 @@
                       <img
                         src="/assets/reviews/rev-15.webp"
                         alt="Відгук учасника гільдії"
+                        width="926"
+                        height="395"
                         loading="lazy"
                       />
                     </div>
@@ -1923,6 +1971,8 @@
                       <img
                         src="/assets/reviews/rev-17.webp"
                         alt="Відгук учасника гільдії"
+                        width="924"
+                        height="348"
                         loading="lazy"
                       />
                     </div>
@@ -1930,6 +1980,8 @@
                       <img
                         src="/assets/reviews/rev-08.webp"
                         alt="Відгук учасника гільдії"
+                        width="846"
+                        height="118"
                         loading="lazy"
                       />
                     </div>
@@ -1939,6 +1991,8 @@
                       <img
                         src="/assets/reviews/rev-12.webp"
                         alt="Відгук учасника гільдії"
+                        width="489"
+                        height="511"
                         loading="lazy"
                       />
                     </div>
@@ -1948,6 +2002,8 @@
                       <img
                         src="/assets/reviews/rev-09.webp"
                         alt="Відгук учасника гільдії"
+                        width="926"
+                        height="727"
                         loading="lazy"
                       />
                     </div>
@@ -1955,6 +2011,8 @@
                       <img
                         src="/assets/reviews/rev-10.webp"
                         alt="Відгук учасника гільдії"
+                        width="951"
+                        height="175"
                         loading="lazy"
                       />
                     </div>
@@ -1964,6 +2022,8 @@
                       <img
                         src="/assets/reviews/rev-16.webp"
                         alt="Відгук учасника гільдії"
+                        width="944"
+                        height="735"
                         loading="lazy"
                       />
                     </div>
@@ -1971,6 +2031,8 @@
                       <img
                         src="/assets/reviews/rev-14.webp"
                         alt="Відгук учасника гільдії"
+                        width="814"
+                        height="151"
                         loading="lazy"
                       />
                     </div>
@@ -1980,6 +2042,8 @@
                       <img
                         src="/assets/reviews/rev-04.webp"
                         alt="Відгук учасника гільдії"
+                        width="928"
+                        height="646"
                         loading="lazy"
                       />
                     </div>
@@ -1987,6 +2051,8 @@
                       <img
                         src="/assets/reviews/rev-13.webp"
                         alt="Відгук учасника гільдії"
+                        width="934"
+                        height="228"
                         loading="lazy"
                       />
                     </div>
@@ -1996,6 +2062,8 @@
                       <img
                         src="/assets/reviews/rev-07.webp"
                         alt="Відгук учасника гільдії"
+                        width="821"
+                        height="443"
                         loading="lazy"
                       />
                     </div>
@@ -2003,6 +2071,8 @@
                       <img
                         src="/assets/reviews/rev-02.webp"
                         alt="Відгук учасника гільдії"
+                        width="1020"
+                        height="292"
                         loading="lazy"
                       />
                     </div>
@@ -2012,6 +2082,8 @@
                       <img
                         src="/assets/reviews/rev-18.webp"
                         alt="Відгук учасника гільдії"
+                        width="928"
+                        height="453"
                         loading="lazy"
                       />
                     </div>
@@ -2019,6 +2091,8 @@
                       <img
                         src="/assets/reviews/rev-05.webp"
                         alt="Відгук учасника гільдії"
+                        width="926"
+                        height="290"
                         loading="lazy"
                       />
                     </div>
@@ -2026,6 +2100,8 @@
                       <img
                         src="/assets/reviews/rev-01.webp"
                         alt="Відгук учасника гільдії"
+                        width="1072"
+                        height="152"
                         loading="lazy"
                       />
                     </div>
@@ -2035,6 +2111,8 @@
                       <img
                         src="/assets/reviews/rev-06.webp"
                         alt="Відгук учасника гільдії"
+                        width="614"
+                        height="292"
                         loading="lazy"
                       />
                     </div>
@@ -2042,6 +2120,8 @@
                       <img
                         src="/assets/reviews/rev-03.webp"
                         alt="Відгук учасника гільдії"
+                        width="902"
+                        height="314"
                         loading="lazy"
                       />
                     </div>
@@ -2049,6 +2129,8 @@
                       <img
                         src="/assets/reviews/rev-11.webp"
                         alt="Відгук учасника гільдії"
+                        width="818"
+                        height="90"
                         loading="lazy"
                       />
                     </div>
@@ -2058,6 +2140,8 @@
                       <img
                         src="/assets/reviews/rev-15.webp"
                         alt="Відгук учасника гільдії"
+                        width="926"
+                        height="395"
                         loading="lazy"
                       />
                     </div>
@@ -2065,6 +2149,8 @@
                       <img
                         src="/assets/reviews/rev-17.webp"
                         alt="Відгук учасника гільдії"
+                        width="924"
+                        height="348"
                         loading="lazy"
                       />
                     </div>
@@ -2072,6 +2158,8 @@
                       <img
                         src="/assets/reviews/rev-08.webp"
                         alt="Відгук учасника гільдії"
+                        width="846"
+                        height="118"
                         loading="lazy"
                       />
                     </div>
@@ -2145,7 +2233,7 @@
           </section>
 
           <!-- SCREEN 13: NOT FOR EVERYONE -->
-          <section class="not-for">
+          <section class="not-for" id="who">
             <div class="section-inner split">
               <div>
                 <div class="section-label">Фільтр учасників</div>
@@ -2475,7 +2563,16 @@
         // can spot dead/regressed CTAs in GA4 rather than via heatmaps.
         var isCta = !!(a.dataset && a.dataset.ctaLocation);
         if (!isBot && !isChannel && !isCta) return;
-        var evt = isChannel && !isBot ? "channel_click" : "cta_click";
+        // GA4: split CTA events — checklist vs join (bot) vs generic.
+        var ctaLoc = a.dataset.ctaLocation || "";
+        var evt =
+          isChannel && !isBot
+            ? "channel_click"
+            : /checklist/i.test(ctaLoc)
+              ? "checklist_cta_click"
+              : isBot
+                ? "join_cta_click"
+                : "cta_click";
         var payload = {
           event: evt,
           cta_location:

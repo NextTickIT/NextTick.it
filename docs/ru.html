@@ -2324,12 +2324,18 @@
 
         /* The win-bar wraps on mobile, so anchor targets need a larger offset. */
         html {
-          scroll-padding-top: 84px;
+          scroll-padding-top: 104px;
         }
 
-        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        /* ≥44×44px touch target (WCAG 2.5.5) so mobile taps don't miss. */
         .lang-switch .ls-opt {
-          padding: 9px 11px;
+          min-width: 44px;
+          min-height: 44px;
+          padding: 0 10px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
         }
 
         .win-bar {
@@ -3323,9 +3329,13 @@
         window.dataLayer = window.dataLayer || [];
         document.querySelectorAll("#join-btn, #join-btn-2").forEach((btn) => {
           btn.addEventListener("click", () => {
+            const loc = locations[btn.id] || btn.id;
             dataLayer.push({
-              event: "cta_click",
-              cta_location: locations[btn.id] || btn.id,
+              // GA4: split CTA events — checklist vs join (both index CTAs are join).
+              event: /checklist/i.test(loc)
+                ? "checklist_cta_click"
+                : "join_cta_click",
+              cta_location: loc,
               cta_text: btn.textContent.trim().replace(/\s+/g, " "),
               time_level: document.body.dataset.timeLevel || "",
               link_url: btn.href,

@@ -401,6 +401,14 @@
         color: var(--green);
         font-family: var(--mono);
         font-size: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.15s ease;
+      }
+
+      /* Hero badge is a link to "who it's for" — signal it's interactive. */
+      a.eyebrow:hover {
+        opacity: 0.8;
       }
 
       .dot {
@@ -993,12 +1001,18 @@
         /* The win-bar wraps to multiple rows on mobile, so anchor targets need a
            larger offset to clear it. */
         html {
-          scroll-padding-top: 84px;
+          scroll-padding-top: 108px;
         }
 
-        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        /* ≥44×44px touch target (WCAG 2.5.5) so mobile taps don't miss. */
         .lang-switch .ls-opt {
-          padding: 9px 11px;
+          min-width: 44px;
+          min-height: 44px;
+          padding: 0 10px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
         }
 
         .nav-inner {
@@ -1029,8 +1043,10 @@
           width: 100%;
         }
 
+        /* Keep the author card two-column on mobile (photo left, text to its
+           right) — top-aligned so a tall bio reads cleanly beside the photo. */
         .author {
-          grid-template-columns: 1fr;
+          align-items: start;
         }
 
         .rec-col {
@@ -1045,7 +1061,25 @@
       const joinHref =
         "https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&source_channel=" +
         analytics.attribution;
-      const shots = ["res-1", "res-2", "res-3", "res-4", "res-5", "res-6"];
+      // Intrinsic (w,h) of each review/result asset — stamped onto every <img>
+      // below so the browser reserves the exact box height before the lazy
+      // image loads: zero layout shift, so in-page #anchor jumps land on target.
+      const imgDim = {
+        "rev-01":[1072,152],"rev-02":[1020,292],"rev-03":[902,314],"rev-04":[928,646],
+        "rev-05":[926,290],"rev-06":[614,292],"rev-07":[821,443],"rev-08":[846,118],
+        "rev-09":[926,727],"rev-10":[951,175],"rev-11":[818,90],"rev-12":[489,511],
+        "rev-13":[934,228],"rev-14":[814,151],"rev-15":[926,395],"rev-16":[944,735],
+        "rev-17":[924,348],"rev-18":[928,453],
+        "res-1":[934,539],"res-2":[964,357],"res-3":[938,1056],"res-4":[930,240],
+        "res-5":[890,622],"res-6":[928,770],
+      };
+      // Result screenshots pre-packed into balanced-height columns (same LPT
+      // bin-pack as the reviews) so they render as a compact horizontal masonry.
+      const resCols = [
+        ["res-3", "res-4"],
+        ["res-6", "res-2"],
+        ["res-5", "res-1"],
+      ];
       const reviewCols = [
         ["rev-12"],
         ["rev-09", "rev-10"],
@@ -1110,7 +1144,7 @@
       <!-- SCREEN 1: HERO -->
       <header class="hero">
         <div class="hero-inner">
-          <div class="eyebrow"><span class="dot"></span> <%~ heroEyebrow %></div>
+          <a class="eyebrow" href="#who"><span class="dot"></span> <%~ heroEyebrow %></a>
           <h1><%~ heroH1 %></h1>
           <p class="lead"><%~ heroLead %></p>
           <div class="hero-actions">
@@ -1280,12 +1314,19 @@
           <div class="section-label"><%~ resultLabel %></div>
           <h2><%~ resultH2 %></h2>
           <p class="section-copy"><%~ resultCopy %></p>
-          <div class="shots">
-            <% shots.forEach(function (s) { %>
-            <figure class="shot">
-              <img src="/assets/results/<%= s %>.webp" alt="<%~ screensAlt %>" loading="lazy" />
-            </figure>
-            <% }) %>
+          <div class="rec-carousel" aria-label="<%~ screensAlt %>">
+            <div class="rec-track">
+              <% for (var spass = 0; spass < 2; spass++) { %> <%
+              resCols.forEach(function (col) { %>
+              <div class="rec-col"<% if (spass === 1) { %> aria-hidden="true"<% } %>>
+                <% col.forEach(function (s) { %>
+                <div class="rec-card">
+                  <img src="/assets/results/<%= s %>.webp" alt="<%~ screensAlt %>" width="<%= imgDim[s][0] %>" height="<%= imgDim[s][1] %>" loading="lazy" />
+                </div>
+                <% }) %>
+              </div>
+              <% }) %> <% } %>
+            </div>
           </div>
           <div class="signals">
             <div class="signal key"><%~ resultKey %></div>
@@ -1306,7 +1347,7 @@
               <div class="rec-col"<% if (pass === 1) { %> aria-hidden="true"<% } %>>
                 <% col.forEach(function (r) { %>
                 <div class="rec-card">
-                  <img src="/assets/reviews/<%= r %>.webp" alt="<%~ reviewsAlt %>" loading="lazy" />
+                  <img src="/assets/reviews/<%= r %>.webp" alt="<%~ reviewsAlt %>" width="<%= imgDim[r][0] %>" height="<%= imgDim[r][1] %>" loading="lazy" />
                 </div>
                 <% }) %>
               </div>
@@ -1317,7 +1358,7 @@
       </section>
 
       <!-- SCREEN 12: WHO IT'S FOR -->
-      <section>
+      <section id="who">
         <div class="section-inner">
           <div class="section-label"><%~ forLabel %></div>
           <h2><%~ forH2 %></h2>
@@ -1484,7 +1525,16 @@
         // can spot dead/regressed CTAs in GA4 rather than via heatmaps.
         var isCta = !!(a.dataset && a.dataset.ctaLocation);
         if (!isBot && !isChannel && !isCta) return;
-        var evt = isChannel && !isBot ? "channel_click" : "cta_click";
+        // GA4: split CTA events — checklist vs join (bot) vs generic.
+        var ctaLoc = a.dataset.ctaLocation || "";
+        var evt =
+          isChannel && !isBot
+            ? "channel_click"
+            : /checklist/i.test(ctaLoc)
+              ? "checklist_cta_click"
+              : isBot
+                ? "join_cta_click"
+                : "cta_click";
         var payload = {
           event: evt,
           cta_location:

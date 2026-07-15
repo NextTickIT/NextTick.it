@@ -472,6 +472,14 @@
         color: var(--green);
         font-family: var(--mono);
         font-size: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.15s ease;
+      }
+
+      /* Hero badge is a link to "who it's for" — signal it's interactive. */
+      a.eyebrow:hover {
+        opacity: 0.8;
       }
 
       .dot {
@@ -1064,12 +1072,18 @@
         /* The win-bar wraps to multiple rows on mobile, so anchor targets need a
            larger offset to clear it. */
         html {
-          scroll-padding-top: 84px;
+          scroll-padding-top: 108px;
         }
 
-        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        /* ≥44×44px touch target (WCAG 2.5.5) so mobile taps don't miss. */
         .lang-switch .ls-opt {
-          padding: 9px 11px;
+          min-width: 44px;
+          min-height: 44px;
+          padding: 0 10px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
         }
 
         .nav-inner {
@@ -1100,8 +1114,10 @@
           width: 100%;
         }
 
+        /* Keep the author card two-column on mobile (photo left, text to its
+           right) — top-aligned so a tall bio reads cleanly beside the photo. */
         .author {
-          grid-template-columns: 1fr;
+          align-items: start;
         }
 
         .rec-col {
@@ -1237,10 +1253,10 @@
           <!-- SCREEN 1: HERO -->
           <header class="hero">
             <div class="hero-inner">
-              <div class="eyebrow">
-                <span class="dot"></span> закрытая инженерная среда · middle+ /
-                senior
-              </div>
+              <a class="eyebrow" href="#who"
+                ><span class="dot"></span> закрытая инженерная среда · middle+ /
+                senior</a
+              >
               <h1>Сам себе сеньор и сам себе джун.</h1>
               <p class="lead">
                 Ты растёшь без сильных инженеров рядом: некому показать решение,
@@ -1611,49 +1627,129 @@
                 Мы спросили инженеров, что для них сигнал «сработало». Вот их
                 ответы — это и есть планка, на которую работает Гильдия.
               </p>
-              <div class="shots">
-                <figure class="shot">
-                  <img
-                    src="/assets/results/res-1.webp"
-                    alt="Скриншот из чата Гильдии"
-                    loading="lazy"
-                  />
-                </figure>
-                <figure class="shot">
-                  <img
-                    src="/assets/results/res-2.webp"
-                    alt="Скриншот из чата Гильдии"
-                    loading="lazy"
-                  />
-                </figure>
-                <figure class="shot">
-                  <img
-                    src="/assets/results/res-3.webp"
-                    alt="Скриншот из чата Гильдии"
-                    loading="lazy"
-                  />
-                </figure>
-                <figure class="shot">
-                  <img
-                    src="/assets/results/res-4.webp"
-                    alt="Скриншот из чата Гильдии"
-                    loading="lazy"
-                  />
-                </figure>
-                <figure class="shot">
-                  <img
-                    src="/assets/results/res-5.webp"
-                    alt="Скриншот из чата Гильдии"
-                    loading="lazy"
-                  />
-                </figure>
-                <figure class="shot">
-                  <img
-                    src="/assets/results/res-6.webp"
-                    alt="Скриншот из чата Гильдии"
-                    loading="lazy"
-                  />
-                </figure>
+              <div class="rec-carousel" aria-label="Скриншот из чата Гильдии">
+                <div class="rec-track">
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-3.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="938"
+                        height="1056"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-4.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="930"
+                        height="240"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-6.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="928"
+                        height="770"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-2.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="964"
+                        height="357"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-5.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="890"
+                        height="622"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-1.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="934"
+                        height="539"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-3.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="938"
+                        height="1056"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-4.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="930"
+                        height="240"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-6.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="928"
+                        height="770"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-2.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="964"
+                        height="357"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-5.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="890"
+                        height="622"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/results/res-1.webp"
+                        alt="Скриншот из чата Гильдии"
+                        width="934"
+                        height="539"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="signals">
                 <div class="signal key">
@@ -1680,6 +1776,8 @@
                       <img
                         src="/assets/reviews/rev-12.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="489"
+                        height="511"
                         loading="lazy"
                       />
                     </div>
@@ -1689,6 +1787,8 @@
                       <img
                         src="/assets/reviews/rev-09.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="926"
+                        height="727"
                         loading="lazy"
                       />
                     </div>
@@ -1696,6 +1796,8 @@
                       <img
                         src="/assets/reviews/rev-10.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="951"
+                        height="175"
                         loading="lazy"
                       />
                     </div>
@@ -1705,6 +1807,8 @@
                       <img
                         src="/assets/reviews/rev-16.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="944"
+                        height="735"
                         loading="lazy"
                       />
                     </div>
@@ -1712,6 +1816,8 @@
                       <img
                         src="/assets/reviews/rev-14.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="814"
+                        height="151"
                         loading="lazy"
                       />
                     </div>
@@ -1721,6 +1827,8 @@
                       <img
                         src="/assets/reviews/rev-04.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="928"
+                        height="646"
                         loading="lazy"
                       />
                     </div>
@@ -1728,6 +1836,8 @@
                       <img
                         src="/assets/reviews/rev-13.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="934"
+                        height="228"
                         loading="lazy"
                       />
                     </div>
@@ -1737,6 +1847,8 @@
                       <img
                         src="/assets/reviews/rev-07.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="821"
+                        height="443"
                         loading="lazy"
                       />
                     </div>
@@ -1744,6 +1856,8 @@
                       <img
                         src="/assets/reviews/rev-02.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="1020"
+                        height="292"
                         loading="lazy"
                       />
                     </div>
@@ -1753,6 +1867,8 @@
                       <img
                         src="/assets/reviews/rev-18.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="928"
+                        height="453"
                         loading="lazy"
                       />
                     </div>
@@ -1760,6 +1876,8 @@
                       <img
                         src="/assets/reviews/rev-05.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="926"
+                        height="290"
                         loading="lazy"
                       />
                     </div>
@@ -1767,6 +1885,8 @@
                       <img
                         src="/assets/reviews/rev-01.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="1072"
+                        height="152"
                         loading="lazy"
                       />
                     </div>
@@ -1776,6 +1896,8 @@
                       <img
                         src="/assets/reviews/rev-06.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="614"
+                        height="292"
                         loading="lazy"
                       />
                     </div>
@@ -1783,6 +1905,8 @@
                       <img
                         src="/assets/reviews/rev-03.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="902"
+                        height="314"
                         loading="lazy"
                       />
                     </div>
@@ -1790,6 +1914,8 @@
                       <img
                         src="/assets/reviews/rev-11.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="818"
+                        height="90"
                         loading="lazy"
                       />
                     </div>
@@ -1799,6 +1925,8 @@
                       <img
                         src="/assets/reviews/rev-15.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="926"
+                        height="395"
                         loading="lazy"
                       />
                     </div>
@@ -1806,6 +1934,8 @@
                       <img
                         src="/assets/reviews/rev-17.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="924"
+                        height="348"
                         loading="lazy"
                       />
                     </div>
@@ -1813,6 +1943,8 @@
                       <img
                         src="/assets/reviews/rev-08.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="846"
+                        height="118"
                         loading="lazy"
                       />
                     </div>
@@ -1822,6 +1954,8 @@
                       <img
                         src="/assets/reviews/rev-12.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="489"
+                        height="511"
                         loading="lazy"
                       />
                     </div>
@@ -1831,6 +1965,8 @@
                       <img
                         src="/assets/reviews/rev-09.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="926"
+                        height="727"
                         loading="lazy"
                       />
                     </div>
@@ -1838,6 +1974,8 @@
                       <img
                         src="/assets/reviews/rev-10.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="951"
+                        height="175"
                         loading="lazy"
                       />
                     </div>
@@ -1847,6 +1985,8 @@
                       <img
                         src="/assets/reviews/rev-16.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="944"
+                        height="735"
                         loading="lazy"
                       />
                     </div>
@@ -1854,6 +1994,8 @@
                       <img
                         src="/assets/reviews/rev-14.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="814"
+                        height="151"
                         loading="lazy"
                       />
                     </div>
@@ -1863,6 +2005,8 @@
                       <img
                         src="/assets/reviews/rev-04.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="928"
+                        height="646"
                         loading="lazy"
                       />
                     </div>
@@ -1870,6 +2014,8 @@
                       <img
                         src="/assets/reviews/rev-13.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="934"
+                        height="228"
                         loading="lazy"
                       />
                     </div>
@@ -1879,6 +2025,8 @@
                       <img
                         src="/assets/reviews/rev-07.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="821"
+                        height="443"
                         loading="lazy"
                       />
                     </div>
@@ -1886,6 +2034,8 @@
                       <img
                         src="/assets/reviews/rev-02.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="1020"
+                        height="292"
                         loading="lazy"
                       />
                     </div>
@@ -1895,6 +2045,8 @@
                       <img
                         src="/assets/reviews/rev-18.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="928"
+                        height="453"
                         loading="lazy"
                       />
                     </div>
@@ -1902,6 +2054,8 @@
                       <img
                         src="/assets/reviews/rev-05.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="926"
+                        height="290"
                         loading="lazy"
                       />
                     </div>
@@ -1909,6 +2063,8 @@
                       <img
                         src="/assets/reviews/rev-01.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="1072"
+                        height="152"
                         loading="lazy"
                       />
                     </div>
@@ -1918,6 +2074,8 @@
                       <img
                         src="/assets/reviews/rev-06.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="614"
+                        height="292"
                         loading="lazy"
                       />
                     </div>
@@ -1925,6 +2083,8 @@
                       <img
                         src="/assets/reviews/rev-03.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="902"
+                        height="314"
                         loading="lazy"
                       />
                     </div>
@@ -1932,6 +2092,8 @@
                       <img
                         src="/assets/reviews/rev-11.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="818"
+                        height="90"
                         loading="lazy"
                       />
                     </div>
@@ -1941,6 +2103,8 @@
                       <img
                         src="/assets/reviews/rev-15.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="926"
+                        height="395"
                         loading="lazy"
                       />
                     </div>
@@ -1948,6 +2112,8 @@
                       <img
                         src="/assets/reviews/rev-17.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="924"
+                        height="348"
                         loading="lazy"
                       />
                     </div>
@@ -1955,6 +2121,8 @@
                       <img
                         src="/assets/reviews/rev-08.webp"
                         alt="Рекомендация участника Гильдии"
+                        width="846"
+                        height="118"
                         loading="lazy"
                       />
                     </div>
@@ -1965,7 +2133,7 @@
           </section>
 
           <!-- SCREEN 12: WHO IT'S FOR -->
-          <section>
+          <section id="who">
             <div class="section-inner">
               <div class="section-label">Для кого</div>
               <h2>Гильдия подходит, если ты узнаёшь себя.</h2>
@@ -2145,7 +2313,7 @@
                     href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:all"
                     target="_blank"
                     rel="noopener"
-                    >AI workflow по чеклисту</a
+                    >Чеклист по AI workflow</a
                   >
                 </p>
               </div>
@@ -2278,7 +2446,16 @@
         // can spot dead/regressed CTAs in GA4 rather than via heatmaps.
         var isCta = !!(a.dataset && a.dataset.ctaLocation);
         if (!isBot && !isChannel && !isCta) return;
-        var evt = isChannel && !isBot ? "channel_click" : "cta_click";
+        // GA4: split CTA events — checklist vs join (bot) vs generic.
+        var ctaLoc = a.dataset.ctaLocation || "";
+        var evt =
+          isChannel && !isBot
+            ? "channel_click"
+            : /checklist/i.test(ctaLoc)
+              ? "checklist_cta_click"
+              : isBot
+                ? "join_cta_click"
+                : "cta_click";
         var payload = {
           event: evt,
           cta_location:

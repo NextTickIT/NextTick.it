@@ -7,9 +7,11 @@
         window.dataLayer = window.dataLayer || [];
         document.querySelectorAll("#join-btn, #join-btn-2").forEach((btn) => {
           btn.addEventListener("click", () => {
+            const loc = locations[btn.id] || btn.id;
             dataLayer.push({
-              event: "cta_click",
-              cta_location: locations[btn.id] || btn.id,
+              // GA4: split CTA events — checklist vs join (both index CTAs are join).
+              event: /checklist/i.test(loc) ? "checklist_cta_click" : "join_cta_click",
+              cta_location: loc,
               cta_text: btn.textContent.trim().replace(/\s+/g, " "),
               time_level: document.body.dataset.timeLevel || "",
               link_url: btn.href,

@@ -389,7 +389,7 @@
     "checklistLi3": "как проверять результат;",
     "checklistLi4": "как не пропустить архитектурные ошибки;",
     "checklistLi5": "в каких случаях AI-generated код требует особенно внимательного review.",
-    "checklistCta": "Чеклист по AI Workflow"
+    "checklistCta": "Чеклист по AI workflow"
   },
   "uk": {
     "title": "Next Tick — гільдія інженерів для middle-розробників",
@@ -585,6 +585,6 @@
     "checklistLi3": "як перевіряти результат;",
     "checklistLi4": "як не пропустити архітектурні помилки;",
     "checklistLi5": "у яких випадках AI-generated код потребує особливо уважного review.",
-    "checklistCta": "Чекліст по AI Workflow"
+    "checklistCta": "Чекліст по AI workflow"
   }
 }

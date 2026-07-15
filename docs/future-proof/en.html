@@ -256,6 +256,14 @@
         color: var(--green);
         font-family: var(--mono);
         font-size: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.15s ease;
+      }
+
+      /* Hero badge is a link to "who it's for" — signal it's interactive. */
+      a.eyebrow:hover {
+        opacity: 0.8;
       }
 
       .dot {
@@ -981,12 +989,18 @@
         /* The nav wraps to two rows on mobile (~2× taller), so anchor targets
            need a larger offset to clear it. */
         html {
-          scroll-padding-top: 104px;
+          scroll-padding-top: 124px;
         }
 
-        /* Roomier tap targets for the language tabs (min ~44px touch height). */
+        /* ≥44×44px touch target (WCAG 2.5.5) so mobile taps don't miss. */
         .lang-switch .ls-opt {
-          padding: 10px 12px;
+          min-width: 44px;
+          min-height: 44px;
+          padding: 0 10px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
         }
 
         h1 {
@@ -1121,9 +1135,10 @@
       <!-- SCREEN 1: HERO -->
       <header class="hero">
         <div class="hero-inner">
-          <div class="eyebrow">
-            <span class="dot"></span> closed engineers' guild · middle / middle+
-          </div>
+          <a class="eyebrow" href="#who"
+            ><span class="dot"></span> closed engineers' guild · middle /
+            middle+</a
+          >
           <h1>Knowledge piles up. Your level&nbsp;— doesn't.</h1>
           <p class="lead">
             You close your tasks, people value you, you can do whatever's
@@ -1724,6 +1739,8 @@
                   <img
                     src="/assets/reviews/rev-12.webp"
                     alt="Review from a guild member"
+                    width="489"
+                    height="511"
                     loading="lazy"
                   />
                 </div>
@@ -1733,6 +1750,8 @@
                   <img
                     src="/assets/reviews/rev-09.webp"
                     alt="Review from a guild member"
+                    width="926"
+                    height="727"
                     loading="lazy"
                   />
                 </div>
@@ -1740,6 +1759,8 @@
                   <img
                     src="/assets/reviews/rev-10.webp"
                     alt="Review from a guild member"
+                    width="951"
+                    height="175"
                     loading="lazy"
                   />
                 </div>
@@ -1749,6 +1770,8 @@
                   <img
                     src="/assets/reviews/rev-16.webp"
                     alt="Review from a guild member"
+                    width="944"
+                    height="735"
                     loading="lazy"
                   />
                 </div>
@@ -1756,6 +1779,8 @@
                   <img
                     src="/assets/reviews/rev-14.webp"
                     alt="Review from a guild member"
+                    width="814"
+                    height="151"
                     loading="lazy"
                   />
                 </div>
@@ -1765,6 +1790,8 @@
                   <img
                     src="/assets/reviews/rev-04.webp"
                     alt="Review from a guild member"
+                    width="928"
+                    height="646"
                     loading="lazy"
                   />
                 </div>
@@ -1772,6 +1799,8 @@
                   <img
                     src="/assets/reviews/rev-13.webp"
                     alt="Review from a guild member"
+                    width="934"
+                    height="228"
                     loading="lazy"
                   />
                 </div>
@@ -1781,6 +1810,8 @@
                   <img
                     src="/assets/reviews/rev-07.webp"
                     alt="Review from a guild member"
+                    width="821"
+                    height="443"
                     loading="lazy"
                   />
                 </div>
@@ -1788,6 +1819,8 @@
                   <img
                     src="/assets/reviews/rev-02.webp"
                     alt="Review from a guild member"
+                    width="1020"
+                    height="292"
                     loading="lazy"
                   />
                 </div>
@@ -1797,6 +1830,8 @@
                   <img
                     src="/assets/reviews/rev-18.webp"
                     alt="Review from a guild member"
+                    width="928"
+                    height="453"
                     loading="lazy"
                   />
                 </div>
@@ -1804,6 +1839,8 @@
                   <img
                     src="/assets/reviews/rev-05.webp"
                     alt="Review from a guild member"
+                    width="926"
+                    height="290"
                     loading="lazy"
                   />
                 </div>
@@ -1811,6 +1848,8 @@
                   <img
                     src="/assets/reviews/rev-01.webp"
                     alt="Review from a guild member"
+                    width="1072"
+                    height="152"
                     loading="lazy"
                   />
                 </div>
@@ -1820,6 +1859,8 @@
                   <img
                     src="/assets/reviews/rev-06.webp"
                     alt="Review from a guild member"
+                    width="614"
+                    height="292"
                     loading="lazy"
                   />
                 </div>
@@ -1827,6 +1868,8 @@
                   <img
                     src="/assets/reviews/rev-03.webp"
                     alt="Review from a guild member"
+                    width="902"
+                    height="314"
                     loading="lazy"
                   />
                 </div>
@@ -1834,6 +1877,8 @@
                   <img
                     src="/assets/reviews/rev-11.webp"
                     alt="Review from a guild member"
+                    width="818"
+                    height="90"
                     loading="lazy"
                   />
                 </div>
@@ -1843,6 +1888,8 @@
                   <img
                     src="/assets/reviews/rev-15.webp"
                     alt="Review from a guild member"
+                    width="926"
+                    height="395"
                     loading="lazy"
                   />
                 </div>
@@ -1850,6 +1897,8 @@
                   <img
                     src="/assets/reviews/rev-17.webp"
                     alt="Review from a guild member"
+                    width="924"
+                    height="348"
                     loading="lazy"
                   />
                 </div>
@@ -1857,6 +1906,8 @@
                   <img
                     src="/assets/reviews/rev-08.webp"
                     alt="Review from a guild member"
+                    width="846"
+                    height="118"
                     loading="lazy"
                   />
                 </div>
@@ -1866,6 +1917,8 @@
                   <img
                     src="/assets/reviews/rev-12.webp"
                     alt="Review from a guild member"
+                    width="489"
+                    height="511"
                     loading="lazy"
                   />
                 </div>
@@ -1875,6 +1928,8 @@
                   <img
                     src="/assets/reviews/rev-09.webp"
                     alt="Review from a guild member"
+                    width="926"
+                    height="727"
                     loading="lazy"
                   />
                 </div>
@@ -1882,6 +1937,8 @@
                   <img
                     src="/assets/reviews/rev-10.webp"
                     alt="Review from a guild member"
+                    width="951"
+                    height="175"
                     loading="lazy"
                   />
                 </div>
@@ -1891,6 +1948,8 @@
                   <img
                     src="/assets/reviews/rev-16.webp"
                     alt="Review from a guild member"
+                    width="944"
+                    height="735"
                     loading="lazy"
                   />
                 </div>
@@ -1898,6 +1957,8 @@
                   <img
                     src="/assets/reviews/rev-14.webp"
                     alt="Review from a guild member"
+                    width="814"
+                    height="151"
                     loading="lazy"
                   />
                 </div>
@@ -1907,6 +1968,8 @@
                   <img
                     src="/assets/reviews/rev-04.webp"
                     alt="Review from a guild member"
+                    width="928"
+                    height="646"
                     loading="lazy"
                   />
                 </div>
@@ -1914,6 +1977,8 @@
                   <img
                     src="/assets/reviews/rev-13.webp"
                     alt="Review from a guild member"
+                    width="934"
+                    height="228"
                     loading="lazy"
                   />
                 </div>
@@ -1923,6 +1988,8 @@
                   <img
                     src="/assets/reviews/rev-07.webp"
                     alt="Review from a guild member"
+                    width="821"
+                    height="443"
                     loading="lazy"
                   />
                 </div>
@@ -1930,6 +1997,8 @@
                   <img
                     src="/assets/reviews/rev-02.webp"
                     alt="Review from a guild member"
+                    width="1020"
+                    height="292"
                     loading="lazy"
                   />
                 </div>
@@ -1939,6 +2008,8 @@
                   <img
                     src="/assets/reviews/rev-18.webp"
                     alt="Review from a guild member"
+                    width="928"
+                    height="453"
                     loading="lazy"
                   />
                 </div>
@@ -1946,6 +2017,8 @@
                   <img
                     src="/assets/reviews/rev-05.webp"
                     alt="Review from a guild member"
+                    width="926"
+                    height="290"
                     loading="lazy"
                   />
                 </div>
@@ -1953,6 +2026,8 @@
                   <img
                     src="/assets/reviews/rev-01.webp"
                     alt="Review from a guild member"
+                    width="1072"
+                    height="152"
                     loading="lazy"
                   />
                 </div>
@@ -1962,6 +2037,8 @@
                   <img
                     src="/assets/reviews/rev-06.webp"
                     alt="Review from a guild member"
+                    width="614"
+                    height="292"
                     loading="lazy"
                   />
                 </div>
@@ -1969,6 +2046,8 @@
                   <img
                     src="/assets/reviews/rev-03.webp"
                     alt="Review from a guild member"
+                    width="902"
+                    height="314"
                     loading="lazy"
                   />
                 </div>
@@ -1976,6 +2055,8 @@
                   <img
                     src="/assets/reviews/rev-11.webp"
                     alt="Review from a guild member"
+                    width="818"
+                    height="90"
                     loading="lazy"
                   />
                 </div>
@@ -1985,6 +2066,8 @@
                   <img
                     src="/assets/reviews/rev-15.webp"
                     alt="Review from a guild member"
+                    width="926"
+                    height="395"
                     loading="lazy"
                   />
                 </div>
@@ -1992,6 +2075,8 @@
                   <img
                     src="/assets/reviews/rev-17.webp"
                     alt="Review from a guild member"
+                    width="924"
+                    height="348"
                     loading="lazy"
                   />
                 </div>
@@ -1999,6 +2084,8 @@
                   <img
                     src="/assets/reviews/rev-08.webp"
                     alt="Review from a guild member"
+                    width="846"
+                    height="118"
                     loading="lazy"
                   />
                 </div>
@@ -2009,7 +2096,7 @@
       </section>
 
       <!-- SCREEN 12: NOT FOR EVERYONE -->
-      <section class="not-for">
+      <section class="not-for" id="who">
         <div class="section-inner split">
           <div>
             <div class="section-label">Honestly</div>
@@ -2227,7 +2314,16 @@
         // so we can spot dead/regressed CTAs in GA4 rather than via heatmaps.
         var isCta = !!(a.dataset && a.dataset.ctaLocation);
         if (!isBot && !isChannel && !isCta) return;
-        var evt = isChannel && !isBot ? "channel_click" : "cta_click";
+        // GA4: split CTA events — checklist vs join (bot) vs generic.
+        var ctaLoc = a.dataset.ctaLocation || "";
+        var evt =
+          isChannel && !isBot
+            ? "channel_click"
+            : /checklist/i.test(ctaLoc)
+              ? "checklist_cta_click"
+              : isBot
+                ? "join_cta_click"
+                : "cta_click";
         var payload = {
           event: evt,
           cta_location:
