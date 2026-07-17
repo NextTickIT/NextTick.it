@@ -27,7 +27,7 @@ import { dirname, join } from "node:path";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PAGES = join(ROOT, "docs");
-const PIXEL_ID = "1022924580268547";
+const PIXEL_ID = "1543537094181571";
 const START = "69ce57941f15eb55e90ea47a";
 const ASSET = "/assets/nt-attribution.js";
 
@@ -126,7 +126,7 @@ for (const p of contentFiles) {
   const html = read(p);
   const okScript =
     html.includes("fbevents.js") &&
-    /fbq\(\s*['"]init['"]\s*,\s*['"]1022924580268547['"]/.test(html) &&
+    /fbq\(\s*['"]init['"]\s*,\s*['"]1543537094181571['"]/.test(html) &&
     /fbq\(\s*['"]track['"]\s*,\s*['"]PageView['"]/.test(html);
   const okNoscript = decode(html).includes(
     `facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`,

@@ -52,9 +52,22 @@ export function canonLang(text) {
   return text.replace(new RegExp(`\\blang="${LOC}"`, "g"), 'lang="§L§"');
 }
 
+// Meta Pixel id: the site owner rotates it site-wide, so the frozen 268cb44
+// baseline's id legitimately differs from the live pages'. Collapse the id in
+// BOTH pixel emitters — fbq("init", "…") and facebook.com/tr?id=… — to one token
+// so the rotation is an EXPECTED delta on the two byte-frozen checklist pages.
+// No id literal lives here: the byte-diff stays pixel-agnostic while the exact
+// current id is still asserted, init + noscript, on every content page by
+// tools/verify-attribution.mjs (the dedicated pixel oracle).
+export function canonPixel(text) {
+  return text
+    .replace(/fbq\(\s*(['"])init\1\s*,\s*(['"])\d+\2/g, 'fbq("init", "§P§"')
+    .replace(/facebook\.com\/tr\?id=\d+/g, "facebook.com/tr?id=§P§");
+}
+
 // Full same-locale canonicalization: neutralize every allowlisted delta.
 export function canonAllowlist(text) {
-  return canonLang(canonUrl(text));
+  return canonPixel(canonLang(canonUrl(text)));
 }
 
 // ─── Block-level normalizers (applied to whole documents before line diff) ───
