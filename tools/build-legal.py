@@ -56,15 +56,46 @@ STR = {
         desc="Политика конфиденциальности NextTick — обработка и защита персональных данных.",
         path="— политика конфиденциальности",
     ),
+    ("consent", "uk"): dict(
+        title="Згода на обробку персональних даних — NextTick",
+        desc="Згода на обробку персональних даних користувачів Telegram-бота NextTick.",
+        path="— згода на обробку даних",
+    ),
+    ("consent", "ru"): dict(
+        title="Согласие на обработку персональных данных — NextTick",
+        desc="Согласие на обработку персональных данных пользователей Telegram-бота NextTick.",
+        path="— согласие на обработку данных",
+    ),
+    ("offer", "en"): dict(
+        title="Public Offer — NextTick",
+        desc="Public offer for the provision of paid subscription services by NextTick.",
+        path="— public offer",
+    ),
+    ("privacy", "en"): dict(
+        title="Privacy Policy — NextTick",
+        desc="NextTick Privacy Policy — the processing and protection of personal data.",
+        path="— privacy policy",
+    ),
+    ("consent", "en"): dict(
+        title="Personal Data Processing Consent — NextTick",
+        desc="Consent to the processing of personal data of NextTick Telegram bot users.",
+        path="— data processing consent",
+    ),
 }
 
 FOOTER_LABELS = {
     "uk": dict(home="← nexttick", offer="Публічна оферта",
                privacy="Політика конфіденційності",
+               consent="Згода на обробку даних",
                copy="© 2026 NextTick · ФОП Карпов Антон"),
     "ru": dict(home="← nexttick", offer="Публичная оферта",
                privacy="Политика конфиденциальности",
+               consent="Согласие на обработку данных",
                copy="© 2026 NextTick · ФЛП Карпов Антон"),
+    "en": dict(home="← nexttick", offer="Public Offer",
+               privacy="Privacy Policy",
+               consent="Data Processing Consent",
+               copy="© 2026 NextTick · Sole Proprietor Anton Karpov"),
 }
 
 APPROVAL_RE = re.compile(r"ЗАТВЕРДЖ|УТВЕРЖД|Дата затвердж|Дата утвержд|^\d{1,2}\s+\S+\s+20\d\d")
@@ -250,8 +281,13 @@ def _list_html(items):
     return "".join(parts)
 
 
-def md_to_html(md):
-    """Parse our Markdown dialect -> (h1, body_html)."""
+def md_to_html(md, lead_preamble=True):
+    """Parse our Markdown dialect -> (h1, body_html).
+
+    lead_preamble: style paragraphs before the first "## " section as .lead
+    (dimmed). True for the section-structured docx docs (offer/privacy), where
+    the preamble sits above section 1. False for section-less md-native docs
+    (consent), whose whole body would otherwise render dimmed."""
     lines = md.split("\n")
     n = len(lines)
     i = 0
@@ -314,8 +350,13 @@ def md_to_html(md):
             blocks.append(_list_html(items))
         else:
             buf = []
+            # strip (not just rstrip): a clause paragraph that follows a bullet
+            # list gets a 2-space indent from Prettier (it reads as a list-item
+            # continuation), which would otherwise hide the "N.M." number from
+            # CLAUSE_RE and drop the clause styling. Prose carries no meaningful
+            # leading whitespace, so stripping is safe.
             while i < n and lines[i].strip() != "" and not special(lines[i]):
-                buf.append(lines[i].rstrip())
+                buf.append(lines[i].strip())
                 i += 1
             mcl = CLAUSE_RE.match(buf[0])
             if mcl:
@@ -326,7 +367,7 @@ def md_to_html(md):
                     f'<p class="clause"><span class="cl-num">{esc(num)}</span> {body}</p>'
                 )
             else:
-                cls = ' class="lead"' if not seen_section else ""
+                cls = ' class="lead"' if (lead_preamble and not seen_section) else ""
                 blocks.append(f"<p{cls}>{'<br />'.join(esc(x) for x in buf)}</p>")
     return h1, "\n".join(blocks)
 
@@ -357,6 +398,7 @@ PAGE = """<!doctype html>
     <link rel="canonical" href="https://nexttick.it/%%SLUG%%/%%LOC%%.html" />
     <link rel="alternate" hreflang="uk" href="https://nexttick.it/%%SLUG%%/uk.html" />
     <link rel="alternate" hreflang="ru" href="https://nexttick.it/%%SLUG%%/ru.html" />
+    <link rel="alternate" hreflang="en" href="https://nexttick.it/%%SLUG%%/en.html" />
     <link rel="alternate" hreflang="x-default" href="https://nexttick.it/%%SLUG%%/ru.html" />
     <meta name="theme-color" content="#0b0d0f" />
 %%CLARITY%%    <script>
@@ -444,6 +486,7 @@ PAGE = """<!doctype html>
           <nav class="lang-switch" aria-label="%%LANG_LABEL%%">
             <a class="ls-opt %%ON_UK%%" data-loc="uk" hreflang="uk" href="/%%SLUG%%/uk.html"%%CUR_UK%%>UK</a>
             <a class="ls-opt %%ON_RU%%" data-loc="ru" hreflang="ru" href="/%%SLUG%%/ru.html"%%CUR_RU%%>RU</a>
+            <a class="ls-opt %%ON_EN%%" data-loc="en" hreflang="en" href="/%%SLUG%%/en.html"%%CUR_EN%%>EN</a>
           </nav>
           <span class="title">nexttick</span>
           <span class="path">%%PATH%%</span>
@@ -456,6 +499,7 @@ PAGE = """<!doctype html>
           <a href="/%%LOC%%.html">%%F_HOME%%</a>
           <a href="/offer/%%LOC%%.html">%%F_OFFER%%</a>
           <a href="/privacy/%%LOC%%.html">%%F_PRIVACY%%</a>
+          <a href="/consent/%%LOC%%.html">%%F_CONSENT%%</a>
           <span class="lf-copy">%%F_COPY%%</span>
         </footer>
       </div>
@@ -477,7 +521,7 @@ PAGE = """<!doctype html>
       // Language switcher — persist ONLY on explicit click (no on-load write, so a
       // legal-page view never clobbers the visitor's saved landing-page locale).
       (function () {
-        var LOCS = ["uk", "ru"];
+        var LOCS = ["uk", "ru", "en"];
         document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
           a.addEventListener("click", function (e) {
             e.preventDefault();
@@ -495,20 +539,81 @@ PAGE = """<!doctype html>
 </html>
 """
 
-THEME_LABELS = {"uk": "Світла / темна тема", "ru": "Светлая / тёмная тема"}
-LANG_LABELS = {"uk": "Мова", "ru": "Язык"}
+THEME_LABELS = {"uk": "Світла / темна тема", "ru": "Светлая / тёмная тема", "en": "Light / dark theme"}
+LANG_LABELS = {"uk": "Мова", "ru": "Язык", "en": "Language"}
+
+
+# Markdown-native pages: (slug, loc) built directly from the committed
+# tools/legal-md/<slug>.<loc>.md — no source .docx. Used for:
+#   • consent (all locales — authored from published telegra.ph text, not a Word doc)
+#   • the English offer/privacy (translated from the ru/uk Markdown; the docx only
+#     ever carried the uk/ru halves, so en has no docx source).
+# Section-less docs (SECTIONLESS) render as plain paragraphs (lead_preamble=False);
+# the section-structured offer/privacy keep the dimmed .lead preamble above section 1.
+SECTIONLESS = {"consent"}
+MD_PAGES = [
+    ("consent", "uk"),
+    ("consent", "ru"),
+    ("consent", "en"),
+    ("offer", "uk"),
+    ("offer", "ru"),
+    ("offer", "en"),
+    ("privacy", "uk"),
+    ("privacy", "ru"),
+    ("privacy", "en"),
+]
+
+
+def assemble_page(slug, loc, md, lead_preamble):
+    """Stage 2: Markdown -> HTML body -> full page written to docs/<slug>/<loc>.html.
+    Returns (html_rel, md_rel) for post-formatting."""
+    h1, body = md_to_html(md, lead_preamble=lead_preamble)
+    s = STR[(slug, loc)]
+    fl = FOOTER_LABELS[loc]
+    page = (
+        PAGE
+        .replace("%%LANG%%", loc)
+        .replace("%%LOC%%", loc)
+        .replace("%%SLUG%%", slug)
+        .replace("%%TITLE%%", esc(s["title"]))
+        .replace("%%DESC%%", esc(s["desc"]))
+        .replace("%%PATH%%", esc(s["path"]))
+        .replace("%%H1%%", h1)
+        .replace("%%BODY%%", body)
+        .replace("%%THEME_LABEL%%", THEME_LABELS[loc])
+        .replace("%%LANG_LABEL%%", LANG_LABELS[loc])
+        .replace("%%ON_UK%%", "on" if loc == "uk" else "")
+        .replace("%%ON_RU%%", "on" if loc == "ru" else "")
+        .replace("%%ON_EN%%", "on" if loc == "en" else "")
+        .replace("%%CUR_UK%%", ' aria-current="true"' if loc == "uk" else "")
+        .replace("%%CUR_RU%%", ' aria-current="true"' if loc == "ru" else "")
+        .replace("%%CUR_EN%%", ' aria-current="true"' if loc == "en" else "")
+        .replace("%%CLARITY%%", CLARITY if slug == "offer" else "")
+        .replace("%%F_HOME%%", esc(fl["home"]))
+        .replace("%%F_OFFER%%", esc(fl["offer"]))
+        .replace("%%F_PRIVACY%%", esc(fl["privacy"]))
+        .replace("%%F_CONSENT%%", esc(fl["consent"]))
+        .replace("%%F_COPY%%", esc(fl["copy"]))
+    )
+    out_dir = os.path.join(ROOT, "docs", slug)
+    os.makedirs(out_dir, exist_ok=True)
+    with open(os.path.join(out_dir, f"{loc}.html"), "w", encoding="utf-8") as f:
+        f.write(page)
+    return (f"docs/{slug}/{loc}.html", f"tools/legal-md/{slug}.{loc}.md")
 
 
 def build():
     written = []
     os.makedirs(MD_DIR, exist_ok=True)
+    # docx-sourced docs (offer/privacy): docx -> Markdown intermediate -> HTML.
     for slug, cfg in DOCS.items():
         docx_path = os.path.join(ROOT, cfg["file"])
         if not os.path.exists(docx_path):
-            # Source .docx absent — keep the committed docs/<slug>/*.html as-is.
-            # The built legal HTML is the frozen artifact; regeneration needs the
-            # original .docx (drop it back next to this repo to rebuild).
-            print(f"skip {slug}: {cfg['file']} not found — keeping committed HTML")
+            # Source .docx absent. offer/privacy are still rebuilt below, md-native,
+            # from the committed tools/legal-md/<slug>.<loc>.md (see MD_PAGES) — the
+            # Markdown is the source of truth now. The .docx step only regenerates
+            # that Markdown; drop the .docx back next to this repo to refresh it.
+            print(f"skip {slug} docx: {cfg['file']} not found — building md-native from committed .md")
             continue
         recs = paragraphs(docx_path)
         uk_half, ru_half = split_halves(recs, cfg["ru_split"])
@@ -518,38 +623,19 @@ def build():
             md = records_to_md(half)
             with open(os.path.join(MD_DIR, f"{slug}.{loc}.md"), "w", encoding="utf-8") as f:
                 f.write(md)
-            # Stage 2: Markdown -> HTML body.
-            h1, body = md_to_html(md)
-            s = STR[(slug, loc)]
-            fl = FOOTER_LABELS[loc]
-            page = (
-                PAGE
-                .replace("%%LANG%%", loc)
-                .replace("%%LOC%%", loc)
-                .replace("%%SLUG%%", slug)
-                .replace("%%TITLE%%", esc(s["title"]))
-                .replace("%%DESC%%", esc(s["desc"]))
-                .replace("%%PATH%%", esc(s["path"]))
-                .replace("%%H1%%", h1)
-                .replace("%%BODY%%", body)
-                .replace("%%THEME_LABEL%%", THEME_LABELS[loc])
-                .replace("%%LANG_LABEL%%", LANG_LABELS[loc])
-                .replace("%%ON_UK%%", "on" if loc == "uk" else "")
-                .replace("%%ON_RU%%", "on" if loc == "ru" else "")
-                .replace("%%CUR_UK%%", ' aria-current="true"' if loc == "uk" else "")
-                .replace("%%CUR_RU%%", ' aria-current="true"' if loc == "ru" else "")
-                .replace("%%CLARITY%%", CLARITY if slug == "offer" else "")
-                .replace("%%F_HOME%%", esc(fl["home"]))
-                .replace("%%F_OFFER%%", esc(fl["offer"]))
-                .replace("%%F_PRIVACY%%", esc(fl["privacy"]))
-                .replace("%%F_COPY%%", esc(fl["copy"]))
-            )
-            out_dir = os.path.join(ROOT, "docs", slug)
-            os.makedirs(out_dir, exist_ok=True)
-            out_path = os.path.join(out_dir, f"{loc}.html")
-            with open(out_path, "w", encoding="utf-8") as f:
-                f.write(page)
-            written.append((f"docs/{slug}/{loc}.html", f"tools/legal-md/{slug}.{loc}.md"))
+            written.append(assemble_page(slug, loc, md, lead_preamble=True))
+    # md-native pages (consent all locales; en offer/privacy): committed Markdown
+    # -> HTML (no docx stage).
+    for slug, loc in MD_PAGES:
+        md_path = os.path.join(MD_DIR, f"{slug}.{loc}.md")
+        if not os.path.exists(md_path):
+            print(f"skip {slug}/{loc}: {md_path} not found")
+            continue
+        with open(md_path, encoding="utf-8") as f:
+            md = f.read()
+        written.append(
+            assemble_page(slug, loc, md, lead_preamble=(slug not in SECTIONLESS))
+        )
     paths = [os.path.join(ROOT, rel) for pair in written for rel in pair]
     if paths:
         format_outputs(paths)

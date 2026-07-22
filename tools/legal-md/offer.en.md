@@ -1,0 +1,392 @@
+# Offer for the Provision of Paid Subscription Services
+
+> APPROVED
+> Sole Proprietor Anton Karpov
+> RNOKPP 3075926357
+> Approval date: "3" March 2026
+> Public offer for the provision of services granting access to the «Next Tick» service by subscription
+> Kyiv
+
+This document is a public offer of the sole proprietor Anton Karpov (hereinafter — the "Contractor") and contains a proposal to conclude an agreement for the provision of paid services granting access to the closed information and communication service «Next Tick».
+
+This Offer is addressed to any legally capable natural person (hereinafter — the "User") who accepts the terms of this Offer.
+
+Acceptance of this Offer is deemed to be the User's performance of actions to arrange and pay for a subscription to the «Next Tick» service, as well as registration and obtaining access to the service through the digital channels provided by the Contractor.
+
+From the moment of acceptance of this Offer, the agreement between the User and the Contractor is deemed concluded on the terms of this Offer.
+
+## 1. DEFINITIONS AND TERMS
+
+1.1. For the purposes of this document, the terms set out below are used in the following meaning:
+
+Contractor — the sole proprietor Anton Hennadiyovych Karpov, RNOKPP (individual taxpayer number) 3075926357, address: Ukraine, Brovary, Kazymyra Malevycha St., 59, IBAN: UA813220010000026000340134954, phone: +380509528378, email: nexttickit@gmail.com, who provides the User with services within the Subscription.
+
+Offer — this document «Offer for the Provision of Subscription Services», posted on the Internet at the addresses https://telegram.me/next_tick_bot, https://nexttick.it/
+
+Service or Personal Account — the digital environment of interaction between the User and the Contractor, intended for arranging the Subscription, managing the Subscription and obtaining access to the functionality of the «Next Tick» service. Access to the Service may be provided through various digital access channels, including Telegram bots, Telegram channels, a mobile application, web interfaces and other software tools determined by the Contractor.
+
+Subscription — the provision to the User, on the terms of the Agreement, of the ability to receive, for a fee and for a limited period of time, the Contractor's Services and access to the «Next Tick» service. The Subscription is provided to the User within the Telegram account or another digital access channel through which the User arranged the subscription and effected acceptance of this Offer.
+
+Services — the services specified in clause 2.1. of the Offer, provided to the User within the Subscription by the Contractor personally or with the involvement of third parties.
+
+User — a legally capable natural person who has reached the age of 18 (eighteen) years and who has effected acceptance of the Offer posted in the Service. The User may not act on behalf of or in the interests of a legal entity or an individual entrepreneur. Acceptance of the Offer is effected exclusively by a natural person in person, not in the capacity of a representative of an organization or a Sole Proprietor and not for the purposes of carrying out entrepreneurial activity. An agreement under this Offer may not be concluded by a legal entity or an individual entrepreneur and applies exclusively to the natural person linked to the corresponding Telegram account or another digital access channel.
+
+Parties — the Contractor and the User.
+
+Acceptance of the Offer — full and unconditional acceptance of the Offer by the User through the performance of the actions specified in clause 3.3., clauses 3.3.1–3.3.4. of the Offer. Acceptance of the Offer means conclusion of the Agreement.
+
+Agreement — the agreement for the provision of subscription services between the User and the Contractor, which is concluded through acceptance of the Offer in accordance with the terms set out in the Offer, as well as the provisions of the Civil Code of Ukraine. The Agreement is deemed concluded in written form from the moment of acceptance of the Offer by the User.
+
+Closed Telegram channel «Next Tick» — a closed Telegram channel belonging to the Contractor, which is one of the digital access channels to the «Next Tick» service, in which the Contractor posts content and provides Users with information materials within the Subscription.
+
+Content — textual, graphic, audio, video and other information materials posted by the Contractor in the «Next Tick» service, including materials posted in the closed Telegram channel, the mobile application, other digital access channels or other interfaces of the service. The Contractor independently determines the volume, content, frequency and time of publication of the Content.
+
+Rules — the rules for using the «Next Tick» service and its individual digital interfaces (including the mobile application, the Telegram channel and other access channels), establishing the procedure for using the functionality of the service, posting content and interaction between users.
+
+Mobile application «Next Tick» — software intended to provide Users with access to the functionality of the «Next Tick» service through mobile devices. The mobile application is one of the digital access channels to the service.
+
+Digital access channels — software and technical means through which the User may obtain access to the «Next Tick» service, including Telegram channels, Telegram bots, the mobile application, web interfaces and other digital services determined by the Contractor.
+
+Calendar month (hereinafter — calendar month, month) — a period equal to 30 (thirty) calendar days, regardless of the actual number of days in the calendar month, unless otherwise indicated in the text of this Agreement.
+
+1.2. The Offer may use terms not defined in clause 1.1. of the Offer. In such a case, the interpretation of such a term is carried out in accordance with the text of the Offer.
+
+In the absence of an unambiguous interpretation of a term in the text of the Offer, one should be guided by the interpretation of the term determined:
+
+— first — by the applicable documents;
+— second — by the legislation of Ukraine;
+— third — by the information posted in the Service;
+— then — by the generally accepted (commonly used) meaning on the Internet.
+
+## 2. SUBJECT MATTER OF THE AGREEMENT
+
+2.1. The subject matter of the Agreement concluded on the terms of the Offer is the provision by the Contractor to the User, within the Subscription, of the ability, for a fee (hereinafter — the "Subscription Fee") and for a limited period of time (hereinafter — the "Subscription Term"), to receive the Contractor's Services, which include the provision of access to the «Next Tick» service and its functionality.
+
+2.2. Within the Subscription, the User may be granted access to the following elements of the «Next Tick» service:
+
+- access to the Contractor's Telegram bot
+- access to the closed Telegram channel «Next Tick»
+- access to the mobile application «Next Tick»
+- access to other digital tools, services, interfaces or software solutions used by the Contractor for the operation of the «Next Tick» service.
+
+  2.3. The Contractor has the right, at its own discretion, to change, add, replace or discontinue the use of individual digital access channels to the «Next Tick» service, including Telegram bots, Telegram channels, mobile applications, web interfaces and other digital services, provided that the User retains the ability to receive the Services within the active Subscription.
+
+  2.4. A change of technical means, access channels or interfaces of the «Next Tick» service does not constitute a change to the subject matter of this Agreement and may not be regarded as improper provision of the Services.
+
+  2.5. Access to the materials of the «Next Tick» service is provided to the User exclusively for the duration of the paid Subscription Period and grants the User the right only to view and use the materials for personal purposes during the specified period. Copying, downloading, saving, reproduction, distribution, transfer to third parties, publication, as well as any other use of the service's materials beyond the terms of the Subscription are not permitted. Upon expiry of the paid Subscription Period, if the Subscription has not been renewed, the User's access to the materials, channels and other elements of the «Next Tick» service is terminated. The Subscription Fee is a payment for temporary access to the service's materials and may not be regarded as a payment for their acquisition or for obtaining perpetual access to them.
+
+## 3. TERMS AND PROCEDURE FOR THE PROVISION OF SERVICES
+
+3.1. The text of this Offer, permanently posted on the Internet at the addresses specified by the Contractor, contains all the essential terms of the Agreement and is a public proposal by the Contractor to conclude an agreement for the provision of subscription services with any fully legally capable natural person on the terms set out in this Offer. This document is a public offer in accordance with Articles 633, 641 and 642 of the Civil Code of Ukraine. From the moment the User performs actions recognized as acceptance of this Offer, the Agreement is deemed concluded on the terms of this Offer without the signing of a separate document in paper form.
+
+3.2. A mandatory condition for the Contractor's provision of the Services within the Subscription is the User's prior familiarization with the terms of this Offer, the User's acceptance of the terms of this Offer in full, as well as the User's compliance with the Rules for using the «Next Tick» service, the rules for using individual digital interfaces of the service and other documents of the Contractor, if the relevant documents directly govern the use of individual functions, services, sections, digital tools or access channels through which the Contractor provides the User with access to the «Next Tick» service.
+
+3.2.1. The Contractor has the right, during the term of the Subscription, at its own discretion, to develop, launch, use, change, restrict, suspend, discontinue the use of and/or test additional digital tools, software solutions, web interfaces, mobile applications, individual sections, modules, personal accounts, communication mechanics, methods of displaying information, algorithms of user interaction and other technological methods of interaction with Users related to the «Next Tick» service, if such actions, in the Contractor's opinion, are aimed at developing the service, improving the convenience of using the service, ensuring information security, changing the architecture of the service, modernizing its technological infrastructure, complying with the requirements of legislation or achieving other reasonable goals of the service's operation.
+
+3.2.2. The Contractor has the right to independently determine the scope of functionality available to the User within the Subscription, the list of digital access channels available to the User during the relevant Subscription Period, as well as the conditions under which a particular digital tool, interface, module, service or section is provided to all Users, to individual categories of Users, to a limited circle of Users or temporarily is not provided. Access to individual digital solutions and interfaces may be provided selectively, temporarily, in test mode, on a free-of-charge basis or on other terms determined by the Contractor independently.
+
+3.2.3. The failure to provide the User with access to individual additional digital tools, services, software solutions, modules, applications, web interfaces, individual functions or digital access channels, as well as the termination, restriction, change, replacement, temporary suspension or withdrawal of such access, does not constitute a breach of this Offer, does not change the scope of the main Subscription, does not indicate improper provision of the Services and may not serve as an independent ground for the User to assert claims for a refund of funds, a reduction of the Subscription Fee, the recovery of damages, compensation or the application of other measures of civil liability to the Contractor, if the User generally retains access to the «Next Tick» service in the scope determined by the Contractor within the active Subscription.
+
+3.2.4. In the event that the User is granted access to additional digital tools, services, software solutions, applications, interfaces, modules or their test versions, the procedure for their use, the technical requirements for their use, the conditions of access, restrictions of functionality, confidentiality requirements, special rules of conduct, the data processing procedure, security requirements, the conditions for restricting or terminating access, as well as other special terms may be determined by separate rules, terms of use, policies, regulations or notifications posted by the Contractor on the Internet, in the relevant digital interface or communicated to the User in electronic form.
+
+3.2.5. The User's actual use of the relevant additional digital tool, digital interface, module, software solution, mobile application, web interface or other element of the service means the User's full and unconditional consent to the rules and terms of use of such element of the service, if such rules and terms were posted by the Contractor in the proper manner or communicated to the User by electronic means.
+
+3.3. Procedure for concluding the Agreement
+
+3.3.1. Prior to effecting acceptance of this Offer, the User is obliged to independently familiarize themselves with the text of this Offer, information about the Contractor, the list of Services included in the Subscription, the terms of their provision, information about the Subscription Fee, the Subscription Term, the payment procedure, the procedure for automatic renewal of the Subscription, the procedure for terminating the Subscription, as well as with other documents of the Contractor referenced by this Offer. By effecting acceptance, the User confirms that they have familiarized themselves with the said information in full, understand the content of this Offer, agree to its terms and accept them without any reservations, exceptions or stipulated changes.
+
+3.3.2. To conclude the Agreement, the User undergoes the authorization procedure in the Service or in another digital interface used by the Contractor to provide access to the «Next Tick» service, in the manner established by the relevant interface. The User is obliged to provide accurate, complete and up-to-date information necessary to arrange the Subscription, as well as undertakes not to use another person's credentials, not to use the data of third parties without lawful grounds and not to create conditions that impede the proper identification of the fact of acceptance of the Offer.
+
+3.3.3. The User undergoes the procedure of linking a bank card and/or an electronic means of payment to their Personal Account. For the purposes of this Offer, any bank card and/or electronic means of payment specified by the User in the relevant digital interface, including cards and means of payment linked both before arranging the Subscription and after arranging it, are deemed to be a Linked Card. The User understands and agrees that the Contractor or a person engaged by the Contractor to ensure the acceptance of payments has the right to use any of the Linked Cards for the purpose of debiting the Subscription Fee, as well as other payments directly provided for by this Offer and accepted by the User.
+
+To confirm the validity of the Linked Card, the User's ownership of the card and the technical feasibility of making subsequent payments, a hold and/or a debit of a test amount not exceeding 99 (ninety-nine) hryvnias may be carried out. Upon successful completion of such a transaction, the said amount is returned to the User in a manner depending on the rules of the issuing bank and the payment system. An unsuccessful attempt to carry out such a transaction means the impossibility of adding the corresponding Linked Card and the impossibility of arranging or paying for the Subscription using such a card.
+
+The User confirms and warrants that the Linked Card is used by them on lawful grounds, that they have the right to dispose of the funds debited from the Linked Card, that they have specified accurate and complete details, and that they comply with the rules of international payment systems, the requirements of the issuing bank, the operator of electronic funds and other mandatory rules applicable to the making of the relevant payments.
+
+3.3.4. After performing the actions provided for in clauses 3.3.1–3.3.3 of this Offer, the User effects acceptance of this Offer by pressing the "Pay" button or another similar button, or by performing another action which, in accordance with the interface of the Service, unambiguously indicates the User's intention to pay for the Subscription and to conclude the Agreement on the terms of this Offer. From the moment of performing the said action and the successful reflection of the payment in the electronic payment accounting system, the Agreement is deemed concluded and the Subscription — arranged.
+
+3.3.5. By effecting acceptance of this Offer through payment for the Subscription, the User provides separate explicit consent for the provision of access to the «Next Tick» service and its digital content to begin immediately, before the expiry of the period for withdrawal from the agreement provided for by Article 11 of the Law of Ukraine "On the Protection of Consumer Rights". The User confirms that they are aware and understand the following: from the moment of the commencement of the provision of access to digital content within the Subscription, they lose the right to withdraw from the Agreement within 14 (fourteen) days, since the subject matter of the Agreement is the provision of access to digital content that is not supplied on a tangible medium, and the Agreement is performed in full before the expiry of the said period with the User's express and advance consent.
+
+3.4. Subscription Term
+
+3.4.1. Unless otherwise expressly provided by the interface of the Service, a tariff, a special offer of the Contractor or the terms of a specific Subscription, the Subscription Fee is charged for each Subscription Period determined by the User when arranging the Subscription.
+
+3.4.2. If the User has chosen a Subscription Period equal to one month, such period constitutes 30 (thirty) calendar days and is calculated from the date of receipt of payment of the Subscription Fee, unless another moment for the commencement of the Subscription Period is expressly determined by the Contractor in the interface of the Service.
+
+3.4.3. If the User arranges the Subscription for a term other than one month, the corresponding Subscription Period is determined by the terms of the selected tariff specified in the Service at the moment of arranging the Subscription.
+
+3.5. Payment procedure
+
+3.5.1. Payment for the Subscription is made by the User in non-cash form using the Linked Card or another payment method available in the relevant digital interface of the Service and determined by the Contractor.
+
+3.5.2. When specifying the details of the Linked Card and in the further use of the Linked Card, the User confirms and warrants:
+
+- that they have specified accurate and complete information about a valid bank card issued in their name or lawfully used by them on another lawful ground
+- their compliance with the rules of international payment systems and the requirements of the issuing bank that issued the Linked Card
+- that they possess the necessary powers to use the electronic means of payment
+- their compliance with the requirements of the operator of electronic funds
+- as well as the absence of circumstances impeding the proper and lawful making of payments in favor of the Contractor.
+
+  3.5.3. The Contractor has the right at any time to require the User to confirm the data specified by them when arranging the Subscription, including the data of the Linked Card, as well as to request supporting documents from the User, if this is necessary to verify the accuracy of the information provided by the User, to prevent fraud, to comply with the requirements of legislation, the rules of payment systems, the requirements of the issuing bank or internal security procedures. The User's failure to provide the requested confirmations may be regarded by the Contractor as the provision of inaccurate information and entail the consequences provided for by this Offer.
+
+  3.6. Automatic renewal of the subscription
+
+  3.6.1. The User understands and agrees that the Subscription is by default arranged with automatic renewal for each subsequent Subscription Period, provided there is a valid Linked Card, a sufficient amount of funds to pay for the next Subscription Period and the User's consent to the automatic periodic debiting of funds.
+
+  3.6.2. The User has the right at any time to refuse the automatic renewal of the Subscription for the next Subscription Period, as well as to refuse the use of the previously provided bank card and/or electronic means of payment details for further automatic settlements with the Contractor, if such functionality is provided by the relevant digital interface of the Service or is otherwise communicated to the User by the Contractor.
+
+  3.6.3. In the event of the User's refusal of the automatic renewal of the Subscription or refusal of the use of the previously provided details for automatic settlements, the Subscription is valid until the expiry of the already paid Subscription Period. Upon expiry of the paid Subscription Period, access to the Services is terminated if the User, prior to the expiry of the relevant Subscription Period, has not arranged the renewal of the Subscription by another available method.
+
+  3.6.4. The User's refusal of the automatic renewal of the Subscription or of the use of the previously provided details for automatic debits does not entail an automatic refund of funds for the already paid Subscription Period, does not annul the access already provided for the paid period and does not release the User from the consequences of the termination of access after the expiry of the paid period.
+
+  3.7. Consequences of non-payment and termination of the renewal of the Subscription
+
+  3.7.1. In the event of the absence of a sufficient amount of funds on the Linked Card for the automatic renewal of the Subscription, the refusal of the issuing bank to process the payment, the User's refusal of the use of the Linked Card for subsequent settlements or the User's failure to provide another payment method allowing payment for the next Subscription Period, the Contractor has the right to suspend the User's access to the Services, restrict access to individual digital access channels or fully terminate the User's access to the «Next Tick» service from the day following the last day of the paid Subscription Period.
+
+  3.7.2. The User understands and agrees that it is the User who bears the obligation to ensure the possibility of proper and timely payment for the next Subscription Period, including the obligation to maintain the currency of the Linked Card details, the sufficiency of funds on the account, as well as the lawfulness and technical feasibility of using the selected payment method.
+
+  3.7.3. The termination of access to the «Next Tick» service as a result of the non-receipt of payment for the next Subscription Period, the absence of funds on the Linked Card, the User's refusal of automatic debits or the User's failure to provide a new payment method does not constitute a breach of the Contractor's obligations and is regarded as the absence on the User's part of an expression of will to renew the Subscription for the next Period.
+
+  3.7.4. The User has the right to arrange the Subscription again in the general manner, provided the Contractor has the technical capability to provide the corresponding access, unless otherwise directly follows from this Offer, the rules of the service or the Contractor's decision to restrict the User's access on other grounds.
+
+  3.8. Consent to automatic debits
+
+  3.8.1. By arranging the Subscription and specifying the details of the Linked Card, the User expresses consent to the automatic periodic debiting of funds from the Linked Card in the amount of the Subscription Fee for each subsequent Subscription Period until the moment of termination of the Subscription or the User's refusal of the automatic renewal of the Subscription.
+
+  3.8.2. The User understands and agrees that the automatic debiting of funds may be carried out by the Contractor without sending a separate notification of each specific debit, unless otherwise provided by the legislation of Ukraine, the rules of the payment system, the issuing bank or the internal rules of the relevant payment provider.
+
+  3.8.3. The Contractor does not have the right to use for automatic debits the details of a bank card or an electronic means of payment the use of which the User has refused in the manner provided by the functionality of the Service or communicated to the User by the Contractor.
+
+  3.8.4. In order to continue the Subscription after the User's refusal of the previously provided details, the User is obliged to independently provide other valid details or to make payment for the next Subscription Period by another available method.
+
+  3.9. Acceptance of the terms of the Offer and related documents
+
+  3.9.1. By arranging the Subscription, the User is deemed to have accepted the terms of this Offer, as well as the terms of the documents to which this Offer directly refers, including the Rules for using the «Next Tick» service, in full, without any reservations, exceptions or conditions.
+
+  3.9.2. In the event of the User's disagreement with the provisions of this Offer, the Rules for using the «Next Tick» service or other documents directly mentioned in this Offer, the User is obliged to refrain from arranging the Subscription, and if the Subscription has already been arranged — to refuse its renewal for the next Period and to cease using the service after the expiry of the paid Subscription Period.
+
+  3.9.3. The User confirms that they understand the terms of the automatic renewal of the Subscription, the procedure for refusing automatic renewal, the procedure for refusing the use of previously provided details for automatic settlements, as well as the consequences of the failure to provide new details or the non-receipt of payment for the next Subscription Period.
+
+  3.10 Scope of the provision of Services
+
+  3.10.1. Access to the Subscription is deemed provided to the User for the relevant Subscription Period in full from the moment of the receipt of payment of the Subscription Fee and the reflection of the fact of payment in the electronic payment accounting system of the Contractor or of a payment partner engaged by them.
+
+  3.10.2. The Contractor's obligations to provide the Services within the Subscription are deemed properly fulfilled from the moment of providing the User with the ability to obtain access to the «Next Tick» service and its functionality through one or more digital access channels determined by the Contractor.
+
+  3.10.3. The Services are deemed properly rendered regardless of whether the User actually used the access provided to them, to what extent the User used the service, whether the User used all the digital access channels, as well as regardless of whether the User used all or only part of the capabilities of the «Next Tick» service available within the active Subscription.
+
+  3.10.4. The User's non-use of the provided access to the service, non-downloading of the mobile application, non-use of individual digital interfaces, refusal of the use of individual access channels or, in the User's opinion, insufficient intensity of use of the service do not indicate the non-provision of the Services, the improper provision of the Services or a reduction of the scope of the Services subject to payment to the Contractor.
+
+  3.11. Additional services
+
+  3.11.1. The User has the right to approach the Contractor with a request for the provision of additional services not included in the scope of the Subscription, including consulting, information, organizational or other services, if the possibility of providing such services is provided for by the Contractor's activity.
+
+  3.11.2. The Contractor has the right, at its own discretion, to refuse the User the provision of additional services without giving reasons for such a refusal, unless otherwise directly provided by the legislation of Ukraine or a separate obligation of the Contractor.
+
+## 4. RIGHTS AND OBLIGATIONS OF THE PARTIES, WARRANTIES
+
+4.1. The Contractor undertakes:
+
+4.1.1. To provide the User with access to the «Next Tick» service in the scope provided for by this Offer and the Subscription selected by the User.
+
+4.1.2. To ensure the User the ability to receive the Services through the digital access channels determined by the Contractor within the operation of the «Next Tick» service.
+
+4.1.3. To communicate to the User the current version of this Offer, as well as other documents of the Contractor governing the use of individual elements of the «Next Tick» service, including the Rules.
+
+4.1.4. To process the User's personal data in the scope and manner necessary for the conclusion and performance of this Agreement, in accordance with the legislation of Ukraine and the documents of the Contractor governing matters of personal data processing.
+
+4.2. The Contractor has the right:
+
+4.2.1. To independently determine the composition of the Services, the content of the Content, the architecture of the «Next Tick» service, the list and types of digital access channels used to provide the User with access to the service.
+
+4.2.2. At its own discretion, to create, change, replace, restrict, suspend, discontinue the use of, delete or transfer individual digital access channels, interfaces, sections, functions, modules, interaction mechanics, methods of displaying information, algorithms of the service's operation and other technological elements of the «Next Tick» service, if such actions do not deprive the User, on the whole, of the ability to receive the Services within the active Subscription.
+
+4.2.3. To provide access to individual functions, sections, digital tools, interfaces or access channels to all Users, to individual categories of Users, to a limited circle of Users or not to provide such access at its own discretion.
+
+4.2.4. To establish, change and apply the Rules for using the «Next Tick» service and its individual digital interfaces, mandatory for the User, including the mobile application, Telegram channels, Telegram bots, web interfaces and other access channels.
+
+4.2.5. To require the User to comply with this Offer, the Rules and other documents of the Contractor governing the use of the «Next Tick» service and its individual elements.
+
+4.2.6. To restrict, suspend or terminate the User's access to individual digital access channels, functions, sections or services of «Next Tick» in the cases provided for by this Offer, the Rules or other documents of the Contractor.
+
+4.2.7. To send the User notifications, legally significant messages, information about changes to the Offer, the Rules, the terms of the Subscription, changes to the digital access channels, as well as other information related to the performance of this Agreement, through the «Next Tick» service, the mobile application, Telegram, email, push notifications, the personal account or other means of electronic communication used by the Contractor.
+
+4.3. The User undertakes:
+
+4.3.1. Prior to acceptance of this Offer, to independently familiarize themselves with its terms, as well as with the Rules and other documents of the Contractor governing the use of the relevant elements of the «Next Tick» service.
+
+4.3.2. To comply with the terms of this Offer, the Rules for using the «Next Tick» service, the rules for using individual digital interfaces of the service, as well as other documents of the Contractor applicable to the use of the relevant functions, services, sections and access channels.
+
+4.3.3. To use the «Next Tick» service and the digital access channels provided within it exclusively in person, in good faith, reasonably and in accordance with the legislation of Ukraine.
+
+4.3.4. Not to perform actions aimed at circumventing technical restrictions, disrupting the operation of the service, interfering with the software code, architecture, interfaces, operating algorithms, protection mechanisms, methods of identification, access systems and other technological elements of the «Next Tick» service.
+
+4.3.5. Not to transfer to third parties access to the «Next Tick» service, credentials, means of authorization, access links, confirmation codes, and likewise not to provide third parties with the ability to actually use the Subscription arranged in the User's name, unless otherwise directly permitted by the Contractor.
+
+4.3.6. To independently ensure the availability of technical means, software, access to the Internet and other conditions necessary for the use of the relevant digital access channels to the «Next Tick» service.
+
+4.3.7. To pay for the Subscription in a timely manner and in full in the manner established by this Offer.
+
+4.3.8. To independently monitor the current version of this Offer, the Rules and other documents of the Contractor posted on the Internet, in the service or communicated to the User in electronic form.
+
+4.4. The User has the right:
+
+4.4.1. To obtain access to the «Next Tick» service in the scope corresponding to the paid Subscription, using the digital access channels determined by the Contractor.
+
+4.4.2. To receive from the Contractor information on matters related to the performance of this Offer, in the manner and through the communication channels determined by the Contractor.
+
+4.4.3. To use the functions of the «Next Tick» service available to them within the limits provided for by this Offer, the Rules and the interface of the relevant digital access channel.
+
+## 5. SUBSCRIPTION FEE AND PAYMENT TERMS
+
+5.1. The Subscription Fee is determined by the Contractor and is specified in the interface of the relevant digital access channel to the «Next Tick» service through which the User arranges the Subscription.
+
+5.2. The Subscription grants the User the right of access to the «Next Tick» service during the paid Subscription Period in the scope provided for by this Offer.
+
+5.3. The Subscription Fee includes the Contractor's remuneration for providing the User with access to the «Next Tick» service and all digital elements of the service that the Contractor provides to the User within the active Subscription.
+
+5.4. Within the Subscription, the Contractor has the right to provide the User with access to one or more digital elements of the «Next Tick» service, including but not limited to:
+
+- closed or open Telegram channels;
+- Telegram bots;
+- the mobile application;
+- web interfaces;
+- digital services, platforms and other technological solutions used by the Contractor for the operation of the «Next Tick» service.
+
+  5.5. The specific list of digital access channels through which the User is provided with the ability to interact with the «Next Tick» service is determined by the Contractor independently.
+
+  5.6. The Contractor has the right, at its own discretion, to change, add, replace, restrict or discontinue the use of individual digital access channels to the «Next Tick» service, including Telegram channels, mobile applications, web interfaces and other digital tools, provided that the User retains the ability to obtain access to the «Next Tick» service within the paid Subscription.
+
+  5.7. Payment of the Subscription Fee is made by the User by non-cash payment using the Linked Card or another payment method provided by the Contractor.
+
+  5.8. Payment for the Subscription is made in the manner established by this Offer and described in the relevant digital access channel through which the User arranges the Subscription.
+
+  5.9. All settlements under this Agreement are made in US dollars (USD) or in hryvnia at the exchange rate of the payment provider on the date of payment.
+
+  5.10. Access to the «Next Tick» service is provided to the User after the receipt of payment of the Subscription Fee by the Contractor, unless otherwise provided by the terms of this Offer.
+
+  5.11. Within the operation of the «Next Tick» service, the Contractor has the right, at its own discretion, to organize additional activities, including community member meetings, networking events, business events, educational sessions and other forms of interaction between community members.
+
+  5.12. Such activities may be conducted by the Contractor independently or with the participation of third parties and are regarded as elements of the development and operation of the «Next Tick» community.
+
+  5.13. The organization of the said events is not the subject matter of this Agreement and does not create independent obligations of the Contractor to the User.
+
+  5.14. The Parties have agreed that the Contractor's obligation to provide the Services under this Agreement is deemed fulfilled from the moment of providing the User with access to the «Next Tick» service and the relevant digital access channels used by the Contractor for the operation of the service.
+
+  5.15. The User's non-use of the provided access to the «Next Tick» service and its digital access channels is not a ground for a refund of funds. The User confirms that access to the «Next Tick» service is provided by the Contractor regardless of the actual extent of the User's use of the functionality of the service.
+
+## 6. PERSONAL DATA
+
+6.1. The Contractor processes the User's personal data obtained upon the conclusion and performance of this Agreement in accordance with the requirements of the Law of Ukraine "On the Protection of Personal Data" No. 2297-VI of 01.06.2010.
+
+6.2. The User's personal data are processed by the Contractor exclusively for the purposes of the conclusion, performance and termination of this Agreement, the provision of access to the «Next Tick» service, as well as ensuring the operation of the digital access channels to the service.
+
+6.3. The User, by accepting the terms of this Offer, expresses consent to the processing by the Contractor of their personal data in the scope necessary for the performance of this Agreement.
+
+6.4. The Contractor has the right to entrust the processing of personal data to third parties or to transfer personal data to third parties in cases where such transfer is necessary for the performance of this Agreement, including when engaging third parties to ensure the operation of the «Next Tick» service, its digital access channels, software solutions, technical infrastructure and other elements of the service.
+
+6.5. The processing of personal data is carried out by the Contractor using the necessary legal, organizational and technical measures aimed at ensuring the security of personal data in accordance with the requirements of the legislation of Ukraine.
+
+## 7. TERM OF THE AGREEMENT
+
+7.1. The Agreement is deemed concluded from the moment of acceptance by the User of this Offer and is valid:
+
+7.1.1. until the full performance by the Parties of the obligations under this Agreement; or
+
+7.1.2. until the moment of termination of the Agreement in the manner provided for by this section.
+
+7.2. The Contractor has the right to unilaterally make changes to the terms of this Offer. The new version of the Offer enters into force from the moment of its posting in the digital access channels to the «Next Tick» service used by the Contractor, unless another date for the entry into force of the changes is specified in the text of the updated version of the Offer.
+
+7.3. The Agreement may be terminated:
+
+7.3.1. by agreement of the Parties at any time;
+
+7.3.2. at the initiative of either Party by sending a notification to the other Party, including in electronic form. The date of termination is deemed to be the date of sending such notification.
+
+7.4. The Contractor has the right to terminate this Agreement unilaterally:
+
+7.4.1. In the event of the establishment of the fact of the User's distribution of information, materials or content obtained by them within access to the «Next Tick» service to third parties for a fee or free of charge without the Contractor's consent, the fee paid by the User is non-refundable and is retained by the Contractor in accordance with the terms of this Agreement and the requirements of the legislation of Ukraine, including the Civil Code of Ukraine.
+
+7.4.2. In the event of the User's breach of the confidentiality terms and the trade secret regime established by this Agreement, the fee paid by the User is non-refundable and is retained by the Contractor in accordance with the terms of this Agreement and the requirements of the legislation of Ukraine, including the Civil Code of Ukraine.
+
+7.4.3. in the event of the User's breach of the Rules for using the «Next Tick» service, including the rules for using the mobile application, the digital access channels, the interfaces of the service, as well as other documents of the Contractor governing the procedure for using the service. In such a case, the Contractor has the right to restrict or terminate the User's access to the «Next Tick» service, its individual functions or digital access channels, as well as to terminate this Agreement unilaterally.
+
+7.4.4. without giving reasons, by sending the User a notification of the termination of the Agreement through the channels of electronic communication used by the Contractor, including but not limited to email, messengers, the interface of the «Next Tick» service, the mobile application or other digital access channels.
+
+7.4.5. The Agreement is deemed terminated from the moment of sending the User a notification of termination, regardless of the fact of receipt or reading of such notification.
+
+7.4.6.In the event of termination of the Agreement by the Contractor without giving reasons, the Contractor makes a refund to the User of funds for the unused Subscription period. In such a case, the refund is made in accordance with the terms of this Agreement and the requirements of the legislation of Ukraine.
+
+## 8. LIABILITY OF THE PARTIES
+
+8.1. For the non-performance or improper performance of obligations under this Agreement, the Parties bear liability in accordance with the terms of this Agreement and the applicable legislation of Ukraine.
+
+8.2. The Parties are released from liability for the partial or full non-performance of obligations under this Agreement if such non-performance was the consequence of circumstances of insuperable force (force majeure) that arose after the conclusion of the Agreement, which the Parties could neither foresee nor prevent by reasonable measures.
+
+Circumstances of force majeure include, among others, but are not limited to: war, armed conflicts, uprisings, mass riots, strikes, fires, floods, earthquakes and other natural disasters, accidents, disruptions in the operation of power systems, failures in the operation of communication networks, actions of state authorities and other events of an emergency nature that are beyond the reasonable control of the Parties.
+
+8.3. In order to counteract unfair conduct of Users, the Contractor has the right to withdraw from this Agreement unilaterally out of court in the event of the detection of unfair conduct of the User, including actions aimed at circumventing the terms of this Agreement, the rules for using the «Next Tick» service or other documents of the Contractor.
+
+8.4. The Contractor does not bear liability for adverse consequences for the User that arose as a result of the User's failure to provide the necessary information, the provision of incomplete or inaccurate information, or as a result of other actions or inaction of the User.
+
+8.5. The User undertakes not to disseminate by any means inaccurate information about the Contractor, its services and activities, as well as information capable of causing harm to the Contractor's business reputation. In the event of a breach of this clause, the User undertakes to pay the Contractor a penalty in the amount of 10,000 (ten thousand) US dollars or the equivalent in hryvnia at the exchange rate on the date of payment for each established fact of such a breach.
+
+8.6. The Contractor has the right to restrict the User's access to the «Next Tick» service, its individual functions, digital access channels, interfaces or materials of the service in the event of the User's breach of the terms of this Agreement, the Rules for using the service, the rules for using the mobile application or other documents of the Contractor.
+
+8.7. The Contractor does not bear liability for temporary technical failures and interruptions in the operation of the «Next Tick» service, the mobile application, Telegram channels, software platforms, servers, communication networks and other digital access channels, if such failures are caused by the actions of third parties, the technical features of the operation of the Internet, software or other circumstances beyond the Contractor's control.
+
+8.8. The Contractor does not bear liability for the impossibility of the User's access to the «Next Tick» service, if such impossibility is caused by:
+
+- restrictions on the operation of third-party platforms
+- actions of the owners of digital platforms
+- blocking of services
+- access restrictions on the part of communication operators
+- actions of state authorities
+- other circumstances beyond the Contractor's control.
+
+In such cases, the Contractor has the right to provide access to the «Next Tick» service through other digital access channels.
+
+## 9. MISCELLANEOUS PROVISIONS
+
+This Agreement, its conclusion and performance are governed by the applicable legislation of Ukraine. All matters not regulated by this Agreement or regulated incompletely are subject to resolution in accordance with the legislation of Ukraine.
+
+9.2. The User's claims are accepted by the Contractor at the email address of the service's support service. If necessary, at the Contractor's request, a claim may also be sent by the User in written form to the Contractor's address specified in section 10 of this Offer.
+
+The period for the consideration of a claim is 10 (ten) calendar days from the moment of its receipt by the Contractor.
+
+9.3. In the event of a failure to reach agreement between the Parties through negotiations, the dispute is subject to consideration in court in accordance with the applicable legislation of Ukraine. Disputes arising out of this Agreement may, by agreement of the Parties, be referred for consideration to the International Commercial Arbitration Court at the Ukrainian Chamber of Commerce and Industry in accordance with its rules.
+
+9.4. If one or more provisions of this Agreement are recognized as invalid or having no legal force, this does not affect the validity of the remaining provisions of the Agreement, which continue to be valid in full.
+
+9.5. The Contractor has the right to unilaterally change the Subscription Fee for subsequent Subscription periods.
+
+In this case, the User who has arranged the Subscription is notified of such a change no later than 3 (three) calendar days before the entry into force of the changes by posting the relevant information in the digital access channels to the «Next Tick» service used by the Contractor.
+
+A change to the Subscription Fee does not apply to the Subscription period already paid for by the User.
+
+9.6. All information that has become known to the Parties in connection with the conclusion, performance and termination of this Agreement, including materials, information, content, the internal rules of the service, methods of providing access, as well as other information obtained by the User within the use of the «Next Tick» service, is confidential.
+
+The User undertakes to comply with the trade secret regime and not to perform actions aimed at the dissemination, disclosure or transfer of such information to third parties without the written consent of the Contractor.
+
+Such actions include, in particular:
+
+— providing third parties with access to the «Next Tick» service or its closed digital access channels;
+
+— copying, replication or distribution of the service's materials by any means;
+
+— transfer of the service's materials to third parties via email, messengers or other means of communication;
+
+— publication or disclosure of information obtained within the «Next Tick» service on the Internet, on social networks or by other means.
+
+9.7. The User understands and agrees that the «Next Tick» service is a developing digital product, and the Contractor has the right, at its own discretion, to change its structure, functionality, interfaces, operating algorithms, the list of digital access channels and other elements of the service without prior agreement with the User.
+
+## 10. CONTRACTOR'S REQUISITES:
+
+```requisites
+Sole Proprietor Anton Hennadiyovych Karpov
+Brovary, Kazymyra Malevycha St., 59
+IBAN: UA813220010000026000340134954
+RNOKPP: 3075926357
+Phone: +380509528378
+Email: nexttickit@gmail.com
+```

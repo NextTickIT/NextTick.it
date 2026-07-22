@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>NextTick — Оферта</title>
+    <title>NextTick — Offer / Оферта</title>
     <link rel="canonical" href="https://nexttick.it/offer/ru.html" />
     <link
       rel="alternate"
@@ -17,12 +17,17 @@
     />
     <link
       rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/offer/en.html"
+    />
+    <link
+      rel="alternate"
       hreflang="x-default"
       href="https://nexttick.it/offer/ru.html"
     />
     <script>
       (function () {
-        var LOCS = ["uk", "ru"],
+        var LOCS = ["uk", "ru", "en"],
           def = "ru";
         var loc;
         try {
@@ -44,6 +49,10 @@
               loc = "ru";
               break;
             }
+            if (t.indexOf("en") === 0) {
+              loc = "en";
+              break;
+            }
           }
         }
         location.replace(
@@ -56,9 +65,10 @@
   <body>
     <noscript>
       <p style="font-family: system-ui, sans-serif; padding: 24px">
-        Оферта / Оферта:
+        Offer / Оферта:
         <a href="/offer/uk.html">Українською</a> ·
-        <a href="/offer/ru.html">На русском</a>
+        <a href="/offer/ru.html">На русском</a> ·
+        <a href="/offer/en.html">In English</a>
       </p>
     </noscript>
   </body>

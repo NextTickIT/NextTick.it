@@ -148,25 +148,37 @@
     {
       "out": "offer.html",
       "data": {
-        "title": "NextTick — Оферта",
-        "locs": ["uk", "ru"],
+        "title": "NextTick — Offer / Оферта",
+        "locs": ["uk", "ru", "en"],
         "default_loc": "ru",
         "base": "/offer/",
         "ext": ".html",
-        "noscript_prompt": "Оферта / Оферта",
-        "noscript_labels": { "uk": "Українською", "ru": "На русском" }
+        "noscript_prompt": "Offer / Оферта",
+        "noscript_labels": { "uk": "Українською", "ru": "На русском", "en": "In English" }
       }
     },
     {
       "out": "privacy.html",
       "data": {
-        "title": "NextTick — Конфіденційність / Конфиденциальность",
-        "locs": ["uk", "ru"],
+        "title": "NextTick — Privacy / Конфіденційність / Конфиденциальность",
+        "locs": ["uk", "ru", "en"],
         "default_loc": "ru",
         "base": "/privacy/",
         "ext": ".html",
-        "noscript_prompt": "Конфіденційність / Конфиденциальность",
-        "noscript_labels": { "uk": "Українською", "ru": "На русском" }
+        "noscript_prompt": "Privacy / Конфіденційність / Конфиденциальность",
+        "noscript_labels": { "uk": "Українською", "ru": "На русском", "en": "In English" }
+      }
+    },
+    {
+      "out": "consent.html",
+      "data": {
+        "title": "NextTick — Consent / Згода / Согласие",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "ru",
+        "base": "/consent/",
+        "ext": ".html",
+        "noscript_prompt": "Consent / Згода / Согласие",
+        "noscript_labels": { "uk": "Українською", "ru": "На русском", "en": "In English" }
       }
     },
     {

@@ -7,44 +7,27 @@ import { dirname, join } from "node:path";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-// Authoritative structure, re-derived from the source .docx at build time.
+// Every legal page cross-links all sibling docs in its footer.
+const LEGAL_SLUGS = ["offer", "privacy", "consent"];
+
+// Authoritative structure, re-derived from the source .docx (offer/privacy) or the
+// committed Markdown (consent — section-less, authored from published text) at
+// build time.
 const PAGES = [
-  {
-    loc: "uk",
-    slug: "offer",
-    other: "privacy",
-    sections: 10,
-    clauses: 129,
-    clarity: true,
-  },
-  {
-    loc: "ru",
-    slug: "offer",
-    other: "privacy",
-    sections: 10,
-    clauses: 129,
-    clarity: true,
-  },
-  {
-    loc: "uk",
-    slug: "privacy",
-    other: "offer",
-    sections: 8,
-    clauses: 20,
-    clarity: false,
-  },
-  {
-    loc: "ru",
-    slug: "privacy",
-    other: "offer",
-    sections: 8,
-    clauses: 20,
-    clarity: false,
-  },
+  { loc: "uk", slug: "offer", sections: 10, clauses: 129, clarity: true },
+  { loc: "ru", slug: "offer", sections: 10, clauses: 129, clarity: true },
+  { loc: "uk", slug: "privacy", sections: 8, clauses: 20, clarity: false },
+  { loc: "ru", slug: "privacy", sections: 8, clauses: 20, clarity: false },
+  { loc: "uk", slug: "consent", sections: 0, clauses: 0, clarity: false },
+  { loc: "ru", slug: "consent", sections: 0, clauses: 0, clarity: false },
+  { loc: "en", slug: "offer", sections: 10, clauses: 129, clarity: true },
+  { loc: "en", slug: "privacy", sections: 8, clauses: 20, clarity: false },
+  { loc: "en", slug: "consent", sections: 0, clauses: 0, clarity: false },
 ];
 
 const RU_ONLY = /[ёъыэЁЪЫЭ]/; // letters that must NOT appear on a uk page
 const UA_ONLY = /[іїєґІЇЄҐ]/; // letters that must NOT appear on a ru page
+const CYRILLIC = /[Ѐ-ӿ]/; // any Cyrillic — must NOT appear on an en page
 
 let failures = 0;
 const check = (cond, msg) => {
@@ -86,12 +69,18 @@ for (const p of PAGES) {
   );
   check(count(h, /<h1>/g) === 1, "exactly one <h1>");
 
-  // Language purity (alphabet scan on the document body).
-  const leakRe = p.loc === "uk" ? RU_ONLY : UA_ONLY;
-  check(
-    !leakRe.test(body),
-    `no ${p.loc === "uk" ? "Russian" : "Ukrainian"}-only letters leak into ${p.loc} body`,
-  );
+  // Language purity (alphabet scan on the document body). en must be fully
+  // translated/transliterated — zero Cyrillic; uk/ru must not leak the other's
+  // locale-only letters.
+  if (p.loc === "en") {
+    check(!CYRILLIC.test(body), "no Cyrillic leaks into en body");
+  } else {
+    const leakRe = p.loc === "uk" ? RU_ONLY : UA_ONLY;
+    check(
+      !leakRe.test(body),
+      `no ${p.loc === "uk" ? "Russian" : "Ukrainian"}-only letters leak into ${p.loc} body`,
+    );
+  }
 
   // Head: canonical + hreflang (uk/ru/x-default, NO en) + legal.css + lang attr.
   check(hn.includes(`<html lang="${p.loc}">`), `<html lang="${p.loc}">`);
@@ -115,7 +104,10 @@ for (const p of PAGES) {
     ),
     "hreflang x-default -> ru",
   );
-  check(!/hreflang="en"/.test(hn), "no en hreflang");
+  check(
+    hn.includes(`hreflang="en" href="https://nexttick.it/${p.slug}/en.html"`),
+    "hreflang en",
+  );
   check(
     hn.includes('rel="stylesheet" href="/assets/legal.css"'),
     "links /assets/legal.css",
@@ -138,8 +130,9 @@ for (const p of PAGES) {
   check(!hn.includes(`href="/en/${p.slug}.html"`), "no /en/ lang-switch link");
   check(
     hn.includes(`href="/${p.slug}/uk.html"`) &&
-      hn.includes(`href="/${p.slug}/ru.html"`),
-    "UK+RU switch links present",
+      hn.includes(`href="/${p.slug}/ru.html"`) &&
+      hn.includes(`href="/${p.slug}/en.html"`),
+    "UK+RU+EN switch links present",
   );
 
   // No on-load locale clobber: setItem("lang" appears exactly once (inside click handler).
@@ -152,15 +145,22 @@ for (const p of PAGES) {
     "lang write is inside the click handler",
   );
 
-  // Footer links resolve to real files on disk.
+  // Footer: home link + a cross-link to every sibling legal doc, each resolving
+  // to a real file on disk.
   check(
     existsSync(join(ROOT, "docs", `${p.loc}.html`)),
     `footer home /${p.loc}.html exists`,
   );
-  check(
-    existsSync(join(ROOT, "docs", p.other, `${p.loc}.html`)),
-    `footer cross-link /${p.other}/${p.loc}.html exists`,
-  );
+  for (const s of LEGAL_SLUGS) {
+    check(
+      hn.includes(`href="/${s}/${p.loc}.html"`),
+      `footer links /${s}/${p.loc}.html`,
+    );
+    check(
+      existsSync(join(ROOT, "docs", s, `${p.loc}.html`)),
+      `footer target /${s}/${p.loc}.html exists`,
+    );
+  }
 }
 
 console.log("");

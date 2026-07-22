@@ -47,6 +47,11 @@
     />
     <link
       rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/privacy/en.html"
+    />
+    <link
+      rel="alternate"
       hreflang="x-default"
       href="https://nexttick.it/privacy/ru.html"
     />
@@ -182,6 +187,13 @@
               aria-current="true"
               >RU</a
             >
+            <a
+              class="ls-opt"
+              data-loc="en"
+              hreflang="en"
+              href="/privacy/en.html"
+              >EN</a
+            >
           </nav>
           <span class="title">nexttick</span>
           <span class="path">— политика конфиденциальности</span>
@@ -261,15 +273,14 @@
           </p>
           <p>
             — платежные системы и провайдеры приема платежей, обеспечивающие
-            обработку оплаты Подписки;<br />
-            — мессенджер Telegram и его техническая инфраструктура как цифровой
-            канал доступа к сервису;<br />
-            — сервисы веб-аналитики и рекламные платформы (в том числе
+            обработку оплаты Подписки;<br />— мессенджер Telegram и его
+            техническая инфраструктура как цифровой канал доступа к сервису;<br />—
+            сервисы веб-аналитики и рекламные платформы (в том числе
             Meta/Facebook, Google), используемые для продвижения сервиса и
             анализа взаимодействия пользователей с сайтом
-            https://nexttick.it/;<br />
-            — иные технические партнеры и подрядчики, привлеченные ФЛП для
-            обеспечения работы цифровых каналов доступа к сервису.
+            https://nexttick.it/;<br />— иные технические партнеры и подрядчики,
+            привлеченные ФЛП для обеспечения работы цифровых каналов доступа к
+            сервису.
           </p>
           <h2>
             <span class="h2-num">4.</span> Принципы и условия обработки
@@ -624,6 +635,7 @@
           <a href="/ru.html">← nexttick</a>
           <a href="/offer/ru.html">Публичная оферта</a>
           <a href="/privacy/ru.html">Политика конфиденциальности</a>
+          <a href="/consent/ru.html">Согласие на обработку данных</a>
           <span class="lf-copy">© 2026 NextTick · ФЛП Карпов Антон</span>
         </footer>
       </div>
@@ -654,7 +666,7 @@
       // Language switcher — persist ONLY on explicit click (no on-load write, so a
       // legal-page view never clobbers the visitor's saved landing-page locale).
       (function () {
-        var LOCS = ["uk", "ru"];
+        var LOCS = ["uk", "ru", "en"];
         document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
           a.addEventListener("click", function (e) {
             e.preventDefault();

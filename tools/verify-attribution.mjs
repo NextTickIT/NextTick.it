@@ -64,8 +64,9 @@ const PAGE_DEFS = [
     ],
     channel: null,
   },
-  { dir: "offer", files: ["offer/ru.html", "offer/uk.html"], channel: null },
-  { dir: "privacy", files: ["privacy/ru.html", "privacy/uk.html"], channel: null },
+  { dir: "offer", files: ["offer/ru.html", "offer/uk.html", "offer/en.html"], channel: null },
+  { dir: "privacy", files: ["privacy/ru.html", "privacy/uk.html", "privacy/en.html"], channel: null },
+  { dir: "consent", files: ["consent/ru.html", "consent/uk.html", "consent/en.html"], channel: null },
 ];
 
 // [7] footprint spot-counts (baseline-faithful; retargeted from the lang tree).
@@ -77,7 +78,10 @@ const FOOTPRINT = {
   "ai-speedup-checklist/en.html": { "G-1TYEB7YFP5": 0, "GTM-M74P6CSD": 0 },
   "ai-speedup-checklist-for-guild-members/en.html": { x5houryvs2: 1, "GTM-M74P6CSD": 0 },
   "offer/ru.html": { "G-MXX0XQWV3R": 2, x5houryvs2: 1 },
+  "offer/en.html": { "G-MXX0XQWV3R": 2, x5houryvs2: 1 },
   "privacy/ru.html": { "G-MXX0XQWV3R": 2 },
+  "consent/ru.html": { "G-MXX0XQWV3R": 2 },
+  "consent/en.html": { "G-MXX0XQWV3R": 2 },
   "swe/uk.html": { "GTM-M74P6CSD": 2, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
   "swe/en.html": { "GTM-M74P6CSD": 2, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
   "swe/ru.html": { "GTM-M74P6CSD": 2, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },

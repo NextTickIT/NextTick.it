@@ -47,6 +47,11 @@
     />
     <link
       rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/privacy/en.html"
+    />
+    <link
+      rel="alternate"
       hreflang="x-default"
       href="https://nexttick.it/privacy/ru.html"
     />
@@ -181,6 +186,13 @@
               hreflang="ru"
               href="/privacy/ru.html"
               >RU</a
+            >
+            <a
+              class="ls-opt"
+              data-loc="en"
+              hreflang="en"
+              href="/privacy/en.html"
+              >EN</a
             >
           </nav>
           <span class="title">nexttick</span>
@@ -615,6 +627,7 @@
           <a href="/uk.html">← nexttick</a>
           <a href="/offer/uk.html">Публічна оферта</a>
           <a href="/privacy/uk.html">Політика конфіденційності</a>
+          <a href="/consent/uk.html">Згода на обробку даних</a>
           <span class="lf-copy">© 2026 NextTick · ФОП Карпов Антон</span>
         </footer>
       </div>
@@ -645,7 +658,7 @@
       // Language switcher — persist ONLY on explicit click (no on-load write, so a
       // legal-page view never clobbers the visitor's saved landing-page locale).
       (function () {
-        var LOCS = ["uk", "ru"];
+        var LOCS = ["uk", "ru", "en"];
         document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
           a.addEventListener("click", function (e) {
             e.preventDefault();

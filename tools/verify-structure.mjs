@@ -130,9 +130,12 @@ const required = [
   "ai-speedup-checklist/en.html", "ai-speedup-checklist/ru.html", "ai-speedup-checklist/uk.html",
   "ai-speedup-checklist-for-guild-members/en.html", "ai-speedup-checklist-for-guild-members/ru.html", "ai-speedup-checklist-for-guild-members/uk.html",
   "offer/ru.html", "offer/uk.html", "privacy/ru.html", "privacy/uk.html",
+  "consent/ru.html", "consent/uk.html",
+  "offer/en.html", "privacy/en.html", "consent/en.html",
   // root sniff stubs
   "index.html", "swe.html", "ai-speedup-checklist.html",
   "ai-speedup-checklist-for-guild-members.html", "offer.html", "privacy.html",
+  "consent.html",
   // home locale-root legacy stubs (self-canonical /en/ /uk/ /ru/ must not 404)
   "en/index.html", "ru/index.html", "uk/index.html",
   // root-default dir stubs (USER-APPROVED 2026-07-07)

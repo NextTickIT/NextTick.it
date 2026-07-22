@@ -12,10 +12,10 @@
    whose values are inconsistent across index/all/swe; a [data-theme="light"]
    override keeps both themes correct. */
 const _legal = ({
-  en: { offer: "Offer", privacy: "Privacy Policy" },
-  uk: { offer: "Оферта", privacy: "Конфіденційність" },
-  ru: { offer: "Оферта", privacy: "Конфиденциальность" },
-})[loc] || { offer: "Offer", privacy: "Privacy Policy" };
+  en: { offer: "Offer", privacy: "Privacy Policy", consent: "Data Consent" },
+  uk: { offer: "Оферта", privacy: "Конфіденційність", consent: "Згода на обробку даних" },
+  ru: { offer: "Оферта", privacy: "Конфиденциальность", consent: "Согласие на обработку данных" },
+})[loc] || { offer: "Offer", privacy: "Privacy Policy", consent: "Data Consent" };
 %>
 <style>
   .site-footer {
@@ -63,6 +63,7 @@ const _legal = ({
     <span class="sf-legal">
       <a href="/offer.html"><%~ _legal.offer %></a>
       <a href="/privacy.html"><%~ _legal.privacy %></a>
+      <a href="/consent.html"><%~ _legal.consent %></a>
     </span>
   </div>
 </footer>

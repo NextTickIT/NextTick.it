@@ -47,6 +47,11 @@
     />
     <link
       rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/offer/en.html"
+    />
+    <link
+      rel="alternate"
       hreflang="x-default"
       href="https://nexttick.it/offer/ru.html"
     />
@@ -192,6 +197,9 @@
               aria-current="true"
               >RU</a
             >
+            <a class="ls-opt" data-loc="en" hreflang="en" href="/offer/en.html"
+              >EN</a
+            >
           </nav>
           <span class="title">nexttick</span>
           <span class="path">— публичная оферта</span>
@@ -240,8 +248,8 @@
           </p>
           <p>
             Оферта — настоящий документ «Оферта на оказание услуг по подписке»,
-            размещенный в сети Интернет по адресам https://telegram.me/next_tick_bot,
-            https://nexttick.it/
+            размещенный в сети Интернет по адресам
+            https://telegram.me/next_tick_bot, https://nexttick.it/
           </p>
           <p>
             Сервис или Личный кабинет — цифровая среда взаимодействия
@@ -1434,6 +1442,7 @@
           <a href="/ru.html">← nexttick</a>
           <a href="/offer/ru.html">Публичная оферта</a>
           <a href="/privacy/ru.html">Политика конфиденциальности</a>
+          <a href="/consent/ru.html">Согласие на обработку данных</a>
           <span class="lf-copy">© 2026 NextTick · ФЛП Карпов Антон</span>
         </footer>
       </div>
@@ -1464,7 +1473,7 @@
       // Language switcher — persist ONLY on explicit click (no on-load write, so a
       // legal-page view never clobbers the visitor's saved landing-page locale).
       (function () {
-        var LOCS = ["uk", "ru"];
+        var LOCS = ["uk", "ru", "en"];
         document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
           a.addEventListener("click", function (e) {
             e.preventDefault();
