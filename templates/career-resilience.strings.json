@@ -1,0 +1,329 @@
+{
+  "en": {
+    "title": "Why smart, productive developers get laid off | NextTick",
+    "description": "A free live session with Illya Klymov on August 20 at 19:00 Kyiv time.",
+    "topCta": "register",
+    "heroH1": "Why smart, productive developers get laid off",
+    "heroSubtitle": "How to spot the risks in time, strengthen your position, and keep your career resilient in a shifting IT market.",
+    "heroNote": "We'll unpack what a company values beyond code quality, and which moves keep an engineer valuable and in demand.",
+    "ctaRegister": "Register for free",
+    "microcopy": "Registration takes less than a minute in Telegram",
+    "eventAria": "Session details",
+    "evDate": "August 20",
+    "evTime": "19:00 · Kyiv",
+    "speakerName": "Illya Klymov",
+    "marketLabel": "# 01 · context",
+    "marketH2": "The market didn't vanish. It just got pickier.",
+    "marketCopy": "There are more developers on the market. But companies still lack engineers they can trust with decisions, not just code.",
+    "stat1P": "Over six months, competition reached 198 and 95 applications per opening.",
+    "stat2P": "of hiring participants are unhappy with candidate quality; 41% lack relevant specialists.",
+    "stat3P": "of U.S. software-job growth went to senior roles; another 37% of growth is tied to AI in the title.",
+    "marketConclusion": "Plenty of candidates. <strong>Engineers trusted with decisions are still in short supply.</strong>",
+    "sources": "Sources: <a href=\"https://dou.ua/lenta/articles/it-job-market-2-quarter-2026/\" target=\"_blank\" rel=\"noreferrer\">DOU · job market</a> · <a href=\"https://dou.ua/lenta/articles/job-market-2026-part-2/\" target=\"_blank\" rel=\"noreferrer\">DOU · hiring</a> · <a href=\"https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/\" target=\"_blank\" rel=\"noreferrer\">Indeed Hiring Lab</a>",
+    "fitLabel": "# 02 · self-check",
+    "fitH2": "Your position may be more vulnerable than it looks",
+    "checkList": [
+      "You close tasks well but rarely take part in decisions",
+      "You can list what you've done, but it's hard to explain its value to the company",
+      "You grow in experience and salary, but not in influence",
+      "You don't know the criteria your leadership uses to judge your work",
+      "You want to reach Senior or Lead, but mostly develop technical skills",
+      "You see AI speeding up code and can't tell what companies will keep paying an engineer for",
+      "You want to assess the risks before the situation turns critical"
+    ],
+    "storyQuote": "The idea for this session came after a career consultation with a strong, high-performing specialist who had been laid off.",
+    "storyP": "He came to discuss the job search. But the conversation quickly turned to a different question:",
+    "storyQuestion": "Why wasn't doing good work enough?",
+    "fitNote": "The session fits developers across stacks. The best time for a check-up is while everything is still going well.",
+    "outcomesLabel": "# 03 · result",
+    "outcomesH2": "After the session you'll be able to",
+    "outcomes": [
+      {
+        "h": "Assess the risks of your position",
+        "p": "You'll spot early signals in tasks, responsibility, and communication that shouldn't be ignored."
+      },
+      {
+        "h": "See whether the company recognizes your value",
+        "p": "You'll understand what a manager evaluates beyond code quality, speed, and the number of closed tasks."
+      },
+      {
+        "h": "Separate your zone of influence from the company's decisions",
+        "p": "You'll see what can be strengthened and what more productivity can't fix: budget, a project shutdown, or a change of strategy."
+      },
+      {
+        "h": "Choose a concrete next step",
+        "p": "You'll decide what needs attention now: engineering thinking, AI, visibility of impact, communication, or external career options."
+      }
+    ],
+    "resultArrow": "→ the takeaway",
+    "resultStrong": "Your own risk map and a clear sense of what to strengthen in your position.",
+    "speakerLabel": "# 04 · speaker",
+    "speakerYears": "15+ years in the industry",
+    "speakerP1": "Illya works at the Staff Engineer level and unpacks not only technology, but how an engineer makes decisions, explains their position, and influences the team.",
+    "speakerP2": "In the session he'll combine an engineering lens, career practice, and market data — with no promises of becoming \"un-fireable\" and no advice to \"just work even harder\".",
+    "guildLabel": "# 05 · organizer",
+    "guildH2": "NextTick — an engineers' guild",
+    "guildP1": "For Middle and Senior developers who want to move from doing tasks to engineering influence.",
+    "trackAria": "Guild tracks",
+    "guildP2": "Not another folder of materials, but regular practice on real work situations.",
+    "faqLabel": "# 06 · faq",
+    "faqH2": "FAQ",
+    "faqItems": [
+      {
+        "q": "When and where does the session take place?",
+        "a": "August 20 at 19:00 Kyiv time, live on YouTube. We'll send the link to registered participants in Telegram."
+      },
+      {
+        "q": "Is it really free?",
+        "a": "Yes. All you need is to register through the Telegram bot."
+      },
+      {
+        "q": "Is the session only for JavaScript developers?",
+        "a": "No. The core context will resonate most with JavaScript engineers, but the topic is relevant to developers across stacks."
+      },
+      {
+        "q": "Do I need to be job-hunting right now?",
+        "a": "No. The session helps you assess your position at your current company. Better to do it before you face a layoff."
+      },
+      {
+        "q": "Will I be able to ask Illya a question?",
+        "a": "Yes. There will be a dedicated part for participants' questions during the stream."
+      },
+      {
+        "q": "Will there be a recording?",
+        "a": "We'll share the terms for accessing the recording with registered participants in Telegram."
+      }
+    ],
+    "finalH2": "Don't wait for a layoff to assess your position for the first time",
+    "finalP": "Understand which risks you can spot in advance, what makes you valuable to a company, and which skills are worth strengthening now.",
+    "footerText": "An engineers' guild · nexttick.it",
+    "mobileCta": "Register",
+    "brand": "nexttick / guild",
+    "navAria": "Sections",
+    "navCheck": "self-check",
+    "navResult": "result",
+    "navSpeaker": "speaker",
+    "navFaq": "faq",
+    "heroSecondary": "Check your position",
+    "freeLabel": "free",
+    "footerTagline": "nexttick — an engineers' guild"
+  },
+  "ru": {
+    "title": "Почему умных и продуктивных разработчиков увольняют | NextTick",
+    "description": "Бесплатная live-встреча с Ильёй Климовым 20 августа в 19:00 по Киеву.",
+    "topCta": "регистрация",
+    "heroH1": "Почему умных и продуктивных разработчиков увольняют",
+    "heroSubtitle": "Как вовремя заметить риски, укрепить свою позицию и сохранить карьерную устойчивость на меняющемся IT-рынке.",
+    "heroNote": "Разберём, что компания оценивает помимо качества кода и какие действия помогают инженеру оставаться ценным и востребованным.",
+    "ctaRegister": "Зарегистрироваться бесплатно",
+    "microcopy": "Регистрация займёт меньше минуты в Telegram",
+    "eventAria": "Детали встречи",
+    "evDate": "20 августа",
+    "evTime": "19:00 · Киев",
+    "speakerName": "Илья Климов",
+    "marketLabel": "# 01 · контекст",
+    "marketH2": "Рынок не исчез. Он стал избирательнее.",
+    "marketCopy": "Разработчиков на рынке становится больше. Но компании по-прежнему испытывают дефицит инженеров, которым можно доверить не только код, но и решения.",
+    "stat1P": "За полгода конкуренция достигла 198 и 95 откликов на вакансию.",
+    "stat2P": "участников найма не устраивает уровень кандидатов; 41% не хватает релевантных специалистов.",
+    "stat3P": "прироста software-вакансий в США пришлось на senior-роли; ещё 37% роста связано с AI в названии.",
+    "marketConclusion": "Кандидатов много. <strong>Инженеров, которым доверяют решения, по-прежнему не хватает.</strong>",
+    "sources": "Источники: <a href=\"https://dou.ua/lenta/articles/it-job-market-2-quarter-2026/\" target=\"_blank\" rel=\"noreferrer\">DOU · рынок вакансий</a> · <a href=\"https://dou.ua/lenta/articles/job-market-2026-part-2/\" target=\"_blank\" rel=\"noreferrer\">DOU · найм</a> · <a href=\"https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/\" target=\"_blank\" rel=\"noreferrer\">Indeed Hiring Lab</a>",
+    "fitLabel": "# 02 · self-check",
+    "fitH2": "Возможно, ваша позиция уязвимее, чем кажется",
+    "checkList": [
+      "Хорошо закрываете задачи, но редко участвуете в принятии решений",
+      "Можете перечислить сделанное, но сложно объяснить ценность работы для компании",
+      "Растёте в опыте и зарплате, но не в зоне влияния",
+      "Не понимаете, по каким критериям руководство оценивает вашу работу",
+      "Хотите расти до Senior или Lead, но развиваете преимущественно технические навыки",
+      "Видите, как AI ускоряет код, и не понимаете, за что компании будут платить инженеру дальше",
+      "Хотите оценить риски до того, как ситуация станет критической"
+    ],
+    "storyQuote": "Идея встречи появилась после карьерной консультации с сильным и результативным специалистом, которого уволили.",
+    "storyP": "Он пришёл обсудить поиск работы. Но разговор быстро перешёл к другому вопросу:",
+    "storyQuestion": "Почему хорошей работы оказалось недостаточно?",
+    "fitNote": "Встреча подходит разработчикам разных стеков. Лучшее время для диагностики — пока у вас всё хорошо.",
+    "outcomesLabel": "# 03 · result",
+    "outcomesH2": "После встречи вы сможете",
+    "outcomes": [
+      {
+        "h": "Оценить риски своей позиции",
+        "p": "Увидите ранние сигналы в задачах, ответственности и коммуникации, которые не стоит игнорировать."
+      },
+      {
+        "h": "Понять, видит ли компания вашу ценность",
+        "p": "Разберётесь, что руководитель оценивает помимо качества кода, скорости и количества закрытых задач."
+      },
+      {
+        "h": "Отделить свою зону влияния от решений компании",
+        "p": "Поймёте, что можно укрепить, а что нельзя исправить дополнительной продуктивностью: бюджет, закрытие проекта или смену стратегии."
+      },
+      {
+        "h": "Выбрать конкретный следующий шаг",
+        "p": "Определите, что требует внимания сейчас: инженерное мышление, AI, заметность вклада, коммуникация или внешние карьерные опции."
+      }
+    ],
+    "resultArrow": "→ на выходе",
+    "resultStrong": "Собственная карта рисков и понимание, что именно укреплять в своей позиции.",
+    "speakerLabel": "# 04 · спикер",
+    "speakerYears": "15+ лет в индустрии",
+    "speakerP1": "Илья работает на уровне Staff Engineer и разбирает не только технологии, но и то, как инженер принимает решения, объясняет свою позицию и влияет на команду.",
+    "speakerP2": "На встрече он соединит инженерную оптику, карьерную практику и данные рынка — без обещаний стать «неувольняемым» и советов «просто работать ещё больше».",
+    "guildLabel": "# 05 · организатор",
+    "guildH2": "NextTick — Гильдия инженеров",
+    "guildP1": "Для Middle- и Senior-разработчиков, которые хотят перейти от выполнения задач к инженерному влиянию.",
+    "trackAria": "Направления Гильдии",
+    "guildP2": "Не ещё одна папка с материалами, а регулярная практика на реальных рабочих ситуациях.",
+    "faqLabel": "# 06 · faq",
+    "faqH2": "Частые вопросы",
+    "faqItems": [
+      {
+        "q": "Когда и где состоится встреча?",
+        "a": "20 августа в 19:00 по Киеву, в прямом эфире на YouTube. Ссылку пришлём зарегистрированным участникам в Telegram."
+      },
+      {
+        "q": "Участие действительно бесплатное?",
+        "a": "Да. Для участия нужно только зарегистрироваться через Telegram-бота."
+      },
+      {
+        "q": "Встреча только для JavaScript-разработчиков?",
+        "a": "Нет. Основной контекст будет особенно близок JavaScript-инженерам, но тема актуальна для разработчиков разных стеков."
+      },
+      {
+        "q": "Нужно ли сейчас искать работу?",
+        "a": "Нет. Встреча поможет оценить вашу позицию в текущей компании. Лучше сделать это до того, как вы столкнётесь с увольнением."
+      },
+      {
+        "q": "Можно будет задать вопрос Илье?",
+        "a": "Да. В эфире будет отдельная часть с ответами на вопросы участников."
+      },
+      {
+        "q": "Будет ли запись?",
+        "a": "Условия доступа к записи сообщим зарегистрированным участникам в Telegram."
+      }
+    ],
+    "finalH2": "Не ждите увольнения, чтобы впервые оценить свою позицию",
+    "finalP": "Поймите, какие риски можно заметить заранее, что делает вас ценным для компании и какие навыки стоит укрепить уже сейчас.",
+    "footerText": "Гильдия инженеров · nexttick.it",
+    "mobileCta": "Зарегистрироваться",
+    "brand": "nexttick / гильдия",
+    "navAria": "Разделы",
+    "navCheck": "самопроверка",
+    "navResult": "результат",
+    "navSpeaker": "спикер",
+    "navFaq": "faq",
+    "heroSecondary": "Проверить позицию",
+    "freeLabel": "бесплатно",
+    "footerTagline": "nexttick — гильдия инженеров"
+  },
+  "uk": {
+    "title": "Чому звільняють розумних і продуктивних розробників | NextTick",
+    "description": "Безкоштовна live-зустріч з Іллею Клімовим 20 серпня о 19:00 за Києвом.",
+    "topCta": "реєстрація",
+    "heroH1": "Чому звільняють розумних і продуктивних розробників",
+    "heroSubtitle": "Як вчасно помітити ризики, зміцнити свою позицію та зберегти карʼєрну стійкість на мінливому IT-ринку.",
+    "heroNote": "Розберемо, що компанія оцінює крім якості коду та які дії допомагають інженеру залишатися цінним і затребуваним.",
+    "ctaRegister": "Зареєструватися безкоштовно",
+    "microcopy": "Реєстрація займе менше хвилини в Telegram",
+    "eventAria": "Деталі зустрічі",
+    "evDate": "20 серпня",
+    "evTime": "19:00 · Київ",
+    "speakerName": "Ілля Клімов",
+    "marketLabel": "# 01 · контекст",
+    "marketH2": "Ринок не зник. Він став вибірковішим.",
+    "marketCopy": "Розробників на ринку стає більше. Але компанії, як і раніше, відчувають дефіцит інженерів, яким можна довірити не лише код, а й рішення.",
+    "stat1P": "За пів року конкуренція сягнула 198 і 95 відгуків на вакансію.",
+    "stat2P": "учасників найму не влаштовує рівень кандидатів; 41% бракує релевантних спеціалістів.",
+    "stat3P": "приросту software-вакансій у США припало на senior-ролі; ще 37% зростання повʼязано з AI у назві.",
+    "marketConclusion": "Кандидатів багато. <strong>Інженерів, яким довіряють рішення, як і раніше, бракує.</strong>",
+    "sources": "Джерела: <a href=\"https://dou.ua/lenta/articles/it-job-market-2-quarter-2026/\" target=\"_blank\" rel=\"noreferrer\">DOU · ринок вакансій</a> · <a href=\"https://dou.ua/lenta/articles/job-market-2026-part-2/\" target=\"_blank\" rel=\"noreferrer\">DOU · найм</a> · <a href=\"https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/\" target=\"_blank\" rel=\"noreferrer\">Indeed Hiring Lab</a>",
+    "fitLabel": "# 02 · self-check",
+    "fitH2": "Можливо, ваша позиція вразливіша, ніж здається",
+    "checkList": [
+      "Добре закриваєте задачі, але рідко берете участь у прийнятті рішень",
+      "Можете перелічити зроблене, але складно пояснити цінність роботи для компанії",
+      "Зростаєте в досвіді та зарплаті, але не в зоні впливу",
+      "Не розумієте, за якими критеріями керівництво оцінює вашу роботу",
+      "Хочете зрости до Senior або Lead, але розвиваєте переважно технічні навички",
+      "Бачите, як AI пришвидшує код, і не розумієте, за що компанії платитимуть інженеру далі",
+      "Хочете оцінити ризики до того, як ситуація стане критичною"
+    ],
+    "storyQuote": "Ідея зустрічі зʼявилася після карʼєрної консультації із сильним і результативним фахівцем, якого звільнили.",
+    "storyP": "Він прийшов обговорити пошук роботи. Але розмова швидко перейшла до іншого питання:",
+    "storyQuestion": "Чому гарної роботи виявилося недостатньо?",
+    "fitNote": "Зустріч підходить розробникам різних стеків. Найкращий час для діагностики — поки у вас усе добре.",
+    "outcomesLabel": "# 03 · result",
+    "outcomesH2": "Після зустрічі ви зможете",
+    "outcomes": [
+      {
+        "h": "Оцінити ризики своєї позиції",
+        "p": "Побачите ранні сигнали в задачах, відповідальності та комунікації, які не варто ігнорувати."
+      },
+      {
+        "h": "Зрозуміти, чи бачить компанія вашу цінність",
+        "p": "Розберетеся, що керівник оцінює крім якості коду, швидкості та кількості закритих задач."
+      },
+      {
+        "h": "Відділити свою зону впливу від рішень компанії",
+        "p": "Зрозумієте, що можна зміцнити, а що не можна виправити додатковою продуктивністю: бюджет, закриття проєкту або зміну стратегії."
+      },
+      {
+        "h": "Обрати конкретний наступний крок",
+        "p": "Визначите, що потребує уваги зараз: інженерне мислення, AI, помітність внеску, комунікація або зовнішні карʼєрні опції."
+      }
+    ],
+    "resultArrow": "→ на виході",
+    "resultStrong": "Власна карта ризиків і розуміння, що саме зміцнювати у своїй позиції.",
+    "speakerLabel": "# 04 · спікер",
+    "speakerYears": "15+ років в індустрії",
+    "speakerP1": "Ілля працює на рівні Staff Engineer і розбирає не лише технології, а й те, як інженер ухвалює рішення, пояснює свою позицію та впливає на команду.",
+    "speakerP2": "На зустрічі він поєднає інженерну оптику, карʼєрну практику та дані ринку — без обіцянок стати «незвільнюваним» і порад «просто працювати ще більше».",
+    "guildLabel": "# 05 · організатор",
+    "guildH2": "NextTick — Гільдія інженерів",
+    "guildP1": "Для Middle- і Senior-розробників, які хочуть перейти від виконання задач до інженерного впливу.",
+    "trackAria": "Напрями Гільдії",
+    "guildP2": "Не ще одна папка з матеріалами, а регулярна практика на реальних робочих ситуаціях.",
+    "faqLabel": "# 06 · faq",
+    "faqH2": "Часті запитання",
+    "faqItems": [
+      {
+        "q": "Коли і де відбудеться зустріч?",
+        "a": "20 серпня о 19:00 за Києвом, у прямому ефірі на YouTube. Посилання надішлемо зареєстрованим учасникам у Telegram."
+      },
+      {
+        "q": "Участь справді безкоштовна?",
+        "a": "Так. Для участі потрібно лише зареєструватися через Telegram-бота."
+      },
+      {
+        "q": "Зустріч лише для JavaScript-розробників?",
+        "a": "Ні. Основний контекст буде особливо близький JavaScript-інженерам, але тема актуальна для розробників різних стеків."
+      },
+      {
+        "q": "Чи потрібно зараз шукати роботу?",
+        "a": "Ні. Зустріч допоможе оцінити вашу позицію в поточній компанії. Краще зробити це до того, як ви зіткнетеся зі звільненням."
+      },
+      {
+        "q": "Чи можна буде поставити запитання Іллі?",
+        "a": "Так. В ефірі буде окрема частина з відповідями на запитання учасників."
+      },
+      {
+        "q": "Чи буде запис?",
+        "a": "Умови доступу до запису повідомимо зареєстрованим учасникам у Telegram."
+      }
+    ],
+    "finalH2": "Не чекайте звільнення, щоб уперше оцінити свою позицію",
+    "finalP": "Зрозумійте, які ризики можна помітити заздалегідь, що робить вас цінним для компанії та які навички варто зміцнити вже зараз.",
+    "footerText": "Гільдія інженерів · nexttick.it",
+    "mobileCta": "Зареєструватися",
+    "brand": "nexttick / гільдія",
+    "navAria": "Розділи",
+    "navCheck": "самоперевірка",
+    "navResult": "результат",
+    "navSpeaker": "спікер",
+    "navFaq": "faq",
+    "heroSecondary": "Перевірити позицію",
+    "freeLabel": "безкоштовно",
+    "footerTagline": "nexttick — гільдія інженерів"
+  }
+}

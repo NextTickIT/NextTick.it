@@ -114,6 +114,38 @@
       }
     },
     {
+      "out": "career-resilience.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/career-resilience/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
+      }
+    },
+    {
+      "out": "career-resilience/index.html",
+      "data": {
+        "title": "NextTick",
+        "locs": ["uk", "ru", "en"],
+        "default_loc": "uk",
+        "base": "/career-resilience/",
+        "ext": ".html",
+        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_labels": {
+          "uk": "Українська",
+          "en": "English",
+          "ru": "Русский"
+        }
+      }
+    },
+    {
       "out": "ai-speedup-checklist.html",
       "data": {
         "title": "NextTick",

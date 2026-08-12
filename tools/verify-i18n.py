@@ -16,6 +16,7 @@ SURFACES = {
     "all": "all/",
     "future-proof": "future-proof/",
     "middle": "middle/",
+    "career-resilience": "career-resilience/",
     "ai-speedup-checklist": "ai-speedup-checklist/",
     "ai-speedup-checklist-for-guild-members": "ai-speedup-checklist-for-guild-members/",
 }
