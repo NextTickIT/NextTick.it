@@ -1124,6 +1124,14 @@
       .eyebrow {
         cursor: default;
       }
+      /* Fix a hover flicker on the language switch: the house rule also set
+         pointer-events:none on :hover, which dropped the hovered link out of
+         hit-testing so :hover toggled on/off at high frequency ("blinking").
+         Keep the dead-click guard on the active (.on) locale only; let a hovered
+         non-active locale stay hoverable/clickable. */
+      .lang-switch .ls-opt:hover:not(.on) {
+        pointer-events: auto;
+      }
       @media (max-width: 560px) {
         /* Cap the framed speaker portrait so it doesn't dominate the mobile fold
            (house .author keeps a fixed small photo column on mobile). */
