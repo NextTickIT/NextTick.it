@@ -1189,6 +1189,17 @@
       .sources {
         font-size: 13px;
       }
+      .hero-langnote {
+        margin-top: 14px;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+      /* The hero eyebrow is a static <p> here (not a link) — no pointer cursor,
+         so it doesn't read as a dead click. */
+      .eyebrow {
+        cursor: default;
+      }
       @media (max-width: 560px) {
         /* Cap the framed speaker portrait so it doesn't dominate the mobile fold
            (house .author keeps a fixed small photo column on mobile). */
@@ -1201,6 +1212,139 @@
         .stat .hrs {
           font-size: 26px;
         }
+      }
+
+      /* Registration modal — house tokens */
+      .reg-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+      }
+      .reg-backdrop[hidden] {
+        display: none;
+      }
+      .reg-dialog {
+        position: relative;
+        width: min(440px, 100%);
+        max-height: calc(100vh - 40px);
+        overflow: auto;
+        border: 1px solid var(--line-2);
+        background: var(--bg-2);
+        padding: 30px clamp(20px, 4vw, 32px);
+      }
+      .reg-dialog h2 {
+        margin-bottom: 8px;
+        font-size: 28px;
+      }
+      .reg-lead {
+        margin-bottom: 22px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .reg-x {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--muted);
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .reg-x:hover {
+        color: var(--green);
+        border-color: var(--green);
+      }
+      .reg-field {
+        display: block;
+        margin-bottom: 14px;
+      }
+      .reg-field span {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+      .reg-field input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+        font: inherit;
+        /* >=16px so iOS Safari doesn't zoom the viewport on focus. */
+        font-size: 16px;
+      }
+      .reg-field input:focus {
+        outline: none;
+        border-color: var(--green);
+      }
+      .reg-consent {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin: 6px 0 16px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .reg-consent input {
+        flex: 0 0 auto;
+        margin-top: 3px;
+        width: 16px;
+        height: 16px;
+        accent-color: var(--green);
+      }
+      .reg-consent a {
+        color: var(--green);
+        text-decoration: underline;
+      }
+      /* Honeypot — offscreen, never shown to humans; bots that fill it are dropped. */
+      .reg-hp {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      .reg-err {
+        min-height: 18px;
+        margin: 0 0 12px;
+        color: var(--red);
+        font-size: 13px;
+      }
+      .reg-dialog .btn {
+        width: 100%;
+      }
+      .reg-opening {
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+      }
+      .reg-opening-box {
+        color: var(--text);
+        font-family: var(--mono);
+        text-align: center;
+      }
+      .reg-opening-box a {
+        display: inline-block;
+        margin-top: 14px;
+        color: var(--green);
+        text-decoration: underline;
       }
     </style>
     <!-- Meta Pixel Code -->
@@ -1328,8 +1472,8 @@
           <a
             class="btn"
             data-cta-location="header"
-            href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:career-resilience"
-            target="_blank"
+            data-open-register
+            href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
             rel="noopener"
             >Зареєструватися безкоштовно</a
           >
@@ -1339,10 +1483,10 @@
           <!-- HERO -->
           <header class="hero">
             <div class="hero-inner">
-              <a class="eyebrow" href="#check"
-                ><span class="dot"></span> free live · middle / middle+ /
-                senior</a
-              >
+              <p class="eyebrow">
+                <span class="dot"></span> 20 серпня · 19:00 за Києвом ·
+                Безкоштовний LIVE з Іллею Клімовим
+              </p>
               <h1>Чому звільняють розумних і продуктивних розробників</h1>
               <p class="lead">
                 Як вчасно помітити ризики, зміцнити свою позицію та зберегти
@@ -1352,8 +1496,8 @@
                 <a
                   class="btn"
                   data-cta-location="hero"
-                  href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:career-resilience"
-                  target="_blank"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
                   rel="noopener"
                   >Зареєструватися безкоштовно</a
                 >
@@ -1370,6 +1514,7 @@
                 <span>YouTube Live</span>
                 <span>безкоштовно</span>
               </div>
+              <p class="hero-langnote">* ефір російською</p>
             </div>
           </header>
 
@@ -1436,6 +1581,16 @@
                   >Indeed Hiring Lab</a
                 >
               </p>
+              <div class="hero-actions" style="margin-top: 30px">
+                <a
+                  class="btn"
+                  data-cta-location="context"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зареєструватися безкоштовно</a
+                >
+              </div>
             </div>
           </section>
 
@@ -1564,12 +1719,87 @@
                 <a
                   class="btn"
                   data-cta-location="result"
-                  href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:career-resilience"
-                  target="_blank"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
                   rel="noopener"
                   >Зареєструватися безкоштовно</a
                 >
               </div>
+            </div>
+          </section>
+
+          <!-- STREAM PROGRAM -->
+          <section id="program">
+            <div class="section-inner">
+              <div class="section-label">// програма стріму</div>
+              <h2>
+                За одну зустріч визначте, наскільки стійка ваша позиція і що
+                посилити, щоб знизити ризик скорочення
+              </h2>
+              <ul class="list" style="margin-top: 30px">
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Реальні причини, з яких звільняють сильних розробників — і
+                    чому якісний код, висока продуктивність та виконані KPI
+                    більше не гарантують, що компанія обере саме вас</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Що насправді стоїть за динамікою 7% → 29% → 77% — і яка
+                    інженерна цінність стає вразливою, коли AI забирає дедалі
+                    більше виконавських задач</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Навички, за які компанії утримуватимуть розробників у
+                    2026–2028 роках — навіть коли написання коду стає швидшим,
+                    дешевшим і доступнішим</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Авторський тест для діагностики вашої карʼєрної позиції —
+                    щоб побачити перекоси в ухваленні рішень, оцінити свою зону
+                    впливу та виявити ризики, які поки не очевидні</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Конкретні точки зростання на найближчі 3–6 місяців — щоб
+                    зміцнювати не кількість виконаної роботи, а якості, що
+                    підвищують вашу цінність для команди та бізнесу</span
+                  >
+                </li>
+              </ul>
+              <p class="choice">
+                У результаті ви зрозумієте не лише, чому сильних розробників
+                звільняють, а й що можете змінити у своїй позиції вже зараз
+              </p>
+              <div class="hero-actions" style="margin-top: 24px">
+                <a
+                  class="btn"
+                  data-cta-location="program"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зареєструватися безкоштовно</a
+                >
+              </div>
+              <p
+                class="section-copy"
+                style="margin-top: 18px; font-size: 12px; color: var(--dim)"
+              >
+                * 7% → 29% → 77% — частка tech-скорочень, які Layoffs.fyi
+                повʼязує з AI: 2024, 2025 і 2026 роки відповідно; дані станом на
+                серпень 2026 року.
+              </p>
             </div>
           </section>
 
@@ -1604,6 +1834,16 @@
                   дані ринку — без обіцянок стати «незвільнюваним» і порад
                   «просто працювати ще більше».
                 </p>
+                <div class="hero-actions" style="margin-top: 24px">
+                  <a
+                    class="btn"
+                    data-cta-location="speaker"
+                    data-open-register
+                    href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                    rel="noopener"
+                    >Зареєструватися безкоштовно</a
+                  >
+                </div>
               </div>
             </div>
           </section>
@@ -1630,6 +1870,384 @@
                 Не ще одна папка з матеріалами, а регулярна практика на реальних
                 робочих ситуаціях.
               </p>
+            </div>
+          </section>
+
+          <!-- REVIEWS -->
+          <section id="reviews">
+            <div class="section-inner">
+              <div class="section-label">// відгуки</div>
+              <h2>Відгуки учасників</h2>
+              <div class="rec-carousel" aria-label="Відгук учасника">
+                <div class="rec-track">
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-12.webp"
+                        alt="Відгук учасника"
+                        width="489"
+                        height="511"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-09.webp"
+                        alt="Відгук учасника"
+                        width="926"
+                        height="727"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-10.webp"
+                        alt="Відгук учасника"
+                        width="951"
+                        height="175"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-16.webp"
+                        alt="Відгук учасника"
+                        width="944"
+                        height="735"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-14.webp"
+                        alt="Відгук учасника"
+                        width="814"
+                        height="151"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-04.webp"
+                        alt="Відгук учасника"
+                        width="928"
+                        height="646"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-13.webp"
+                        alt="Відгук учасника"
+                        width="934"
+                        height="228"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-07.webp"
+                        alt="Відгук учасника"
+                        width="821"
+                        height="443"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-02.webp"
+                        alt="Відгук учасника"
+                        width="1020"
+                        height="292"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-18.webp"
+                        alt="Відгук учасника"
+                        width="928"
+                        height="453"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-05.webp"
+                        alt="Відгук учасника"
+                        width="926"
+                        height="290"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-01.webp"
+                        alt="Відгук учасника"
+                        width="1072"
+                        height="152"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-06.webp"
+                        alt="Відгук учасника"
+                        width="614"
+                        height="292"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-03.webp"
+                        alt="Відгук учасника"
+                        width="902"
+                        height="314"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-11.webp"
+                        alt="Відгук учасника"
+                        width="818"
+                        height="90"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-15.webp"
+                        alt="Відгук учасника"
+                        width="926"
+                        height="395"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-17.webp"
+                        alt="Відгук учасника"
+                        width="924"
+                        height="348"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-08.webp"
+                        alt="Відгук учасника"
+                        width="846"
+                        height="118"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-12.webp"
+                        alt="Відгук учасника"
+                        width="489"
+                        height="511"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-09.webp"
+                        alt="Відгук учасника"
+                        width="926"
+                        height="727"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-10.webp"
+                        alt="Відгук учасника"
+                        width="951"
+                        height="175"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-16.webp"
+                        alt="Відгук учасника"
+                        width="944"
+                        height="735"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-14.webp"
+                        alt="Відгук учасника"
+                        width="814"
+                        height="151"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-04.webp"
+                        alt="Відгук учасника"
+                        width="928"
+                        height="646"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-13.webp"
+                        alt="Відгук учасника"
+                        width="934"
+                        height="228"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-07.webp"
+                        alt="Відгук учасника"
+                        width="821"
+                        height="443"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-02.webp"
+                        alt="Відгук учасника"
+                        width="1020"
+                        height="292"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-18.webp"
+                        alt="Відгук учасника"
+                        width="928"
+                        height="453"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-05.webp"
+                        alt="Відгук учасника"
+                        width="926"
+                        height="290"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-01.webp"
+                        alt="Відгук учасника"
+                        width="1072"
+                        height="152"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-06.webp"
+                        alt="Відгук учасника"
+                        width="614"
+                        height="292"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-03.webp"
+                        alt="Відгук учасника"
+                        width="902"
+                        height="314"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-11.webp"
+                        alt="Відгук учасника"
+                        width="818"
+                        height="90"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-15.webp"
+                        alt="Відгук учасника"
+                        width="926"
+                        height="395"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-17.webp"
+                        alt="Відгук учасника"
+                        width="924"
+                        height="348"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-08.webp"
+                        alt="Відгук учасника"
+                        width="846"
+                        height="118"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-actions" style="margin-top: 30px">
+                <a
+                  class="btn"
+                  data-cta-location="reviews"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зареєструватися безкоштовно</a
+                >
+              </div>
             </div>
           </section>
 
@@ -1706,8 +2324,8 @@
                 <a
                   class="btn"
                   data-cta-location="final"
-                  href="https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&amp;source_channel=website:career-resilience"
-                  target="_blank"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
                   rel="noopener"
                   >Зареєструватися безкоштовно</a
                 >
@@ -1775,6 +2393,347 @@
       </div>
     </div>
 
+    <!-- Registration modal -->
+    <div class="reg-backdrop" id="reg-modal" hidden>
+      <div
+        class="reg-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reg-title"
+      >
+        <button type="button" class="reg-x" data-reg-close aria-label="Закрити">
+          ×
+        </button>
+        <p class="section-label"># register</p>
+        <h2 id="reg-title">Реєстрація на зустріч</h2>
+        <p class="reg-lead">Займіть місце — посилання надішлемо в Telegram.</p>
+        <form id="reg-form" novalidate>
+          <label class="reg-field" for="reg-name"
+            ><span>Імʼя</span>
+            <input
+              id="reg-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              maxlength="120"
+              required
+          /></label>
+          <label class="reg-field" for="reg-phone"
+            ><span>Телефон</span>
+            <input
+              id="reg-phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              maxlength="32"
+              required
+          /></label>
+          <label class="reg-field" for="reg-email"
+            ><span>Email</span>
+            <input
+              id="reg-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              maxlength="320"
+              required
+          /></label>
+          <label class="reg-consent" for="reg-consent">
+            <input id="reg-consent" name="consent" type="checkbox" required />
+            <span
+              >Погоджуюсь з
+              <a href="/privacy.html">політикою конфіденційності</a> та
+              <a href="/consent.html">обробкою даних</a></span
+            >
+          </label>
+          <input
+            class="reg-hp"
+            type="text"
+            name="company_url"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+          <p class="reg-err" id="reg-error" role="alert"></p>
+          <button type="submit" class="btn">Зареєструватися</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // Insertion 1 — capture ad attribution into localStorage["attr"] so it
+        // survives navigation (utm_*, funnel, fb_placement, fb_ad_id, fbclid).
+        try {
+          var p = new URLSearchParams(location.search);
+          var keys = [
+            "utm_source",
+            "utm_medium",
+            "utm_campaign",
+            "utm_content",
+            "utm_term",
+            "funnel",
+            "fb_placement",
+            "fb_ad_id",
+          ];
+          var a0 = {};
+          try {
+            a0 = JSON.parse(localStorage.getItem("attr") || "{}");
+          } catch (e) {}
+          keys.forEach(function (k) {
+            if (p.get(k)) a0[k] = p.get(k);
+          });
+          // Store fbclid only. The _fbc COOKIE (set by the Meta Pixel) is the
+          // single source of truth for fbc — never synthesize a second one here.
+          if (p.get("fbclid")) a0.fbclid = p.get("fbclid");
+          localStorage.setItem("attr", JSON.stringify(a0));
+        } catch (e) {}
+
+        var I18N = {
+          opening: "Відкриваємо Telegram…",
+          openLink: "Не відкрилось? Натисніть тут",
+          fill: "Заповніть усі поля та підтвердіть згоду.",
+          badEmail: "Введіть коректний email.",
+        };
+        var ENDPOINT = "https://app.nexttick.it/api/register";
+        var BOT_FALLBACK =
+          "https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar";
+        var CONSENT_VERSION = "consent-2026-08";
+        var POLICY_URL = "/consent.html";
+        var submitting = false;
+        var lastTrigger = null;
+        var openedAt = 0;
+        var pageEl = document.querySelector(".page");
+
+        var modal = document.getElementById("reg-modal");
+        var form = document.getElementById("reg-form");
+        var errEl = document.getElementById("reg-error");
+
+        function cookie(n) {
+          var m = document.cookie.split("; ").find(function (r) {
+            return r.indexOf(n + "=") === 0;
+          });
+          return m ? m.slice(n.length + 1) : "";
+        }
+        function getAttr() {
+          try {
+            return JSON.parse(localStorage.getItem("attr") || "{}");
+          } catch (e) {
+            return {};
+          }
+        }
+        function openModal(e) {
+          if (e) {
+            e.preventDefault();
+            lastTrigger = e.target.closest("[data-open-register]") || null;
+          }
+          if (!modal) return;
+          modal.hidden = false;
+          document.body.style.overflow = "hidden";
+          // inert the page behind the dialog so SR/keyboard users stay trapped in it.
+          if (pageEl && "inert" in pageEl) pageEl.inert = true;
+          openedAt = Date.now();
+          var el = document.getElementById("reg-name");
+          if (el) el.focus();
+        }
+        function closeModal() {
+          if (!modal) return;
+          modal.hidden = true;
+          document.body.style.overflow = "";
+          if (pageEl && "inert" in pageEl) pageEl.inert = false;
+          if (lastTrigger && lastTrigger.focus) lastTrigger.focus();
+        }
+
+        // Bind opening DIRECTLY on each trigger. A delegated document-level
+        // listener can lose the race to the native <a> navigation in some in-app
+        // webviews — which is why taps intermittently "blinked" to the bot in a
+        // new view instead of opening the modal. Direct listeners intercept first.
+        Array.prototype.forEach.call(
+          document.querySelectorAll("[data-open-register]"),
+          function (el) {
+            el.addEventListener("click", openModal);
+          },
+        );
+        document.addEventListener("click", function (e) {
+          if (e.target.closest && e.target.closest("[data-reg-close]")) {
+            closeModal();
+            return;
+          }
+          if (e.target === modal) closeModal();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeModal();
+        });
+
+        function fallbackUrl(a, leadId) {
+          var base = BOT_FALLBACK.split("?");
+          var q = new URLSearchParams(base[1] || "");
+          q.set("lead_id", leadId);
+          [
+            "utm_source",
+            "utm_medium",
+            "utm_campaign",
+            "utm_content",
+            "utm_term",
+            "funnel",
+          ].forEach(function (k) {
+            if (a[k]) q.set(k, a[k]);
+          });
+          return base[0] + "?" + q.toString();
+        }
+        function showOpening(url) {
+          // The real bot-open happens here (not on CTA click) — log it now.
+          try {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "join_cta_click",
+              cta_location: "register-modal",
+              link_url: url,
+            });
+            if (typeof window.gtag === "function")
+              window.gtag("event", "join_cta_click", {
+                cta_location: "register-modal",
+                link_url: url,
+              });
+          } catch (e) {}
+          var o = document.createElement("div");
+          o.className = "reg-opening";
+          var box = document.createElement("div");
+          box.className = "reg-opening-box";
+          var msg = document.createElement("p");
+          msg.textContent = I18N.opening;
+          var link = document.createElement("a");
+          link.href = url;
+          link.textContent = I18N.openLink;
+          box.appendChild(msg);
+          box.appendChild(link);
+          o.appendChild(box);
+          document.body.appendChild(o);
+          // Navigate promptly — deferred top-nav is blocked by some in-app webviews;
+          // the visible "tap here" link is the always-present manual fallback.
+          setTimeout(function () {
+            window.location.href = url;
+          }, 150);
+        }
+
+        if (form)
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (submitting) return;
+            errEl.textContent = "";
+            var name = (document.getElementById("reg-name").value || "").trim();
+            var phone = (
+              document.getElementById("reg-phone").value || ""
+            ).trim();
+            var email = (
+              document.getElementById("reg-email").value || ""
+            ).trim();
+            var consent = document.getElementById("reg-consent").checked;
+            var hpEl = form.querySelector("[name=company_url]");
+            var hp = hpEl ? hpEl.value || "" : "";
+            if (!name || !phone || !email || !consent) {
+              errEl.textContent = I18N.fill;
+              return;
+            }
+            if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+              errEl.textContent = I18N.badEmail;
+              return;
+            }
+            submitting = true;
+            var submitBtn = form.querySelector("[type=submit]");
+            if (submitBtn) submitBtn.disabled = true;
+
+            var a = getAttr();
+            var leadId =
+              "ld_" +
+              Date.now() +
+              "_" +
+              Math.random().toString(36).slice(2, 10);
+            var fbp = cookie("_fbp");
+            // fbc: the Pixel-set _fbc cookie only (single source of truth for dedup).
+            var fbc = cookie("_fbc") || "";
+
+            try {
+              if (typeof fbq === "function")
+                fbq(
+                  "track",
+                  "Lead",
+                  {
+                    content_name: a.funnel || "unknown_funnel",
+                    funnel: a.funnel || "",
+                    utm_source: a.utm_source || "",
+                    utm_medium: a.utm_medium || "",
+                    utm_campaign: a.utm_campaign || "",
+                    utm_content: a.utm_content || "",
+                    utm_term: a.utm_term || "",
+                    fb_ad_id: a.fb_ad_id || "",
+                    lead_id: leadId,
+                  },
+                  { eventID: leadId },
+                );
+            } catch (e) {}
+
+            var payload = {
+              name: name,
+              phone: phone,
+              email: email,
+              consent: consent,
+              event_id: leadId,
+              consent_version: CONSENT_VERSION,
+              policy_url: POLICY_URL,
+              hp: hp,
+              elapsed_ms: openedAt ? Date.now() - openedAt : 0,
+              funnel: a.funnel || "",
+              utm_source: a.utm_source || "",
+              utm_medium: a.utm_medium || "",
+              utm_campaign: a.utm_campaign || "",
+              utm_content: a.utm_content || "",
+              utm_term: a.utm_term || "",
+              fb_placement: a.fb_placement || "",
+              fb_ad_id: a.fb_ad_id || "",
+              fbclid: a.fbclid || "",
+              fbp: fbp,
+              fbc: fbc,
+              landing_url: location.href,
+              locale: document.documentElement.lang || "",
+            };
+            var ac = "AbortController" in window ? new AbortController() : null;
+            var timer = ac
+              ? setTimeout(function () {
+                  ac.abort();
+                }, 8000)
+              : 0;
+            fetch(ENDPOINT, {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(payload),
+              signal: ac ? ac.signal : undefined,
+            })
+              .then(function (r) {
+                return r.ok ? r.json() : Promise.reject(r);
+              })
+              .then(function (d) {
+                if (timer) clearTimeout(timer);
+                showOpening((d && d.url) || fallbackUrl(a, leadId));
+              })
+              .catch(function () {
+                if (timer) clearTimeout(timer);
+                showOpening(fallbackUrl(a, leadId));
+              });
+          });
+
+        // Tapping a consent policy link must not toggle the checkbox.
+        Array.prototype.forEach.call(
+          document.querySelectorAll("#reg-form .reg-consent a"),
+          function (link) {
+            link.addEventListener("click", function (ev) {
+              ev.stopPropagation();
+            });
+          },
+        );
+      })();
+    </script>
+
     <script>
       // Light/dark theme toggle.
       (function () {
@@ -1839,6 +2798,8 @@
       document.addEventListener("click", function (e) {
         var a = e.target.closest && e.target.closest("a");
         if (!a) return;
+        // CTAs that open the register modal are counted at redirect time, not here.
+        if (a.hasAttribute("data-open-register")) return;
         var href = a.href || "";
         var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
         var isCta = !!(a.dataset && a.dataset.ctaLocation);

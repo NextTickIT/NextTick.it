@@ -57,8 +57,8 @@ const PAGE_DEFS = [
       "career-resilience/ru.html",
       "career-resilience/uk.html",
     ],
-    channel: "website:career-resilience",
-    start: "6a4f770343a30de13e0cbfbc",
+    channel: "webinar",
+    start: "6a7db7b03abe1dde0804837b",
   },
   {
     dir: "ai-speedup-checklist",
