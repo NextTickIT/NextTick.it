@@ -135,7 +135,8 @@
     "programFootnote": "* 7% → 29% → 77% — the share of tech layoffs Layoffs.fyi attributes to AI in 2024, 2025, and 2026 respectively; data as of August 2026.",
     "reviewsLabel": "// reviews",
     "reviewsH2": "What participants say",
-    "reviewsAlt": "Participant review"
+    "reviewsAlt": "Participant review",
+    "regBadPhone": "Please enter a valid phone number."
   },
   "ru": {
     "title": "Почему умных и продуктивных разработчиков увольняют | NextTick",
@@ -273,7 +274,8 @@
     "programFootnote": "* 7% → 29% → 77% — доля tech-сокращений, которые Layoffs.fyi связывает с AI: 2024, 2025 и 2026 годы соответственно; данные на август 2026 года.",
     "reviewsLabel": "// отзывы",
     "reviewsH2": "Отзывы участников",
-    "reviewsAlt": "Отзыв участника"
+    "reviewsAlt": "Отзыв участника",
+    "regBadPhone": "Введите корректный номер телефона."
   },
   "uk": {
     "title": "Чому звільняють розумних і продуктивних розробників | NextTick",
@@ -411,6 +413,7 @@
     "programFootnote": "* 7% → 29% → 77% — частка tech-скорочень, які Layoffs.fyi повʼязує з AI: 2024, 2025 і 2026 роки відповідно; дані станом на серпень 2026 року.",
     "reviewsLabel": "// відгуки",
     "reviewsH2": "Відгуки учасників",
-    "reviewsAlt": "Відгук учасника"
+    "reviewsAlt": "Відгук учасника",
+    "regBadPhone": "Введіть коректний номер телефону."
   }
 }

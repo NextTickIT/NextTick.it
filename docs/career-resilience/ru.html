@@ -1334,6 +1334,10 @@
       .reg-dialog .btn {
         width: 100%;
       }
+      .reg-dialog .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
       .reg-opening {
         position: fixed;
         inset: 0;
@@ -2465,7 +2469,7 @@
             aria-hidden="true"
           />
           <p class="reg-err" id="reg-error" role="alert"></p>
-          <button type="submit" class="btn">Зарегистрироваться</button>
+          <button type="submit" class="btn" disabled>Зарегистрироваться</button>
         </form>
       </div>
     </div>
@@ -2504,6 +2508,7 @@
           openLink: "Не открылось? Нажмите здесь",
           fill: "Заполните все поля и подтвердите согласие.",
           badEmail: "Введите корректный email.",
+          badPhone: "Введите корректный номер телефона.",
         };
         var ENDPOINT = "https://app.nexttick.it/api/register";
         var BOT_FALLBACK =
@@ -2645,6 +2650,17 @@
               errEl.textContent = I18N.fill;
               return;
             }
+            // Phone: accept any international format (optional +, digits and
+            // common separators), 7–15 digits per E.164.
+            var phoneDigits = phone.replace(/\D/g, "");
+            if (
+              !/^\+?[\d\s()\-.]+$/.test(phone) ||
+              phoneDigits.length < 7 ||
+              phoneDigits.length > 15
+            ) {
+              errEl.textContent = I18N.badPhone;
+              return;
+            }
             if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
               errEl.textContent = I18N.badEmail;
               return;
@@ -2731,6 +2747,18 @@
                 showOpening(fallbackUrl(a, leadId));
               });
           });
+
+        // Keep the submit button disabled until data-collection consent is ticked.
+        var regConsent = document.getElementById("reg-consent");
+        var regSubmitBtn = form ? form.querySelector("[type=submit]") : null;
+        function syncSubmitEnabled() {
+          if (regSubmitBtn)
+            regSubmitBtn.disabled =
+              submitting || !(regConsent && regConsent.checked);
+        }
+        if (regConsent)
+          regConsent.addEventListener("change", syncSubmitEnabled);
+        syncSubmitEnabled();
 
         // Tapping a consent policy link must not toggle the checkbox.
         Array.prototype.forEach.call(
