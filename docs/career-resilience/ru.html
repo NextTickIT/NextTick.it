@@ -8,7 +8,13 @@
          parallel with parsing — shrinks time-to-PageView on cold connections. -->
     <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
     <link rel="preconnect" href="https://www.googletagmanager.com" />
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel + first-party CAPI PageView beacon (career-resilience only).
+         Inlined instead of the shared partial so the browser Pixel and the
+         server-side CAPI PageView share ONE event_id → Meta dedups them:
+           · normal visitors     → both events arrive, counted once;
+           · ad-blocked visitors → fbevents.js is blocked, but the first-party
+             beacon to app.nexttick.it still lands → still counted once.
+         No PageView is lost. -->
     <script>
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
@@ -33,8 +39,59 @@
         "script",
         "https://connect.facebook.net/en_US/fbevents.js",
       );
-      fbq("init", "1543537094181571");
-      fbq("track", "PageView");
+      (function () {
+        var CAPI_BEACON = "https://app.nexttick.it/api/pageview";
+        // One id shared by the browser Pixel and the server CAPI event so Meta
+        // dedups the redundant pair into a single counted PageView.
+        var eventId;
+        try {
+          eventId =
+            window.crypto && crypto.randomUUID ? crypto.randomUUID() : "";
+        } catch (e) {}
+        if (!eventId)
+          eventId =
+            "pv_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+
+        fbq("init", "1543537094181571");
+        fbq("track", "PageView", {}, { eventID: eventId });
+
+        // First-party beacon — reaches our own origin even when fbevents.js is
+        // blocked, so ad-blocked visitors still register a (deduped) PageView.
+        try {
+          var ck = function (name) {
+            var m = document.cookie.split("; ").find(function (r) {
+              return r.indexOf(name + "=") === 0;
+            });
+            return m ? m.slice(name.length + 1) : "";
+          };
+          var q = new URLSearchParams(location.search);
+          var fbclid = q.get("fbclid") || "";
+          var fbc =
+            ck("_fbc") || (fbclid ? "fb.1." + Date.now() + "." + fbclid : "");
+          var payload = {
+            event_id: eventId,
+            event_source_url: location.href,
+            fbp: ck("_fbp") || undefined,
+            fbc: fbc || undefined,
+            fbclid: fbclid || undefined,
+            funnel: q.get("funnel") || undefined,
+            utm_source: q.get("utm_source") || undefined,
+            utm_medium: q.get("utm_medium") || undefined,
+            utm_campaign: q.get("utm_campaign") || undefined,
+            utm_content: q.get("utm_content") || undefined,
+            utm_term: q.get("utm_term") || undefined,
+            fb_placement: q.get("fb_placement") || undefined,
+            fb_ad_id: q.get("fb_ad_id") || undefined,
+            locale: document.documentElement.lang || undefined,
+          };
+          fetch(CAPI_BEACON, {
+            method: "POST",
+            keepalive: true,
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(payload),
+          }).catch(function () {});
+        } catch (e) {}
+      })();
     </script>
     <noscript
       ><img
@@ -43,7 +100,6 @@
         style="display: none"
         src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
     /></noscript>
-    <!-- End Meta Pixel Code -->
     <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
