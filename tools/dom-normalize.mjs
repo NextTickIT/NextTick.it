@@ -64,11 +64,18 @@ function canonAttrValue(tag, name, value) {
     return value;
   }
   if (name === "href" || name === "src") {
+    // Self-hosted font preloads are per-locale (uk/ru → cyrillic, en → latin).
+    // That subset token is a locale variant (like a nav href), not structural
+    // drift, so collapse it before the shared URL canonicalization.
+    const canon = value.replace(
+      /(\/assets\/fonts\/[^"']*?)-(?:latin|cyrillic)\.woff2/g,
+      "$1-§S§.woff2",
+    );
     // Reuse the same-locale oracle's URL canonicalization so both oracles agree
     // on what a nav/roadmap delta is. Wrapping in href="…" lets canonUrl's
     // relative-href rule fire; its absolute-URL and roadmap rules match inside
     // the wrapper too. Unchanged values pass through untouched.
-    return canonUrl(`href="${value}"`).slice('href="'.length, -1);
+    return canonUrl(`href="${canon}"`).slice('href="'.length, -1);
   }
   return value;
 }

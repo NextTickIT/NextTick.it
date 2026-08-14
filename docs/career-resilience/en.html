@@ -4,6 +4,46 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
+    <!-- Warm up the tracking origins so fbevents.js / gtm.js handshake in
+         parallel with parsing — shrinks time-to-PageView on cold connections. -->
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "1543537094181571");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
@@ -99,13 +139,202 @@
         y.parentNode.insertBefore(t, y);
       })(window, document, "clarity", "script", "x5houryvs2");
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/inter-700-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/inter-400-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/jbmono-400-latin.woff2"
+      crossorigin
     />
     <style>
+      /* ── Self-hosted fonts (subsetted latin+cyrillic woff2, same-origin) ──
+         Replaces the render-blocking Google Fonts stylesheet: no third-party
+         round-trip, and the critical weights are <link rel=preload>-ed in the
+         head so the hero paints in the real font with no swap = no layout shift.
+         The *-Fallback faces are metric-matched (size/ascent/descent overrides)
+         so any pre-swap paint on a slow connection reflows ~0px. */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/assets/fonts/inter-400-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/assets/fonts/inter-400-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("/assets/fonts/inter-500-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("/assets/fonts/inter-500-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url("/assets/fonts/inter-600-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url("/assets/fonts/inter-600-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("/assets/fonts/inter-700-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("/assets/fonts/inter-700-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 800;
+        font-display: swap;
+        src: url("/assets/fonts/inter-800-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 800;
+        font-display: swap;
+        src: url("/assets/fonts/inter-800-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/assets/fonts/jbmono-400-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/assets/fonts/jbmono-400-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("/assets/fonts/jbmono-500-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("/assets/fonts/jbmono-500-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url("/assets/fonts/jbmono-600-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url("/assets/fonts/jbmono-600-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* Metric-matched fallbacks — occupy the same space as the webfont so a
+         pre-swap paint (slow connection) does not reflow. Values tuned for
+         Inter-over-Arial (next/font metrics). */
+      @font-face {
+        font-family: "Inter Fallback";
+        src: local("Arial");
+        ascent-override: 90.44%;
+        descent-override: 22.52%;
+        line-gap-override: 0%;
+        size-adjust: 107.12%;
+      }
+      @font-face {
+        font-family: "JBMono Fallback";
+        src: local("Courier New"), local("Courier");
+        size-adjust: 100%;
+      }
       :root {
         color-scheme: dark;
         --bg: #0b0d0f;
@@ -132,10 +361,11 @@
         --dot-y: #4a3a14;
         --dot-g: #1d3a24;
         --mono:
-          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+          "JetBrains Mono", "JBMono Fallback", ui-monospace, SFMono-Regular,
+          Menlo, monospace;
         --sans:
-          "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
+          "Inter", "Inter Fallback", system-ui, -apple-system,
+          BlinkMacSystemFont, "Segoe UI", sans-serif;
         --max: 1160px;
       }
 
@@ -1357,42 +1587,6 @@
         text-decoration: underline;
       }
     </style>
-    <!-- Meta Pixel Code -->
-    <script>
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () {
-          n.callMethod
-            ? n.callMethod.apply(n, arguments)
-            : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = "2.0";
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-      })(
-        window,
-        document,
-        "script",
-        "https://connect.facebook.net/en_US/fbevents.js",
-      );
-      fbq("init", "1543537094181571");
-      fbq("track", "PageView");
-    </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -1819,11 +2013,12 @@
             <div class="section-inner split">
               <div class="card portrait acc-cyan">
                 <img
-                  src="/assets/author-ilya-fwdays.jpg"
+                  src="/assets/author-ilya-fwdays.webp"
                   alt="Illya Klymov"
                   width="820"
                   height="1040"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div>
