@@ -41,6 +41,40 @@
       );
       (function () {
         var CAPI_BEACON = "https://app.nexttick.it/api/pageview";
+        var ck = function (name) {
+          var m = document.cookie.split("; ").find(function (r) {
+            return r.indexOf(name + "=") === 0;
+          });
+          return m ? m.slice(name.length + 1) : "";
+        };
+        var setCk = function (name, value) {
+          try {
+            document.cookie =
+              name + "=" + value + "; path=/; max-age=63072000; SameSite=Lax";
+          } catch (e) {}
+        };
+        // Stable first-party visitor id → sent as external_id on every Pixel +
+        // CAPI event. It is the one match key that survives ad-blockers, so no
+        // event is left without user_data (Meta does not count IP+UA alone).
+        var uid = ck("nt_uid");
+        if (!uid) {
+          try {
+            uid = window.crypto && crypto.randomUUID ? crypto.randomUUID() : "";
+          } catch (e) {}
+          if (!uid)
+            uid =
+              "nt_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+          setCk("nt_uid", uid);
+        }
+        // Self-generate _fbp when the Pixel cookie is absent (fbevents blocked or
+        // not yet run). fbevents adopts an existing _fbp, so the browser Pixel and
+        // the server CAPI keep sharing one fbp for matching + dedup.
+        var fbp = ck("_fbp");
+        if (!fbp) {
+          fbp = "fb.1." + Date.now() + "." + Math.floor(Math.random() * 1e10);
+          setCk("_fbp", fbp);
+        }
+
         // One id shared by the browser Pixel and the server CAPI event so Meta
         // dedups the redundant pair into a single counted PageView.
         var eventId;
@@ -52,18 +86,14 @@
           eventId =
             "pv_" + Date.now() + "_" + Math.random().toString(16).slice(2);
 
-        fbq("init", "1543537094181571");
+        // external_id in advanced matching → browser Pixel events match the same
+        // person as the server events (both hash sha256 of the lowercased uid).
+        fbq("init", "1543537094181571", { external_id: uid });
         fbq("track", "PageView", {}, { eventID: eventId });
 
         // First-party beacon — reaches our own origin even when fbevents.js is
         // blocked, so ad-blocked visitors still register a (deduped) PageView.
         try {
-          var ck = function (name) {
-            var m = document.cookie.split("; ").find(function (r) {
-              return r.indexOf(name + "=") === 0;
-            });
-            return m ? m.slice(name.length + 1) : "";
-          };
           var q = new URLSearchParams(location.search);
           var fbclid = q.get("fbclid") || "";
           var fbc =
@@ -71,7 +101,8 @@
           var payload = {
             event_id: eventId,
             event_source_url: location.href,
-            fbp: ck("_fbp") || undefined,
+            external_id: uid,
+            fbp: fbp || undefined,
             fbc: fbc || undefined,
             fbclid: fbclid || undefined,
             funnel: q.get("funnel") || undefined,
@@ -2785,6 +2816,35 @@
           });
           return m ? m.slice(n.length + 1) : "";
         }
+        function setCookie(n, v) {
+          try {
+            document.cookie =
+              n + "=" + v + "; path=/; max-age=63072000; SameSite=Lax";
+          } catch (e) {}
+        }
+        // Same first-party ids the head beacon writes; regenerate defensively so
+        // the Lead carries external_id + fbp even if the beacon block never ran.
+        function ntUid() {
+          var v = cookie("nt_uid");
+          if (!v) {
+            try {
+              v = window.crypto && crypto.randomUUID ? crypto.randomUUID() : "";
+            } catch (e) {}
+            if (!v)
+              v =
+                "nt_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+            setCookie("nt_uid", v);
+          }
+          return v;
+        }
+        function ntFbp() {
+          var v = cookie("_fbp");
+          if (!v) {
+            v = "fb.1." + Date.now() + "." + Math.floor(Math.random() * 1e10);
+            setCookie("_fbp", v);
+          }
+          return v;
+        }
         function getAttr() {
           try {
             return JSON.parse(localStorage.getItem("attr") || "{}");
@@ -2850,6 +2910,23 @@
             if (a[k]) q.set(k, a[k]);
           });
           return base[0] + "?" + q.toString();
+        }
+        // Ride the RAW click identifiers on the bot link as ordinary query params
+        // → SendPulse stores them as contact variables and replays them on its
+        // Purchase CAPI event. Must stay raw: a lowercased/truncated fbclid makes
+        // Meta reject the fbc ("modified fbclid"). URL.searchParams handles only
+        // percent-encoding, never case/length — so fbc reaches SendPulse intact.
+        function withAttr(url, uid, fbp, fbc, fbclid) {
+          try {
+            var u = new URL(url, location.href);
+            if (fbc) u.searchParams.set("fbc", fbc);
+            if (fbp) u.searchParams.set("fbp", fbp);
+            if (fbclid) u.searchParams.set("fbclid", fbclid);
+            if (uid) u.searchParams.set("nt_click_id", uid);
+            return u.toString();
+          } catch (e) {
+            return url;
+          }
         }
         function showOpening(url) {
           // The real bot-open happens here (not on CTA click) — log it now.
@@ -2930,7 +3007,8 @@
               Date.now() +
               "_" +
               Math.random().toString(36).slice(2, 10);
-            var fbp = cookie("_fbp");
+            var uid = ntUid();
+            var fbp = ntFbp();
             // fbc: the Pixel-set _fbc cookie only (single source of truth for dedup).
             var fbc = cookie("_fbc") || "";
 
@@ -2975,6 +3053,7 @@
               fbclid: a.fbclid || "",
               fbp: fbp,
               fbc: fbc,
+              external_id: uid,
               landing_url: location.href,
               locale: document.documentElement.lang || "",
             };
@@ -2995,11 +3074,21 @@
               })
               .then(function (d) {
                 if (timer) clearTimeout(timer);
-                showOpening((d && d.url) || fallbackUrl(a, leadId));
+                showOpening(
+                  withAttr(
+                    (d && d.url) || fallbackUrl(a, leadId),
+                    uid,
+                    fbp,
+                    fbc,
+                    a.fbclid,
+                  ),
+                );
               })
               .catch(function () {
                 if (timer) clearTimeout(timer);
-                showOpening(fallbackUrl(a, leadId));
+                showOpening(
+                  withAttr(fallbackUrl(a, leadId), uid, fbp, fbc, a.fbclid),
+                );
               });
           });
 
