@@ -1514,20 +1514,10 @@
         border-color: var(--green);
       }
       .reg-consent {
-        display: flex;
-        gap: 10px;
-        align-items: flex-start;
         margin: 6px 0 16px;
         color: var(--muted);
         font-size: 13px;
         line-height: 1.5;
-      }
-      .reg-consent input {
-        flex: 0 0 auto;
-        margin-top: 3px;
-        width: 16px;
-        height: 16px;
-        accent-color: var(--green);
       }
       .reg-consent a {
         color: var(--green);
@@ -1903,13 +1893,10 @@
             ><span><%~ regEmail %></span>
             <input id="reg-email" name="email" type="email" autocomplete="email" maxlength="320" required
           /></label>
-          <label class="reg-consent" for="reg-consent">
-            <input id="reg-consent" name="consent" type="checkbox" required />
-            <span><%~ regConsent %></span>
-          </label>
+          <p class="reg-consent"><%~ regConsent %></p>
           <input class="reg-hp" type="text" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <p class="reg-err" id="reg-error" role="alert"></p>
-          <button type="submit" class="btn" disabled><%~ regSubmit %></button>
+          <button type="submit" class="btn"><%~ regSubmit %></button>
         </form>
       </div>
     </div>
@@ -2112,7 +2099,9 @@
             var name = (document.getElementById("reg-name").value || "").trim();
             var phone = (document.getElementById("reg-phone").value || "").trim();
             var email = (document.getElementById("reg-email").value || "").trim();
-            var consent = document.getElementById("reg-consent").checked;
+            // Consent is implied by submitting — the form states it in text next
+            // to the button — so it is always true and no longer gates the form.
+            var consent = true;
             var hpEl = form.querySelector("[name=company_url]");
             var hp = hpEl ? hpEl.value || "" : "";
             if (!name || !phone || !email || !consent) {
@@ -2203,26 +2192,10 @@
               });
           });
 
-        // Keep the submit button disabled until data-collection consent is ticked.
-        var regConsent = document.getElementById("reg-consent");
-        var regSubmitBtn = form ? form.querySelector("[type=submit]") : null;
-        function syncSubmitEnabled() {
-          if (regSubmitBtn)
-            regSubmitBtn.disabled =
-              submitting || !(regConsent && regConsent.checked);
-        }
-        if (regConsent) regConsent.addEventListener("change", syncSubmitEnabled);
-        syncSubmitEnabled();
-
-        // Tapping a consent policy link must not toggle the checkbox.
-        Array.prototype.forEach.call(
-          document.querySelectorAll("#reg-form .reg-consent a"),
-          function (link) {
-            link.addEventListener("click", function (ev) {
-              ev.stopPropagation();
-            });
-          },
-        );
+        // Consent is implied by submitting (stated in the form text), so the
+        // submit button is enabled from the start — there is no checkbox to miss,
+        // and the policy links open in a new tab so tapping them never navigates
+        // the page away and wipes the half-filled form.
       })();
     </script>
 
