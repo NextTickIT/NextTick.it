@@ -2796,6 +2796,25 @@
           "https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar";
         var CONSENT_VERSION = "consent-2026-08";
         var POLICY_URL = "/consent.html";
+        // Same host as ENDPOINT with /register -> /diag. Best-effort beacon that
+        // records which form field stalled a submit (see fail() below); log-only
+        // on the server (NTREG key), so a failure here never affects the user.
+        var DIAG_ENDPOINT = (ENDPOINT || "").replace(/\/register$/, "/diag");
+        function diag(reason) {
+          if (!DIAG_ENDPOINT) return;
+          try {
+            fetch(DIAG_ENDPOINT, {
+              method: "POST",
+              keepalive: true,
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                reason: reason,
+                locale: document.documentElement.lang || "",
+                landing_url: location.href,
+              }),
+            }).catch(function () {});
+          } catch (e) {}
+        }
         var submitting = false;
         var lastTrigger = null;
         var openedAt = 0;
@@ -2979,16 +2998,20 @@
             // Per-field message + focus the offending field, so the user (and our
             // diagnostics) sees exactly which value is missing/invalid instead of a
             // single generic "fill everything" — the top reason submits stalled.
-            function fail(el, msg) {
+            function fail(el, msg, reason) {
               errEl.textContent = msg || I18N.fill;
               if (el && el.focus) {
                 try {
                   el.focus();
                 } catch (e) {}
               }
+              // Beacon which field stalled the submit (NTREG on the server) —
+              // these fail before any real registration request is sent, so this
+              // is the only place they are visible to us.
+              if (reason) diag(reason);
             }
-            if (!name) return fail(nameEl, I18N.needName);
-            if (!phone) return fail(phoneEl, I18N.needPhone);
+            if (!name) return fail(nameEl, I18N.needName, "name");
+            if (!phone) return fail(phoneEl, I18N.needPhone, "phone");
             // Phone: accept any international format (optional +, digits and
             // common separators), 7–15 digits per E.164.
             var phoneDigits = phone.replace(/\D/g, "");
@@ -2997,11 +3020,11 @@
               phoneDigits.length < 7 ||
               phoneDigits.length > 15
             ) {
-              return fail(phoneEl, I18N.badPhone);
+              return fail(phoneEl, I18N.badPhone, "phone_format");
             }
-            if (!email) return fail(emailEl, I18N.needEmail);
+            if (!email) return fail(emailEl, I18N.needEmail, "email");
             if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-              return fail(emailEl, I18N.badEmail);
+              return fail(emailEl, I18N.badEmail, "email_format");
             }
             submitting = true;
             var submitBtn = form.querySelector("[type=submit]");
