@@ -3017,6 +3017,10 @@
                   "Lead",
                   {
                     content_name: a.funnel || "unknown_funnel",
+                    // Free event: currency present (denomination only) clears Meta's
+                    // "valid currency information" Lead warning; value 0 = no worth asserted.
+                    currency: "USD",
+                    value: 0,
                     funnel: a.funnel || "",
                     utm_source: a.utm_source || "",
                     utm_medium: a.utm_medium || "",
@@ -3036,6 +3040,8 @@
               email: email,
               consent: consent,
               event_id: leadId,
+              currency: "USD",
+              value: 0,
               consent_version: CONSENT_VERSION,
               policy_url: POLICY_URL,
               hp: hp,
