@@ -1619,7 +1619,8 @@
         border-color: var(--green);
       }
       .reg-consent {
-        margin: 6px 0 16px;
+        margin: 14px 0 0;
+        text-align: center;
         color: var(--muted);
         font-size: 13px;
         line-height: 1.5;
@@ -2726,16 +2727,6 @@
               maxlength="320"
               required
           /></label>
-          <p class="reg-consent">
-            Реєструючись, ви погоджуєтесь з
-            <a href="/privacy.html" target="_blank" rel="noopener"
-              >політикою конфіденційності</a
-            >
-            та
-            <a href="/consent.html" target="_blank" rel="noopener"
-              >обробкою даних</a
-            >.
-          </p>
           <input
             class="reg-hp"
             type="text"
@@ -2746,6 +2737,16 @@
           />
           <p class="reg-err" id="reg-error" role="alert"></p>
           <button type="submit" class="btn">Зареєструватися</button>
+          <p class="reg-consent">
+            Реєструючись, ви погоджуєтесь з
+            <a href="/privacy.html" target="_blank" rel="noopener"
+              >політикою конфіденційності</a
+            >
+            та
+            <a href="/consent.html" target="_blank" rel="noopener"
+              >обробкою даних</a
+            >.
+          </p>
         </form>
       </div>
     </div>

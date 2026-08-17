@@ -1514,7 +1514,8 @@
         border-color: var(--green);
       }
       .reg-consent {
-        margin: 6px 0 16px;
+        margin: 14px 0 0;
+        text-align: center;
         color: var(--muted);
         font-size: 13px;
         line-height: 1.5;
@@ -1893,10 +1894,10 @@
             ><span><%~ regEmail %></span>
             <input id="reg-email" name="email" type="email" autocomplete="email" maxlength="320" required
           /></label>
-          <p class="reg-consent"><%~ regConsent %></p>
           <input class="reg-hp" type="text" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <p class="reg-err" id="reg-error" role="alert"></p>
           <button type="submit" class="btn"><%~ regSubmit %></button>
+          <p class="reg-consent"><%~ regConsent %></p>
         </form>
       </div>
     </div>
