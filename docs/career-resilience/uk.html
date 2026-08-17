@@ -2783,6 +2783,9 @@
           opening: "Відкриваємо Telegram…",
           openLink: "Не відкрилось? Натисніть тут",
           fill: "Заповніть усі поля.",
+          needName: "Введіть імʼя.",
+          needPhone: "Введіть номер телефону.",
+          needEmail: "Введіть email.",
           badEmail: "Введіть коректний email.",
           badPhone: "Введіть коректний номер телефону.",
         };
@@ -2958,22 +2961,32 @@
             e.preventDefault();
             if (submitting) return;
             errEl.textContent = "";
-            var name = (document.getElementById("reg-name").value || "").trim();
-            var phone = (
-              document.getElementById("reg-phone").value || ""
-            ).trim();
-            var email = (
-              document.getElementById("reg-email").value || ""
-            ).trim();
+            var nameEl = document.getElementById("reg-name");
+            var phoneEl = document.getElementById("reg-phone");
+            var emailEl = document.getElementById("reg-email");
+            // Defensive reads: a missing node would otherwise throw and kill the
+            // submit handler silently — a "dead" submit that never posts.
+            var name = ((nameEl && nameEl.value) || "").trim();
+            var phone = ((phoneEl && phoneEl.value) || "").trim();
+            var email = ((emailEl && emailEl.value) || "").trim();
             // Consent is implied by submitting — the form states it in text next
             // to the button — so it is always true and no longer gates the form.
             var consent = true;
             var hpEl = form.querySelector("[name=company_url]");
             var hp = hpEl ? hpEl.value || "" : "";
-            if (!name || !phone || !email || !consent) {
-              errEl.textContent = I18N.fill;
-              return;
+            // Per-field message + focus the offending field, so the user (and our
+            // diagnostics) sees exactly which value is missing/invalid instead of a
+            // single generic "fill everything" — the top reason submits stalled.
+            function fail(el, msg) {
+              errEl.textContent = msg || I18N.fill;
+              if (el && el.focus) {
+                try {
+                  el.focus();
+                } catch (e) {}
+              }
             }
+            if (!name) return fail(nameEl, I18N.needName);
+            if (!phone) return fail(phoneEl, I18N.needPhone);
             // Phone: accept any international format (optional +, digits and
             // common separators), 7–15 digits per E.164.
             var phoneDigits = phone.replace(/\D/g, "");
@@ -2982,12 +2995,11 @@
               phoneDigits.length < 7 ||
               phoneDigits.length > 15
             ) {
-              errEl.textContent = I18N.badPhone;
-              return;
+              return fail(phoneEl, I18N.badPhone);
             }
+            if (!email) return fail(emailEl, I18N.needEmail);
             if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-              errEl.textContent = I18N.badEmail;
-              return;
+              return fail(emailEl, I18N.badEmail);
             }
             submitting = true;
             var submitBtn = form.querySelector("[type=submit]");
