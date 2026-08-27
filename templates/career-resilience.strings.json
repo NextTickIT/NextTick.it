@@ -1,7 +1,7 @@
 {
   "en": {
     "title": "Why smart, productive developers get laid off | NextTick",
-    "description": "A free live session with Illya Klymov on August 20 at 19:00 Kyiv time.",
+    "description": "A free replay with Illya Klymov on September 5 at 19:00 Kyiv time — with live chat and Q&A.",
     "topCta": "register",
     "heroH1": "Why smart, productive developers get laid off",
     "heroSubtitle": "How to spot the risks in time, strengthen your position, and keep your career resilient in a shifting IT market.",
@@ -9,7 +9,7 @@
     "ctaRegister": "Register for free",
     "microcopy": "Registration takes less than a minute in Telegram",
     "eventAria": "Session details",
-    "evDate": "August 20",
+    "evDate": "September 5",
     "evTime": "19:00 · Kyiv",
     "speakerName": "Illya Klymov",
     "marketLabel": "# 01 · context",
@@ -71,7 +71,7 @@
     "faqItems": [
       {
         "q": "When and where does the session take place?",
-        "a": "August 20 at 19:00 Kyiv time, live on YouTube. We'll send the link to registered participants in Telegram."
+        "a": "September 5 at 19:00 Kyiv time — a replay we watch together. Illya recorded the session in advance, while the chat, polls, and Q&A happen live during the show. We'll send the link to registered participants in Telegram."
       },
       {
         "q": "Is it really free?",
@@ -87,11 +87,11 @@
       },
       {
         "q": "Will I be able to ask Illya a question?",
-        "a": "Yes. There will be a dedicated part for participants' questions during the stream."
+        "a": "Yes. A live Q&A runs during the show: you post your questions in the chat, and answers come from the moderator or from Illya personally."
       },
       {
-        "q": "Will there be a recording?",
-        "a": "We'll share the terms for accessing the recording with registered participants in Telegram."
+        "q": "Will access remain after the show?",
+        "a": "Yes. Materials and the recording go to those who watch to the end — everything arrives in the Telegram bot."
       }
     ],
     "finalH2": "Don't wait for a layoff to assess your position for the first time",
@@ -106,6 +106,7 @@
     "navFaq": "faq",
     "heroSecondary": "Check your position",
     "freeLabel": "free",
+    "formatLabel": "Replay with live Q&A",
     "footerTagline": "nexttick — an engineers' guild",
     "regTitle": "Register for the session",
     "regLead": "Grab your spot — we'll send the link in Telegram.",
@@ -123,8 +124,8 @@
     "regNeedPhone": "Please enter your phone number.",
     "regNeedEmail": "Please enter your email.",
     "regBadEmail": "Please enter a valid email.",
-    "heroKicker": "August 20 · 19:00 Kyiv · Free LIVE with Illya Klymov",
-    "heroLangNote": "* stream in Russian",
+    "heroKicker": "September 5 · 19:00 Kyiv · Replay with live Q&A · free, with Illya Klymov",
+    "heroLangNote": "* replay in Russian",
     "programLabel": "// stream program",
     "programH2": "In one session, gauge how stable your position is — and what to strengthen to lower your layoff risk",
     "programItems": [
@@ -143,7 +144,7 @@
   },
   "ru": {
     "title": "Почему умных и продуктивных разработчиков увольняют | NextTick",
-    "description": "Бесплатная live-встреча с Ильёй Климовым 20 августа в 19:00 по Киеву.",
+    "description": "Бесплатный реплей эфира с Ильёй Климовым 5 сентября в 19:00 по Киеву — с живым чатом и Q&A.",
     "topCta": "регистрация",
     "heroH1": "Почему умных и продуктивных разработчиков увольняют",
     "heroSubtitle": "Как вовремя заметить риски, укрепить свою позицию и сохранить карьерную устойчивость на меняющемся IT-рынке.",
@@ -151,7 +152,7 @@
     "ctaRegister": "Зарегистрироваться бесплатно",
     "microcopy": "Регистрация займёт меньше минуты в Telegram",
     "eventAria": "Детали встречи",
-    "evDate": "20 августа",
+    "evDate": "5 сентября",
     "evTime": "19:00 · Киев",
     "speakerName": "Илья Климов",
     "marketLabel": "# 01 · контекст",
@@ -213,7 +214,7 @@
     "faqItems": [
       {
         "q": "Когда и где состоится встреча?",
-        "a": "20 августа в 19:00 по Киеву, в прямом эфире на YouTube. Ссылку пришлём зарегистрированным участникам в Telegram."
+        "a": "5 сентября в 19:00 по Киеву — реплей эфира, который смотрим вместе. Илья записал эфир заранее, а чат, голосования и ответы на вопросы происходят вживую во время показа. Ссылку пришлём зарегистрированным участникам в Telegram."
       },
       {
         "q": "Участие действительно бесплатное?",
@@ -229,11 +230,11 @@
       },
       {
         "q": "Можно будет задать вопрос Илье?",
-        "a": "Да. В эфире будет отдельная часть с ответами на вопросы участников."
+        "a": "Да. Во время показа работает живой Q&A: вопросы задаёте в чат, ответ приходит от модератора или от Ильи лично."
       },
       {
-        "q": "Будет ли запись?",
-        "a": "Условия доступа к записи сообщим зарегистрированным участникам в Telegram."
+        "q": "Останется ли доступ после показа?",
+        "a": "Да. Материалы и запись забирает тот, кто досмотрел до конца, — всё приходит в Telegram-бот."
       }
     ],
     "finalH2": "Не ждите увольнения, чтобы впервые оценить свою позицию",
@@ -248,6 +249,7 @@
     "navFaq": "faq",
     "heroSecondary": "Проверить позицию",
     "freeLabel": "бесплатно",
+    "formatLabel": "Реплей эфира с живым Q&A",
     "footerTagline": "nexttick — гильдия инженеров",
     "regTitle": "Регистрация на встречу",
     "regLead": "Займите место — ссылку пришлём в Telegram.",
@@ -265,8 +267,8 @@
     "regNeedPhone": "Введите номер телефона.",
     "regNeedEmail": "Введите email.",
     "regBadEmail": "Введите корректный email.",
-    "heroKicker": "20 августа · 19:00 по Киеву · Бесплатный LIVE с Ильёй Климовым",
-    "heroLangNote": "* эфир на русском",
+    "heroKicker": "5 сентября · 19:00 по Киеву · Реплей эфира с живым Q&A · бесплатно, с Ильёй Климовым",
+    "heroLangNote": "* реплей на русском",
     "programLabel": "// программа стрима",
     "programH2": "За одну встречу определите, насколько устойчива ваша позиция и что усилить, чтобы снизить риск сокращения",
     "programItems": [
@@ -285,7 +287,7 @@
   },
   "uk": {
     "title": "Чому звільняють розумних і продуктивних розробників | NextTick",
-    "description": "Безкоштовна live-зустріч з Іллею Клімовим 20 серпня о 19:00 за Києвом.",
+    "description": "Безкоштовний реплей ефіру з Іллею Клімовим 5 вересня о 19:00 за Києвом — з живим чатом і Q&A.",
     "topCta": "реєстрація",
     "heroH1": "Чому звільняють розумних і продуктивних розробників",
     "heroSubtitle": "Як вчасно помітити ризики, зміцнити свою позицію та зберегти карʼєрну стійкість на мінливому IT-ринку.",
@@ -293,7 +295,7 @@
     "ctaRegister": "Зареєструватися безкоштовно",
     "microcopy": "Реєстрація займе менше хвилини в Telegram",
     "eventAria": "Деталі зустрічі",
-    "evDate": "20 серпня",
+    "evDate": "5 вересня",
     "evTime": "19:00 · Київ",
     "speakerName": "Ілля Клімов",
     "marketLabel": "# 01 · контекст",
@@ -355,7 +357,7 @@
     "faqItems": [
       {
         "q": "Коли і де відбудеться зустріч?",
-        "a": "20 серпня о 19:00 за Києвом, у прямому ефірі на YouTube. Посилання надішлемо зареєстрованим учасникам у Telegram."
+        "a": "5 вересня о 19:00 за Києвом — реплей ефіру, який дивимося разом. Ілля записав ефір заздалегідь, а чат, голосування й відповіді на запитання відбуваються наживо під час показу. Посилання надішлемо зареєстрованим учасникам у Telegram."
       },
       {
         "q": "Участь справді безкоштовна?",
@@ -371,11 +373,11 @@
       },
       {
         "q": "Чи можна буде поставити запитання Іллі?",
-        "a": "Так. В ефірі буде окрема частина з відповідями на запитання учасників."
+        "a": "Так. Під час показу працює живий Q&A: запитання ставите в чат, відповідь приходить від модератора або від Іллі особисто."
       },
       {
-        "q": "Чи буде запис?",
-        "a": "Умови доступу до запису повідомимо зареєстрованим учасникам у Telegram."
+        "q": "Чи залишиться доступ після показу?",
+        "a": "Так. Матеріали й запис забирає той, хто додивився до кінця, — усе приходить у Telegram-бот."
       }
     ],
     "finalH2": "Не чекайте звільнення, щоб уперше оцінити свою позицію",
@@ -390,6 +392,7 @@
     "navFaq": "faq",
     "heroSecondary": "Перевірити позицію",
     "freeLabel": "безкоштовно",
+    "formatLabel": "Реплей ефіру з живим Q&A",
     "footerTagline": "nexttick — гільдія інженерів",
     "regTitle": "Реєстрація на зустріч",
     "regLead": "Займіть місце — посилання надішлемо в Telegram.",
@@ -407,8 +410,8 @@
     "regNeedPhone": "Введіть номер телефону.",
     "regNeedEmail": "Введіть email.",
     "regBadEmail": "Введіть коректний email.",
-    "heroKicker": "20 серпня · 19:00 за Києвом · Безкоштовний LIVE з Іллею Клімовим",
-    "heroLangNote": "* ефір російською",
+    "heroKicker": "5 вересня · 19:00 за Києвом · Реплей ефіру з живим Q&A · безкоштовно, з Іллею Клімовим",
+    "heroLangNote": "* реплей російською",
     "programLabel": "// програма стріму",
     "programH2": "За одну зустріч визначте, наскільки стійка ваша позиція і що посилити, щоб знизити ризик скорочення",
     "programItems": [

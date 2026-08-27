@@ -1659,7 +1659,7 @@
               <div class="hero-facts">
                 <span><%~ evDate %></span>
                 <span><%~ evTime %></span>
-                <span>YouTube Live</span>
+                <span><%~ formatLabel %></span>
                 <span><%~ freeLabel %></span>
               </div>
               <p class="hero-langnote"><%~ heroLangNote %></p>
@@ -1854,7 +1854,7 @@
               <div class="hero-facts" style="margin-top: 22px">
                 <span><%~ evDate %></span>
                 <span><%~ evTime %></span>
-                <span>YouTube Live</span>
+                <span><%~ formatLabel %></span>
                 <span><%~ freeLabel %></span>
               </div>
               <div class="hero-actions" style="margin-top: 26px">
@@ -1904,24 +1904,28 @@
 
     <script>
       (function () {
-        // Insertion 1 — capture ad attribution into localStorage["attr"] so it
-        // survives navigation (utm_*, funnel, fb_placement, fb_ad_id, fbclid).
+        // Insertion 1 — capture EVERY query param the visitor arrived with into
+        // localStorage["attr"] (utm_*, funnel, fb_*, source_channel, fbclid, gclid,
+        // ttclid, …) so no attribution is lost to a hardcoded allowlist. Persisted so
+        // it survives navigation; last-touch (a fresh URL value overrides a stored
+        // one). fbc/fbp are NOT read from the URL — the Meta Pixel owns the _fbc/_fbp
+        // cookies (read at submit); we never synthesize them here.
         try {
-          var p = new URLSearchParams(location.search);
-          var keys = [
-            "utm_source", "utm_medium", "utm_campaign", "utm_content",
-            "utm_term", "funnel", "fb_placement", "fb_ad_id",
-          ];
           var a0 = {};
           try {
             a0 = JSON.parse(localStorage.getItem("attr") || "{}");
           } catch (e) {}
-          keys.forEach(function (k) {
-            if (p.get(k)) a0[k] = p.get(k);
+          // Skip prototype-pollution + PII-shaped keys, and cap key count / value
+          // length, so a crafted URL can't bloat the bag or the outbound bot link.
+          var ATTR_DENY = [
+            "__proto__", "constructor", "prototype",
+            "name", "first_name", "last_name", "phone", "tel", "email",
+          ];
+          new URLSearchParams(location.search).forEach(function (v, k) {
+            if (!v || ATTR_DENY.indexOf(k) !== -1) return;
+            if (a0[k] === undefined && Object.keys(a0).length >= 40) return;
+            a0[k] = String(v).slice(0, 2048);
           });
-          // Store fbclid only. The _fbc COOKIE (set by the Meta Pixel) is the
-          // single source of truth for fbc — never synthesize a second one here.
-          if (p.get("fbclid")) a0.fbclid = p.get("fbclid");
           localStorage.setItem("attr", JSON.stringify(a0));
         } catch (e) {}
 
@@ -2008,6 +2012,11 @@
             return {};
           }
         }
+        // Resolve the channel the visitor actually arrived with: an explicit
+        // source_channel wins, then utm_source, else the funnel default ("webinar").
+        function resolveSourceChannel(a) {
+          return (a && (a.source_channel || a.utm_source)) || "webinar";
+        }
         function openModal(e) {
           if (e) {
             e.preventDefault();
@@ -2055,11 +2064,9 @@
           var base = BOT_FALLBACK.split("?");
           var q = new URLSearchParams(base[1] || "");
           q.set("lead_id", leadId);
-          ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "funnel"].forEach(
-            function (k) {
-              if (a[k]) q.set(k, a[k]);
-            },
-          );
+          // Override the static webinar tag with the visitor's resolved channel;
+          // withAttr() then rides ALL captured attribution onto the link.
+          q.set("source_channel", resolveSourceChannel(a));
           return base[0] + "?" + q.toString();
         }
         // Ride the RAW click identifiers on the bot link as ordinary query params
@@ -2067,12 +2074,25 @@
         // Purchase CAPI event. Must stay raw: a lowercased/truncated fbclid makes
         // Meta reject the fbc ("modified fbclid"). URL.searchParams handles only
         // percent-encoding, never case/length — so fbc reaches SendPulse intact.
-        function withAttr(url, uid, fbp, fbc, fbclid) {
+        // Params the bot link owns — a landing-URL query must never overwrite them
+        // (defends the campaign token + lead id against ?start=/?lead_id= injection;
+        // source_channel is already the resolved value; fbc/fbp/nt_click_id are set
+        // explicitly below from the cookies).
+        var RESERVED_LINK_KEYS = {
+          start: 1, lead_id: 1, source_channel: 1, fbc: 1, fbp: 1, nt_click_id: 1,
+        };
+        function withAttr(url, a, uid, fbp, fbc) {
           try {
             var u = new URL(url, location.href);
+            // Ride EVERY captured attribution param (utm_*, fb_*, fbclid, gclid, …)
+            // onto the bot link so SendPulse stores them as contact variables. Raw:
+            // URL.searchParams only percent-encodes, so fbclid/fbc aren't mangled.
+            if (a)
+              Object.keys(a).forEach(function (k) {
+                if (a[k] && !RESERVED_LINK_KEYS[k]) u.searchParams.set(k, a[k]);
+              });
             if (fbc) u.searchParams.set("fbc", fbc);
             if (fbp) u.searchParams.set("fbp", fbp);
-            if (fbclid) u.searchParams.set("fbclid", fbclid);
             if (uid) u.searchParams.set("nt_click_id", uid);
             return u.toString();
           } catch (e) {
@@ -2168,6 +2188,20 @@
             if (submitBtn) submitBtn.disabled = true;
 
             var a = getAttr();
+            // Belt-and-suspenders: the localStorage capture (Insertion 1) can
+            // silently fail in in-app WebViews (Instagram/Facebook) that block
+            // storage, leaving `a` empty even though the URL carries the params
+            // (landing_url proves it). Recover any missing field straight from the
+            // current URL so the Pixel Lead + the payload keep their attribution.
+            try {
+              var _q = new URLSearchParams(location.search);
+              [
+                "utm_source", "utm_medium", "utm_campaign", "utm_content",
+                "utm_term", "funnel", "fb_placement", "fb_ad_id", "fbclid",
+              ].forEach(function (k) {
+                if (!a[k] && _q.get(k)) a[k] = _q.get(k);
+              });
+            } catch (e) {}
             var leadId = "ld_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
             var uid = ntUid();
             var fbp = ntFbp();
@@ -2197,18 +2231,21 @@
                 );
             } catch (e) {}
 
-            var payload = {
+            // Send EVERY captured attribution param (utm_*, fb_*, source_channel,
+            // fbclid, gclid, …) so the server can persist all of it. The explicit
+            // fields below always win over a same-named URL param — the URL is never
+            // trusted for name/phone/email/event_id/consent.
+            var payload = Object.assign({}, a, {
               name: name, phone: phone, email: email, consent: consent, event_id: leadId,
-              currency: "USD", value: 0,
               consent_version: CONSENT_VERSION, policy_url: POLICY_URL,
               hp: hp, elapsed_ms: openedAt ? Date.now() - openedAt : 0,
-              funnel: a.funnel || "", utm_source: a.utm_source || "", utm_medium: a.utm_medium || "",
-              utm_campaign: a.utm_campaign || "", utm_content: a.utm_content || "",
-              utm_term: a.utm_term || "", fb_placement: a.fb_placement || "",
-              fb_ad_id: a.fb_ad_id || "", fbclid: a.fbclid || "", fbp: fbp, fbc: fbc,
-              external_id: uid,
+              source_channel: resolveSourceChannel(a),
+              // Full captured bag → server's `attribution` jsonb (everything we have,
+              // incl. params arriving via an earlier page that landing_url would miss).
+              attribution: a,
+              fbp: fbp, fbc: fbc, external_id: uid,
               landing_url: location.href, locale: document.documentElement.lang || "",
-            };
+            });
             var ac = "AbortController" in window ? new AbortController() : null;
             var timer = ac ? setTimeout(function () { ac.abort(); }, 8000) : 0;
             fetch(ENDPOINT, {
@@ -2223,12 +2260,12 @@
               .then(function (d) {
                 if (timer) clearTimeout(timer);
                 showOpening(
-                  withAttr((d && d.url) || fallbackUrl(a, leadId), uid, fbp, fbc, a.fbclid),
+                  withAttr((d && d.url) || fallbackUrl(a, leadId), a, uid, fbp, fbc),
                 );
               })
               .catch(function () {
                 if (timer) clearTimeout(timer);
-                showOpening(withAttr(fallbackUrl(a, leadId), uid, fbp, fbc, a.fbclid));
+                showOpening(withAttr(fallbackUrl(a, leadId), a, uid, fbp, fbc));
               });
           });
 
