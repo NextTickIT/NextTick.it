@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<%= loc %>">
+<html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,13 +8,6 @@
          parallel with parsing — shrinks time-to-PageView on cold connections. -->
     <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
     <link rel="preconnect" href="https://www.googletagmanager.com" />
-    <%
-      /* Meta Pixel FIRST in <head> — kick off fbevents.js on the first bytes so
-         the PageView beacon fires before slow FB/IG in-app webviews can bounce.
-         (Previously it sat after the render-blocking font <link>, which delayed
-         the beacon by the full Google Fonts round-trip → most PageViews lost.) */
-    %>
-    <% if (analytics.pixel) { %>
     <!-- Meta Pixel + first-party CAPI PageView beacon (career-resilience only).
          Inlined instead of the shared partial so the browser Pixel and the
          server-side CAPI PageView share ONE event_id → Meta dedups them:
@@ -69,7 +62,8 @@
             uid = window.crypto && crypto.randomUUID ? crypto.randomUUID() : "";
           } catch (e) {}
           if (!uid)
-            uid = "nt_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+            uid =
+              "nt_" + Date.now() + "_" + Math.random().toString(16).slice(2);
           setCk("nt_uid", uid);
         }
         // Self-generate _fbp when the Pixel cookie is absent (fbevents blocked or
@@ -137,12 +131,58 @@
         style="display: none"
         src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
     /></noscript>
-    <% } %>
-    <% if (analytics.gtm) { %><%~ include("_partials/analytics/gtm.html") %><% } %>
-    <%~ include("_partials/head.html", { loc, title, description, urlBase: "https://nexttick.it/" + page + "/" }) %>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-M74P6CSD");
+    </script>
+    <!-- End Google Tag Manager -->
+    <title>
+      Почему умных и продуктивных разработчиков увольняют | NextTick
+    </title>
+    <meta
+      name="description"
+      content="Бесплатный реплей эфира с Ильёй Климовым 5 сентября в 19:00 по Киеву — с живым чатом и Q&A."
+    />
+    <link
+      rel="canonical"
+      href="https://nexttick.it/career-resilience-signs/ru.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="https://nexttick.it/career-resilience-signs/uk.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://nexttick.it/career-resilience-signs/en.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://nexttick.it/career-resilience-signs/ru.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://nexttick.it/career-resilience-signs/uk.html"
+    />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0b0d0f" />
     <script>
@@ -160,18 +200,55 @@
         } catch (e) {}
       })();
     </script>
-    <% if (analytics.ga4) { %><%~ include("_partials/analytics/ga4.html") %><% } %>
-    <% if (analytics.clarity) { %><%~ include("_partials/analytics/clarity.html") %><% } %>
-    <%
-      /* Preload only the above-the-fold subset for this locale so the hero paints
-         in the real font with no swap (no CLS). uk/ru → cyrillic, en → latin.
-         @font-face declarations live in the <style> below; other weights/subsets
-         load on demand via their unicode-range. */
-      const fsub = loc === "en" ? "latin" : "cyrillic";
-    %>
-    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-700-<%= fsub %>.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-400-<%= fsub %>.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/jbmono-400-<%= fsub %>.woff2" crossorigin />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1TYEB7YFP5");
+    </script>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "x5houryvs2");
+    </script>
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/inter-700-cyrillic.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/inter-400-cyrillic.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/jbmono-400-cyrillic.woff2"
+      crossorigin
+    />
     <style>
       /* ── Self-hosted fonts (subsetted latin+cyrillic woff2, same-origin) ──
          Replaces the render-blocking Google Fonts stylesheet: no third-party
@@ -193,7 +270,10 @@
         font-weight: 400;
         font-display: optional;
         src: url("/assets/fonts/inter-400-latin.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
         font-family: "Inter";
@@ -209,7 +289,10 @@
         font-weight: 500;
         font-display: optional;
         src: url("/assets/fonts/inter-500-latin.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
         font-family: "Inter";
@@ -225,7 +308,10 @@
         font-weight: 600;
         font-display: optional;
         src: url("/assets/fonts/inter-600-latin.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
         font-family: "Inter";
@@ -241,7 +327,10 @@
         font-weight: 700;
         font-display: optional;
         src: url("/assets/fonts/inter-700-latin.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
         font-family: "Inter";
@@ -257,7 +346,10 @@
         font-weight: 800;
         font-display: optional;
         src: url("/assets/fonts/inter-800-latin.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
         font-family: "JetBrains Mono";
@@ -273,7 +365,10 @@
         font-weight: 400;
         font-display: optional;
         src: url("/assets/fonts/jbmono-400-latin.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
         font-family: "JetBrains Mono";
@@ -289,7 +384,10 @@
         font-weight: 500;
         font-display: optional;
         src: url("/assets/fonts/jbmono-500-latin.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
         font-family: "JetBrains Mono";
@@ -305,7 +403,10 @@
         font-weight: 600;
         font-display: optional;
         src: url("/assets/fonts/jbmono-600-latin.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
       }
       /* Metric-matched fallbacks — occupy the same space as the webfont. With
          font-display:optional the webfont never swaps in late (so it can't shift
@@ -352,8 +453,12 @@
         --dot-r: #4a2222;
         --dot-y: #4a3a14;
         --dot-g: #1d3a24;
-        --mono: "JetBrains Mono", "JBMono Fallback", ui-monospace, SFMono-Regular, Menlo, monospace;
-        --sans: "Inter", "Inter Fallback", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --mono:
+          "JetBrains Mono", "JBMono Fallback", ui-monospace, SFMono-Regular,
+          Menlo, monospace;
+        --sans:
+          "Inter", "Inter Fallback", system-ui, -apple-system,
+          BlinkMacSystemFont, "Segoe UI", sans-serif;
         --max: 1160px;
       }
 
@@ -673,47 +778,6 @@
       .hero .lead {
         max-width: none;
       }
-
-<% if (page === "career-resilience-hero") { %>
-      /* Speaker photo beside the hero text, matching the text block (hero-inner)
-         height via a stretch flex row (career-resilience-hero variant only). */
-      .hero--photo .hero-inner {
-        display: flex;
-        align-items: stretch;
-        gap: 40px;
-      }
-      .hero--photo .hero-copy {
-        flex: 1 1 0;
-        min-width: 0;
-      }
-      .hero-photo {
-        flex: 0 0 40%;
-        overflow: hidden;
-        border-left: 1px solid var(--line);
-        background: var(--surface);
-      }
-      .hero-photo img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: 65% 50%;
-      }
-      @media (max-width: 900px) {
-        /* Stack: image ABOVE the text (column-reverse keeps text in the DOM
-           first for reading order while showing the photo first visually). */
-        .hero--photo .hero-inner {
-          flex-direction: column-reverse;
-          gap: 24px;
-        }
-        .hero-photo {
-          flex: none;
-          height: 300px;
-          border-left: 0;
-          border-bottom: 1px solid var(--line);
-        }
-      }
-<% } %>
 
       .eyebrow {
         display: inline-flex;
@@ -1609,49 +1673,6 @@
     </style>
   </head>
   <body>
-    <%
-      // Webinar funnel: the primary CTAs open the registration modal (JS). This
-      // href is the no-JS fallback and the static link the attribution gate reads;
-      // the real destination (with UTMs) is built server-side on form submit.
-      const joinHref =
-        "https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&source_channel=webinar";
-      const registerEndpoint = "https://app.nexttick.it/api/register";
-      // A/B hero variants — separate <page>.page.json configs share this template
-      // and branch on the page name:
-      //   career-resilience         → original hero
-      //   career-resilience-hero    → original hero + speaker portrait
-      //   career-resilience-signs   → "7 signs…" headline
-      //   career-resilience-why     → "Why are strong devs laid off?" headline
-      const heroVariant = page.replace(/^career-resilience-?/, "");
-      const heroShowPortrait = heroVariant === "hero";
-      const heroHeadline =
-        heroVariant === "signs"
-          ? heroH1Signs
-          : heroVariant === "why"
-            ? heroH1Why
-            : heroH1;
-      const accents = ["acc-green", "acc-cyan", "acc-magenta", "acc-amber"];
-      // Reviews carousel — real screenshots bin-packed into balanced columns
-      // (same data and review images as the middle page).
-      const imgDim = {
-        "rev-01": [1072, 152], "rev-02": [1020, 292], "rev-03": [902, 314], "rev-04": [928, 646],
-        "rev-05": [926, 290], "rev-06": [614, 292], "rev-07": [821, 443], "rev-08": [846, 118],
-        "rev-09": [926, 727], "rev-10": [951, 175], "rev-11": [818, 90], "rev-12": [489, 511],
-        "rev-13": [934, 228], "rev-14": [814, 151], "rev-15": [926, 395], "rev-16": [944, 735],
-        "rev-17": [924, 348], "rev-18": [928, 453],
-      };
-      const reviewCols = [
-        ["rev-12"],
-        ["rev-09", "rev-10"],
-        ["rev-16", "rev-14"],
-        ["rev-04", "rev-13"],
-        ["rev-07", "rev-02"],
-        ["rev-18", "rev-05", "rev-01"],
-        ["rev-06", "rev-03", "rev-11"],
-        ["rev-15", "rev-17", "rev-08"],
-      ];
-    %>
-    <% if (analytics.gtm) { %>
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
@@ -1662,12 +1683,12 @@
       ></iframe
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <% } %>
     <div class="page">
       <div class="win">
         <header class="win-bar">
           <div class="dots" aria-hidden="true">
-            <span class="r"></span><span class="y"></span><span class="g"></span>
+            <span class="r"></span><span class="y"></span
+            ><span class="g"></span>
           </div>
           <button
             class="theme-toggle"
@@ -1676,86 +1697,187 @@
             aria-label="Toggle theme"
             title="Toggle theme"
           >
-            <svg class="tt-icon tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg
+              class="tt-icon tt-sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
               <circle cx="12" cy="12" r="4"></circle>
-              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+              <path
+                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"
+              ></path>
             </svg>
-            <svg class="tt-icon tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg
+              class="tt-icon tt-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
             </svg>
           </button>
           <nav class="lang-switch" aria-label="Language">
-            <a class="ls-opt<% if (loc === "uk") { %> on<% } %>" data-loc="uk" hreflang="uk" href="/career-resilience/uk.html"<% if (loc === "uk") { %> aria-current="true"<% } %>>UK</a>
-            <a class="ls-opt<% if (loc === "en") { %> on<% } %>" data-loc="en" hreflang="en" href="/career-resilience/en.html"<% if (loc === "en") { %> aria-current="true"<% } %>>EN</a>
-            <a class="ls-opt<% if (loc === "ru") { %> on<% } %>" data-loc="ru" hreflang="ru" href="/career-resilience/ru.html"<% if (loc === "ru") { %> aria-current="true"<% } %>>RU</a>
+            <a
+              class="ls-opt"
+              data-loc="uk"
+              hreflang="uk"
+              href="/career-resilience/uk.html"
+              >UK</a
+            >
+            <a
+              class="ls-opt"
+              data-loc="en"
+              hreflang="en"
+              href="/career-resilience/en.html"
+              >EN</a
+            >
+            <a
+              class="ls-opt on"
+              data-loc="ru"
+              hreflang="ru"
+              href="/career-resilience/ru.html"
+              aria-current="true"
+              >RU</a
+            >
           </nav>
-          <span class="title"><%~ brand %></span>
+          <span class="title">nexttick / гильдия</span>
           <span class="path">~/events/career-resilience.md</span>
-          <nav class="tabs" aria-label="<%~ navAria %>">
-            <a class="tab on" href="#check" data-tab><%~ navCheck %></a>
-            <a class="tab" href="#result" data-tab><%~ navResult %></a>
-            <a class="tab" href="#speaker" data-tab><%~ navSpeaker %></a>
-            <a class="tab" href="#faq" data-tab><%~ navFaq %></a>
+          <nav class="tabs" aria-label="Разделы">
+            <a class="tab on" href="#check" data-tab>самопроверка</a>
+            <a class="tab" href="#result" data-tab>результат</a>
+            <a class="tab" href="#speaker" data-tab>спикер</a>
+            <a class="tab" href="#faq" data-tab>faq</a>
           </nav>
-          <a class="btn" data-cta-location="header" data-open-register href="<%= joinHref %>" rel="noopener"><%~ ctaRegister %></a>
+          <a
+            class="btn"
+            data-cta-location="header"
+            data-open-register
+            href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+            rel="noopener"
+            >Зарегистрироваться бесплатно</a
+          >
         </header>
 
         <main id="top">
           <!-- HERO -->
-          <header class="hero<% if (heroShowPortrait) { %> hero--photo<% } %>">
+          <header class="hero">
             <div class="hero-inner">
-              <% if (heroShowPortrait) { %><div class="hero-copy"><% } %>
-              <p class="eyebrow"><span class="dot"></span> <%~ heroKicker %></p>
-              <h1><%~ heroHeadline %></h1>
-              <p class="lead"><%~ heroSubtitle %></p>
+              <p class="eyebrow">
+                <span class="dot"></span> 5 сентября · 19:00 по Киеву · Реплей
+                эфира с живым Q&A · бесплатно, с Ильёй Климовым
+              </p>
+              <h1>7 признаков уязвимой позиции разработчика в 2026 году</h1>
+              <p class="lead">
+                Как вовремя заметить риски, укрепить свою позицию и сохранить
+                карьерную устойчивость на меняющемся IT-рынке.
+              </p>
               <div class="hero-actions">
-                <a class="btn" data-cta-location="hero" data-open-register href="<%= joinHref %>" rel="noopener"><%~ ctaRegister %></a>
-                <a class="btn secondary" data-cta-location="hero-check" href="#check"><%~ heroSecondary %></a>
+                <a
+                  class="btn"
+                  data-cta-location="hero"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зарегистрироваться бесплатно</a
+                >
+                <a
+                  class="btn secondary"
+                  data-cta-location="hero-check"
+                  href="#check"
+                  >Проверить позицию</a
+                >
               </div>
               <div class="hero-facts">
-                <span><%~ evDate %></span>
-                <span><%~ evTime %></span>
-                <span><%~ formatLabel %></span>
-                <span><%~ freeLabel %></span>
+                <span>5 сентября</span>
+                <span>19:00 · Киев</span>
+                <span>Реплей эфира с живым Q&A</span>
+                <span>бесплатно</span>
               </div>
-              <p class="hero-langnote"><%~ heroLangNote %></p>
-              <% if (heroShowPortrait) { %></div>
-              <div class="hero-photo">
-                <img
-                  src="/assets/author-ilya-fwdays.webp"
-                  alt="<%~ speakerName %>"
-                  loading="eager"
-                  decoding="async"
-                />
-              </div>
-              <% } %>
+              <p class="hero-langnote">* реплей на русском</p>
             </div>
           </header>
 
           <!-- CONTEXT / MARKET -->
           <section id="context">
             <div class="section-inner">
-              <div class="section-label"><%~ marketLabel %></div>
-              <h2><%~ marketH2 %></h2>
-              <p class="section-copy"><%~ marketCopy %></p>
+              <div class="section-label"># 01 · контекст</div>
+              <h2>Рынок не исчез. Он стал избирательнее.</h2>
+              <p class="section-copy">
+                Разработчиков на рынке становится больше. Но компании
+                по-прежнему испытывают дефицит инженеров, которым можно доверить
+                не только код, но и решения.
+              </p>
               <div class="load-grid">
                 <div class="load-card stat acc-green">
                   <span class="hrs">×2–3</span>
-                  <p><%~ stat1P %></p>
+                  <p>
+                    За полгода конкуренция достигла 198 и 95 откликов на
+                    вакансию.
+                  </p>
                 </div>
                 <div class="load-card stat acc-cyan">
                   <span class="hrs">61%</span>
-                  <p><%~ stat2P %></p>
+                  <p>
+                    участников найма не устраивает уровень кандидатов; 41% не
+                    хватает релевантных специалистов.
+                  </p>
                 </div>
                 <div class="load-card stat acc-amber">
                   <span class="hrs">71%</span>
-                  <p><%~ stat3P %></p>
+                  <p>
+                    прироста software-вакансий в США пришлось на senior-роли;
+                    ещё 37% роста связано с AI в названии.
+                  </p>
                 </div>
               </div>
-              <p class="choice"><%~ marketConclusion %></p>
-              <p class="section-copy sources" style="margin-top: 14px"><%~ sources %></p>
+              <p class="choice">
+                Кандидатов много.
+                <strong
+                  >Инженеров, которым доверяют решения, по-прежнему не
+                  хватает.</strong
+                >
+              </p>
+              <p class="section-copy sources" style="margin-top: 14px">
+                Источники:
+                <a
+                  href="https://dou.ua/lenta/articles/it-job-market-2-quarter-2026/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >DOU · рынок вакансий</a
+                >
+                ·
+                <a
+                  href="https://dou.ua/lenta/articles/job-market-2026-part-2/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >DOU · найм</a
+                >
+                ·
+                <a
+                  href="https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Indeed Hiring Lab</a
+                >
+              </p>
               <div class="hero-actions" style="margin-top: 30px">
-                <a class="btn" data-cta-location="context" data-open-register href="<%= joinHref %>" rel="noopener"><%~ ctaRegister %></a>
+                <a
+                  class="btn"
+                  data-cta-location="context"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зарегистрироваться бесплатно</a
+                >
               </div>
             </div>
           </section>
@@ -1764,17 +1886,69 @@
           <section id="check">
             <div class="section-inner split">
               <div>
-                <div class="section-label"><%~ fitLabel %></div>
-                <h2><%~ fitH2 %></h2>
+                <div class="section-label"># 02 · self-check</div>
+                <h2>Возможно, ваша позиция уязвимее, чем кажется</h2>
                 <blockquote class="quote-band">
-                  <%~ storyQuote %><small><%~ storyQuestion %></small>
+                  Идея встречи появилась после карьерной консультации с сильным
+                  и результативным специалистом, которого уволили.<small
+                    >Почему хорошей работы оказалось недостаточно?</small
+                  >
                 </blockquote>
-                <p class="choice"><%~ fitNote %></p>
+                <p class="choice">
+                  Встреча подходит разработчикам разных стеков. Лучшее время для
+                  диагностики — пока у вас всё хорошо.
+                </p>
               </div>
-              <ul class="list" aria-label="<%~ fitH2 %>">
-                <% checkList.forEach(function (item) { %>
-                <li><span class="mark">—</span><span><%~ item %></span></li>
-                <% }) %>
+              <ul
+                class="list"
+                aria-label="Возможно, ваша позиция уязвимее, чем кажется"
+              >
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Хорошо закрываете задачи, но редко участвуете в принятии
+                    решений</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Можете перечислить сделанное, но сложно объяснить ценность
+                    работы для компании</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span>Растёте в опыте и зарплате, но не в зоне влияния</span>
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Не понимаете, по каким критериям руководство оценивает вашу
+                    работу</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Хотите расти до Senior или Lead, но развиваете
+                    преимущественно технические навыки</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Видите, как AI ускоряет код, и не понимаете, за что
+                    компании будут платить инженеру дальше</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">—</span
+                  ><span
+                    >Хотите оценить риски до того, как ситуация станет
+                    критической</span
+                  >
+                </li>
               </ul>
             </div>
           </section>
@@ -1782,38 +1956,137 @@
           <!-- STREAM PROGRAM -->
           <section id="program">
             <div class="section-inner">
-              <div class="section-label"><%~ programLabel %></div>
-              <h2><%~ programH2 %></h2>
+              <div class="section-label">// программа стрима</div>
+              <h2>
+                За одну встречу определите, насколько устойчива ваша позиция и
+                что усилить, чтобы снизить риск сокращения
+              </h2>
               <ul class="list" style="margin-top: 30px">
-                <% programItems.forEach(function (item) { %>
-                <li><span class="mark">✓</span><span><%~ item %></span></li>
-                <% }) %>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Реальные причины, по которым увольняют сильных
+                    разработчиков — и почему качественный код, высокая
+                    продуктивность и выполненные KPI больше не гарантируют, что
+                    компания выберет именно вас</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Что на самом деле стоит за динамикой 7% → 29% → 77% — и
+                    какая инженерная ценность становится уязвимой, когда AI
+                    забирает всё больше исполнительских задач</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Навыки, за которые компании будут удерживать разработчиков
+                    в 2026–2028 годах — даже когда написание кода становится
+                    быстрее, дешевле и доступнее</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Авторский тест для диагностики вашей карьерной позиции —
+                    чтобы увидеть перекосы в принятии решений, оценить свою зону
+                    влияния и обнаружить риски, которые пока не очевидны</span
+                  >
+                </li>
+                <li>
+                  <span class="mark">✓</span
+                  ><span
+                    >Конкретные точки роста на ближайшие 3–6 месяцев — чтобы
+                    укреплять не количество выполненной работы, а качества,
+                    которые повышают вашу ценность для команды и бизнеса</span
+                  >
+                </li>
               </ul>
-              <p class="choice"><%~ programResult %></p>
+              <p class="choice">
+                В результате вы поймёте не только, почему сильных разработчиков
+                увольняют, но и что можете изменить в своей позиции уже сейчас
+              </p>
               <div class="hero-actions" style="margin-top: 24px">
-                <a class="btn" data-cta-location="program" data-open-register href="<%= joinHref %>" rel="noopener"><%~ ctaRegister %></a>
+                <a
+                  class="btn"
+                  data-cta-location="program"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зарегистрироваться бесплатно</a
+                >
               </div>
-              <p class="section-copy" style="margin-top: 18px; font-size: 12px; color: var(--dim)"><%~ programFootnote %></p>
+              <p
+                class="section-copy"
+                style="margin-top: 18px; font-size: 12px; color: var(--dim)"
+              >
+                * 7% → 29% → 77% — доля tech-сокращений, которые Layoffs.fyi
+                связывает с AI: 2024, 2025 и 2026 годы соответственно; данные на
+                август 2026 года.
+              </p>
             </div>
           </section>
 
           <!-- OUTCOMES / RESULT -->
           <section id="result">
             <div class="section-inner">
-              <div class="section-label"><%~ outcomesLabel %></div>
-              <h2><%~ outcomesH2 %></h2>
+              <div class="section-label"># 03 · result</div>
+              <h2>После встречи вы сможете</h2>
               <div class="formula-grid" style="margin-top: 30px">
-                <% outcomes.forEach(function (o, i) { %>
-                <div class="card <%= accents[i % accents.length] %>">
-                  <span class="k"><%= String(i + 1).padStart(2, "0") %></span>
-                  <span class="name"><%~ o.h %></span>
-                  <p><%~ o.p %></p>
+                <div class="card acc-green">
+                  <span class="k">01</span>
+                  <span class="name">Оценить риски своей позиции</span>
+                  <p>
+                    Увидите ранние сигналы в задачах, ответственности и
+                    коммуникации, которые не стоит игнорировать.
+                  </p>
                 </div>
-                <% }) %>
+                <div class="card acc-cyan">
+                  <span class="k">02</span>
+                  <span class="name"
+                    >Понять, видит ли компания вашу ценность</span
+                  >
+                  <p>
+                    Разберётесь, что руководитель оценивает помимо качества
+                    кода, скорости и количества закрытых задач.
+                  </p>
+                </div>
+                <div class="card acc-magenta">
+                  <span class="k">03</span>
+                  <span class="name"
+                    >Отделить свою зону влияния от решений компании</span
+                  >
+                  <p>
+                    Поймёте, что можно укрепить, а что нельзя исправить
+                    дополнительной продуктивностью: бюджет, закрытие проекта или
+                    смену стратегии.
+                  </p>
+                </div>
+                <div class="card acc-amber">
+                  <span class="k">04</span>
+                  <span class="name">Выбрать конкретный следующий шаг</span>
+                  <p>
+                    Определите, что требует внимания сейчас: инженерное
+                    мышление, AI, заметность вклада, коммуникация или внешние
+                    карьерные опции.
+                  </p>
+                </div>
               </div>
-              <p class="choice"><%~ resultStrong %></p>
+              <p class="choice">
+                Собственная карта рисков и понимание, что именно укреплять в
+                своей позиции.
+              </p>
               <div class="hero-actions" style="margin-top: 22px">
-                <a class="btn" data-cta-location="result" data-open-register href="<%= joinHref %>" rel="noopener"><%~ ctaRegister %></a>
+                <a
+                  class="btn"
+                  data-cta-location="result"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зарегистрироваться бесплатно</a
+                >
               </div>
             </div>
           </section>
@@ -1824,7 +2097,7 @@
               <div class="card portrait acc-cyan">
                 <img
                   src="/assets/author-ilya-fwdays.webp"
-                  alt="<%~ speakerName %>"
+                  alt="Илья Климов"
                   width="820"
                   height="1040"
                   loading="lazy"
@@ -1832,18 +2105,33 @@
                 />
               </div>
               <div>
-                <div class="section-label"><%~ speakerLabel %></div>
-                <h2><%~ speakerName %></h2>
+                <div class="section-label"># 04 · спикер</div>
+                <h2>Илья Климов</h2>
                 <div class="hero-facts" style="margin-bottom: 22px">
                   <span>Staff Frontend Engineer · GitLab</span>
                   <span>Google Developer Expert</span>
                   <span>JavaScript.ninja · HolyJS</span>
-                  <span><%~ speakerYears %></span>
+                  <span>15+ лет в индустрии</span>
                 </div>
-                <p class="section-copy"><%~ speakerP1 %></p>
-                <p class="section-copy" style="margin-top: 16px"><%~ speakerP2 %></p>
+                <p class="section-copy">
+                  Илья работает на уровне Staff Engineer и разбирает не только
+                  технологии, но и то, как инженер принимает решения, объясняет
+                  свою позицию и влияет на команду.
+                </p>
+                <p class="section-copy" style="margin-top: 16px">
+                  На встрече он соединит инженерную оптику, карьерную практику и
+                  данные рынка — без обещаний стать «неувольняемым» и советов
+                  «просто работать ещё больше».
+                </p>
                 <div class="hero-actions" style="margin-top: 24px">
-                  <a class="btn" data-cta-location="speaker" data-open-register href="<%= joinHref %>" rel="noopener"><%~ ctaRegister %></a>
+                  <a
+                    class="btn"
+                    data-cta-location="speaker"
+                    data-open-register
+                    href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                    rel="noopener"
+                    >Зарегистрироваться бесплатно</a
+                  >
                 </div>
               </div>
             </div>
@@ -1852,45 +2140,402 @@
           <!-- ORGANIZER / GUILD -->
           <section id="guild">
             <div class="section-inner">
-              <div class="section-label"><%~ guildLabel %></div>
-              <h2><%~ guildH2 %></h2>
-              <p class="section-copy"><%~ guildP1 %></p>
-              <div class="hero-facts" style="margin: 22px 0" aria-label="<%~ trackAria %>">
+              <div class="section-label"># 05 · организатор</div>
+              <h2>NextTick — Гильдия инженеров</h2>
+              <p class="section-copy">
+                Для Middle- и Senior-разработчиков, которые хотят перейти от
+                выполнения задач к инженерному влиянию.
+              </p>
+              <div
+                class="hero-facts"
+                style="margin: 22px 0"
+                aria-label="Направления Гильдии"
+              >
                 <span>architecture</span>
                 <span>AI agents</span>
                 <span>communication</span>
               </div>
-              <p class="section-copy"><%~ guildP2 %></p>
+              <p class="section-copy">
+                Не ещё одна папка с материалами, а регулярная практика на
+                реальных рабочих ситуациях.
+              </p>
             </div>
           </section>
 
           <!-- REVIEWS -->
           <section id="reviews">
             <div class="section-inner">
-              <div class="section-label"><%~ reviewsLabel %></div>
-              <h2><%~ reviewsH2 %></h2>
-              <div class="rec-carousel" aria-label="<%~ reviewsAlt %>">
+              <div class="section-label">// отзывы</div>
+              <h2>Отзывы участников</h2>
+              <div class="rec-carousel" aria-label="Отзыв участника">
                 <div class="rec-track">
-                  <% for (var pass = 0; pass < 2; pass++) { %> <%
-                  reviewCols.forEach(function (col) { %>
-                  <div class="rec-col"<% if (pass === 1) { %> aria-hidden="true"<% } %>>
-                    <% col.forEach(function (r) { %>
+                  <div class="rec-col">
                     <div class="rec-card">
                       <img
-                        src="/assets/reviews/<%= r %>.webp"
-                        alt="<%~ reviewsAlt %>"
-                        width="<%= imgDim[r][0] %>"
-                        height="<%= imgDim[r][1] %>"
+                        src="/assets/reviews/rev-12.webp"
+                        alt="Отзыв участника"
+                        width="489"
+                        height="511"
                         loading="lazy"
                       />
                     </div>
-                    <% }) %>
                   </div>
-                  <% }) %> <% } %>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-09.webp"
+                        alt="Отзыв участника"
+                        width="926"
+                        height="727"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-10.webp"
+                        alt="Отзыв участника"
+                        width="951"
+                        height="175"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-16.webp"
+                        alt="Отзыв участника"
+                        width="944"
+                        height="735"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-14.webp"
+                        alt="Отзыв участника"
+                        width="814"
+                        height="151"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-04.webp"
+                        alt="Отзыв участника"
+                        width="928"
+                        height="646"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-13.webp"
+                        alt="Отзыв участника"
+                        width="934"
+                        height="228"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-07.webp"
+                        alt="Отзыв участника"
+                        width="821"
+                        height="443"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-02.webp"
+                        alt="Отзыв участника"
+                        width="1020"
+                        height="292"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-18.webp"
+                        alt="Отзыв участника"
+                        width="928"
+                        height="453"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-05.webp"
+                        alt="Отзыв участника"
+                        width="926"
+                        height="290"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-01.webp"
+                        alt="Отзыв участника"
+                        width="1072"
+                        height="152"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-06.webp"
+                        alt="Отзыв участника"
+                        width="614"
+                        height="292"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-03.webp"
+                        alt="Отзыв участника"
+                        width="902"
+                        height="314"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-11.webp"
+                        alt="Отзыв участника"
+                        width="818"
+                        height="90"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-15.webp"
+                        alt="Отзыв участника"
+                        width="926"
+                        height="395"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-17.webp"
+                        alt="Отзыв участника"
+                        width="924"
+                        height="348"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-08.webp"
+                        alt="Отзыв участника"
+                        width="846"
+                        height="118"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-12.webp"
+                        alt="Отзыв участника"
+                        width="489"
+                        height="511"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-09.webp"
+                        alt="Отзыв участника"
+                        width="926"
+                        height="727"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-10.webp"
+                        alt="Отзыв участника"
+                        width="951"
+                        height="175"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-16.webp"
+                        alt="Отзыв участника"
+                        width="944"
+                        height="735"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-14.webp"
+                        alt="Отзыв участника"
+                        width="814"
+                        height="151"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-04.webp"
+                        alt="Отзыв участника"
+                        width="928"
+                        height="646"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-13.webp"
+                        alt="Отзыв участника"
+                        width="934"
+                        height="228"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-07.webp"
+                        alt="Отзыв участника"
+                        width="821"
+                        height="443"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-02.webp"
+                        alt="Отзыв участника"
+                        width="1020"
+                        height="292"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-18.webp"
+                        alt="Отзыв участника"
+                        width="928"
+                        height="453"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-05.webp"
+                        alt="Отзыв участника"
+                        width="926"
+                        height="290"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-01.webp"
+                        alt="Отзыв участника"
+                        width="1072"
+                        height="152"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-06.webp"
+                        alt="Отзыв участника"
+                        width="614"
+                        height="292"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-03.webp"
+                        alt="Отзыв участника"
+                        width="902"
+                        height="314"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-11.webp"
+                        alt="Отзыв участника"
+                        width="818"
+                        height="90"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="rec-col" aria-hidden="true">
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-15.webp"
+                        alt="Отзыв участника"
+                        width="926"
+                        height="395"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-17.webp"
+                        alt="Отзыв участника"
+                        width="924"
+                        height="348"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="rec-card">
+                      <img
+                        src="/assets/reviews/rev-08.webp"
+                        alt="Отзыв участника"
+                        width="846"
+                        height="118"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="hero-actions" style="margin-top: 30px">
-                <a class="btn" data-cta-location="reviews" data-open-register href="<%= joinHref %>" rel="noopener"><%~ ctaRegister %></a>
+                <a
+                  class="btn"
+                  data-cta-location="reviews"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зарегистрироваться бесплатно</a
+                >
               </div>
             </div>
           </section>
@@ -1898,15 +2543,57 @@
           <!-- FAQ -->
           <section id="faq">
             <div class="section-inner">
-              <div class="section-label"><%~ faqLabel %></div>
-              <h2><%~ faqH2 %></h2>
+              <div class="section-label"># 06 · faq</div>
+              <h2>Частые вопросы</h2>
               <div class="faq">
-                <% faqItems.forEach(function (f) { %>
                 <details class="faq-item">
-                  <summary><%~ f.q %></summary>
-                  <p><%~ f.a %></p>
+                  <summary>Когда и где состоится встреча?</summary>
+                  <p>
+                    5 сентября в 19:00 по Киеву — реплей эфира, который смотрим
+                    вместе. Илья записал эфир заранее, а чат, голосования и
+                    ответы на вопросы происходят вживую во время показа. Ссылку
+                    пришлём зарегистрированным участникам в Telegram.
+                  </p>
                 </details>
-                <% }) %>
+                <details class="faq-item">
+                  <summary>Участие действительно бесплатное?</summary>
+                  <p>
+                    Да. Для участия нужно только зарегистрироваться через
+                    Telegram-бота.
+                  </p>
+                </details>
+                <details class="faq-item">
+                  <summary>
+                    Встреча только для JavaScript-разработчиков?
+                  </summary>
+                  <p>
+                    Нет. Основной контекст будет особенно близок
+                    JavaScript-инженерам, но тема актуальна для разработчиков
+                    разных стеков.
+                  </p>
+                </details>
+                <details class="faq-item">
+                  <summary>Нужно ли сейчас искать работу?</summary>
+                  <p>
+                    Нет. Встреча поможет оценить вашу позицию в текущей
+                    компании. Лучше сделать это до того, как вы столкнётесь с
+                    увольнением.
+                  </p>
+                </details>
+                <details class="faq-item">
+                  <summary>Можно будет задать вопрос Илье?</summary>
+                  <p>
+                    Да. Во время показа работает живой Q&A: вопросы задаёте в
+                    чат, ответ приходит от модератора или от Ильи лично.
+                  </p>
+                </details>
+                <details class="faq-item">
+                  <summary>Останется ли доступ после показа?</summary>
+                  <p>
+                    Да. Материалы и запись забирает тот, кто досмотрел до конца,
+                    — всё приходит в Telegram-бот.
+                  </p>
+                </details>
               </div>
             </div>
           </section>
@@ -1915,23 +2602,87 @@
           <section id="join">
             <div class="section-inner">
               <div class="section-label">$ ready --check</div>
-              <h2><%~ finalH2 %></h2>
-              <p class="section-copy"><%~ finalP %></p>
+              <h2>Не ждите увольнения, чтобы впервые оценить свою позицию</h2>
+              <p class="section-copy">
+                Поймите, какие риски можно заметить заранее, что делает вас
+                ценным для компании и какие навыки стоит укрепить уже сейчас.
+              </p>
               <div class="hero-facts" style="margin-top: 22px">
-                <span><%~ evDate %></span>
-                <span><%~ evTime %></span>
-                <span><%~ formatLabel %></span>
-                <span><%~ freeLabel %></span>
+                <span>5 сентября</span>
+                <span>19:00 · Киев</span>
+                <span>Реплей эфира с живым Q&A</span>
+                <span>бесплатно</span>
               </div>
               <div class="hero-actions" style="margin-top: 26px">
-                <a class="btn" data-cta-location="final" data-open-register href="<%= joinHref %>" rel="noopener"><%~ ctaRegister %></a>
-                <a class="btn secondary" data-cta-location="final-check" href="#check"><%~ heroSecondary %></a>
+                <a
+                  class="btn"
+                  data-cta-location="final"
+                  data-open-register
+                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  rel="noopener"
+                  >Зарегистрироваться бесплатно</a
+                >
+                <a
+                  class="btn secondary"
+                  data-cta-location="final-check"
+                  href="#check"
+                  >Проверить позицию</a
+                >
               </div>
             </div>
           </section>
         </main>
 
-        <%~ include("_partials/footer.html", { loc, tagline: footerTagline }) %>
+        <style>
+          .site-footer {
+            --sf-fg: #888d92;
+            --sf-strong: #d6d8da;
+            padding: 26px 0 30px;
+            font-size: 12px;
+          }
+          [data-theme="light"] .site-footer {
+            --sf-fg: #59636e;
+            --sf-strong: #1f2328;
+          }
+          .site-footer-inner {
+            width: min(960px, calc(100% - 40px));
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 20px;
+            color: var(--sf-fg);
+          }
+          .site-footer .sf-legal {
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+          }
+          .site-footer a {
+            color: var(--sf-fg);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.15s ease;
+          }
+          .site-footer a:hover {
+            color: var(--sf-strong);
+          }
+          @media (max-width: 560px) {
+            .site-footer .sf-legal {
+              margin-left: 0;
+            }
+          }
+        </style>
+        <footer class="site-footer">
+          <div class="site-footer-inner">
+            <span class="sf-tagline">nexttick — гильдия инженеров</span>
+            <span class="sf-legal">
+              <a href="/offer.html">Оферта</a>
+              <a href="/privacy.html">Конфиденциальность</a>
+              <a href="/consent.html">Согласие на обработку данных</a>
+            </span>
+          </div>
+        </footer>
       </div>
     </div>
 
@@ -1943,27 +2694,63 @@
         aria-modal="true"
         aria-labelledby="reg-title"
       >
-        <button type="button" class="reg-x" data-reg-close aria-label="<%~ regClose %>">×</button>
+        <button type="button" class="reg-x" data-reg-close aria-label="Закрыть">
+          ×
+        </button>
         <p class="section-label"># register</p>
-        <h2 id="reg-title"><%~ regTitle %></h2>
-        <p class="reg-lead"><%~ regLead %></p>
+        <h2 id="reg-title">Регистрация на встречу</h2>
+        <p class="reg-lead">Займите место — ссылку пришлём в Telegram.</p>
         <form id="reg-form" novalidate>
           <label class="reg-field" for="reg-name"
-            ><span><%~ regName %></span>
-            <input id="reg-name" name="name" type="text" autocomplete="name" maxlength="120" required
+            ><span>Имя</span>
+            <input
+              id="reg-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              maxlength="120"
+              required
           /></label>
           <label class="reg-field" for="reg-phone"
-            ><span><%~ regPhone %></span>
-            <input id="reg-phone" name="phone" type="tel" autocomplete="tel" maxlength="32" required
+            ><span>Телефон</span>
+            <input
+              id="reg-phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              maxlength="32"
+              required
           /></label>
           <label class="reg-field" for="reg-email"
-            ><span><%~ regEmail %></span>
-            <input id="reg-email" name="email" type="email" autocomplete="email" maxlength="320" required
+            ><span>Email</span>
+            <input
+              id="reg-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              maxlength="320"
+              required
           /></label>
-          <input class="reg-hp" type="text" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <input
+            class="reg-hp"
+            type="text"
+            name="company_url"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
           <p class="reg-err" id="reg-error" role="alert"></p>
-          <button type="submit" class="btn"><%~ regSubmit %></button>
-          <p class="reg-consent"><%~ regConsent %></p>
+          <button type="submit" class="btn">Зарегистрироваться</button>
+          <p class="reg-consent">
+            Регистрируясь, вы соглашаетесь с
+            <a href="/privacy.html" target="_blank" rel="noopener"
+              >политикой конфиденциальности</a
+            >
+            и
+            <a href="/consent.html" target="_blank" rel="noopener"
+              >обработкой данных</a
+            >.
+          </p>
         </form>
       </div>
     </div>
@@ -1984,8 +2771,15 @@
           // Skip prototype-pollution + PII-shaped keys, and cap key count / value
           // length, so a crafted URL can't bloat the bag or the outbound bot link.
           var ATTR_DENY = [
-            "__proto__", "constructor", "prototype",
-            "name", "first_name", "last_name", "phone", "tel", "email",
+            "__proto__",
+            "constructor",
+            "prototype",
+            "name",
+            "first_name",
+            "last_name",
+            "phone",
+            "tel",
+            "email",
           ];
           new URLSearchParams(location.search).forEach(function (v, k) {
             if (!v || ATTR_DENY.indexOf(k) !== -1) return;
@@ -1996,17 +2790,18 @@
         } catch (e) {}
 
         var I18N = {
-          opening: "<%~ regOpening %>",
-          openLink: "<%~ regOpenLink %>",
-          fill: "<%~ regFill %>",
-          needName: "<%~ regNeedName %>",
-          needPhone: "<%~ regNeedPhone %>",
-          needEmail: "<%~ regNeedEmail %>",
-          badEmail: "<%~ regBadEmail %>",
-          badPhone: "<%~ regBadPhone %>",
+          opening: "Открываем Telegram…",
+          openLink: "Не открылось? Нажмите здесь",
+          fill: "Заполните все поля.",
+          needName: "Введите имя.",
+          needPhone: "Введите номер телефона.",
+          needEmail: "Введите email.",
+          badEmail: "Введите корректный email.",
+          badPhone: "Введите корректный номер телефона.",
         };
-        var ENDPOINT = "<%= registerEndpoint %>";
-        var BOT_FALLBACK = "<%= joinHref %>";
+        var ENDPOINT = "https://app.nexttick.it/api/register";
+        var BOT_FALLBACK =
+          "https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar";
         var CONSENT_VERSION = "consent-2026-08";
         var POLICY_URL = "/consent.html";
         // Same host as ENDPOINT with /register -> /diag. Best-effort beacon that
@@ -2058,7 +2853,8 @@
               v = window.crypto && crypto.randomUUID ? crypto.randomUUID() : "";
             } catch (e) {}
             if (!v)
-              v = "nt_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+              v =
+                "nt_" + Date.now() + "_" + Math.random().toString(16).slice(2);
             setCookie("nt_uid", v);
           }
           return v;
@@ -2145,7 +2941,12 @@
         // source_channel is already the resolved value; fbc/fbp/nt_click_id are set
         // explicitly below from the cookies).
         var RESERVED_LINK_KEYS = {
-          start: 1, lead_id: 1, source_channel: 1, fbc: 1, fbp: 1, nt_click_id: 1,
+          start: 1,
+          lead_id: 1,
+          source_channel: 1,
+          fbc: 1,
+          fbp: 1,
+          nt_click_id: 1,
         };
         function withAttr(url, a, uid, fbp, fbc) {
           try {
@@ -2262,13 +3063,24 @@
             try {
               var _q = new URLSearchParams(location.search);
               [
-                "utm_source", "utm_medium", "utm_campaign", "utm_content",
-                "utm_term", "funnel", "fb_placement", "fb_ad_id", "fbclid",
+                "utm_source",
+                "utm_medium",
+                "utm_campaign",
+                "utm_content",
+                "utm_term",
+                "funnel",
+                "fb_placement",
+                "fb_ad_id",
+                "fbclid",
               ].forEach(function (k) {
                 if (!a[k] && _q.get(k)) a[k] = _q.get(k);
               });
             } catch (e) {}
-            var leadId = "ld_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
+            var leadId =
+              "ld_" +
+              Date.now() +
+              "_" +
+              Math.random().toString(36).slice(2, 10);
             var uid = ntUid();
             var fbp = ntFbp();
             // fbc: the Pixel-set _fbc cookie only (single source of truth for dedup).
@@ -2277,7 +3089,8 @@
             try {
               if (typeof fbq === "function")
                 fbq(
-                  "track", "Lead",
+                  "track",
+                  "Lead",
                   {
                     content_name: a.funnel || "unknown_funnel",
                     // Free event: currency present (denomination only) clears Meta's
@@ -2302,18 +3115,31 @@
             // fields below always win over a same-named URL param — the URL is never
             // trusted for name/phone/email/event_id/consent.
             var payload = Object.assign({}, a, {
-              name: name, phone: phone, email: email, consent: consent, event_id: leadId,
-              consent_version: CONSENT_VERSION, policy_url: POLICY_URL,
-              hp: hp, elapsed_ms: openedAt ? Date.now() - openedAt : 0,
+              name: name,
+              phone: phone,
+              email: email,
+              consent: consent,
+              event_id: leadId,
+              consent_version: CONSENT_VERSION,
+              policy_url: POLICY_URL,
+              hp: hp,
+              elapsed_ms: openedAt ? Date.now() - openedAt : 0,
               source_channel: resolveSourceChannel(a),
               // Full captured bag → server's `attribution` jsonb (everything we have,
               // incl. params arriving via an earlier page that landing_url would miss).
               attribution: a,
-              fbp: fbp, fbc: fbc, external_id: uid,
-              landing_url: location.href, locale: document.documentElement.lang || "",
+              fbp: fbp,
+              fbc: fbc,
+              external_id: uid,
+              landing_url: location.href,
+              locale: document.documentElement.lang || "",
             });
             var ac = "AbortController" in window ? new AbortController() : null;
-            var timer = ac ? setTimeout(function () { ac.abort(); }, 8000) : 0;
+            var timer = ac
+              ? setTimeout(function () {
+                  ac.abort();
+                }, 8000)
+              : 0;
             fetch(ENDPOINT, {
               method: "POST",
               headers: { "content-type": "application/json" },
@@ -2326,7 +3152,13 @@
               .then(function (d) {
                 if (timer) clearTimeout(timer);
                 showOpening(
-                  withAttr((d && d.url) || fallbackUrl(a, leadId), a, uid, fbp, fbc),
+                  withAttr(
+                    (d && d.url) || fallbackUrl(a, leadId),
+                    a,
+                    uid,
+                    fbp,
+                    fbc,
+                  ),
                 );
               })
               .catch(function () {
@@ -2359,7 +3191,10 @@
             localStorage.setItem("theme", next);
           } catch (e) {}
           if (meta)
-            meta.setAttribute("content", next === "light" ? "#ffffff" : "#0b0d0f");
+            meta.setAttribute(
+              "content",
+              next === "light" ? "#ffffff" : "#0b0d0f",
+            );
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({ event: "theme_toggle", theme: next });
           if (typeof window.gtag === "function")
@@ -2425,9 +3260,37 @@
         }
       });
     </script>
-    <% if (analytics.attribution) { %><%~ include("_partials/analytics/attribution.html") %><% } %>
+    <script src="/assets/nt-attribution.js?v=1"></script>
     <script>
-      <%~ include("_partials/lang-switch.html", { loc, switchPrefix: "career-resilience/" }) %>
+      (function () {
+        var LOCS = ["uk", "en", "ru"];
+        var PAGE_LOC = "ru";
+        try {
+          localStorage.setItem("lang", PAGE_LOC);
+        } catch (e) {}
+        document.querySelectorAll(".lang-switch .ls-opt").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            var loc = a.getAttribute("data-loc");
+            if (LOCS.indexOf(loc) < 0) return;
+            try {
+              localStorage.setItem("lang", loc);
+            } catch (e) {}
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "lang_switch",
+              from: PAGE_LOC,
+              to: loc,
+            });
+            location.href =
+              "/career-resilience/" +
+              loc +
+              ".html" +
+              location.search +
+              location.hash;
+          });
+        });
+      })();
     </script>
   </body>
 </html>

@@ -110,7 +110,7 @@ for (const { page, scheme, locales } of discoverChrome()) {
       page !== "index" &&
       page !== "future-proof" &&
       page !== "middle" &&
-      page !== "career-resilience"
+      !page.startsWith("career-resilience")
     ) {
       const res = byteDiffFiles(p, BASELINE_SHA, baselineOldPath(page, loc));
       if (!res.ok) {

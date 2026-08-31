@@ -17,6 +17,9 @@ SURFACES = {
     "future-proof": "future-proof/",
     "middle": "middle/",
     "career-resilience": "career-resilience/",
+    "career-resilience-hero": "career-resilience-hero/",
+    "career-resilience-signs": "career-resilience-signs/",
+    "career-resilience-why": "career-resilience-why/",
     "ai-speedup-checklist": "ai-speedup-checklist/",
     "ai-speedup-checklist-for-guild-members": "ai-speedup-checklist-for-guild-members/",
 }
