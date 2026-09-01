@@ -1613,8 +1613,7 @@
       // Webinar funnel: the primary CTAs open the registration modal (JS). This
       // href is the no-JS fallback and the static link the attribution gate reads;
       // the real destination (with UTMs) is built server-side on form submit.
-      const joinHref =
-        "https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&source_channel=webinar";
+      const joinHref = "https://gm.nexttick.it/go/05-09-efir";
       const registerEndpoint = "https://app.nexttick.it/api/register";
       // A/B hero variants — separate <page>.page.json configs share this template
       // and branch on the page name:
@@ -2406,7 +2405,7 @@
         // CTAs that open the register modal are counted at redirect time, not here.
         if (a.hasAttribute("data-open-register")) return;
         var href = a.href || "";
-        var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
+        var isBot = href.indexOf("gm.nexttick.it/go/") !== -1;
         var isCta = !!(a.dataset && a.dataset.ctaLocation);
         if (!isBot && !isCta) return;
         var payload = {

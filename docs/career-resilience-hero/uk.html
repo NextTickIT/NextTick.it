@@ -1800,7 +1800,7 @@
             class="btn"
             data-cta-location="header"
             data-open-register
-            href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+            href="https://gm.nexttick.it/go/05-09-efir"
             rel="noopener"
             >Зареєструватися безкоштовно</a
           >
@@ -1825,7 +1825,7 @@
                     class="btn"
                     data-cta-location="hero"
                     data-open-register
-                    href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                    href="https://gm.nexttick.it/go/05-09-efir"
                     rel="noopener"
                     >Зареєструватися безкоштовно</a
                   >
@@ -1923,7 +1923,7 @@
                   class="btn"
                   data-cta-location="context"
                   data-open-register
-                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  href="https://gm.nexttick.it/go/05-09-efir"
                   rel="noopener"
                   >Зареєструватися безкоштовно</a
                 >
@@ -2063,7 +2063,7 @@
                   class="btn"
                   data-cta-location="program"
                   data-open-register
-                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  href="https://gm.nexttick.it/go/05-09-efir"
                   rel="noopener"
                   >Зареєструватися безкоштовно</a
                 >
@@ -2132,7 +2132,7 @@
                   class="btn"
                   data-cta-location="result"
                   data-open-register
-                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  href="https://gm.nexttick.it/go/05-09-efir"
                   rel="noopener"
                   >Зареєструватися безкоштовно</a
                 >
@@ -2177,7 +2177,7 @@
                     class="btn"
                     data-cta-location="speaker"
                     data-open-register
-                    href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                    href="https://gm.nexttick.it/go/05-09-efir"
                     rel="noopener"
                     >Зареєструватися безкоштовно</a
                   >
@@ -2581,7 +2581,7 @@
                   class="btn"
                   data-cta-location="reviews"
                   data-open-register
-                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  href="https://gm.nexttick.it/go/05-09-efir"
                   rel="noopener"
                   >Зареєструватися безкоштовно</a
                 >
@@ -2666,7 +2666,7 @@
                   class="btn"
                   data-cta-location="final"
                   data-open-register
-                  href="https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar"
+                  href="https://gm.nexttick.it/go/05-09-efir"
                   rel="noopener"
                   >Зареєструватися безкоштовно</a
                 >
@@ -2848,8 +2848,7 @@
           badPhone: "Введіть коректний номер телефону.",
         };
         var ENDPOINT = "https://app.nexttick.it/api/register";
-        var BOT_FALLBACK =
-          "https://tg.pulse.is/next_tick_bot?start=6a7db7b03abe1dde0804837b&amp;source_channel=webinar";
+        var BOT_FALLBACK = "https://gm.nexttick.it/go/05-09-efir";
         var CONSENT_VERSION = "consent-2026-08";
         var POLICY_URL = "/consent.html";
         // Same host as ENDPOINT with /register -> /diag. Best-effort beacon that
@@ -3289,7 +3288,7 @@
         // CTAs that open the register modal are counted at redirect time, not here.
         if (a.hasAttribute("data-open-register")) return;
         var href = a.href || "";
-        var isBot = href.indexOf("tg.pulse.is/next_tick_bot") !== -1;
+        var isBot = href.indexOf("gm.nexttick.it/go/") !== -1;
         var isCta = !!(a.dataset && a.dataset.ctaLocation);
         if (!isBot && !isCta) return;
         var payload = {

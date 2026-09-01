@@ -57,8 +57,11 @@ const PAGE_DEFS = [
       "career-resilience/ru.html",
       "career-resilience/uk.html",
     ],
+    // Join CTAs now point at a guildmaster go-link (gm.nexttick.it/go/<slug>) that
+    // forwards to the bot — not a SendPulse deep-link. So there's no start=/
+    // source_channel in the static href; assert the go-link target instead.
     channel: "webinar",
-    start: "6a7db7b03abe1dde0804837b",
+    goHref: "https://gm.nexttick.it/go/05-09-efir",
   },
   {
     dir: "ai-speedup-checklist",
@@ -133,6 +136,9 @@ const botFiles = Object.fromEntries(
 const botStart = Object.fromEntries(
   selected.filter((d) => d.channel).flatMap((d) => d.files.map((f) => [f, d.start || START])),
 );
+const defByFile = Object.fromEntries(
+  selected.flatMap((d) => d.files.map((f) => [f, d])),
+);
 const noAttrFiles = selected.filter((d) => d.channel == null).flatMap((d) => d.files);
 
 console.log(`\n[1] Meta Pixel present on ${contentFiles.length} content page(s)`);
@@ -182,9 +188,23 @@ for (const p of noAttrFiles) {
   else fail(`${p} — expected no attribution/bot links, got attribution=${html.includes(ASSET)} bots=${bots}`);
 }
 
-console.log("\n[4/5] Bot links: start code + per-page source_channel");
+console.log("\n[4/5] Join links: SendPulse bot (start+source_channel) OR guildmaster go-link");
 for (const [p, expectSc] of Object.entries(botFiles)) {
   const html = read(p);
+  const def = defByFile[p];
+  // Go-link pages (career-resilience): the CTA is a guildmaster /go/<slug> that
+  // forwards to the bot. Assert the exact go-link + that no legacy SendPulse
+  // deep-link remains.
+  if (def && def.goHref) {
+    const hasGo = decode(html).includes(def.goHref);
+    const legacy = [...html.matchAll(BOT_HREF_RE)].length;
+    if (hasGo && legacy === 0) pass(`${p} — go-link ${def.goHref}, no legacy bot links`);
+    else
+      fail(
+        `${p} — expected go-link ${def.goHref} (found=${hasGo}) and 0 legacy bot links (got ${legacy})`,
+      );
+    continue;
+  }
   const links = [...html.matchAll(BOT_HREF_RE)].map((m) => decode(m[1]));
   if (!links.length) {
     fail(`${p} — no bot links found`);
