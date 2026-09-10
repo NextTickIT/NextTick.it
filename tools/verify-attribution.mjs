@@ -61,7 +61,7 @@ const PAGE_DEFS = [
     // forwards to the bot — not a SendPulse deep-link. So there's no start=/
     // source_channel in the static href; assert the go-link target instead.
     channel: "webinar",
-    goHref: "https://gm.nexttick.it/go/05-09-efir",
+    goHref: "https://gm.nexttick.it/go/17-09-efir",
   },
   {
     dir: "ai-speedup-checklist",
