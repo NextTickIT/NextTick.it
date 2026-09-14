@@ -777,6 +777,45 @@
         max-width: none;
       }
 
+      /* Speaker photo beside the hero text, matching the text block (hero-inner)
+         height via a stretch flex row (photo hero variants: -hero and -salary). */
+      .hero--photo .hero-inner {
+        display: flex;
+        align-items: stretch;
+        gap: 40px;
+      }
+      .hero--photo .hero-copy {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+      .hero-photo {
+        flex: 0 0 40%;
+        overflow: hidden;
+        border-left: 1px solid var(--line);
+        background: var(--surface);
+      }
+      .hero-photo img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 65% 50%;
+      }
+      @media (max-width: 900px) {
+        /* Stack: image ABOVE the text (column-reverse keeps text in the DOM
+           first for reading order while showing the photo first visually). */
+        .hero--photo .hero-inner {
+          flex-direction: column-reverse;
+          gap: 24px;
+        }
+        .hero-photo {
+          flex: none;
+          height: 300px;
+          border-left: 0;
+          border-bottom: 1px solid var(--line);
+        }
+      }
+
       .eyebrow {
         display: inline-flex;
         align-items: center;

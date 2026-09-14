@@ -674,9 +674,9 @@
         max-width: none;
       }
 
-<% if (page === "career-resilience-hero") { %>
+<% if (page === "career-resilience-hero" || page === "career-resilience-salary") { %>
       /* Speaker photo beside the hero text, matching the text block (hero-inner)
-         height via a stretch flex row (career-resilience-hero variant only). */
+         height via a stretch flex row (photo hero variants: -hero and -salary). */
       .hero--photo .hero-inner {
         display: flex;
         align-items: stretch;
