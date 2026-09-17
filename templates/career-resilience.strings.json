@@ -1,7 +1,7 @@
 {
   "en": {
     "title": "Why smart, productive developers get laid off | NextTick",
-    "description": "A free replay with Illya Klymov on September 17 at 19:00 Kyiv time — with live chat and Q&A.",
+    "description": "A free replay with Illya Klymov on September 24 at 19:00 Kyiv time — with live chat and Q&A.",
     "topCta": "register",
     "heroH1": "Why smart, productive developers get laid off",
     "heroH1Signs": "7 signs your developer position is vulnerable in 2026",
@@ -13,7 +13,7 @@
     "ctaRegister": "Register for free",
     "microcopy": "Registration takes less than a minute in Telegram",
     "eventAria": "Session details",
-    "evDate": "September 17",
+    "evDate": "September 24",
     "evTime": "19:00 · Kyiv",
     "speakerName": "Illya Klymov",
     "marketLabel": "# 01 · context",
@@ -75,7 +75,7 @@
     "faqItems": [
       {
         "q": "When and where does the session take place?",
-        "a": "September 17 at 19:00 Kyiv time — a replay we watch together. Illya recorded the session in advance, while the chat, polls, and Q&A happen live during the show. We'll send the link to registered participants in Telegram."
+        "a": "September 24 at 19:00 Kyiv time — a replay we watch together. Illya recorded the session in advance, while the chat, polls, and Q&A happen live during the show. We'll send the link to registered participants in Telegram."
       },
       {
         "q": "Is it really free?",
@@ -128,7 +128,7 @@
     "regNeedPhone": "Please enter your phone number.",
     "regNeedEmail": "Please enter your email.",
     "regBadEmail": "Please enter a valid email.",
-    "heroKicker": "September 17 · 19:00 Kyiv · Replay with live Q&A · free, with Illya Klymov",
+    "heroKicker": "September 24 · 19:00 Kyiv · Replay with live Q&A · free, with Illya Klymov",
     "heroLangNote": "* replay in Russian",
     "programLabel": "// stream program",
     "programH2": "In one session, gauge how stable your position is — and what to strengthen to lower your layoff risk",
@@ -148,7 +148,7 @@
   },
   "ru": {
     "title": "Почему умных и продуктивных разработчиков увольняют | NextTick",
-    "description": "Бесплатный реплей эфира с Ильёй Климовым 17 сентября в 19:00 по Киеву — с живым чатом и Q&A.",
+    "description": "Бесплатный реплей эфира с Ильёй Климовым 24 сентября в 19:00 по Киеву — с живым чатом и Q&A.",
     "topCta": "регистрация",
     "heroH1": "Почему умных и продуктивных разработчиков увольняют",
     "heroH1Signs": "7 признаков уязвимой позиции разработчика в 2026 году",
@@ -160,7 +160,7 @@
     "ctaRegister": "Зарегистрироваться бесплатно",
     "microcopy": "Регистрация займёт меньше минуты в Telegram",
     "eventAria": "Детали встречи",
-    "evDate": "17 сентября",
+    "evDate": "24 сентября",
     "evTime": "19:00 · Киев",
     "speakerName": "Илья Климов",
     "marketLabel": "# 01 · контекст",
@@ -222,7 +222,7 @@
     "faqItems": [
       {
         "q": "Когда и где состоится встреча?",
-        "a": "17 сентября в 19:00 по Киеву — реплей эфира, который смотрим вместе. Илья записал эфир заранее, а чат, голосования и ответы на вопросы происходят вживую во время показа. Ссылку пришлём зарегистрированным участникам в Telegram."
+        "a": "24 сентября в 19:00 по Киеву — реплей эфира, который смотрим вместе. Илья записал эфир заранее, а чат, голосования и ответы на вопросы происходят вживую во время показа. Ссылку пришлём зарегистрированным участникам в Telegram."
       },
       {
         "q": "Участие действительно бесплатное?",
@@ -275,7 +275,7 @@
     "regNeedPhone": "Введите номер телефона.",
     "regNeedEmail": "Введите email.",
     "regBadEmail": "Введите корректный email.",
-    "heroKicker": "17 сентября · 19:00 по Киеву · Реплей эфира с живым Q&A · бесплатно, с Ильёй Климовым",
+    "heroKicker": "24 сентября · 19:00 по Киеву · Реплей эфира с живым Q&A · бесплатно, с Ильёй Климовым",
     "heroLangNote": "* реплей на русском",
     "programLabel": "// программа стрима",
     "programH2": "За одну встречу определите, насколько устойчива ваша позиция и что усилить, чтобы снизить риск сокращения",
@@ -295,7 +295,7 @@
   },
   "uk": {
     "title": "Чому звільняють розумних і продуктивних розробників | NextTick",
-    "description": "Безкоштовний реплей ефіру з Іллею Клімовим 17 вересня о 19:00 за Києвом — з живим чатом і Q&A.",
+    "description": "Безкоштовний реплей ефіру з Іллею Клімовим 24 вересня о 19:00 за Києвом — з живим чатом і Q&A.",
     "topCta": "реєстрація",
     "heroH1": "Чому звільняють розумних і продуктивних розробників",
     "heroH1Signs": "7 ознак вразливої позиції розробника у 2026 році",
@@ -307,7 +307,7 @@
     "ctaRegister": "Зареєструватися безкоштовно",
     "microcopy": "Реєстрація займе менше хвилини в Telegram",
     "eventAria": "Деталі зустрічі",
-    "evDate": "17 вересня",
+    "evDate": "24 вересня",
     "evTime": "19:00 · Київ",
     "speakerName": "Ілля Клімов",
     "marketLabel": "# 01 · контекст",
@@ -369,7 +369,7 @@
     "faqItems": [
       {
         "q": "Коли і де відбудеться зустріч?",
-        "a": "17 вересня о 19:00 за Києвом — реплей ефіру, який дивимося разом. Ілля записав ефір заздалегідь, а чат, голосування й відповіді на запитання відбуваються наживо під час показу. Посилання надішлемо зареєстрованим учасникам у Telegram."
+        "a": "24 вересня о 19:00 за Києвом — реплей ефіру, який дивимося разом. Ілля записав ефір заздалегідь, а чат, голосування й відповіді на запитання відбуваються наживо під час показу. Посилання надішлемо зареєстрованим учасникам у Telegram."
       },
       {
         "q": "Участь справді безкоштовна?",
@@ -422,7 +422,7 @@
     "regNeedPhone": "Введіть номер телефону.",
     "regNeedEmail": "Введіть email.",
     "regBadEmail": "Введіть коректний email.",
-    "heroKicker": "17 вересня · 19:00 за Києвом · Реплей ефіру з живим Q&A · безкоштовно, з Іллею Клімовим",
+    "heroKicker": "24 вересня · 19:00 за Києвом · Реплей ефіру з живим Q&A · безкоштовно, з Іллею Клімовим",
     "heroLangNote": "* реплей російською",
     "programLabel": "// програма стріму",
     "programH2": "За одну зустріч визначте, наскільки стійка ваша позиція і що посилити, щоб знизити ризик скорочення",
