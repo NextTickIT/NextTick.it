@@ -20,9 +20,9 @@
         });
       })();
 
-      document.getElementById("lede-sub").innerHTML =
-        '<%~ render.c0 %></span>.';
-      // (overwritten by time-level picker below — leaving as initial fallback)
+      // The lede is rendered server-side in index.html (identical to the
+      // level-2 phrase below) so the hero does not shift when this script runs;
+      // the time-level picker further down still swaps it on a saved preference.
 
       // ── Derived counters / labels ────────────────────────────────────
       const totalEps = R.episodes.length;

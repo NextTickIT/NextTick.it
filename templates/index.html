@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <% if (analytics.gtm || analytics.ga4) { %><%~ include("_partials/analytics/partytown.html") %><% } %>
     <% if (analytics.gtm) { %><%~ include("_partials/analytics/gtm.html") %><% } %>
     <title><%~ s0 %></title>
     <!-- Favicons -->
@@ -52,11 +53,7 @@
       })();
     </script>
     <% if (analytics.ga4) { %><%~ include("_partials/analytics/ga4.html") %><% } %>
-    <link rel="preconnect" href="https://fonts.googleapis.com" >
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
-    <link       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    >
+    <%~ include("_partials/fonts.html", { loc, mono: true, preload: ["jbmono"] }) %>
     <style>
       :root {
         color-scheme: dark;
@@ -77,7 +74,7 @@
         --cyan: #56d4dd;
         --magenta: #bc8cff;
         --red: #ff7b72;
-        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        --mono: "JetBrains Mono", "JBMono Fallback", ui-monospace, Menlo, monospace;
         /* theme-dependent effects (routed through vars so the light theme can flip them) */
         --bg-rgb:
           11, 13, 15; /* base bg as rgb, for edge-fade gradients/shadows */
@@ -103,14 +100,14 @@
         --line-2: #b6bfc8;
         --txt: #1f2328;
         --dim: #59636e;
-        --muted: #8b949e;
-        --green: #1a7f37;
+        --muted: #656b73;
+        --green: #197a35;
         --green-2: #116329;
         --green-hover: #166b2e;
-        --amber: #9a6700;
+        --amber: #916100;
         --amber-2: #7a5200;
         --cyan: #0b7285;
-        --magenta: #8250df;
+        --magenta: #7d4dd7;
         --red: #cf222e;
         --bg-rgb: 255, 255, 255;
         --scan: rgba(0, 0, 0, 0.022);
@@ -299,7 +296,7 @@
         padding: 4px 6px;
         border-radius: 6px;
         color: inherit;
-        opacity: 0.5;
+        opacity: 1;
         text-decoration: none;
         border: 1px solid transparent;
         transition:
@@ -776,6 +773,10 @@
         color: var(--green);
       }
       .sec-head .name {
+        /* A real heading for the document outline: h1, then one per section,
+           then the h3s inside it. The bar's own type scale overrides the UA
+           heading styles. */
+        margin: 0;
         color: var(--txt);
         font-size: 13px;
         font-weight: 600;
@@ -897,7 +898,16 @@
       .tracks-wrap {
         margin: 0 14px;
       }
+      /* roadmap.js fills these containers at runtime. Until it does they are
+         0px tall, which collapsed everything below into the viewport and then
+         shifted it down by over a thousand pixels (intermittent CLS up to 0.71
+         on mobile, 0.45 on desktop, depending on whether first paint beat the
+         script). These floors reserve the space. Each is set just BELOW the
+         smallest height the filled content takes across en/uk/ru at every width
+         where the container is shown (measured: 878px mobile at 860w, 523px
+         grid at 1280w), so the floor never pads the real content. */
       .tracks-grid {
+        min-height: 520px;
         display: grid;
         grid-template-columns: 172px 1fr 1fr 1fr;
         gap: 1px;
@@ -1232,6 +1242,7 @@
 
       /* CSS-driven sizing — change cell width here */
       .tl-grid {
+        min-height: 500px;
         --label-w: 150px;
         --cell-w: 184px;
         --weeks: 40;
@@ -1689,6 +1700,7 @@
 
       /* ── minimap below timeline ──────────────────────────── */
       .minimap {
+        min-height: 100px;
         margin: 0 14px;
         border: 1px solid var(--line);
         border-top: 0;
@@ -2368,6 +2380,10 @@
           display: none;
         }
         .tracks-mobile {
+          /* Same reserve as .tracks-grid above, for the stacked layout: 860px
+             is just under the 878px the shortest locale fills at this
+             breakpoint's widest width. */
+          min-height: 860px;
           display: block;
           margin: 0 6px;
         }
@@ -2597,8 +2613,11 @@
             <div class="hero-copy">
               <div class="hero-title">
                 <img                   class="hero-logo"
-                  src="/assets/nexttick-logo.png"
+                  src="/assets/nexttick-logo.webp"
                   alt="nexttick"
+                  width="104"
+                  height="104"
+                  decoding="async"
                 >
                 <h1 data-comment-anchor="1586baca91-h1">
                   <span class="swap" id="h1-w1"><%~ s16 %></span><br><span                     class="swap"
@@ -2606,12 +2625,12 @@
                     ><%~ s17 %></span>
                 </h1>
               </div>
-              <div class="sub" id="lede-sub"></div>
+              <div class="sub" id="lede-sub"><%~ render.c0 %></span>.</div>
             </div>
 
             <div class="hero-video">
               <div class="hero-video-frame" id="hero-video" role="button" tabindex="0" aria-label="<%~ s18 %>" data-embed="https://www.youtube-nocookie.com/embed/nW8g4Y6otWM?autoplay=1&rel=0">
-                <img class="hv-poster" src="https://i.ytimg.com/vi/nW8g4Y6otWM/maxresdefault.jpg" alt="<%~ s19 %>" loading="lazy">
+                <img class="hv-poster" src="/assets/hero-poster.webp" alt="<%~ s19 %>" width="960" height="540" fetchpriority="high" decoding="async">
                 <span class="hv-play" aria-hidden="true"></span>
               </div>
             </div>
@@ -2624,7 +2643,7 @@
         <section class="sec" id="sec-tracks">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s20 %></span>
+            <h2 class="name"><%~ s20 %></h2>
             <span class="rule"></span>
           </div>
 
@@ -2638,7 +2657,7 @@
         <section class="sec" id="sec-timeline">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s21 %></span>
+            <h2 class="name"><%~ s21 %></h2>
             <span class="rule"></span>
           </div>
           <p class="sec-desc"><%~ s22 %><span class="em"><%~ s23 %></span><%~ s24 %></p>
@@ -2682,7 +2701,7 @@
         <section class="sec gates-preview" id="sec-gates-preview">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s30 %></span>
+            <h2 class="name"><%~ s30 %></h2>
             <span class="rule"></span>
             <span style="color: var(--muted); font-size: 10.5px"
               ><%~ s31 %></span>
@@ -2722,7 +2741,7 @@
         <section class="sec gated" data-tier="4" id="sec-cases">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s49 %></span>
+            <h2 class="name"><%~ s49 %></h2>
             <span class="rule"></span>
             <span style="color: var(--muted); font-size: 10.5px"
               ><%~ s50 %></span>
@@ -2770,7 +2789,7 @@
         <section class="sec gated" data-tier="4" id="sec-digest">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s68 %></span>
+            <h2 class="name"><%~ s68 %></h2>
             <span class="rule"></span>
             <span style="color: var(--muted); font-size: 10.5px"
               ><%~ s69 %></span>
@@ -2827,7 +2846,7 @@
         <section class="sec gated" data-tier="6" id="sec-community">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s91 %></span>
+            <h2 class="name"><%~ s91 %></h2>
             <span class="rule"></span>
             <span style="color: var(--muted); font-size: 10.5px"
               ><%~ s92 %></span>
@@ -2880,7 +2899,7 @@
         <section class="sec gated" data-tier="6" id="sec-audio">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s109 %></span>
+            <h2 class="name"><%~ s109 %></h2>
             <span class="rule"></span>
             <span style="color: var(--muted); font-size: 10.5px"
               ><%~ s110 %></span>
@@ -2923,7 +2942,7 @@
         <section class="sec">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s125 %></span>
+            <h2 class="name"><%~ s125 %></h2>
             <span class="rule"></span>
             <span style="color: var(--muted); font-size: 10.5px"
               ><%~ s126 %></span>
@@ -2959,12 +2978,12 @@
         <section class="sec">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s136 %></span>
+            <h2 class="name"><%~ s136 %></h2>
             <span class="rule"></span>
           </div>
           <div class="authors-grid">
             <div class="author">
-              <img src="/assets/author-ilya.png" alt="<%~ s137 %>">
+              <img src="/assets/author-ilya.webp" alt="<%~ s137 %>" width="92" height="92" loading="lazy" decoding="async">
               <div>
                 <div class="nm"><%~ s138 %></div>
                 <div class="role">
@@ -2972,7 +2991,7 @@
               </div>
             </div>
             <div class="author">
-              <img src="/assets/author-timur.png" alt="<%~ s140 %>">
+              <img src="/assets/author-timur.webp" alt="<%~ s140 %>" width="92" height="92" loading="lazy" decoding="async">
               <div>
                 <div class="nm"><%~ s141 %></div>
                 <div class="role">
@@ -2986,7 +3005,7 @@
         <section class="sec">
           <div class="sec-head">
             <span class="hash">##</span>
-            <span class="name"><%~ s144 %></span>
+            <h2 class="name"><%~ s144 %></h2>
             <span class="rule"></span>
             <span style="color: var(--muted); font-size: 10.5px"
               ><%~ s145 %></span>

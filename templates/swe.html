@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <% if (analytics.gtm || analytics.ga4) { %><%~ include("_partials/analytics/partytown.html") %><% } %>
     <% if (analytics.gtm) { %><%~ include("_partials/analytics/gtm.html") %><% } %>
     <%~ include("_partials/head.html", { loc, title, description, urlBase: "https://nexttick.it/swe/" }) %>
     <!-- Favicons -->
@@ -31,12 +32,7 @@
     </script>
     <% if (analytics.ga4) { %><%~ include("_partials/analytics/ga4.html") %><% } %>
     <% if (analytics.clarity) { %><%~ include("_partials/analytics/clarity.html") %><% } %>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <%~ include("_partials/fonts.html", { loc, mono: true, preload: ["jbmono"] }) %>
     <style>
       :root {
         color-scheme: dark;
@@ -57,7 +53,7 @@
         --cyan: #56d4dd;
         --magenta: #bc8cff;
         --red: #ff7b72;
-        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        --mono: "JetBrains Mono", "JBMono Fallback", ui-monospace, Menlo, monospace;
         --max: 1200px;
         --bg-rgb: 11, 13, 15;
         --scan: rgba(255, 255, 255, 0.012);
@@ -76,14 +72,14 @@
         --line-2: #b6bfc8;
         --txt: #1f2328;
         --dim: #59636e;
-        --muted: #8b949e;
-        --green: #1a7f37;
+        --muted: #656b73;
+        --green: #197a35;
         --green-2: #116329;
         --green-hover: #166b2e;
-        --amber: #9a6700;
+        --amber: #916100;
         --amber-2: #7a5200;
         --cyan: #0b7285;
-        --magenta: #8250df;
+        --magenta: #7d4dd7;
         --red: #cf222e;
         --bg-rgb: 255, 255, 255;
         --scan: rgba(0, 0, 0, 0.022);
@@ -296,7 +292,7 @@
         padding: 4px 6px;
         border-radius: 6px;
         color: inherit;
-        opacity: 0.5;
+        opacity: 1;
         text-decoration: none;
         border: 1px solid transparent;
         transition:
@@ -1018,7 +1014,7 @@
             <a class="ls-opt<% if (loc === "en") { %> on<% } %>" data-loc="en" hreflang="en" href="/swe/en.html"<% if (loc === "en") { %> aria-current="true"<% } %>>EN</a>
             <a class="ls-opt<% if (loc === "ru") { %> on<% } %>" data-loc="ru" hreflang="ru" href="/swe/ru.html"<% if (loc === "ru") { %> aria-current="true"<% } %>>RU</a>
           </nav>
-          <img class="win-logo" src="/assets/nexttick-logo.png" alt="" />
+          <img class="win-logo" src="/assets/nexttick-logo.webp" alt="" width="18" height="18" decoding="async" />
           <span class="title">nexttick</span>
           <span class="path">~/guild/middle.md</span>
           <nav class="tabs" aria-label="nav">
@@ -1046,7 +1042,7 @@
             <div class="hero-main">
               <div>
                 <div class="hero-title">
-                  <img class="hero-logo" src="/assets/nexttick-logo.png" alt="nexttick" />
+                  <img class="hero-logo" src="/assets/nexttick-logo.webp" alt="nexttick" width="112" height="112" decoding="async" />
                   <div>
                     <a class="eyebrow" href="#risk"><%~ heroEyebrow %></a>
                     <h1><%~ heroH1 %></h1>
@@ -1115,14 +1111,14 @@
             </div>
             <div class="authors">
               <article class="card author cyan">
-                <img src="/assets/author-ilya.png" alt="<%~ ilyaName %>" />
+                <img src="/assets/author-ilya.webp" alt="<%~ ilyaName %>" width="92" height="92" loading="lazy" decoding="async" />
                 <div>
                   <h3><%~ ilyaName %></h3>
                   <p><%~ ilyaBio %></p>
                 </div>
               </article>
               <article class="card author amber">
-                <img src="/assets/author-timur.png" alt="<%~ timurName %>" />
+                <img src="/assets/author-timur.webp" alt="<%~ timurName %>" width="92" height="92" loading="lazy" decoding="async" />
                 <div>
                   <h3><%~ timurName %></h3>
                   <p><%~ timurBio %></p>

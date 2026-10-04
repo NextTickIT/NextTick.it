@@ -1,0 +1,98 @@
+<%
+/* Self-hosted webfonts — ONE source for every chrome page.
+
+   Replaces the render-blocking Google Fonts <link>: that cost two extra
+   third-party connections (fonts.googleapis.com for the CSS, then
+   fonts.gstatic.com for the woff2) on the critical path, and the woff2 URLs
+   were only discoverable after the CSS had landed.
+
+   The files under assets/fonts/ are Google's own VARIABLE woff2, saved verbatim
+   by tools/fetch-fonts.mjs, so the unicode-range values below are exactly the
+   ones Google serves. Variable matters: one file per subset covers the whole
+   weight axis, so a page using five weights still makes one request per script.
+   The equivalent static per-weight set is ~340 KB against ~105 KB here, and on
+   Lighthouse's throttled mobile profile that difference alone moved First
+   Contentful Paint by ~1.5 s.
+
+   Only `latin` and `cyrillic` are declared — the site is en/uk/ru.
+
+   Include data:
+     loc     -> "en" | "ru" | "uk"; decides which subset is worth preloading
+     sans    -> true to declare Inter (weights 400-800)
+     mono    -> true to declare JetBrains Mono (weights 400-700)
+     preload -> optional list of stems to preload for the hero paint, e.g.
+                ["inter"]. Only the locale's own subset is preloaded; the other
+                script loads on demand via its unicode-range. Preload sparingly:
+                each file competes with the HTML for the same connection. */
+
+const SUBSETS = {
+  cyrillic: "U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116",
+  latin:
+    "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, " +
+    "U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+};
+/* Weight ranges must stay in sync with tools/fetch-fonts.mjs. */
+const FAMILIES = {
+  inter: { name: "Inter", range: "400 800" },
+  jbmono: { name: "JetBrains Mono", range: "400 700" },
+};
+
+const _loc = typeof loc === "undefined" ? "uk" : loc;
+const _preload = typeof preload === "undefined" ? [] : preload;
+const stems = [];
+if (typeof sans !== "undefined" && sans) stems.push("inter");
+if (typeof mono !== "undefined" && mono) stems.push("jbmono");
+
+/* uk/ru are Cyrillic; en is Latin. */
+const fsub = _loc === "en" ? "latin" : "cyrillic";
+%>
+<% for (const stem of _preload) { %>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/<%= stem %>-var-<%= fsub %>.woff2" crossorigin />
+<% } %>
+<style>
+  /* `font-display: swap` paints the text immediately in the fallback and
+     upgrades it when the real face arrives; the metric-matched fallbacks below
+     make that upgrade a ~0px reflow, so it costs no layout shift. */
+  <% for (const stem of stems) { %>
+  <% for (const sub of ["cyrillic", "latin"]) { %>
+  @font-face {
+    font-family: "<%= FAMILIES[stem].name %>";
+    font-style: normal;
+    font-weight: <%= FAMILIES[stem].range %>;
+    font-display: swap;
+    src: url("/assets/fonts/<%= stem %>-var-<%= sub %>.woff2") format("woff2");
+    unicode-range: <%= SUBSETS[sub] %>;
+  }
+  <% } %>
+  <% } %>
+  /* Metric-matched fallbacks — they occupy the same space as the real face, so
+     the swap reflows ~0px. Values are next/font's for Inter-over-Arial;
+     Liberation Sans (Linux, incl. Lighthouse's own Chrome) is metric-identical
+     to Arial and Helvetica Neue covers macOS, so the override resolves on every
+     platform. They apply only where the stack lists them, between the real
+     family and the generic. */
+  <% if (stems.includes("inter")) { %>
+  @font-face {
+    font-family: "Inter Fallback";
+    src: local("Arial"), local("Liberation Sans"), local("Helvetica Neue");
+    ascent-override: 90.44%;
+    descent-override: 22.52%;
+    line-gap-override: 0%;
+    size-adjust: 107.12%;
+  }
+  <% } %>
+  <% if (stems.includes("jbmono")) { %>
+  @font-face {
+    font-family: "JBMono Fallback";
+    src: local("Courier New"), local("Liberation Mono"), local("DejaVu Sans Mono");
+    /* JetBrains Mono is 1020/300 per 1000upm, so `normal` line boxes are 1.32em
+       against Courier New's 1.13em. Without these overrides the swap grew every
+       line by ~17% and shifted the whole page (measured CLS 0.448 on the home
+       page). The advance already matches at 0.6em, hence size-adjust 100%. */
+    ascent-override: 102%;
+    descent-override: 30%;
+    line-gap-override: 0%;
+    size-adjust: 100%;
+  }
+  <% } %>
+</style>

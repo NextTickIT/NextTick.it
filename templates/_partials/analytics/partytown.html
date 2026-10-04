@@ -1,0 +1,36 @@
+<%
+/* Partytown loader — runs the Google tags (GTM + GA4) in a web worker instead
+   of on the main thread. Include this BEFORE gtm.html / ga4.html: the loader
+   must execute before any script it is meant to pick up, and it must not be
+   async or deferred.
+
+   Only the Google tags are routed here. Meta Pixel stays on the main thread
+   because connect.facebook.net sends no Access-Control-Allow-Origin and the
+   worker fetches scripts over XHR, so it would need a reverse proxy this site
+   has nowhere to host. Clarity stays on the main thread because its session
+   replay continuously walks the live DOM — the workload Partytown's own
+   trade-offs page says it is not suited to.
+
+   `forward` lists the globals the page itself calls on the main thread, which
+   Partytown re-points at the worker:
+     dataLayer.push -> roadmap.js (CTA, tab, theme, time-level events) and
+                       lang-switch.html (lang_switch)
+     gtag           -> roadmap.js's theme_toggle event, which is guarded by
+                       `typeof window.gtag === "function"` and so needs the
+                       stub to exist.
+   Both are defined inside the worker by gtm.html / ga4.html; without the
+   forward those main-thread calls would vanish silently.
+
+   `lib` must be an absolute path with a leading slash — the loader skips its
+   whole init block for a relative one, with no error. Files are vendored to
+   docs/~partytown/ by tools/copy-partytown.mjs. */
+%>
+<script>
+  partytown = {
+    lib: "/~partytown/",
+    forward: ["dataLayer.push", "gtag"],
+  };
+</script>
+<script>
+  <%~ include("partytown-snippet.html") %>
+</script>

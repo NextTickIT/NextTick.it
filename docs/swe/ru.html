@@ -3,8 +3,218 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Google Tag Manager -->
     <script>
+      partytown = {
+        lib: "/~partytown/",
+        forward: ["dataLayer.push", "gtag"],
+      };
+    </script>
+    <script>
+      /* Partytown 0.14.5 - MIT QwikDev */
+      !(function () {
+        const t = (t, e, r) => {
+            var n;
+            if (void 0 === (r = globalThis)._pttt) {
+              r._pttt = null;
+              try {
+                r._pttt =
+                  (null === (n = r.trustedTypes) || void 0 === n
+                    ? void 0
+                    : n.createPolicy("partytown", {
+                        createHTML: (t) => t,
+                        createScript: (t) => t,
+                        createScriptURL: (t) => t,
+                      })) || null;
+              } catch (t) {}
+            }
+            return r._pttt ? r._pttt[t](e) : e;
+          },
+          e = { preserveBehavior: !1 },
+          r = (t) => {
+            if ("string" == typeof t) return [t, e];
+            const [r, n = e] = t;
+            return [r, { ...e, ...n }];
+          },
+          n = Object.freeze(
+            ((t) => {
+              const e = new Set();
+              let r = [];
+              do {
+                Object.getOwnPropertyNames(r).forEach((t) => {
+                  "function" == typeof r[t] && e.add(t);
+                });
+              } while ((r = Object.getPrototypeOf(r)) !== Object.prototype);
+              return Array.from(e);
+            })(),
+          );
+        !(function (e, o, i, a, c, l, s, p, d, u, y = e, f) {
+          function h() {
+            f ||
+              ((f = 1),
+              "/" ==
+                (s =
+                  (l.lib || "/~partytown/") + (l.debug ? "debug/" : ""))[0] &&
+                ((d = o.querySelectorAll('script[type="text/partytown"]')),
+                a != e &&
+                (function () {
+                  try {
+                    return !!a.dispatchEvent;
+                  } catch (t) {
+                    return !1;
+                  }
+                })()
+                  ? a.dispatchEvent(new CustomEvent("pt1", { detail: e }))
+                  : (0 != (null == l ? void 0 : l.fallbackTimeout) &&
+                      ((p = setTimeout(
+                        w,
+                        (null == l ? void 0 : l.fallbackTimeout) || 1e4,
+                      )),
+                      o.addEventListener("pt0", m)),
+                    c
+                      ? v(1)
+                      : i.serviceWorker
+                        ? i.serviceWorker
+                            .register(
+                              t(
+                                "createScriptURL",
+                                s + (l.swPath || "partytown-sw.js"),
+                              ),
+                              { scope: s },
+                            )
+                            .then(
+                              function (t) {
+                                t
+                                  ? t.active
+                                    ? v()
+                                    : t.installing &&
+                                      t.installing.addEventListener(
+                                        "statechange",
+                                        function (t) {
+                                          "activated" == t.target.state && v();
+                                        },
+                                      )
+                                  : w();
+                              },
+                              function (t) {
+                                (console.error(t), w());
+                              },
+                            )
+                        : w())));
+          }
+          function v(r) {
+            ((u = o.createElement(r ? "script" : "iframe")),
+              (e._pttab = Date.now()),
+              r ||
+                ((u.style.display = "block"),
+                (u.style.width = "0"),
+                (u.style.height = "0"),
+                (u.style.border = "0"),
+                (u.style.visibility = "hidden"),
+                u.setAttribute("aria-hidden", !0)),
+              (u.src = r
+                ? t("createScriptURL", s + "partytown-atomics.js?v=0.14.5")
+                : s + "partytown-sandbox-sw.html?" + e._pttab),
+              o.querySelector(l.sandboxParent || "body").appendChild(u));
+          }
+          function w(t, n) {
+            for (
+              m(),
+                a == e &&
+                  (l.forward || []).map(function (t) {
+                    const [n] = r(t);
+                    delete e[n.split(".")[0]];
+                  }),
+                d = o.querySelectorAll('script[type="text/partytown"]'),
+                t = 0;
+              t < d.length;
+              t++
+            )
+              b(d[t]);
+            ("undefined" != typeof MutationObserver &&
+              new MutationObserver(function (t) {
+                t.map(function (t) {
+                  for (var e = 0; e < t.addedNodes.length; e++) {
+                    var r = t.addedNodes[e];
+                    1 == r.nodeType &&
+                      ("SCRIPT" == r.nodeName && "text/partytown" == r.type
+                        ? b(r)
+                        : r.querySelectorAll &&
+                          r
+                            .querySelectorAll('script[type="text/partytown"]')
+                            .forEach(b));
+                  }
+                });
+              }).observe(o.documentElement, { childList: !0, subtree: !0 }),
+              u && u.parentNode.removeChild(u));
+          }
+          function b(e, r) {
+            ((r = o.createElement("script")),
+              e.src
+                ? (r.src = t("createScriptURL", e.src))
+                : (r.innerHTML = t("createHTML", e.innerHTML)),
+              (r.nonce = l.nonce),
+              (e.type += "-x"),
+              o.head.appendChild(r));
+          }
+          function m() {
+            clearTimeout(p);
+          }
+          ((l = e.partytown || {}),
+            a == e &&
+              (l.forward || []).map(function (t) {
+                const [o, { preserveBehavior: i }] = r(t);
+                ((y = e),
+                  o.split(".").map(function (t, r, o) {
+                    var a;
+                    y = y[o[r]] =
+                      r + 1 < o.length
+                        ? y[o[r]] || ((a = o[r + 1]), n.includes(a) ? [] : {})
+                        : (() => {
+                            let t = null;
+                            if (i) {
+                              const { methodOrProperty: r, thisObject: n } = ((
+                                t,
+                                e,
+                              ) => {
+                                let r = t;
+                                for (let t = 0; t < e.length - 1; t += 1)
+                                  r = r[e[t]];
+                                return {
+                                  thisObject: r,
+                                  methodOrProperty:
+                                    e.length > 0 ? r[e[e.length - 1]] : void 0,
+                                };
+                              })(e, o);
+                              "function" == typeof r &&
+                                (t = (...t) => r.apply(n, ...t));
+                            }
+                            return (
+                              "push" == o[r] &&
+                                Array.isArray(y) &&
+                                y.map(function (t) {
+                                  (e._ptf = e._ptf || []).push(o, [t]);
+                                }),
+                              function () {
+                                let r;
+                                return (
+                                  t && (r = t(arguments)),
+                                  (e._ptf = e._ptf || []).push(o, arguments),
+                                  r
+                                );
+                              }
+                            );
+                          })();
+                  }));
+              }),
+            "complete" == o.readyState
+              ? h()
+              : (e.addEventListener("DOMContentLoaded", h),
+                e.addEventListener("load", h)));
+        })(window, document, navigator, top, window.crossOriginIsolated);
+      })();
+    </script>
+    <!-- Google Tag Manager — runs in the Partytown worker (see partytown.html) -->
+    <script type="text/partytown">
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -86,12 +296,12 @@
         } catch (e) {}
       })();
     </script>
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) — runs in the Partytown worker (see partytown.html) -->
     <script
-      async
+      type="text/partytown"
       src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
     ></script>
-    <script>
+    <script type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -114,12 +324,57 @@
         y.parentNode.insertBefore(t, y);
       })(window, document, "clarity", "script", "x5houryvs2");
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/jbmono-var-cyrillic.woff2"
+      crossorigin
     />
+    <style>
+      /* `font-display: swap` paints the text immediately in the fallback and
+     upgrades it when the real face arrives; the metric-matched fallbacks below
+     make that upgrade a ~0px reflow, so it costs no layout shift. */
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: url("/assets/fonts/jbmono-var-cyrillic.woff2") format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: url("/assets/fonts/jbmono-var-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* Metric-matched fallbacks — they occupy the same space as the real face, so
+     the swap reflows ~0px. Values are next/font's for Inter-over-Arial;
+     Liberation Sans (Linux, incl. Lighthouse's own Chrome) is metric-identical
+     to Arial and Helvetica Neue covers macOS, so the override resolves on every
+     platform. They apply only where the stack lists them, between the real
+     family and the generic. */
+      @font-face {
+        font-family: "JBMono Fallback";
+        src:
+          local("Courier New"), local("Liberation Mono"),
+          local("DejaVu Sans Mono");
+        /* JetBrains Mono is 1020/300 per 1000upm, so `normal` line boxes are 1.32em
+       against Courier New's 1.13em. Without these overrides the swap grew every
+       line by ~17% and shifted the whole page (measured CLS 0.448 on the home
+       page). The advance already matches at 0.6em, hence size-adjust 100%. */
+        ascent-override: 102%;
+        descent-override: 30%;
+        line-gap-override: 0%;
+        size-adjust: 100%;
+      }
+    </style>
     <style>
       :root {
         color-scheme: dark;
@@ -140,7 +395,8 @@
         --cyan: #56d4dd;
         --magenta: #bc8cff;
         --red: #ff7b72;
-        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        --mono:
+          "JetBrains Mono", "JBMono Fallback", ui-monospace, Menlo, monospace;
         --max: 1200px;
         --bg-rgb: 11, 13, 15;
         --scan: rgba(255, 255, 255, 0.012);
@@ -159,14 +415,14 @@
         --line-2: #b6bfc8;
         --txt: #1f2328;
         --dim: #59636e;
-        --muted: #8b949e;
-        --green: #1a7f37;
+        --muted: #656b73;
+        --green: #197a35;
         --green-2: #116329;
         --green-hover: #166b2e;
-        --amber: #9a6700;
+        --amber: #916100;
         --amber-2: #7a5200;
         --cyan: #0b7285;
-        --magenta: #8250df;
+        --magenta: #7d4dd7;
         --red: #cf222e;
         --bg-rgb: 255, 255, 255;
         --scan: rgba(0, 0, 0, 0.022);
@@ -379,7 +635,7 @@
         padding: 4px 6px;
         border-radius: 6px;
         color: inherit;
-        opacity: 0.5;
+        opacity: 1;
         text-decoration: none;
         border: 1px solid transparent;
         transition:
@@ -1149,7 +1405,14 @@
               >RU</a
             >
           </nav>
-          <img class="win-logo" src="/assets/nexttick-logo.png" alt="" />
+          <img
+            class="win-logo"
+            src="/assets/nexttick-logo.webp"
+            alt=""
+            width="18"
+            height="18"
+            decoding="async"
+          />
           <span class="title">nexttick</span>
           <span class="path">~/guild/middle.md</span>
           <nav class="tabs" aria-label="nav">
@@ -1187,8 +1450,11 @@
                 <div class="hero-title">
                   <img
                     class="hero-logo"
-                    src="/assets/nexttick-logo.png"
+                    src="/assets/nexttick-logo.webp"
                     alt="nexttick"
+                    width="112"
+                    height="112"
+                    decoding="async"
                   />
                   <div>
                     <a class="eyebrow" href="#risk">Middle-разработчик</a>
@@ -1301,7 +1567,14 @@
             </div>
             <div class="authors">
               <article class="card author cyan">
-                <img src="/assets/author-ilya.png" alt="Илья Климов" />
+                <img
+                  src="/assets/author-ilya.webp"
+                  alt="Илья Климов"
+                  width="92"
+                  height="92"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div>
                   <h3>Илья Климов</h3>
                   <p>
@@ -1312,7 +1585,14 @@
                 </div>
               </article>
               <article class="card author amber">
-                <img src="/assets/author-timur.png" alt="Тимур Шемсединов" />
+                <img
+                  src="/assets/author-timur.webp"
+                  alt="Тимур Шемсединов"
+                  width="92"
+                  height="92"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div>
                   <h3>Тимур Шемсединов</h3>
                   <p>
