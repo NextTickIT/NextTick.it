@@ -2,6 +2,7 @@
   "template": "index.html",
   "strings": "index.strings.json",
   "outputScheme": "root",
+  "rootIndex": "ru",
   "locales": [
     "en",
     "ru",

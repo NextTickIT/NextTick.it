@@ -3,6 +3,45 @@
   <head>
     <meta charset="utf-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1" >
+<% if (isRootIndex) { %>
+    <%
+    /* This copy is served at the bare domain, which used to be a redirect stub:
+       everyone paid a second document load (Lighthouse measured 751 ms) before
+       the page they wanted even started. The root now IS the ru page, so ru
+       visitors pay nothing, and only other locales are sent on.
+
+       This runs FIRST in <head>, ahead of the analytics includes and the
+       stylesheet, so location.replace() aborts the document before any of that
+       is fetched — a visitor who gets redirected pays about what the old stub
+       cost, instead of a whole page. The canonical below points at /ru.html, so
+       this copy and that one are not rival URLs in search. */
+    %>
+    <script>
+      (function () {
+        var LOCS = ["uk", "ru", "en"],
+          here = "ru";
+        var loc;
+        try {
+          loc = localStorage.getItem("lang");
+        } catch (e) {}
+        if (LOCS.indexOf(loc) < 0) {
+          loc = here;
+          var langs =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language || ""];
+          for (var i = 0; i < langs.length; i++) {
+            var t = (langs[i] || "").toLowerCase();
+            if (t.indexOf("uk") === 0) { loc = "uk"; break; }
+            if (t.indexOf("ru") === 0) { loc = "ru"; break; }
+            if (t.indexOf("en") === 0) { loc = "en"; break; }
+          }
+        }
+        if (loc !== here)
+          location.replace("/" + loc + ".html" + location.search + location.hash);
+      })();
+    </script>
+<% } %>
     <% if (analytics.gtm || analytics.ga4) { %><%~ include("_partials/analytics/partytown.html") %><% } %>
     <% if (analytics.gtm) { %><%~ include("_partials/analytics/gtm.html") %><% } %>
     <title><%~ s0 %></title>

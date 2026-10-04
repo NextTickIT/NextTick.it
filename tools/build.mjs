@@ -13,6 +13,7 @@
 //          "template": "all.html",          // Eta view, relative to templates/
 //          "strings":  "all.strings.json",  // relative to templates/
 //          "outputScheme": "dir",           // "dir" | "root"  (see below)
+//          "rootIndex": "ru",               // optional; see below
 //          "locales": ["en","ru","uk"],     // optional; default en/ru/uk
 //          "analytics": { "gtm": true, "ga4": true, "clarity": true,
 //                         "pixel": true, "attribution": "website" }
@@ -21,6 +22,13 @@
 //      • strings JSON is keyed by locale: { "en": {…}, "ru": {…}, "uk": {…} }.
 //      • outputScheme "dir"  -> pages/<page>/<loc>.html
 //        outputScheme "root" -> pages/<loc>.html            (home)
+//      • "rootIndex": "<loc>" ALSO renders that locale to pages/index.html, so
+//        the bare domain serves a real page instead of redirecting to one. The
+//        extra render gets `isRootIndex: true` in its context (the per-locale
+//        files get `false`), which is how a template tells the two apart — the
+//        root copy carries the language sniffer that sends other locales on to
+//        their own URL. Its canonical still points at pages/<loc>.html, so the
+//        two copies do not compete in search.
 //
 //   2. Stub / legacy batches — one file `templates/<name>.stubs.json`
 //      (authored in Phase 5; analytics-free sniff stubs + legacy redirects):
@@ -39,6 +47,7 @@
 //   • loc      -> "en" | "ru" | "uk"
 //   • analytics-> the page's analytics flags object
 //   • page     -> the page name
+//   • isRootIndex -> true only in the extra pages/index.html render (see rootIndex)
 //   • include(name, data) -> Eta partial include (built-in)
 //   Reserved top-level names (do NOT use as strings keys): s, loc, analytics,
 //   page, include, it. Stub templates receive their `data` object the same way
@@ -60,7 +69,7 @@ import { formatHtml, ROOT } from "./lib/format.mjs";
 const TEMPLATES_DIR = path.join(ROOT, "templates");
 const PAGES_DIR = path.join(ROOT, "docs");
 const DEFAULT_LOCALES = ["en", "ru", "uk"];
-const RESERVED = new Set(["s", "loc", "analytics", "page", "include", "it"]);
+const RESERVED = new Set(["s", "loc", "analytics", "page", "include", "it", "isRootIndex"]);
 
 // Leave autoTrim at Eta's default ([false,"nl"]): it trims one newline after a
 // closing tag, which keeps conditional analytics includes free of stray blank
@@ -122,7 +131,7 @@ async function buildContentPages() {
   const written = [];
   for (const cfg of configs) {
     const page = cfg.slice(0, -".page.json".length);
-    const { template, strings, outputScheme, analytics = {}, locales = DEFAULT_LOCALES } =
+    const { template, strings, outputScheme, rootIndex, analytics = {}, locales = DEFAULT_LOCALES } =
       await readJson(cfg);
     if (!template || !strings || !outputScheme) {
       throw new Error(`${cfg}: requires "template", "strings", "outputScheme"`);
@@ -134,9 +143,21 @@ async function buildContentPages() {
         throw new Error(`${strings}: missing locale "${loc}" for page "${page}"`);
       }
       assertNoReserved(page, loc, locStrings);
-      const data = { ...locStrings, s: locStrings, loc, analytics, page };
+      const data = { ...locStrings, s: locStrings, loc, analytics, page, isRootIndex: false };
       const out = await renderAndWrite(template, data, outputPath(page, outputScheme, loc));
       written.push(out);
+    }
+    if (rootIndex) {
+      // Second render of one locale, to pages/index.html, so the bare domain is
+      // a page rather than a redirect to one.
+      const locStrings = stringsByLocale[rootIndex];
+      if (!locStrings) {
+        throw new Error(`${strings}: rootIndex locale "${rootIndex}" missing for page "${page}"`);
+      }
+      const data = {
+        ...locStrings, s: locStrings, loc: rootIndex, analytics, page, isRootIndex: true,
+      };
+      written.push(await renderAndWrite(template, data, path.join(PAGES_DIR, "index.html")));
     }
   }
   return written;

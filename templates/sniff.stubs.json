@@ -2,34 +2,22 @@
   "template": "stub.html",
   "outputs": [
     {
-      "out": "index.html",
-      "data": {
-        "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
-        "default_loc": "uk",
-        "base": "/",
-        "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
-        "noscript_labels": {
-          "uk": "Українська",
-          "en": "English",
-          "ru": "Русский"
-        }
-      }
-    },
-    {
       "out": "swe.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/swe/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -37,15 +25,19 @@
       "out": "all.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/all/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -53,15 +45,19 @@
       "out": "future-proof.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/future-proof/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -69,15 +65,19 @@
       "out": "future-proof/index.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/future-proof/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -85,15 +85,19 @@
       "out": "middle.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/middle/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -101,15 +105,19 @@
       "out": "middle/index.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/middle/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -117,15 +125,19 @@
       "out": "career-resilience.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/career-resilience/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -133,15 +145,19 @@
       "out": "career-resilience/index.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/career-resilience/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -149,15 +165,19 @@
       "out": "career-resilience-salary.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/career-resilience-salary/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -165,15 +185,19 @@
       "out": "career-resilience-salary/index.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/career-resilience-salary/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -181,15 +205,19 @@
       "out": "ai-speedup-checklist.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/ai-speedup-checklist/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -197,67 +225,99 @@
       "out": "ai-speedup-checklist-for-guild-members.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/ai-speedup-checklist-for-guild-members/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
     {
       "out": "offer.html",
       "data": {
-        "title": "NextTick — Offer / Оферта",
-        "locs": ["uk", "ru", "en"],
+        "title": "NextTick \u2014 Offer / \u041e\u0444\u0435\u0440\u0442\u0430",
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "ru",
         "base": "/offer/",
         "ext": ".html",
-        "noscript_prompt": "Offer / Оферта",
-        "noscript_labels": { "uk": "Українською", "ru": "На русском", "en": "In English" }
+        "noscript_prompt": "Offer / \u041e\u0444\u0435\u0440\u0442\u0430",
+        "noscript_labels": {
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u044e",
+          "ru": "\u041d\u0430 \u0440\u0443\u0441\u0441\u043a\u043e\u043c",
+          "en": "In English"
+        }
       }
     },
     {
       "out": "privacy.html",
       "data": {
-        "title": "NextTick — Privacy / Конфіденційність / Конфиденциальность",
-        "locs": ["uk", "ru", "en"],
+        "title": "NextTick \u2014 Privacy / \u041a\u043e\u043d\u0444\u0456\u0434\u0435\u043d\u0446\u0456\u0439\u043d\u0456\u0441\u0442\u044c / \u041a\u043e\u043d\u0444\u0438\u0434\u0435\u043d\u0446\u0438\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c",
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "ru",
         "base": "/privacy/",
         "ext": ".html",
-        "noscript_prompt": "Privacy / Конфіденційність / Конфиденциальность",
-        "noscript_labels": { "uk": "Українською", "ru": "На русском", "en": "In English" }
+        "noscript_prompt": "Privacy / \u041a\u043e\u043d\u0444\u0456\u0434\u0435\u043d\u0446\u0456\u0439\u043d\u0456\u0441\u0442\u044c / \u041a\u043e\u043d\u0444\u0438\u0434\u0435\u043d\u0446\u0438\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c",
+        "noscript_labels": {
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u044e",
+          "ru": "\u041d\u0430 \u0440\u0443\u0441\u0441\u043a\u043e\u043c",
+          "en": "In English"
+        }
       }
     },
     {
       "out": "consent.html",
       "data": {
-        "title": "NextTick — Consent / Згода / Согласие",
-        "locs": ["uk", "ru", "en"],
+        "title": "NextTick \u2014 Consent / \u0417\u0433\u043e\u0434\u0430 / \u0421\u043e\u0433\u043b\u0430\u0441\u0438\u0435",
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "ru",
         "base": "/consent/",
         "ext": ".html",
-        "noscript_prompt": "Consent / Згода / Согласие",
-        "noscript_labels": { "uk": "Українською", "ru": "На русском", "en": "In English" }
+        "noscript_prompt": "Consent / \u0417\u0433\u043e\u0434\u0430 / \u0421\u043e\u0433\u043b\u0430\u0441\u0438\u0435",
+        "noscript_labels": {
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u044e",
+          "ru": "\u041d\u0430 \u0440\u0443\u0441\u0441\u043a\u043e\u043c",
+          "en": "In English"
+        }
       }
     },
     {
       "out": "ai-speedup-checklist/index.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/ai-speedup-checklist/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     },
@@ -265,15 +325,19 @@
       "out": "ai-speedup-checklist-for-guild-members/index.html",
       "data": {
         "title": "NextTick",
-        "locs": ["uk", "ru", "en"],
+        "locs": [
+          "uk",
+          "ru",
+          "en"
+        ],
         "default_loc": "uk",
         "base": "/ai-speedup-checklist-for-guild-members/",
         "ext": ".html",
-        "noscript_prompt": "Choose language / Оберіть мову / Выберите язык",
+        "noscript_prompt": "Choose language / \u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043c\u043e\u0432\u0443 / \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a",
         "noscript_labels": {
-          "uk": "Українська",
+          "uk": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
           "en": "English",
-          "ru": "Русский"
+          "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
         }
       }
     }

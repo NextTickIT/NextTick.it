@@ -3,8 +3,8 @@
 // attribution footprint on the BUILT docs/ tree (page-based layout).
 //
 // Asserts, without a browser:
-//   1. Meta Pixel (fbq init + PageView) + <noscript> present on all 16 content pages.
-//   2. Every analytics-free stub (24: sniff + root-default + legacy redirects) has
+//   1. Meta Pixel (fbq init + PageView) + <noscript> present on every content page.
+//   2. Every analytics-free stub (sniff + root-default + legacy redirects) has
 //      NO pixel/GTM/GA4/Clarity/attribution.
 //   3. nt-attribution.js is included on the bot-link pages AND absent on the
 //      non-attribution content pages (guild, offer, privacy).
@@ -35,7 +35,10 @@ const ASSET = "/assets/nt-attribution.js";
 // `channel` is the expected bot-link source_channel, or null for pages with no
 // bot links / no attribution include (guild, offer, privacy — baseline reality).
 const PAGE_DEFS = [
-  { dir: "", files: ["en.html", "ru.html", "uk.html"], channel: "website" },
+  // "index.html" is the rootIndex copy of ru.html served at the bare domain
+  // (templates/index.page.json). It carries the same analytics as any content
+  // page, so it belongs here, not in the analytics-free stub list.
+  { dir: "", files: ["en.html", "ru.html", "uk.html", "index.html"], channel: "website" },
   { dir: "swe", files: ["swe/en.html", "swe/ru.html", "swe/uk.html"], channel: "website" },
   { dir: "all", files: ["all/en.html", "all/ru.html", "all/uk.html"], channel: "website:all", start: "6a4f770343a30de13e0cbfbc" },
   {
