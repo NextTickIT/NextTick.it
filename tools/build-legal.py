@@ -87,14 +87,17 @@ FOOTER_LABELS = {
     "uk": dict(home="← nexttick", offer="Публічна оферта",
                privacy="Політика конфіденційності",
                consent="Згода на обробку даних",
+               prev="Попередня редакція",
                copy="© 2026 NextTick · ТОВ «МЕТАТЕСН»"),
     "ru": dict(home="← nexttick", offer="Публичная оферта",
                privacy="Политика конфиденциальности",
                consent="Согласие на обработку данных",
+               prev="Предыдущая редакция",
                copy="© 2026 NextTick · ООО «МЕТАТЕСН»"),
     "en": dict(home="← nexttick", offer="Public Offer",
                privacy="Privacy Policy",
                consent="Data Processing Consent",
+               prev="Previous revision",
                copy="© 2026 NextTick · METATECH LLC"),
 }
 
@@ -185,8 +188,10 @@ def paragraphs(docx_path):
 # terms. URLs are left as plain text, exactly as every published revision renders
 # them — auto-linking them would silently restyle the archived revisions too.
 INLINE_BOLD = re.compile(r"\*\*(.+?)\*\*", re.S)
-# A whole-line *italic* paragraph -> the dimmed .legal-meta approval block (B3).
-ITALIC_META = re.compile(r"^\*(?!\*)(.+?)\*$", re.S)
+# A whole-line italic paragraph -> the dimmed .legal-meta approval block (B3).
+# Both delimiters: the Ред.№2 sources use _underscores_, and *asterisks* are the
+# other common authoring style, so neither can leak into the page as literal text.
+ITALIC_META = re.compile(r"^(?:\*(?!\*)(.+?)\*|_(?!_)(.+?)_)$", re.S)
 
 
 def inline(t):
@@ -313,6 +318,44 @@ def records_to_md(recs):
 
 
 # ── Markdown → HTML (1:1 structural mapping) ──────────────────────────
+SEP_CELL = re.compile(r"^:?-{2,}:?$")
+
+
+def _cells(row):
+    r = row.strip()
+    if r.startswith("|"):
+        r = r[1:]
+    if r.endswith("|"):
+        r = r[:-1]
+    return [c.strip() for c in r.split("|")]
+
+
+def _table_html(rows):
+    """GitHub-style pipe table -> <table class="legal-table">.
+
+    The Ред.№2 privacy policy states its processing purposes and retention periods
+    as two tables; without this they reached the page as literal pipe characters.
+    """
+    grid = [_cells(r) for r in rows]
+    head = None
+    if len(grid) >= 2 and grid[1] and all(SEP_CELL.match(c) for c in grid[1] if c):
+        head, grid = grid[0], grid[2:]
+    parts = ['<table class="legal-table">']
+    if head:
+        parts.append(
+            "<thead><tr>"
+            + "".join(f"<th>{inline(esc(c))}</th>" for c in head)
+            + "</tr></thead>"
+        )
+    parts.append("<tbody>")
+    for row in grid:
+        parts.append(
+            "<tr>" + "".join(f"<td>{inline(esc(c))}</td>" for c in row) + "</tr>"
+        )
+    parts.append("</tbody></table>")
+    return "".join(parts)
+
+
 def _list_html(items):
     """items: [(level, text)]. Build a (possibly nested) <ul> from level 0."""
     parts = ["<ul>"]
@@ -356,6 +399,7 @@ def md_to_html(md, lead_preamble=None):
             or ln.startswith("> ")
             or ln.startswith("```")
             or ln.lstrip().startswith("- ")
+            or ln.lstrip().startswith("|")
         )
 
     while i < n:
@@ -402,6 +446,12 @@ def md_to_html(md, lead_preamble=None):
                 if info == "requisites"
                 else f"<pre>{joined}</pre>"
             )
+        elif ln.lstrip().startswith("|"):
+            rows = []
+            while i < n and lines[i].lstrip().startswith("|"):
+                rows.append(lines[i])
+                i += 1
+            blocks.append(_table_html(rows))
         elif ln.lstrip().startswith("- "):
             items = []
             while i < n and lines[i].lstrip().startswith("- "):
@@ -423,8 +473,9 @@ def md_to_html(md, lead_preamble=None):
             if mi:
                 # B3: the new revisions carry their approval block as one *italic*
                 # line instead of the old "> " blockquote. Same .legal-meta styling.
+                inner = mi.group(1) if mi.group(1) is not None else mi.group(2)
                 blocks.append(
-                    '<p class="legal-meta">' + inline(esc(mi.group(1).strip())) + "</p>"
+                    '<p class="legal-meta">' + inline(esc(inner.strip())) + "</p>"
                 )
                 continue
             mcl = CLAUSE_RE.match(buf[0])
@@ -570,7 +621,7 @@ PAGE = """<!doctype html>
           <a href="/%%LOC%%.html">%%F_HOME%%</a>
           <a href="/offer/%%LOC%%.html">%%F_OFFER%%</a>
           <a href="/privacy/%%LOC%%.html">%%F_PRIVACY%%</a>
-          <a href="/consent/%%LOC%%.html">%%F_CONSENT%%</a>
+          <a href="/consent/%%LOC%%.html">%%F_CONSENT%%</a>%%PREV_REV%%
           <span class="lf-copy">%%F_COPY%%</span>
         </footer>
       </div>
@@ -634,13 +685,18 @@ MD_PAGES = [
 ]
 
 
-def assemble_page(slug, loc, md, lead_preamble=None, archive_date=None):
+def assemble_page(slug, loc, md, lead_preamble=None, archive_date=None,
+                  prev_revision=None):
     """Stage 2: Markdown -> HTML body -> full page.
 
     archive_date set (YYYY-MM-DD) emits the dated, superseded revision at
     docs/<slug>/<loc>-<date>.html: noindex (canonical already points at the live
     page, so the archive never competes with it in search), a localized
     superseded banner under the <h1>, and the issuing entity's own copyright.
+    prev_revision (YYYY-MM-DD) adds a footer link to the superseded revision. The
+    offer keeps a User on the revision in force when they paid until their
+    Subscription Period ends (cl. 7.2), so the previous text has to stay reachable
+    FROM the current one, not merely exist at a URL.
     Returns (html_rel, md_rel) for post-formatting."""
     h1, body = md_to_html(md, lead_preamble=lead_preamble)
     s = STR[(slug, loc)]
@@ -671,6 +727,13 @@ def assemble_page(slug, loc, md, lead_preamble=None, archive_date=None):
         .replace("%%F_PRIVACY%%", esc(fl["privacy"]))
         .replace("%%F_CONSENT%%", esc(fl["consent"]))
         .replace("%%F_COPY%%", esc(fl["copy"]))
+        .replace(
+            "%%PREV_REV%%",
+            f'\n          <a href="/{slug}/{loc}-{prev_revision}.html">'
+            f"{esc(fl['prev'])}</a>"
+            if prev_revision
+            else "",
+        )
         .replace(
             "%%ROBOTS%%",
             '\n    <meta name="robots" content="noindex,follow" />'
@@ -706,6 +769,21 @@ ARCHIVE_DIR = os.path.join(MD_DIR, "archive")
 ARCHIVE_RE = re.compile(r"^(offer|privacy|consent)\.(uk|ru|en)-(\d{4}-\d{2}-\d{2})\.md$")
 
 
+def latest_archived():
+    """{(slug, loc): newest archived date} — the revision a live page links back to."""
+    out = {}
+    if not os.path.isdir(ARCHIVE_DIR):
+        return out
+    for name in os.listdir(ARCHIVE_DIR):
+        m = ARCHIVE_RE.match(name)
+        if m:
+            slug, loc, date = m.groups()
+            key = (slug, loc)
+            if date > out.get(key, ""):
+                out[key] = date
+    return out
+
+
 def build(from_docx=False):
     written = []
     os.makedirs(MD_DIR, exist_ok=True)
@@ -733,6 +811,7 @@ def build(from_docx=False):
             written.append(assemble_page(slug, loc, md, lead_preamble=True))
     # md-native pages: committed Markdown -> HTML (no docx stage). The .lead
     # preamble decision is auto-detected per document (see md_to_html).
+    prev = latest_archived()
     for slug, loc in MD_PAGES:
         md_path = os.path.join(MD_DIR, f"{slug}.{loc}.md")
         if not os.path.exists(md_path):
@@ -740,7 +819,9 @@ def build(from_docx=False):
             continue
         with open(md_path, encoding="utf-8") as f:
             md = f.read()
-        written.append(assemble_page(slug, loc, md))
+        written.append(
+            assemble_page(slug, loc, md, prev_revision=prev.get((slug, loc)))
+        )
     # Superseded revisions: docs/<slug>/<loc>-<date>.html from the archive sources.
     if os.path.isdir(ARCHIVE_DIR):
         for name in sorted(os.listdir(ARCHIVE_DIR)):

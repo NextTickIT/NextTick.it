@@ -249,6 +249,30 @@ body::after {
   color: var(--dim);
   margin: 0 0 28px;
 }
+/* Pipe tables from the Markdown sources (privacy: processing purposes, retention). */
+.legal .legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 22px;
+  font-size: 14px;
+}
+.legal .legal-table th,
+.legal .legal-table td {
+  border: 1px solid var(--line, rgba(127, 127, 127, 0.35));
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.legal .legal-table th {
+  font-weight: 600;
+}
+/* Narrow screens: let the table scroll rather than break the page. */
+@media (max-width: 640px) {
+  .legal .legal-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
 /* Superseded-revision banner on the dated archive pages (docs/<slug>/<loc>-<date>.html).
    Accented so a reader cannot mistake an archived revision for the current one. */
 .legal .legal-archived {
