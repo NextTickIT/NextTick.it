@@ -87,16 +87,51 @@ FOOTER_LABELS = {
     "uk": dict(home="← nexttick", offer="Публічна оферта",
                privacy="Політика конфіденційності",
                consent="Згода на обробку даних",
-               copy="© 2026 NextTick · ФОП Карпов Антон"),
+               copy="© 2026 NextTick · ТОВ «МЕТАТЕСН»"),
     "ru": dict(home="← nexttick", offer="Публичная оферта",
                privacy="Политика конфиденциальности",
                consent="Согласие на обработку данных",
-               copy="© 2026 NextTick · ФЛП Карпов Антон"),
+               copy="© 2026 NextTick · ООО «МЕТАТЕСН»"),
     "en": dict(home="← nexttick", offer="Public Offer",
                privacy="Privacy Policy",
                consent="Data Processing Consent",
-               copy="© 2026 NextTick · Sole Proprietor Anton Karpov"),
+               copy="© 2026 NextTick · METATECH LLC"),
 }
+
+# The copyright line belongs to the REVISION, not to the site: an archived page
+# must keep stamping the entity that actually issued it (B6/B7).
+FOOTER_COPY_ARCHIVE = {
+    "uk": "© 2026 NextTick · ФОП Карпов Антон",
+    "ru": "© 2026 NextTick · ФЛП Карпов Антон",
+    "en": "© 2026 NextTick · Sole Proprietor Anton Karpov",
+}
+
+# Superseded-revision banner. {date} is localized via MONTHS below.
+ARCHIVE_NOTE = {
+    "uk": 'Архівна редакція. Втратила чинність {date}. '
+          'Чинна редакція: <a href="/{slug}/uk.html">nexttick.it/{slug}/uk.html</a>',
+    "ru": 'Архивная редакция. Утратила силу {date}. '
+          'Действующая редакция: <a href="/{slug}/ru.html">nexttick.it/{slug}/ru.html</a>',
+    "en": 'Archived revision, superseded on {date}. '
+          'Current revision: <a href="/{slug}/en.html">nexttick.it/{slug}/en.html</a>',
+}
+MONTHS = {
+    "uk": ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня",
+           "серпня", "вересня", "жовтня", "листопада", "грудня"],
+    "ru": ["января", "февраля", "марта", "апреля", "мая", "июня", "июля",
+           "августа", "сентября", "октября", "ноября", "декабря"],
+    "en": ["January", "February", "March", "April", "May", "June", "July",
+           "August", "September", "October", "November", "December"],
+}
+ARCHIVE_SUFFIX = {"uk": " року", "ru": " года", "en": ""}
+
+
+def archive_note(slug, loc, date):
+    """Localized 'this revision is superseded' banner for a dated archive page."""
+    y, m, d = (int(x) for x in date.split("-"))
+    human = f"{d} {MONTHS[loc][m - 1]} {y}{ARCHIVE_SUFFIX[loc]}"
+    return ARCHIVE_NOTE[loc].format(date=human, slug=slug)
+
 
 APPROVAL_RE = re.compile(r"ЗАТВЕРДЖ|УТВЕРЖД|Дата затвердж|Дата утвержд|^\d{1,2}\s+\S+\s+20\d\d")
 # Line breaks for the opening legal-entity block. The RU docx carries explicit
@@ -142,6 +177,21 @@ def paragraphs(docx_path):
             ilvl = int(m.group(1)) if m else 0
         out.append({"text": text, "list": is_list, "ilvl": ilvl})
     return out
+
+
+# --- Inline markdown (B1). Applied to ALREADY-ESCAPED text, so the escaping done
+# by esc() is preserved and only our own tags are introduced.
+# Scope is deliberately just **bold**: the Ред.№2 sources use it for the ~24 defined
+# terms. URLs are left as plain text, exactly as every published revision renders
+# them — auto-linking them would silently restyle the archived revisions too.
+INLINE_BOLD = re.compile(r"\*\*(.+?)\*\*", re.S)
+# A whole-line *italic* paragraph -> the dimmed .legal-meta approval block (B3).
+ITALIC_META = re.compile(r"^\*(?!\*)(.+?)\*$", re.S)
+
+
+def inline(t):
+    """Inline markdown on escaped text: **bold** -> <strong>."""
+    return INLINE_BOLD.sub(r"<strong>\1</strong>", t)
 
 
 def esc(t):
@@ -269,25 +319,29 @@ def _list_html(items):
     prev = 0
     for idx, (lv, text) in enumerate(items):
         if idx == 0:
-            parts.append(f"<li>{esc(text)}")
+            parts.append(f"<li>{inline(esc(text))}")
         elif lv > prev:
-            parts.append("<ul>" * (lv - prev) + f"<li>{esc(text)}")
+            parts.append("<ul>" * (lv - prev) + f"<li>{inline(esc(text))}")
         elif lv < prev:
-            parts.append("</li>" + "</ul></li>" * (prev - lv) + f"<li>{esc(text)}")
+            parts.append("</li>" + "</ul></li>" * (prev - lv) + f"<li>{inline(esc(text))}")
         else:
-            parts.append(f"</li><li>{esc(text)}")
+            parts.append(f"</li><li>{inline(esc(text))}")
         prev = lv
     parts.append("</li>" + "</ul>" * (prev + 1))
     return "".join(parts)
 
 
-def md_to_html(md, lead_preamble=True):
+def md_to_html(md, lead_preamble=None):
     """Parse our Markdown dialect -> (h1, body_html).
 
     lead_preamble: style paragraphs before the first "## " section as .lead
-    (dimmed). True for the section-structured docx docs (offer/privacy), where
-    the preamble sits above section 1. False for section-less md-native docs
-    (consent), whose whole body would otherwise render dimmed."""
+    (dimmed). Auto-detected when None (B4): a document that HAS "## " sections
+    gets the dimmed preamble above section 1; a section-less document would
+    otherwise render entirely dimmed, so it does not. This replaces the old
+    hardcoded SECTIONLESS slug list, which broke as soon as a previously
+    section-less doc (consent) gained numbered sections in a new revision."""
+    if lead_preamble is None:
+        lead_preamble = any(l.startswith("## ") for l in md.split("\n"))
     lines = md.split("\n")
     n = len(lines)
     i = 0
@@ -309,7 +363,14 @@ def md_to_html(md, lead_preamble=True):
         if ln.strip() == "":
             i += 1
         elif ln.startswith("# "):
-            h1 = esc(ln[2:].strip())
+            # B2: only the FIRST "# " becomes the page <h1>. A later one (e.g. the
+            # offer's "ДОДАТОК 1 ДО ОФЕРТИ") is a major in-body division: emit it as
+            # a titled h2 instead of silently overwriting the document title.
+            t = esc(ln[2:].strip())
+            if not h1:
+                h1 = t
+            else:
+                blocks.append(f'<h2 class="appendix-title">{t}</h2>')
             i += 1
         elif ln.startswith("## "):
             seen_section = True
@@ -358,17 +419,27 @@ def md_to_html(md, lead_preamble=True):
             while i < n and lines[i].strip() != "" and not special(lines[i]):
                 buf.append(lines[i].strip())
                 i += 1
+            mi = ITALIC_META.match(buf[0]) if len(buf) == 1 else None
+            if mi:
+                # B3: the new revisions carry their approval block as one *italic*
+                # line instead of the old "> " blockquote. Same .legal-meta styling.
+                blocks.append(
+                    '<p class="legal-meta">' + inline(esc(mi.group(1).strip())) + "</p>"
+                )
+                continue
             mcl = CLAUSE_RE.match(buf[0])
             if mcl:
                 num = mcl.group(1)
                 body_lines = [buf[0][len(num):].lstrip()] + buf[1:]
-                body = "<br />".join(esc(x) for x in body_lines if x != "")
+                body = inline("<br />".join(esc(x) for x in body_lines if x != ""))
                 blocks.append(
                     f'<p class="clause"><span class="cl-num">{esc(num)}</span> {body}</p>'
                 )
             else:
                 cls = ' class="lead"' if (lead_preamble and not seen_section) else ""
-                blocks.append(f"<p{cls}>{'<br />'.join(esc(x) for x in buf)}</p>")
+                blocks.append(
+                    f"<p{cls}>" + inline("<br />".join(esc(x) for x in buf)) + "</p>"
+                )
     return h1, "\n".join(blocks)
 
 
@@ -395,7 +466,7 @@ PAGE = """<!doctype html>
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="description" content="%%DESC%%" />
-    <link rel="canonical" href="https://nexttick.it/%%SLUG%%/%%LOC%%.html" />
+    <link rel="canonical" href="https://nexttick.it/%%SLUG%%/%%LOC%%.html" />%%ROBOTS%%
     <link rel="alternate" hreflang="uk" href="https://nexttick.it/%%SLUG%%/uk.html" />
     <link rel="alternate" hreflang="ru" href="https://nexttick.it/%%SLUG%%/ru.html" />
     <link rel="alternate" hreflang="en" href="https://nexttick.it/%%SLUG%%/en.html" />
@@ -492,7 +563,7 @@ PAGE = """<!doctype html>
           <span class="path">%%PATH%%</span>
         </div>
         <main class="legal">
-          <h1>%%H1%%</h1>
+          <h1>%%H1%%</h1>%%ARCHIVE_NOTE%%
           %%BODY%%
         </main>
         <footer class="legal-footer">
@@ -550,7 +621,6 @@ LANG_LABELS = {"uk": "Мова", "ru": "Язык", "en": "Language"}
 #     ever carried the uk/ru halves, so en has no docx source).
 # Section-less docs (SECTIONLESS) render as plain paragraphs (lead_preamble=False);
 # the section-structured offer/privacy keep the dimmed .lead preamble above section 1.
-SECTIONLESS = {"consent"}
 MD_PAGES = [
     ("consent", "uk"),
     ("consent", "ru"),
@@ -564,12 +634,19 @@ MD_PAGES = [
 ]
 
 
-def assemble_page(slug, loc, md, lead_preamble):
-    """Stage 2: Markdown -> HTML body -> full page written to docs/<slug>/<loc>.html.
+def assemble_page(slug, loc, md, lead_preamble=None, archive_date=None):
+    """Stage 2: Markdown -> HTML body -> full page.
+
+    archive_date set (YYYY-MM-DD) emits the dated, superseded revision at
+    docs/<slug>/<loc>-<date>.html: noindex (canonical already points at the live
+    page, so the archive never competes with it in search), a localized
+    superseded banner under the <h1>, and the issuing entity's own copyright.
     Returns (html_rel, md_rel) for post-formatting."""
     h1, body = md_to_html(md, lead_preamble=lead_preamble)
     s = STR[(slug, loc)]
     fl = FOOTER_LABELS[loc]
+    if archive_date:
+        fl = dict(fl, copy=FOOTER_COPY_ARCHIVE[loc])
     page = (
         PAGE
         .replace("%%LANG%%", loc)
@@ -594,19 +671,49 @@ def assemble_page(slug, loc, md, lead_preamble):
         .replace("%%F_PRIVACY%%", esc(fl["privacy"]))
         .replace("%%F_CONSENT%%", esc(fl["consent"]))
         .replace("%%F_COPY%%", esc(fl["copy"]))
+        .replace(
+            "%%ROBOTS%%",
+            '\n    <meta name="robots" content="noindex,follow" />'
+            if archive_date
+            else "",
+        )
+        .replace(
+            "%%ARCHIVE_NOTE%%",
+            '\n          <p class="legal-meta legal-archived">'
+            + archive_note(slug, loc, archive_date)
+            + "</p>"
+            if archive_date
+            else "",
+        )
     )
     out_dir = os.path.join(ROOT, "docs", slug)
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, f"{loc}.html"), "w", encoding="utf-8") as f:
+    stem = f"{loc}-{archive_date}" if archive_date else loc
+    with open(os.path.join(out_dir, f"{stem}.html"), "w", encoding="utf-8") as f:
         f.write(page)
-    return (f"docs/{slug}/{loc}.html", f"tools/legal-md/{slug}.{loc}.md")
+    md_rel = (
+        f"tools/legal-md/archive/{slug}.{loc}-{archive_date}.md"
+        if archive_date
+        else f"tools/legal-md/{slug}.{loc}.md"
+    )
+    return (f"docs/{slug}/{stem}.html", md_rel)
 
 
-def build():
+ARCHIVE_DIR = os.path.join(MD_DIR, "archive")
+# tools/legal-md/archive/<slug>.<loc>-<YYYY-MM-DD>.md — superseded revisions, kept
+# buildable (not frozen HTML) so a dated page can always be regenerated from its
+# own source. Published noindex with a banner pointing at the live revision.
+ARCHIVE_RE = re.compile(r"^(offer|privacy|consent)\.(uk|ru|en)-(\d{4}-\d{2}-\d{2})\.md$")
+
+
+def build(from_docx=False):
     written = []
     os.makedirs(MD_DIR, exist_ok=True)
     # docx-sourced docs (offer/privacy): docx -> Markdown intermediate -> HTML.
-    for slug, cfg in DOCS.items():
+    # B8: gated behind --from-docx. This stage OVERWRITES the committed Markdown,
+    # which is now the source of truth; an un-gated run would silently destroy
+    # hand-authored revisions the moment a stale .docx reappeared in the repo root.
+    for slug, cfg in (DOCS.items() if from_docx else []):
         docx_path = os.path.join(ROOT, cfg["file"])
         if not os.path.exists(docx_path):
             # Source .docx absent. offer/privacy are still rebuilt below, md-native,
@@ -624,8 +731,8 @@ def build():
             with open(os.path.join(MD_DIR, f"{slug}.{loc}.md"), "w", encoding="utf-8") as f:
                 f.write(md)
             written.append(assemble_page(slug, loc, md, lead_preamble=True))
-    # md-native pages (consent all locales; en offer/privacy): committed Markdown
-    # -> HTML (no docx stage).
+    # md-native pages: committed Markdown -> HTML (no docx stage). The .lead
+    # preamble decision is auto-detected per document (see md_to_html).
     for slug, loc in MD_PAGES:
         md_path = os.path.join(MD_DIR, f"{slug}.{loc}.md")
         if not os.path.exists(md_path):
@@ -633,9 +740,17 @@ def build():
             continue
         with open(md_path, encoding="utf-8") as f:
             md = f.read()
-        written.append(
-            assemble_page(slug, loc, md, lead_preamble=(slug not in SECTIONLESS))
-        )
+        written.append(assemble_page(slug, loc, md))
+    # Superseded revisions: docs/<slug>/<loc>-<date>.html from the archive sources.
+    if os.path.isdir(ARCHIVE_DIR):
+        for name in sorted(os.listdir(ARCHIVE_DIR)):
+            m = ARCHIVE_RE.match(name)
+            if not m:
+                continue
+            slug, loc, date = m.groups()
+            with open(os.path.join(ARCHIVE_DIR, name), encoding="utf-8") as f:
+                md = f.read()
+            written.append(assemble_page(slug, loc, md, archive_date=date))
     paths = [os.path.join(ROOT, rel) for pair in written for rel in pair]
     if paths:
         format_outputs(paths)
@@ -658,5 +773,7 @@ def format_outputs(paths):
 
 
 if __name__ == "__main__":
-    for html_path, md_path in build():
+    import sys as _sys
+
+    for html_path, md_path in build(from_docx="--from-docx" in _sys.argv):
         print(f"wrote {md_path} -> {html_path}")
