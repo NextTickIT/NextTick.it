@@ -1,7 +1,7 @@
 {
   "en": {
     "title": "Next Tick — a guild for JavaScript developers",
-    "description": "The Next Tick guild: architecture, AI, and engineering communication for JavaScript developers. 2 hours a week, on your own work tasks. $50/mo.",
+    "description": "The Next Tick guild: architecture, AI, and engineering communication for JavaScript developers. 2 hours a week, on your own work tasks. $50/4 weeks.",
     "brand": "nexttick / guild",
     "navAria": "Primary navigation",
     "navChecklist": "Checklist",
@@ -18,7 +18,7 @@
     "heroFact1": "10,000+ engineers trained by the authors",
     "heroFact2": "800+ already inside",
     "heroFact3": "40+ materials in the base",
-    "heroFact4": "$50/mo",
+    "heroFact4": "$50/4 weeks",
     "painLabel": "Sound familiar?",
     "painH2": "\"I'm stuck. And I don't understand why.\"",
     "painCopy": "If you recognized yourself in at least three of these — it's not imposter syndrome talking. It's the absence of the right environment and feedback. That shift is nearly impossible to find on your own.",
@@ -141,7 +141,7 @@
     "reviewsLabel": "Cases and reviews",
     "reviewsH2": "What changed for those already inside.",
     "reviewsAlt": "Review from a guild member",
-    "reviewsSurveyP": "From a member survey: \"What would you change about the Guild? — I don't see anything right now. Just one request: keep going.\" And 9 out of 10 renew their subscription every month.",
+    "reviewsSurveyP": "From a member survey: \"What would you change about the Guild? — I don't see anything right now. Just one request: keep going.\" And 9 out of 10 renew their subscription every 4 weeks.",
     "reviewsSoftCta": "Not ready to subscribe yet? <a href=\"#checklist\" style=\"color: var(--green)\">Grab the \"100 AI Points\" checklist</a> — come back when you're ready.",
     "authorsLabel": "Who leads it",
     "authorsH2": "Two views on engineering: systems architecture and the reality of teams",
@@ -170,8 +170,8 @@
       "The full base from day one: 40+ topics, call recordings, notes, audio streams. The program is updated alongside the industry."
     ],
     "priceValue": "$50",
-    "priceUnit": "/ month",
-    "priceDesc": "We deliberately don't sell you a $2000 course with a \"30-day refund.\" A subscription is more honest: every month you decide for yourself whether it's worth the money. If we slip — you unsubscribe in one click, and we see it immediately.",
+    "priceUnit": "/ 4 weeks",
+    "priceDesc": "We deliberately don't sell you a $2000 course with a \"30-day refund.\" A subscription is more honest: every 4 weeks you decide for yourself whether it's worth the money. If we slip — you unsubscribe in one click, and we see it immediately.",
     "priceCopy": "Payment and access through the Telegram bot · first topics unlock right after subscribing.",
     "faqLabel": "FAQ",
     "faqH2": "Questions you might have.",
@@ -190,7 +190,7 @@
       },
       {
         "q": "What if it's not for me?",
-        "a": "Cancel in one click in the same bot. Worst case: you spent $50 and had a month of materials. Best case: you stopped being replaceable."
+        "a": "Cancel in one click in the same bot. Worst case: you spent $50 and had 4 weeks of materials. Best case: you stopped being replaceable."
       },
       {
         "q": "What language is the content in?",
@@ -200,12 +200,12 @@
     "finalLabel": "Join",
     "finalH2": "Become the person who's hard to replace.",
     "finalCopy": "Code lost its value — judgment gained it. In six months you're either the engineer who keeps AI chaos under control and gets invited to the decisions — or the same plateau you've been stuck on alone. First results take a week. First step takes a second.",
-    "choiceP": "$50/mo · cancel anytime · 800+ engineers already inside · <strong>if not now — in six months you'll be right where you are today.</strong>",
+    "choiceP": "$50/4 weeks · cancel anytime · 800+ engineers already inside · <strong>if not now — in six months you'll be right where you are today.</strong>",
     "footerTagline": "nexttick — an engineers' guild"
   },
   "ru": {
     "title": "Next Tick — гильдия для JavaScript-разработчиков",
-    "description": "Гильдия Next Tick: архитектура, работа с AI и инженерная коммуникация для JavaScript-разработчиков. 2 часа в неделю на своих рабочих задачах. $50/мес.",
+    "description": "Гильдия Next Tick: архитектура, работа с AI и инженерная коммуникация для JavaScript-разработчиков. 2 часа в неделю на своих рабочих задачах. $50/4 недели.",
     "brand": "nexttick / гильдия",
     "navAria": "Основная навигация",
     "navChecklist": "Чек-лист",
@@ -222,7 +222,7 @@
     "heroFact1": "10 000+ инженеров прошли обучение у авторов",
     "heroFact2": "800+ уже внутри",
     "heroFact3": "40+ материалов в базе",
-    "heroFact4": "$50/мес",
+    "heroFact4": "$50/4 недели",
     "painLabel": "Знакомо?",
     "painH2": "«Я застрял. И не понимаю почему»",
     "painCopy": "Если узнал себя хотя бы в трёх пунктах — это не самозванец в тебе говорит. Это отсутствие среды и обратной связи. В одиночку этот сдвиг почти не нащупывается.",
@@ -345,7 +345,7 @@
     "reviewsLabel": "Кейсы и отзывы",
     "reviewsH2": "Что изменилось у тех, кто уже внутри.",
     "reviewsAlt": "Отзыв участника гильдии",
-    "reviewsSurveyP": "Из опроса участников: «Что бы ты изменил в Гильдии? — Пока не вижу таких вещей. Лишь одна просьба: продолжайте». И 9 из 10 продлевают подписку каждый месяц.",
+    "reviewsSurveyP": "Из опроса участников: «Что бы ты изменил в Гильдии? — Пока не вижу таких вещей. Лишь одна просьба: продолжайте». И 9 из 10 продлевают подписку каждые 4 недели.",
     "reviewsSoftCta": "Пока не готов к подписке? <a href=\"#checklist\" style=\"color: var(--green)\">Забери чек-лист «100 пунктов AI»</a> — вернёшься, когда решишь.",
     "authorsLabel": "Кто ведёт",
     "authorsH2": "Два взгляда на инженерию: архитектура систем и реальность команд",
@@ -374,8 +374,8 @@
       "Вся база с первого дня: 40+ тем, записи созвонов, конспекты, аудио-стримы. Программа обновляется вместе с индустрией."
     ],
     "priceValue": "$50",
-    "priceUnit": "/ месяц",
-    "priceDesc": "Мы специально не продаём курс за $2000 с «возвратом 30 дней». Подписка честнее: каждый месяц ты сам решаешь, стоит ли это денег. Лажаем — отписываешься в один клик, и мы видим это сразу.",
+    "priceUnit": "/ 4 недели",
+    "priceDesc": "Мы специально не продаём курс за $2000 с «возвратом 30 дней». Подписка честнее: каждые 4 недели ты сам решаешь, стоит ли это денег. Лажаем — отписываешься в один клик, и мы видим это сразу.",
     "priceCopy": "Оплата и доступ через телеграм-бот · первые темы сразу после подписки.",
     "faqLabel": "FAQ",
     "faqH2": "Вопросы, которые могут возникнуть.",
@@ -394,7 +394,7 @@
       },
       {
         "q": "А если не зайдёт?",
-        "a": "Отменишь в один клик в том же боте. Худший сценарий — потратил $50 и месяц смотрел материалы. Лучший — перестал быть заменимым."
+        "a": "Отменишь в один клик в том же боте. Худший сценарий — потратил $50 и 4 недели смотрел материалы. Лучший — перестал быть заменимым."
       },
       {
         "q": "На каком языке контент?",
@@ -404,12 +404,12 @@
     "finalLabel": "Вход",
     "finalH2": "Стань тем, кого сложно заменить.",
     "finalCopy": "Код обесценился — суждение подорожало. Через полгода ты либо инженер, который держит AI-хаос под контролем и которого зовут на решения, — либо всё то же плато, в котором варишься один. Первый результат занимает неделю. Первый шаг — секунду.",
-    "choiceP": "$50/мес · отмена в любое время · 800+ инженеров уже внутри · <strong>если не сейчас — через полгода ты там же, где сегодня.</strong>",
+    "choiceP": "$50/4 недели · отмена в любое время · 800+ инженеров уже внутри · <strong>если не сейчас — через полгода ты там же, где сегодня.</strong>",
     "footerTagline": "nexttick — гильдия инженеров"
   },
   "uk": {
     "title": "Next Tick — гільдія для JavaScript-розробників",
-    "description": "Гільдія Next Tick: архітектура, робота з AI та інженерна комунікація для JavaScript-розробників. 2 години на тиждень на своїх робочих задачах. $50/міс.",
+    "description": "Гільдія Next Tick: архітектура, робота з AI та інженерна комунікація для JavaScript-розробників. 2 години на тиждень на своїх робочих задачах. $50/4 тижні.",
     "brand": "nexttick / гільдія",
     "navAria": "Основна навігація",
     "navChecklist": "Чек-лист",
@@ -426,7 +426,7 @@
     "heroFact1": "10 000+ інженерів пройшли навчання в авторів",
     "heroFact2": "800+ уже всередині",
     "heroFact3": "40+ матеріалів у базі",
-    "heroFact4": "$50/міс",
+    "heroFact4": "$50/4 тижні",
     "painLabel": "Знайомо?",
     "painH2": "«Я застряг. І не розумію чому»",
     "painCopy": "Якщо впізнав себе хоча б у трьох пунктах — це не самозванець у тобі говорить. Це відсутність середовища та зворотного зв'язку. Наодинці цей зсув майже не нащупується.",
@@ -549,7 +549,7 @@
     "reviewsLabel": "Кейси та відгуки",
     "reviewsH2": "Що змінилося у тих, хто вже всередині.",
     "reviewsAlt": "Відгук учасника гільдії",
-    "reviewsSurveyP": "З опитування учасників: «Що б ти змінив у Гільдії? — Поки не бачу таких речей. Лише одне прохання: продовжуйте». І 9 з 10 продовжують підписку щомісяця.",
+    "reviewsSurveyP": "З опитування учасників: «Що б ти змінив у Гільдії? — Поки не бачу таких речей. Лише одне прохання: продовжуйте». І 9 з 10 продовжують підписку кожні 4 тижні.",
     "reviewsSoftCta": "Поки не готовий до підписки? <a href=\"#checklist\" style=\"color: var(--green)\">Забери чек-лист «100 пунктів AI»</a> — повернешся, коли вирішиш.",
     "authorsLabel": "Хто веде",
     "authorsH2": "Два погляди на інженерію: архітектура систем і реальність команд",
@@ -578,8 +578,8 @@
       "Уся база з першого дня: 40+ тем, записи дзвінків, конспекти, аудіо-стрими. Програма оновлюється разом з індустрією."
     ],
     "priceValue": "$50",
-    "priceUnit": "/ місяць",
-    "priceDesc": "Ми спеціально не продаємо курс за $2000 з «поверненням 30 днів». Підписка чесніша: щомісяця ти сам вирішуєш, чи варте це грошей. Лажаємо — відписуєшся в один клік, і ми бачимо це одразу.",
+    "priceUnit": "/ 4 тижні",
+    "priceDesc": "Ми спеціально не продаємо курс за $2000 з «поверненням 30 днів». Підписка чесніша: кожні 4 тижні ти сам вирішуєш, чи варте це грошей. Лажаємо — відписуєшся в один клік, і ми бачимо це одразу.",
     "priceCopy": "Оплата і доступ через телеграм-бот · перші теми одразу після підписки.",
     "faqLabel": "FAQ",
     "faqH2": "Питання, які можуть виникнути.",
@@ -598,7 +598,7 @@
       },
       {
         "q": "А якщо не зайде?",
-        "a": "Скасуєш в один клік у тому самому боті. Найгірший сценарій — витратив $50 і місяць дивився матеріали. Найкращий — перестав бути замінним."
+        "a": "Скасуєш в один клік у тому самому боті. Найгірший сценарій — витратив $50 і 4 тижні дивився матеріали. Найкращий — перестав бути замінним."
       },
       {
         "q": "Якою мовою контент?",
@@ -608,7 +608,7 @@
     "finalLabel": "Вхід",
     "finalH2": "Стань тим, кого складно замінити.",
     "finalCopy": "Код знецінився — судження подорожчало. Через пів року ти або інженер, який тримає AI-хаос під контролем і якого запрошують на рішення, — або те саме плато, в якому варишся сам. Перший результат займає тиждень. Перший крок — секунду.",
-    "choiceP": "$50/міс · скасування в будь-який час · 800+ інженерів уже всередині · <strong>якщо не зараз — через пів року ти там само, де сьогодні.</strong>",
+    "choiceP": "$50/4 тижні · скасування в будь-який час · 800+ інженерів уже всередині · <strong>якщо не зараз — через пів року ти там само, де сьогодні.</strong>",
     "footerTagline": "nexttick — гільдія інженерів"
   }
 }
