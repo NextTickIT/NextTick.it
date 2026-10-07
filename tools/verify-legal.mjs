@@ -16,7 +16,7 @@ const LOCS = ["uk", "ru", "en"];
 // in-body <h2 class="appendix-title"> emitted for a second "# " heading.
 const LIVE_SHAPE = {
   offer: { sections: 30, appendix: 1, clauses: 290, clarity: true },
-  privacy: { sections: 13, appendix: 0, clauses: 53, clarity: false },
+  privacy: { sections: 13, appendix: 0, clauses: 54, clarity: false },
   consent: { sections: 6, appendix: 0, clauses: 19, clarity: false },
 };
 
