@@ -26,7 +26,7 @@ ANNEX 1. SERVICE USE RULES
 
 1.1. For the purposes of this document, the terms set out below are used with the following meanings:
 
-**the Provider** — METATECH Limited Liability Company (METATECH LLC; in English: METATECH LIMITED LIABILITY COMPANY, METATECH LLC), USREOU code 44819869, address: 04071, Ukraine, city of Kyiv, Khoryva Lane, building 4, office 25/1, telephone: +380509528378, email: info@nexttick.it, which provides the User with services within the framework of the Subscription.
+**the Provider** — METATECH Limited Liability Company (METATECH LLC; in English: METATECH LIMITED LIABILITY COMPANY, METATECH LLC), USREOU code 44819869, address: 04071, Ukraine, city of Kyiv, Khoryva Lane, building 4, office 25/1, email: info@nexttick.it, which provides the User with services within the framework of the Subscription.
 
 **the Offer** — this document, the "Offer for the provision of paid services by subscription", published on the Internet at the address: https://nexttick.it/offer/en.html. A link to the Offer is also placed in the Provider's Telegram bot https://telegram.me/next_tick_bot
 
@@ -658,8 +658,6 @@ METATECH LLC
 Address: 04071, Ukraine, city of Kyiv, Khoryva Lane, building 4, office 25/1
 
 USREOU code: 44819869
-
-Phone: +380509528378
 
 Email: info@nexttick.it
 
