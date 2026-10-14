@@ -3,9 +3,11 @@
 // attribution footprint on the BUILT docs/ tree (page-based layout).
 //
 // Asserts, without a browser:
-//   1. Meta Pixel (fbq init + PageView) + <noscript> present on every content page.
+//   1. Meta Pixel (fbq init + PageView) present on every content page, consent-
+//      gated (text/plain + data-consent), with NO <noscript> fallback; every
+//      other analytics tag gated too and the consent manager included.
 //   2. Every analytics-free stub (sniff + root-default + legacy redirects) has
-//      NO pixel/GTM/GA4/Clarity/attribution.
+//      NO pixel/GTM/GA4/Clarity/attribution/consent.
 //   3. nt-attribution.js is included on the bot-link pages AND absent on the
 //      non-attribution content pages (guild, offer, privacy).
 //   4. Every bot link keeps the exact start= code.
@@ -24,6 +26,12 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import {
+  ungatedAnalyticsScripts,
+  hasNoscriptTracker,
+  trackerLeaks,
+  CONSENT_ASSET,
+} from "./lib/consent-gate.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PAGES = join(ROOT, "docs");
@@ -38,12 +46,29 @@ const PAGE_DEFS = [
   // "index.html" is the rootIndex copy of ru.html served at the bare domain
   // (templates/index.page.json). It carries the same analytics as any content
   // page, so it belongs here, not in the analytics-free stub list.
-  { dir: "", files: ["en.html", "ru.html", "uk.html", "index.html"], channel: "website" },
-  { dir: "swe", files: ["swe/en.html", "swe/ru.html", "swe/uk.html"], channel: "website" },
-  { dir: "all", files: ["all/en.html", "all/ru.html", "all/uk.html"], channel: "website:all", start: "6a4f770343a30de13e0cbfbc" },
+  {
+    dir: "",
+    files: ["en.html", "ru.html", "uk.html", "index.html"],
+    channel: "website",
+  },
+  {
+    dir: "swe",
+    files: ["swe/en.html", "swe/ru.html", "swe/uk.html"],
+    channel: "website",
+  },
+  {
+    dir: "all",
+    files: ["all/en.html", "all/ru.html", "all/uk.html"],
+    channel: "website:all",
+    start: "6a4f770343a30de13e0cbfbc",
+  },
   {
     dir: "future-proof",
-    files: ["future-proof/en.html", "future-proof/ru.html", "future-proof/uk.html"],
+    files: [
+      "future-proof/en.html",
+      "future-proof/ru.html",
+      "future-proof/uk.html",
+    ],
     channel: "website:future-proof",
     start: "6a4f770343a30de13e0cbfbc",
   },
@@ -68,7 +93,11 @@ const PAGE_DEFS = [
   },
   {
     dir: "ai-speedup-checklist",
-    files: ["ai-speedup-checklist/en.html", "ai-speedup-checklist/ru.html", "ai-speedup-checklist/uk.html"],
+    files: [
+      "ai-speedup-checklist/en.html",
+      "ai-speedup-checklist/ru.html",
+      "ai-speedup-checklist/uk.html",
+    ],
     channel: "conf",
   },
   {
@@ -80,27 +109,44 @@ const PAGE_DEFS = [
     ],
     channel: null,
   },
-  { dir: "offer", files: ["offer/ru.html", "offer/uk.html", "offer/en.html"], channel: null },
-  { dir: "privacy", files: ["privacy/ru.html", "privacy/uk.html", "privacy/en.html"], channel: null },
-  { dir: "consent", files: ["consent/ru.html", "consent/uk.html", "consent/en.html"], channel: null },
+  {
+    dir: "offer",
+    files: ["offer/ru.html", "offer/uk.html", "offer/en.html"],
+    channel: null,
+  },
+  {
+    dir: "privacy",
+    files: ["privacy/ru.html", "privacy/uk.html", "privacy/en.html"],
+    channel: null,
+  },
+  {
+    dir: "consent",
+    files: ["consent/ru.html", "consent/uk.html", "consent/en.html"],
+    channel: null,
+  },
 ];
 
 // [7] footprint spot-counts (baseline-faithful; retargeted from the lang tree).
 // NOTE: home + guild DO carry Clarity in the baseline — these assertions never
 // claim Clarity-absent there; the byte-diff + verify-structure guarantee the
 // full footprint, this is a targeted GA4/GTM/Clarity presence spot-check.
+// GTM counts once since the consent gate (2026-10-14): the <noscript> iframe
+// that carried the second occurrence fired without consent and was removed.
 const FOOTPRINT = {
-  "en.html": { "G-1TYEB7YFP5": 2, "GTM-M74P6CSD": 2, x5houryvs2: 1 },
+  "en.html": { "G-1TYEB7YFP5": 2, "GTM-M74P6CSD": 1, x5houryvs2: 1 },
   "ai-speedup-checklist/en.html": { "G-1TYEB7YFP5": 0, "GTM-M74P6CSD": 0 },
-  "ai-speedup-checklist-for-guild-members/en.html": { x5houryvs2: 1, "GTM-M74P6CSD": 0 },
+  "ai-speedup-checklist-for-guild-members/en.html": {
+    x5houryvs2: 1,
+    "GTM-M74P6CSD": 0,
+  },
   "offer/ru.html": { "G-MXX0XQWV3R": 2, x5houryvs2: 1 },
   "offer/en.html": { "G-MXX0XQWV3R": 2, x5houryvs2: 1 },
   "privacy/ru.html": { "G-MXX0XQWV3R": 2 },
   "consent/ru.html": { "G-MXX0XQWV3R": 2 },
   "consent/en.html": { "G-MXX0XQWV3R": 2 },
-  "swe/uk.html": { "GTM-M74P6CSD": 2, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
-  "swe/en.html": { "GTM-M74P6CSD": 2, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
-  "swe/ru.html": { "GTM-M74P6CSD": 2, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
+  "swe/uk.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
+  "swe/en.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
+  "swe/ru.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
 };
 
 const BOT_HREF_RE = /href="([^"]*tg\.pulse\.is\/next_tick_bot[^"]*)"/g;
@@ -110,11 +156,15 @@ const argv = process.argv.slice(2);
 let pageArg = null;
 for (let i = 0; i < argv.length; i++) {
   if (argv[i] === "--page") pageArg = argv[++i];
-  else if (argv[i].startsWith("--page=")) pageArg = argv[i].slice("--page=".length);
+  else if (argv[i].startsWith("--page="))
+    pageArg = argv[i].slice("--page=".length);
 }
 // normalize "docs/all" | "docs" | "all" | "" -> dir
 const normDir = (a) => a.replace(/^\.?\/?docs\/?/, "").replace(/\/+$/, "");
-const selected = pageArg == null ? PAGE_DEFS : PAGE_DEFS.filter((d) => d.dir === normDir(pageArg));
+const selected =
+  pageArg == null
+    ? PAGE_DEFS
+    : PAGE_DEFS.filter((d) => d.dir === normDir(pageArg));
 if (pageArg != null && selected.length === 0) {
   console.error(`--page "${pageArg}" matched no page group`);
   process.exit(2);
@@ -133,42 +183,65 @@ const decode = (s) => s.replace(/&amp;/g, "&");
 
 const contentFiles = selected.flatMap((d) => d.files);
 const botFiles = Object.fromEntries(
-  selected.filter((d) => d.channel).flatMap((d) => d.files.map((f) => [f, d.channel])),
+  selected
+    .filter((d) => d.channel)
+    .flatMap((d) => d.files.map((f) => [f, d.channel])),
 );
 // per-page SendPulse start code (defaults to the site-wide START; `all` uses its own)
 const botStart = Object.fromEntries(
-  selected.filter((d) => d.channel).flatMap((d) => d.files.map((f) => [f, d.start || START])),
+  selected
+    .filter((d) => d.channel)
+    .flatMap((d) => d.files.map((f) => [f, d.start || START])),
 );
 const defByFile = Object.fromEntries(
   selected.flatMap((d) => d.files.map((f) => [f, d])),
 );
-const noAttrFiles = selected.filter((d) => d.channel == null).flatMap((d) => d.files);
+const noAttrFiles = selected
+  .filter((d) => d.channel == null)
+  .flatMap((d) => d.files);
 
-console.log(`\n[1] Meta Pixel present on ${contentFiles.length} content page(s)`);
+console.log(
+  `\n[1] Meta Pixel present + consent-gated on ${contentFiles.length} content page(s)`,
+);
 for (const p of contentFiles) {
   const html = read(p);
   const okScript =
     html.includes("fbevents.js") &&
     /fbq\(\s*['"]init['"]\s*,\s*['"]1543537094181571['"]/.test(html) &&
     /fbq\(\s*['"]track['"]\s*,\s*['"]PageView['"]/.test(html);
-  const okNoscript = decode(html).includes(
-    `facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`,
-  );
-  if (okScript && okNoscript) pass(`${p} — pixel + noscript`);
+  const noscript = hasNoscriptTracker(html);
+  const ungated = ungatedAnalyticsScripts(html);
+  const leaks = trackerLeaks(html);
+  const consent = html.includes(CONSENT_ASSET);
+  if (okScript && !noscript && !ungated.length && !leaks.length && consent)
+    pass(
+      `${p} — pixel gated, no noscript tracker, all tags gated, no tracker host outside the gate, consent manager included`,
+    );
   else
     fail(
-      `${p} — ${okScript ? "" : "missing fbq init/PageView "}${okNoscript ? "" : "missing noscript img"}`,
+      `${p} — ${okScript ? "" : "missing fbq init/PageView; "}${noscript ? "noscript tracker must be removed; " : ""}${consent ? "" : `missing ${CONSENT_ASSET}; `}${ungated.length ? "ungated: " + ungated.join(" ") + "; " : ""}${leaks.length ? "tracker host outside gate: " + leaks.join(" | ") : ""}`,
     );
 }
 
 if (!scoped) {
-  const stubs = ["templates/sniff.stubs.json", "templates/legacy.stubs.json"].flatMap(
-    (cfg) => JSON.parse(readFileSync(join(ROOT, cfg), "utf8")).outputs.map((o) => o.out),
+  const stubs = [
+    "templates/sniff.stubs.json",
+    "templates/legacy.stubs.json",
+  ].flatMap((cfg) =>
+    JSON.parse(readFileSync(join(ROOT, cfg), "utf8")).outputs.map((o) => o.out),
   );
-  console.log(`\n[2] The ${stubs.length} analytics-free stubs have NO pixel/GTM/GA4/Clarity/attribution`);
+  console.log(
+    `\n[2] The ${stubs.length} analytics-free stubs have NO pixel/GTM/GA4/Clarity/attribution/consent`,
+  );
   const STUB_FORBIDDEN = [
-    PIXEL_ID, "fbevents.js", "GTM-M74P6CSD", "G-1TYEB7YFP5", "G-MXX0XQWV3R",
-    "x5houryvs2", "nt-attribution.js",
+    PIXEL_ID,
+    "fbevents.js",
+    "GTM-M74P6CSD",
+    "G-1TYEB7YFP5",
+    "G-MXX0XQWV3R",
+    "x5houryvs2",
+    "nt-attribution.js",
+    "nt-consent.js",
   ];
   for (const p of stubs) {
     const html = read(p);
@@ -178,7 +251,9 @@ if (!scoped) {
   }
 }
 
-console.log("\n[3] nt-attribution.js present on bot-link pages, absent on non-attribution pages");
+console.log(
+  "\n[3] nt-attribution.js present on bot-link pages, absent on non-attribution pages",
+);
 for (const p of Object.keys(botFiles)) {
   const html = read(p);
   if (html.includes(ASSET)) pass(`${p} — attribution script included`);
@@ -187,11 +262,17 @@ for (const p of Object.keys(botFiles)) {
 for (const p of noAttrFiles) {
   const html = read(p);
   const bots = [...html.matchAll(BOT_HREF_RE)].length;
-  if (!html.includes(ASSET) && bots === 0) pass(`${p} — no attribution/bot links (as expected)`);
-  else fail(`${p} — expected no attribution/bot links, got attribution=${html.includes(ASSET)} bots=${bots}`);
+  if (!html.includes(ASSET) && bots === 0)
+    pass(`${p} — no attribution/bot links (as expected)`);
+  else
+    fail(
+      `${p} — expected no attribution/bot links, got attribution=${html.includes(ASSET)} bots=${bots}`,
+    );
 }
 
-console.log("\n[4/5] Join links: SendPulse bot (start+source_channel) OR guildmaster go-link");
+console.log(
+  "\n[4/5] Join links: SendPulse bot (start+source_channel) OR guildmaster go-link",
+);
 for (const [p, expectSc] of Object.entries(botFiles)) {
   const html = read(p);
   const def = defByFile[p];
@@ -201,7 +282,8 @@ for (const [p, expectSc] of Object.entries(botFiles)) {
   if (def && def.goHref) {
     const hasGo = decode(html).includes(def.goHref);
     const legacy = [...html.matchAll(BOT_HREF_RE)].length;
-    if (hasGo && legacy === 0) pass(`${p} — go-link ${def.goHref}, no legacy bot links`);
+    if (hasGo && legacy === 0)
+      pass(`${p} — go-link ${def.goHref}, no legacy bot links`);
     else
       fail(
         `${p} — expected go-link ${def.goHref} (found=${hasGo}) and 0 legacy bot links (got ${legacy})`,
@@ -228,7 +310,10 @@ for (const [p, expectSc] of Object.entries(botFiles)) {
       );
     }
   }
-  if (ok) pass(`${p} — ${links.length} bot link(s): start ok, source_channel=${expectSc}`);
+  if (ok)
+    pass(
+      `${p} — ${links.length} bot link(s): start ok, source_channel=${expectSc}`,
+    );
 }
 
 console.log("\n[6] No residual source_channel=utm swap");
@@ -244,7 +329,9 @@ console.log("\n[6] No residual source_channel=utm swap");
   if (!found) pass('no `set("source_channel", utm` anywhere');
 }
 
-console.log("\n[7] GA4/GTM/Clarity footprint counts (baseline-faithful spot checks)");
+console.log(
+  "\n[7] GA4/GTM/Clarity footprint counts (baseline-faithful spot checks)",
+);
 {
   const inScope = new Set(contentFiles);
   for (const [p, counts] of Object.entries(FOOTPRINT)) {
@@ -270,7 +357,9 @@ if (selected.some((d) => d.dir === "all")) {
   const base = shape(read("all/ru.html")); // ru = source of truth
   for (const p of ["all/uk.html", "all/en.html"]) {
     const s = shape(read(p));
-    const diffs = ["section", "h2", "faq", "bot"].filter((k) => base[k] !== s[k]);
+    const diffs = ["section", "h2", "faq", "bot"].filter(
+      (k) => base[k] !== s[k],
+    );
     if (!diffs.length) pass(`${p} — structural parity with all/ru.html`);
     else for (const k of diffs) fail(`${p} — ${k}=${s[k]} != ru ${base[k]}`);
   }
@@ -284,11 +373,20 @@ if (selected.some((d) => d.dir === "all")) {
 // lang-switch <script> modernization.
 {
   const CHROME = new Set([
-    "", "swe", "all", "future-proof", "middle", "career-resilience", "ai-speedup-checklist", "ai-speedup-checklist-for-guild-members",
+    "",
+    "swe",
+    "all",
+    "future-proof",
+    "middle",
+    "career-resilience",
+    "ai-speedup-checklist",
+    "ai-speedup-checklist-for-guild-members",
   ]);
   const chromeDefs = selected.filter((d) => CHROME.has(d.dir));
   if (chromeDefs.length) {
-    console.log("\n[9] Lang-switch anchors page-based (no bare /<loc>/ dir-style) across chrome pages");
+    console.log(
+      "\n[9] Lang-switch anchors page-based (no bare /<loc>/ dir-style) across chrome pages",
+    );
     const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const badRe = /class="ls-opt[^"]*"[^>]*href="\/(?:uk|en|ru)\//g;
     for (const d of chromeDefs) {
@@ -301,7 +399,8 @@ if (selected.some((d) => d.dir === "all")) {
         const html = read(f);
         const good = (html.match(goodRe) || []).length;
         const bad = (html.match(badRe) || []).length;
-        if (good === 3 && bad === 0) pass(`${f} — 3 ls-opt -> /${prefix}<loc>.html, 0 old dir-style`);
+        if (good === 3 && bad === 0)
+          pass(`${f} — 3 ls-opt -> /${prefix}<loc>.html, 0 old dir-style`);
         else
           fail(
             `${f} — ls-opt good(/${prefix}<loc>.html)=${good} (want 3), bad(bare /<loc>/ dir-style)=${bad} (want 0)`,

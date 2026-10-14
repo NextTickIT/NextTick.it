@@ -72,16 +72,16 @@
         } catch (e) {}
       })();
     </script>
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) — consent-gated: text/plain until nt-consent.js activates it -->
     <script
+      type="text/plain"
+      data-consent="analytics"
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-MXX0XQWV3R"
     ></script>
-    <script>
+    <script type="text/plain" data-consent="analytics">
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
       gtag("config", "G-MXX0XQWV3R");
     </script>
@@ -92,8 +92,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/assets/legal.css" />
-    <!-- Meta Pixel Code -->
-    <script>
+    <script src="/assets/nt-consent.js?v=1" defer></script>
+    <!-- Meta Pixel Code — consent-gated: text/plain until nt-consent.js activates it.
+         No <noscript> fallback: it would fire before any consent could be asked. -->
+    <script type="text/plain" data-consent="analytics">
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -120,13 +122,6 @@
       fbq("init", "1543537094181571");
       fbq("track", "PageView");
     </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
-    /></noscript>
     <!-- End Meta Pixel Code -->
   </head>
   <body>
@@ -633,6 +628,7 @@
           <a href="/offer/uk.html">Публічна оферта</a>
           <a href="/privacy/uk.html">Політика конфіденційності</a>
           <a href="/consent/uk.html">Згода на обробку даних</a>
+          <a href="#" data-nt-consent-open>Cookie</a>
           <span class="lf-copy">© 2026 NextTick · ФОП Карпов Антон</span>
         </footer>
       </div>

@@ -1,5 +1,10 @@
+<%
+/* Consent-gated (Privacy Policy §10): shipped as text/plain and activated by
+   assets/nt-consent.js only after the visitor accepts. The <noscript> pixel is
+   gone on purpose: it would fire before any consent could be asked. */
+%>
 <!-- Meta Pixel Code -->
-<script>
+<script type="text/plain" data-consent="analytics">
   !(function (f, b, e, v, n, t, s) {
     if (f.fbq) return;
     n = f.fbq = function () {
@@ -26,11 +31,4 @@
   fbq("init", "1543537094181571");
   fbq("track", "PageView");
 </script>
-<noscript
-  ><img
-    height="1"
-    width="1"
-    style="display: none"
-    src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
-/></noscript>
 <!-- End Meta Pixel Code -->

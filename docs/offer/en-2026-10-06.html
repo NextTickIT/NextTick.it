@@ -57,18 +57,15 @@
       href="https://nexttick.it/offer/ru.html"
     />
     <meta name="theme-color" content="#0b0d0f" />
-    <script type="text/javascript">
+    <script
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/javascript"
+    >
       (function (c, l, a, r, i, t, y) {
-        c[a] =
-          c[a] ||
-          function () {
-            (c[a].q = c[a].q || []).push(arguments);
-          };
-        t = l.createElement(r);
-        t.async = 1;
-        t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0];
-        y.parentNode.insertBefore(t, y);
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
       })(window, document, "clarity", "script", "x5houryvs2");
     </script>
     <script>
@@ -86,16 +83,16 @@
         } catch (e) {}
       })();
     </script>
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) — consent-gated: text/plain until nt-consent.js activates it -->
     <script
+      type="text/plain"
+      data-consent="analytics"
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-MXX0XQWV3R"
     ></script>
-    <script>
+    <script type="text/plain" data-consent="analytics">
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
       gtag("config", "G-MXX0XQWV3R");
     </script>
@@ -106,8 +103,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/assets/legal.css" />
-    <!-- Meta Pixel Code -->
-    <script>
+    <script src="/assets/nt-consent.js?v=1" defer></script>
+    <!-- Meta Pixel Code — consent-gated: text/plain until nt-consent.js activates it.
+         No <noscript> fallback: it would fire before any consent could be asked. -->
+    <script type="text/plain" data-consent="analytics">
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -134,13 +133,6 @@
       fbq("init", "1543537094181571");
       fbq("track", "PageView");
     </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
-    /></noscript>
     <!-- End Meta Pixel Code -->
   </head>
   <body>
@@ -1468,6 +1460,7 @@
           <a href="/offer/en.html">Public Offer</a>
           <a href="/privacy/en.html">Privacy Policy</a>
           <a href="/consent/en.html">Data Processing Consent</a>
+          <a href="#" data-nt-consent-open>Cookies</a>
           <span class="lf-copy"
             >© 2026 NextTick · Sole Proprietor Anton Karpov</span
           >

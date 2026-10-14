@@ -558,6 +558,7 @@
       }
     </style>
     <% if (analytics.pixel) { %><%~ include("_partials/analytics/pixel.html") %><% } %>
+    <%~ include("_partials/analytics/consent.html", { analytics }) %>
   </head>
   <body>
     <header>

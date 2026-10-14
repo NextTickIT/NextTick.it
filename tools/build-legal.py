@@ -87,16 +87,19 @@ FOOTER_LABELS = {
     "uk": dict(home="← nexttick", offer="Публічна оферта",
                privacy="Політика конфіденційності",
                consent="Згода на обробку даних",
+               cookies="Cookie",
                prev="Попередня редакція",
                copy="© 2026 NextTick · ТОВ «МЕТАТЕСН»"),
     "ru": dict(home="← nexttick", offer="Публичная оферта",
                privacy="Политика конфиденциальности",
                consent="Согласие на обработку данных",
+               cookies="Cookie",
                prev="Предыдущая редакция",
                copy="© 2026 NextTick · ООО «МЕТАТЕСН»"),
     "en": dict(home="← nexttick", offer="Public Offer",
                privacy="Privacy Policy",
                consent="Data Processing Consent",
+               cookies="Cookies",
                prev="Previous revision",
                copy="© 2026 NextTick · METATECH LLC"),
 }
@@ -494,7 +497,7 @@ def md_to_html(md, lead_preamble=None):
     return h1, "\n".join(blocks)
 
 
-CLARITY = """    <script type="text/javascript">
+CLARITY = """    <script type="text/plain" data-consent="analytics" data-type="text/javascript">
       (function (c, l, a, r, i, t, y) {
         c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
         t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
@@ -534,9 +537,9 @@ PAGE = """<!doctype html>
         } catch (e) {}
       })();
     </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXX0XQWV3R"></script>
-    <script>
+    <!-- Google tag (gtag.js) — consent-gated: text/plain until nt-consent.js activates it -->
+    <script type="text/plain" data-consent="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-MXX0XQWV3R"></script>
+    <script type="text/plain" data-consent="analytics">
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
@@ -549,8 +552,10 @@ PAGE = """<!doctype html>
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/assets/legal.css" />
-    <!-- Meta Pixel Code -->
-    <script>
+    <script src="/assets/nt-consent.js?v=1" defer></script>
+    <!-- Meta Pixel Code — consent-gated: text/plain until nt-consent.js activates it.
+         No <noscript> fallback: it would fire before any consent could be asked. -->
+    <script type="text/plain" data-consent="analytics">
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -577,13 +582,6 @@ PAGE = """<!doctype html>
       fbq("init", "1543537094181571");
       fbq("track", "PageView");
     </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
-    /></noscript>
     <!-- End Meta Pixel Code -->
   </head>
   <body>
@@ -621,7 +619,8 @@ PAGE = """<!doctype html>
           <a href="/%%LOC%%.html">%%F_HOME%%</a>
           <a href="/offer/%%LOC%%.html">%%F_OFFER%%</a>
           <a href="/privacy/%%LOC%%.html">%%F_PRIVACY%%</a>
-          <a href="/consent/%%LOC%%.html">%%F_CONSENT%%</a>%%PREV_REV%%
+          <a href="/consent/%%LOC%%.html">%%F_CONSENT%%</a>
+          <a href="#" data-nt-consent-open>%%F_COOKIES%%</a>%%PREV_REV%%
           <span class="lf-copy">%%F_COPY%%</span>
         </footer>
       </div>
@@ -726,6 +725,7 @@ def assemble_page(slug, loc, md, lead_preamble=None, archive_date=None,
         .replace("%%F_OFFER%%", esc(fl["offer"]))
         .replace("%%F_PRIVACY%%", esc(fl["privacy"]))
         .replace("%%F_CONSENT%%", esc(fl["consent"]))
+        .replace("%%F_COOKIES%%", esc(fl["cookies"]))
         .replace("%%F_COPY%%", esc(fl["copy"]))
         .replace(
             "%%PREV_REV%%",

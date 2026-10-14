@@ -4,10 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
-    <!-- Warm up the tracking origins so fbevents.js / gtm.js handshake in
-         parallel with parsing — shrinks time-to-PageView on cold connections. -->
-    <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
-    <link rel="preconnect" href="https://www.googletagmanager.com" />
     <%
       /* Meta Pixel FIRST in <head> — kick off fbevents.js on the first bytes so
          the PageView beacon fires before slow FB/IG in-app webviews can bounce.
@@ -21,8 +17,11 @@
            · normal visitors     → both events arrive, counted once;
            · ad-blocked visitors → fbevents.js is blocked, but the first-party
              beacon to app.nexttick.it still lands → still counted once.
-         No PageView is lost. -->
-    <script>
+         No PageView is lost.
+         Consent-gated (Privacy Policy §10): shipped as text/plain and activated by
+         assets/nt-consent.js only after the visitor accepts — the first-party
+         beacon and the nt_uid/_fbp cookies are advertising tracking too. -->
+    <script type="text/plain" data-consent="analytics">
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -130,13 +129,6 @@
         } catch (e) {}
       })();
     </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
-    /></noscript>
     <% } %>
     <% if (analytics.gtm || analytics.ga4) { %><%~ include("_partials/analytics/partytown.html") %><% } %>
     <% if (analytics.gtm) { %><%~ include("_partials/analytics/gtm.html") %><% } %>
@@ -1445,6 +1437,7 @@
         text-decoration: underline;
       }
     </style>
+    <%~ include("_partials/analytics/consent.html", { analytics }) %>
   </head>
   <body>
     <%
@@ -1494,18 +1487,6 @@
         ["rev-15", "rev-17", "rev-08"],
       ];
     %>
-    <% if (analytics.gtm) { %>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <% } %>
     <div class="page">
       <div class="win">
         <header class="win-bar">

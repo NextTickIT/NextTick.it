@@ -215,7 +215,11 @@
       })();
     </script>
     <!-- Google Tag Manager — runs in the Partytown worker (see partytown.html) -->
-    <script type="text/partytown">
+    <script
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/partytown"
+    >
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -282,10 +286,16 @@
     </script>
     <!-- Google tag (gtag.js) — runs in the Partytown worker (see partytown.html) -->
     <script
-      type="text/partytown"
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/partytown"
       src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
     ></script>
-    <script type="text/partytown">
+    <script
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/partytown"
+    >
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -294,7 +304,11 @@
 
       gtag("config", "G-1TYEB7YFP5");
     </script>
-    <script type="text/javascript">
+    <script
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/javascript"
+    >
       (function (c, l, a, r, i, t, y) {
         c[a] =
           c[a] ||
@@ -1411,7 +1425,7 @@
       }
     </style>
     <!-- Meta Pixel Code -->
-    <script>
+    <script type="text/plain" data-consent="analytics">
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -1438,26 +1452,10 @@
       fbq("init", "1543537094181571");
       fbq("track", "PageView");
     </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
-    /></noscript>
     <!-- End Meta Pixel Code -->
+    <script src="/assets/nt-consent.js?v=1" defer></script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div class="page">
       <div class="win">
         <header class="win-bar">
@@ -2692,6 +2690,7 @@
               <a href="/offer.html">Offer</a>
               <a href="/privacy.html">Privacy Policy</a>
               <a href="/consent.html">Data Consent</a>
+              <a href="#" data-nt-consent-open>Cookies</a>
             </span>
           </div>
         </footer>

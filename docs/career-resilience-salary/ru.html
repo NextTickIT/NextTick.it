@@ -4,18 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
-    <!-- Warm up the tracking origins so fbevents.js / gtm.js handshake in
-         parallel with parsing — shrinks time-to-PageView on cold connections. -->
-    <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
-    <link rel="preconnect" href="https://www.googletagmanager.com" />
     <!-- Meta Pixel + first-party CAPI PageView beacon (career-resilience only).
          Inlined instead of the shared partial so the browser Pixel and the
          server-side CAPI PageView share ONE event_id → Meta dedups them:
            · normal visitors     → both events arrive, counted once;
            · ad-blocked visitors → fbevents.js is blocked, but the first-party
              beacon to app.nexttick.it still lands → still counted once.
-         No PageView is lost. -->
-    <script>
+         No PageView is lost.
+         Consent-gated (Privacy Policy §10): shipped as text/plain and activated by
+         assets/nt-consent.js only after the visitor accepts — the first-party
+         beacon and the nt_uid/_fbp cookies are advertising tracking too. -->
+    <script type="text/plain" data-consent="analytics">
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -62,8 +61,7 @@
             uid = window.crypto && crypto.randomUUID ? crypto.randomUUID() : "";
           } catch (e) {}
           if (!uid)
-            uid =
-              "nt_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+            uid = "nt_" + Date.now() + "_" + Math.random().toString(16).slice(2);
           setCk("nt_uid", uid);
         }
         // Self-generate _fbp when the Pixel cookie is absent (fbevents blocked or
@@ -124,13 +122,6 @@
         } catch (e) {}
       })();
     </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"
-    /></noscript>
     <script>
       partytown = {
         lib: "/~partytown/",
@@ -342,7 +333,11 @@
       })();
     </script>
     <!-- Google Tag Manager — runs in the Partytown worker (see partytown.html) -->
-    <script type="text/partytown">
+    <script
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/partytown"
+    >
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -412,10 +407,16 @@
     </script>
     <!-- Google tag (gtag.js) — runs in the Partytown worker (see partytown.html) -->
     <script
-      type="text/partytown"
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/partytown"
       src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
     ></script>
-    <script type="text/partytown">
+    <script
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/partytown"
+    >
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -424,7 +425,11 @@
 
       gtag("config", "G-1TYEB7YFP5");
     </script>
-    <script type="text/javascript">
+    <script
+      type="text/plain"
+      data-consent="analytics"
+      data-type="text/javascript"
+    >
       (function (c, l, a, r, i, t, y) {
         c[a] =
           c[a] ||
@@ -1799,18 +1804,9 @@
         text-decoration: underline;
       }
     </style>
+    <script src="/assets/nt-consent.js?v=1" defer></script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div class="page">
       <div class="win">
         <header class="win-bar">
@@ -2820,6 +2816,7 @@
               <a href="/offer.html">Оферта</a>
               <a href="/privacy.html">Конфиденциальность</a>
               <a href="/consent.html">Согласие на обработку данных</a>
+              <a href="#" data-nt-consent-open>Cookie</a>
             </span>
           </div>
         </footer>

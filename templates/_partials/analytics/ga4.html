@@ -1,9 +1,13 @@
+<%
+/* Consent-gated (Privacy Policy §10): shipped as text/plain and cloned as
+   text/partytown by assets/nt-consent.js only after the visitor accepts. */
+%>
 <!-- Google tag (gtag.js) — runs in the Partytown worker (see partytown.html) -->
 <script
-  type="text/partytown"
+  type="text/plain" data-consent="analytics" data-type="text/partytown"
   src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
 ></script>
-<script type="text/partytown">
+<script type="text/plain" data-consent="analytics" data-type="text/partytown">
   window.dataLayer = window.dataLayer || [];
   function gtag() {
     dataLayer.push(arguments);

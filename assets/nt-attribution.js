@@ -10,6 +10,14 @@
 //   live per-click (never persisted): source_channel (read from the link's own
 //     href, default 'website'), fbp, fbc, landing_path, landing_lang, last_touch_at
 //   start=69ce57941f15eb55e90ea47a is always preserved.
+//
+// Consent (Privacy Policy §10, see nt-consent.js): the persisted first-touch
+// record, the click id, the synthesized _fbc cookie and the fbp/fbc/fbclid link
+// params are advertising identifiers, so they exist only while the stored
+// nt_consent choice is "granted". Without consent nothing is written to
+// localStorage or document.cookie, and the bot link only carries what is in the
+// current URL (utm_*, campaign ids) plus source_channel / landing_path. When the
+// visitor accepts on this very page, the "nt-consent" event re-runs hydrate().
 (function () {
   "use strict";
   var BOT = 'a[href*="tg.pulse.is/next_tick_bot"]';
@@ -32,6 +40,19 @@
   ];
 
   var qs = new URLSearchParams(location.search);
+  var CONSENT_KEY = "nt_consent";
+  var CONSENT_VERSION = 1;
+  // Same contract as nt-consent.js getChoice(): localStorage JSON first, the
+  // strictly-necessary fallback cookie "<v>:<0|1>" second.
+  function consentGranted() {
+    try {
+      var v = JSON.parse(localStorage.getItem(CONSENT_KEY));
+      if (v && v.v === CONSENT_VERSION && typeof v.analytics === "boolean")
+        return v.analytics;
+    } catch (e) {}
+    var c = cookie(CONSENT_KEY).split(":");
+    return c.length === 2 && Number(c[0]) === CONSENT_VERSION && c[1] === "1";
+  }
 
   // localStorage guarded — Safari private mode throws on read/write.
   function lsGet(k) {
@@ -76,34 +97,52 @@
     }
     return v;
   }
-  var clickId = persistOnce(K_CLICK, uuid);
-  var firstTouch = persistOnce(K_FT, function () {
-    return new Date().toISOString();
-  });
 
-  var attr = (function () {
-    try {
-      return JSON.parse(lsGet(K_ATTR) || "{}");
-    } catch (e) {
-      return {};
+  var granted = false;
+  var clickId = "";
+  var firstTouch = "";
+  var attr = {};
+  function hydrate() {
+    granted = consentGranted();
+    var incoming = {};
+    PERSIST.forEach(function (k) {
+      var v = qs.get(k);
+      if (v) incoming[k] = v;
+    });
+    if (!granted) {
+      // No consent: nothing identifying, nothing stored. Keep only the
+      // campaign-level params of THIS url (not the click id) for the link.
+      delete incoming.fbclid;
+      clickId = "";
+      firstTouch = "";
+      attr = incoming;
+      return;
     }
-  })();
-  var incoming = {};
-  PERSIST.forEach(function (k) {
-    var v = qs.get(k);
-    if (v) incoming[k] = v;
+    clickId = persistOnce(K_CLICK, uuid);
+    firstTouch = persistOnce(K_FT, function () {
+      return new Date().toISOString();
+    });
+    try {
+      attr = JSON.parse(lsGet(K_ATTR) || "{}");
+    } catch (e) {
+      attr = {};
+    }
+    if (Object.keys(incoming).length) {
+      attr = Object.assign({}, attr, incoming);
+      lsSet(K_ATTR, JSON.stringify(attr));
+    }
+    // Synthesize _fbc from fbclid ONLY when the cookie is absent — never
+    // overwrite the cookie the Meta Pixel itself sets (keeps CAPI dedup intact).
+    var fbclid = attr.fbclid || qs.get("fbclid") || "";
+    if (!cookie("_fbc") && fbclid) {
+      setCookie("_fbc", "fb.1." + Date.now() + "." + fbclid, 90);
+    }
+  }
+  hydrate();
+  document.addEventListener("nt-consent", function () {
+    hydrate();
+    document.querySelectorAll(BOT).forEach(patch);
   });
-  if (Object.keys(incoming).length) {
-    attr = Object.assign({}, attr, incoming);
-    lsSet(K_ATTR, JSON.stringify(attr));
-  }
-
-  // Synthesize _fbc from fbclid ONLY when the cookie is absent — never
-  // overwrite the cookie the Meta Pixel itself sets (keeps CAPI dedup intact).
-  var fbclid = attr.fbclid || qs.get("fbclid") || "";
-  if (!cookie("_fbc") && fbclid) {
-    setCookie("_fbc", "fb.1." + Date.now() + "." + fbclid, 90);
-  }
 
   function landingLang() {
     var seg = location.pathname.split("/").filter(Boolean)[0];
@@ -124,8 +163,7 @@
     // channel — this restores the pre-refactor index behavior (utm_source swap).
     // Otherwise keep the link's own value (e.g. 'conf' / 'website:all'), defaulting
     // to 'website' only if absent.
-    var utmChannel =
-      qs.get("utm_source") || qs.get("utm") || attr.utm_source;
+    var utmChannel = qs.get("utm_source") || qs.get("utm") || attr.utm_source;
     if (utmChannel) {
       url.searchParams.set("source_channel", utmChannel);
     } else if (!url.searchParams.get("source_channel")) {
@@ -136,8 +174,8 @@
     });
     var live = {
       nt_click_id: clickId,
-      fbp: cookie("_fbp"),
-      fbc: cookie("_fbc"),
+      fbp: granted ? cookie("_fbp") : "",
+      fbc: granted ? cookie("_fbc") : "",
       landing_path: location.pathname,
       landing_lang: landingLang(),
       first_touch_at: firstTouch,

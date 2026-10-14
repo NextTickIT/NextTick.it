@@ -6,16 +6,18 @@
      loc     -> current locale ("en" | "ru" | "uk"); selects the legal labels
      tagline -> per-page footer tagline (raw HTML allowed)
    The offer/privacy hrefs are the locale-agnostic redirect stubs (/offer.html,
-   /privacy.html) which forward to the visitor's saved language. The footer does
+   /privacy.html) which forward to the visitor's saved language. The Cookie link
+   reopens the consent banner (data-nt-consent-open is handled by nt-consent.js)
+   so the choice can be changed as easily as it was made (Privacy Policy §10.4). The footer does
    NOT include a language switcher — every page already has one in its top bar.
    Colors are self-scoped (--sf-*) instead of the pages' own --muted/--dim vars,
    whose values are inconsistent across index/all/swe; a [data-theme="light"]
    override keeps both themes correct. */
 const _legal = ({
-  en: { offer: "Offer", privacy: "Privacy Policy", consent: "Data Consent" },
-  uk: { offer: "Оферта", privacy: "Конфіденційність", consent: "Згода на обробку даних" },
-  ru: { offer: "Оферта", privacy: "Конфиденциальность", consent: "Согласие на обработку данных" },
-})[loc] || { offer: "Offer", privacy: "Privacy Policy", consent: "Data Consent" };
+  en: { offer: "Offer", privacy: "Privacy Policy", consent: "Data Consent", cookies: "Cookies" },
+  uk: { offer: "Оферта", privacy: "Конфіденційність", consent: "Згода на обробку даних", cookies: "Cookie" },
+  ru: { offer: "Оферта", privacy: "Конфиденциальность", consent: "Согласие на обработку данных", cookies: "Cookie" },
+})[loc] || { offer: "Offer", privacy: "Privacy Policy", consent: "Data Consent", cookies: "Cookies" };
 %>
 <style>
   .site-footer {
@@ -64,6 +66,7 @@ const _legal = ({
       <a href="/offer.html"><%~ _legal.offer %></a>
       <a href="/privacy.html"><%~ _legal.privacy %></a>
       <a href="/consent.html"><%~ _legal.consent %></a>
+      <a href="#" data-nt-consent-open><%~ _legal.cookies %></a>
     </span>
   </div>
 </footer>

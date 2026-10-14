@@ -96,6 +96,27 @@ function selftest() {
   const good = byteDiff(goodGen, baseline);
   const bad = byteDiff(badGen, baseline);
 
+  // Consent gating (allowlist.exciseConsentGating): gated tag + consent include
+  // on the generated side, noscript pixel only on the baseline side -> no diff.
+  const gatedBase = [
+    "    <script>",
+    '      fbq("init", "1543537094181571");',
+    "    </script>",
+    "    <noscript",
+    "      ><img",
+    '        src="https://www.facebook.com/tr?id=1543537094181571&ev=PageView&noscript=1"',
+    "    /></noscript>",
+    "  </head>",
+  ].join("\n");
+  const gatedGen = [
+    '    <script type="text/plain" data-consent="analytics">',
+    '      fbq("init", "1543537094181571");',
+    "    </script>",
+    '    <script src="/assets/nt-consent.js?v=1" defer></script>',
+    "  </head>",
+  ].join("\n");
+  const gated = byteDiff(gatedGen, gatedBase);
+
   let ok = true;
   // 4 lines differ (canonical, hreflang href, ls-opt href, roadmap src); the
   // html lang line is identical same-locale, so it is NOT a differing line.
@@ -104,6 +125,12 @@ function selftest() {
     console.error("selftest FAIL [allowlist-only]:", JSON.stringify(good));
   } else {
     console.log(`selftest OK  allowlist-only diff accepted (${good.differing} allowed lines)`);
+  }
+  if (!gated.ok) {
+    ok = false;
+    console.error("selftest FAIL [consent gating not excised]:", JSON.stringify(gated));
+  } else {
+    console.log("selftest OK  consent gating excised as an expected delta");
   }
   if (bad.ok || !bad.unexpected.some((u) => u.line === 6)) {
     ok = false;

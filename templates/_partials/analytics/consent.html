@@ -1,0 +1,10 @@
+<%
+/* Cookie consent gate (Privacy Policy §10). Loads the first-party banner that
+   activates the text/plain analytics tags only after the visitor accepts, and
+   remembers the choice in localStorage. Include at the END of <head>, after
+   every analytics partial, on any page that carries at least one gated tag.
+   Data: { analytics } -> the page's flags; nothing is emitted when all are off. */
+%>
+<% if (analytics.gtm || analytics.ga4 || analytics.clarity || analytics.pixel) { %>
+<script src="/assets/nt-consent.js?v=1" defer></script>
+<% } %>

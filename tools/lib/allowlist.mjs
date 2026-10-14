@@ -95,7 +95,29 @@ export function exciseLangSwitch(text) {
   );
 }
 
+// Cookie consent (Privacy Policy §10, 2026-10-14): every analytics tag is now
+// shipped inert — <script type="text/plain" data-consent="analytics"
+// [data-type="…"]> — and activated by assets/nt-consent.js after the visitor
+// accepts; the Meta Pixel <noscript> fallback is gone (it cannot ask first).
+// Canonicalize the gate away so the frozen 268cb44 pages still byte-match on
+// everything else: the gating attributes collapse to the original type, the
+// consent include vanishes from the generated side and the noscript block from
+// the baseline side. The gate itself is asserted by tools/lib/consent-gate.mjs
+// (verify-attribution + verify-legal), not by this diff.
+export function exciseConsentGating(text) {
+  return text
+    .replace(/\s*<script\b[^>]*nt-consent\.js[^>]*>\s*<\/script>/g, "")
+    .replace(
+      /<script\s+type="text\/plain"\s+data-consent="analytics"(?:\s+data-type="([^"]+)")?(\s[^>]*)?>/g,
+      // Prettier wraps the long gated open tag over several lines; the restored
+      // tag must collapse back to the baseline's single line.
+      (_, type, rest) =>
+        `<script${type ? ` type="${type}"` : ""}${rest && rest.trim() ? " " + rest.trim() : ""}>`,
+    )
+    .replace(/\n\s*<noscript\s*>\s*<img[\s\S]*?facebook\.com\/tr\?[\s\S]*?\/>\s*<\/noscript>/g, "");
+}
+
 // Everything the same-locale byte-diff normalizes before comparing lines.
 export function normalizeForByteDiff(text) {
-  return collapseVoidTags(exciseLangSwitch(text));
+  return collapseVoidTags(exciseLangSwitch(exciseConsentGating(text)));
 }

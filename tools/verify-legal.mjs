@@ -4,6 +4,12 @@
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import {
+  ungatedAnalyticsScripts,
+  hasNoscriptTracker,
+  trackerLeaks,
+  CONSENT_ASSET,
+} from "./lib/consent-gate.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -68,7 +74,9 @@ check(existsSync(join(ROOT, "assets/legal.css")), "assets/legal.css exists");
 
 // The newest archived revision each live page must link back to: the offer keeps a
 // User on the revision in force when they paid (cl. 7.2), so it has to stay reachable.
-const newestArchive = ARCHIVES.map((a) => a.date).sort().at(-1);
+const newestArchive = ARCHIVES.map((a) => a.date)
+  .sort()
+  .at(-1);
 
 /** Checks shared by live and archived pages. */
 function checkCommon(h, { slug, loc, shape }) {
@@ -120,17 +128,23 @@ function checkCommon(h, { slug, loc, shape }) {
   // Head: canonical always points at the LIVE page + hreflang + legal.css + lang attr.
   check(hn.includes(`<html lang="${loc}">`), `<html lang="${loc}">`);
   check(
-    hn.includes(`rel="canonical" href="https://nexttick.it/${slug}/${loc}.html"`),
+    hn.includes(
+      `rel="canonical" href="https://nexttick.it/${slug}/${loc}.html"`,
+    ),
     "canonical -> live page",
   );
   for (const l of LOCS) {
     check(
-      hn.includes(`hreflang="${l}" href="https://nexttick.it/${slug}/${l}.html"`),
+      hn.includes(
+        `hreflang="${l}" href="https://nexttick.it/${slug}/${l}.html"`,
+      ),
       `hreflang ${l}`,
     );
   }
   check(
-    hn.includes(`hreflang="x-default" href="https://nexttick.it/${slug}/ru.html"`),
+    hn.includes(
+      `hreflang="x-default" href="https://nexttick.it/${slug}/ru.html"`,
+    ),
     "hreflang x-default -> ru",
   );
   check(
@@ -138,17 +152,37 @@ function checkCommon(h, { slug, loc, shape }) {
     "links /assets/legal.css",
   );
 
-  // Analytics per policy: GA4 everywhere; Clarity on offer only.
+  // Analytics per policy: GA4 everywhere; Clarity on offer only — and every tag
+  // consent-gated behind nt-consent.js (Privacy Policy §10), no noscript pixel.
   check(h.includes("G-MXX0XQWV3R"), "GA4 present");
   check(
     h.includes("x5houryvs2") === shape.clarity,
     `Clarity ${shape.clarity ? "present" : "absent"}`,
   );
+  check(h.includes(CONSENT_ASSET), `consent manager ${CONSENT_ASSET} included`);
+  check(!hasNoscriptTracker(h), "no <noscript> tracker fallback");
+  const ungated = ungatedAnalyticsScripts(h);
+  check(
+    !ungated.length,
+    `every analytics tag consent-gated (ungated: ${ungated.join(" ")})`,
+  );
+  const leaks = trackerLeaks(h);
+  check(
+    !leaks.length,
+    `no tracker host outside the gate (${leaks.join(" | ")})`,
+  );
+  check(
+    hn.includes("data-nt-consent-open"),
+    "footer has the Cookie (reopen consent) link",
+  );
 
   // Lang switch is uk/ru/en; no dead /en/<slug>.html link.
   check(!hn.includes(`href="/en/${slug}.html"`), "no /en/ lang-switch link");
   for (const l of LOCS) {
-    check(hn.includes(`href="/${slug}/${l}.html"`), `switch link /${slug}/${l}.html`);
+    check(
+      hn.includes(`href="/${slug}/${l}.html"`),
+      `switch link /${slug}/${l}.html`,
+    );
   }
 
   // No on-load locale clobber: setItem("lang" appears exactly once (click handler).
@@ -167,7 +201,10 @@ function checkCommon(h, { slug, loc, shape }) {
     `footer home /${loc}.html exists`,
   );
   for (const s of LEGAL_SLUGS) {
-    check(hn.includes(`href="/${s}/${loc}.html"`), `footer links /${s}/${loc}.html`);
+    check(
+      hn.includes(`href="/${s}/${loc}.html"`),
+      `footer links /${s}/${loc}.html`,
+    );
     check(
       existsSync(join(ROOT, "docs", s, `${loc}.html`)),
       `footer target /${s}/${loc}.html exists`,
@@ -189,7 +226,10 @@ for (const slug of LEGAL_SLUGS) {
     const hn = h.replace(/\s+/g, " ");
     checkCommon(h, { slug, loc, shape: LIVE_SHAPE[slug] });
 
-    check(!hn.includes('name="robots"'), "live page is indexable (no robots meta)");
+    check(
+      !hn.includes('name="robots"'),
+      "live page is indexable (no robots meta)",
+    );
     for (const m of NEW_ENTITY) {
       check(h.includes(m), `issuing entity marker present: ${m}`);
     }

@@ -952,6 +952,7 @@
       }
     </style>
     <% if (analytics.pixel) { %><%~ include("_partials/analytics/pixel.html") %><% } %>
+    <%~ include("_partials/analytics/consent.html", { analytics }) %>
   </head>
   <body>
     <%
@@ -959,18 +960,6 @@
         "https://tg.pulse.is/next_tick_bot?start=6a4f770343a30de13e0cbfbc&source_channel=" +
         analytics.attribution;
     %>
-    <% if (analytics.gtm) { %>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <% } %>
     <nav class="nav" aria-label="<%~ navAria %>">
       <div class="nav-inner">
         <a class="brand" href="#top"><%~ brand %></a>

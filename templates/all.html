@@ -1051,6 +1051,7 @@
       }
     </style>
     <% if (analytics.pixel) { %><%~ include("_partials/analytics/pixel.html") %><% } %>
+    <%~ include("_partials/analytics/consent.html", { analytics }) %>
   </head>
   <body>
     <%
@@ -1087,18 +1088,6 @@
         ["rev-15", "rev-17", "rev-08"],
       ];
     %>
-    <% if (analytics.gtm) { %>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-M74P6CSD"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <% } %>
     <div class="page">
       <div class="win">
         <header class="win-bar">
