@@ -413,8 +413,9 @@
         letter-spacing: 0.03em;
         text-decoration: none;
         white-space: nowrap;
+        position: relative;
+        isolation: isolate;
         box-shadow: 0 0 0 0 rgba(126, 231, 135, 0.5);
-        animation: joinPulse 2.4s ease-out infinite;
         transition:
           transform 0.15s,
           background 0.15s,
@@ -424,7 +425,6 @@
         transform: translateY(-1px);
         background: var(--green-hover);
         box-shadow: 0 0 18px rgba(126, 231, 135, 0.5);
-        animation: none;
       }
       .jb-dot {
         width: 6px;
@@ -439,15 +439,78 @@
       .join-btn:hover .jb-arrow {
         transform: translateX(3px);
       }
+      /* Pulse ring. Four copies of the button box drift 8px outward
+         diagonally while their group fades, tracing the same outset
+         rectangle a spreading box-shadow would. Only transform and
+         opacity animate, so it stays on the compositor instead of
+         repainting every frame. ::after repaints the button fill on top
+         so the ring never tints the button itself. */
+      .join-btn::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        z-index: -1;
+        background: inherit;
+      }
+      .jb-pulse {
+        position: absolute;
+        inset: -1px;
+        z-index: -1;
+        opacity: 0;
+        pointer-events: none;
+        animation: joinPulse 2.4s ease-out infinite;
+      }
+      .jb-pulse::before,
+      .jb-pulse::after,
+      .jb-pulse > span,
+      .jb-pulse > span::before,
+      .jb-pulse > span::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+      .jb-pulse::before,
+      .jb-pulse::after,
+      .jb-pulse > span::before,
+      .jb-pulse > span::after {
+        background: rgb(126, 231, 135);
+        animation: joinPulseShift 2.4s ease-out infinite;
+      }
+      .jb-pulse::before {
+        --dx: -8px;
+        --dy: -8px;
+      }
+      .jb-pulse::after {
+        --dx: 8px;
+        --dy: -8px;
+      }
+      .jb-pulse > span::before {
+        --dx: -8px;
+        --dy: 8px;
+      }
+      .jb-pulse > span::after {
+        --dx: 8px;
+        --dy: 8px;
+      }
+      .join-btn:hover .jb-pulse {
+        display: none;
+      }
       @keyframes joinPulse {
         0% {
-          box-shadow: 0 0 0 0 rgba(126, 231, 135, 0.5);
+          opacity: 0.5;
         }
-        70% {
-          box-shadow: 0 0 0 8px rgba(126, 231, 135, 0);
-        }
+        70%,
         100% {
-          box-shadow: 0 0 0 0 rgba(126, 231, 135, 0);
+          opacity: 0;
+        }
+      }
+      @keyframes joinPulseShift {
+        0% {
+          transform: none;
+        }
+        70%,
+        100% {
+          transform: translate(var(--dx), var(--dy));
         }
       }
       @keyframes joinDot {
@@ -460,9 +523,11 @@
         }
       }
       @media (prefers-reduced-motion: reduce) {
-        .join-btn,
         .jb-dot {
           animation: none;
+        }
+        .jb-pulse {
+          display: none;
         }
       }
 
@@ -1166,7 +1231,8 @@
             target="_blank"
             rel="noopener"
           >
-            <span class="jb-dot"></span>Приєднатися<span class="jb-arrow"
+            <span class="jb-pulse" aria-hidden="true"><span></span></span
+            ><span class="jb-dot"></span>Приєднатися<span class="jb-arrow"
               >→</span
             >
           </a>
@@ -1206,7 +1272,9 @@
                     target="_blank"
                     rel="noopener"
                   >
-                    <span class="jb-dot"></span>Приєднатися до гільдії<span
+                    <span class="jb-pulse" aria-hidden="true"
+                      ><span></span></span
+                    ><span class="jb-dot"></span>Приєднатися до гільдії<span
                       class="jb-arrow"
                       >→</span
                     >
@@ -1282,7 +1350,8 @@
                 target="_blank"
                 rel="noopener"
               >
-                <span class="jb-dot"></span>Приєднатися до гільдії<span
+                <span class="jb-pulse" aria-hidden="true"><span></span></span
+                ><span class="jb-dot"></span>Приєднатися до гільдії<span
                   class="jb-arrow"
                   >→</span
                 >
@@ -1412,7 +1481,8 @@
                 target="_blank"
                 rel="noopener"
               >
-                <span class="jb-dot"></span>Приєднатися до гільдії<span
+                <span class="jb-pulse" aria-hidden="true"><span></span></span
+                ><span class="jb-dot"></span>Приєднатися до гільдії<span
                   class="jb-arrow"
                   >→</span
                 >
@@ -1556,7 +1626,8 @@
                 target="_blank"
                 rel="noopener"
               >
-                <span class="jb-dot"></span>Приєднатися до гільдії<span
+                <span class="jb-pulse" aria-hidden="true"><span></span></span
+                ><span class="jb-dot"></span>Приєднатися до гільдії<span
                   class="jb-arrow"
                   >→</span
                 >
@@ -2204,7 +2275,8 @@
                 target="_blank"
                 rel="noopener"
               >
-                <span class="jb-dot"></span>Приєднатися до гільдії<span
+                <span class="jb-pulse" aria-hidden="true"><span></span></span
+                ><span class="jb-dot"></span>Приєднатися до гільдії<span
                   class="jb-arrow"
                   >→</span
                 >
@@ -2280,7 +2352,9 @@
                     target="_blank"
                     rel="noopener"
                   >
-                    <span class="jb-dot"></span>Приєднатися до гільдії<span
+                    <span class="jb-pulse" aria-hidden="true"
+                      ><span></span></span
+                    ><span class="jb-dot"></span>Приєднатися до гільдії<span
                       class="jb-arrow"
                       >→</span
                     >
