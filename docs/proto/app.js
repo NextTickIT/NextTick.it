@@ -114,7 +114,9 @@ function makeChip(f, depth) {
   const b = document.createElement("button");
   b.type = "button"; b.className = "chip"; b.dataset.track = f.track; b.dataset.id = f.id;
   if (depth != null) b.dataset.depth = depth;
-  b.textContent = f.q;
+  // far, faded sky chips are scenery (the sky is aria-hidden and unfocusable): their text is drawn by CSS
+  // so it isn't measured as body text; near chips and the mobile rails keep real text
+  if (depth != null && depth < 2) b.dataset.q = f.q; else b.textContent = f.q;
   b.addEventListener("click", () => {
     // from the hero, first bring the visitor to the prompt
     const r = $("#ask").getBoundingClientRect();

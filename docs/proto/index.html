@@ -142,6 +142,7 @@ button, input, textarea { font: inherit; color: inherit; }
     transition: opacity .3s, filter .3s, border-color .2s, background .2s, box-shadow .3s; }
   .chip::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--tc); margin-right: 9px; vertical-align: 2px; }
   .chip[data-depth="0"] { opacity: .25; filter: blur(1.6px); font-size: 13px; }
+  .chip[data-q]::after { content: attr(data-q); }
   .chip[data-depth="1"] { opacity: .45; filter: blur(.6px); }
   .chip[data-depth="2"] { opacity: .7; }
   .chip:hover, .chip:focus-visible { opacity: 1; filter: none; border-color: var(--tc); background: var(--panel-2); z-index: 5; }
