@@ -1,0 +1,62 @@
+/* Shared tokens — taken verbatim from the current nexttick.it dark theme. */
+@font-face { font-family: "Inter"; src: url(/assets/fonts/inter-var-latin.woff2) format("woff2"); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+02BB-02BC, U+2000-206F, U+20AC, U+2122, U+2190-21FF; }
+@font-face { font-family: "Inter"; src: url(/assets/fonts/inter-var-cyrillic.woff2) format("woff2"); font-weight: 100 900; font-display: swap; unicode-range: U+0400-04FF; }
+@font-face { font-family: "JetBrains Mono"; src: url(/assets/fonts/jbmono-var-latin.woff2) format("woff2"); font-weight: 100 800; font-display: swap; unicode-range: U+0000-00FF, U+02BB-02BC, U+2000-206F, U+2190-21FF; }
+@font-face { font-family: "JetBrains Mono"; src: url(/assets/fonts/jbmono-var-cyrillic.woff2) format("woff2"); font-weight: 100 800; font-display: swap; unicode-range: U+0400-04FF; }
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0d0f;
+  --bg-2: #111417;
+  --panel: #15191c;
+  --panel-2: #1c2126;
+  --line: #2a3138;
+  --line-2: #3a444c;
+  --txt: #d6d8da;
+  --dim: #888d92;
+  --muted: #5d6469;
+  --green: #7ee787;
+  --green-2: #3fb950;
+  --amber: #e3b341;
+  --cyan: #56d4dd;
+  --magenta: #bc8cff;
+  --red: #ff7b72;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", system-ui, sans-serif;
+  /* track accents, same mapping as the live roadmap */
+  --t-agents: var(--amber);
+  --t-comms: var(--cyan);
+  --t-arch: var(--green);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--txt); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 6px; }
+[data-track="agents"] { --tc: var(--t-agents); }
+[data-track="comms"] { --tc: var(--t-comms); }
+[data-track="arch"] { --tc: var(--t-arch); }
+
+/* Prototype switcher, fixed bottom-left on every variant */
+.proto-bar {
+  position: fixed; left: 12px; bottom: 12px; z-index: 100;
+  display: flex; gap: 4px; align-items: center;
+  padding: 4px; border: 1px solid var(--line); border-radius: 10px;
+  background: rgba(17, 20, 23, .92); backdrop-filter: blur(8px);
+  font: 500 11px/1 var(--mono); color: var(--dim);
+}
+.proto-bar a, .proto-bar button { padding: 7px 9px; border-radius: 7px; text-decoration: none; background: none; border: 0; cursor: pointer; color: var(--dim); font: inherit; }
+.proto-bar a[aria-current] { background: var(--panel-2); color: var(--txt); }
+.proto-bar a:hover, .proto-bar button:hover { color: var(--txt); }
+.proto-bar .sep { width: 1px; height: 16px; background: var(--line); margin: 0 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+@media (max-width: 720px) {
+  .proto-bar { left: 50%; right: auto; translate: -50% 0; bottom: 8px; white-space: nowrap; font-size: 10px; }
+  .proto-bar a, .proto-bar button { padding: 6px 7px; }
+}

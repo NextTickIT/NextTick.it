@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<script>
+  // ?lang=uk|en (the real site routes by path); Russian is the source text, i18n.<lang>.js maps it
+  window.LANG = ["uk", "en"].find((l) => l === new URLSearchParams(location.search).get("lang")) || "ru";
+  document.documentElement.lang = window.LANG;
+</script>
+<title>NextTick — прототип лендинга</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  :root { --display: "Unbounded", var(--sans); --gutter: clamp(16px, 4vw, 40px); --wrap: 1180px; }
+  html { scroll-behavior: smooth; }
+  body { overflow-x: clip; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ── header ───────────────────────────────────────── */
+  /* fixed header: the join button stays on screen the whole way down */
+  .top { position: fixed; inset: 0 0 auto; z-index: 50; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px var(--gutter);
+    transition: padding .25s, background .25s, border-color .25s; border-bottom: 1px solid transparent; }
+  .top.scrolled { padding-top: 12px; padding-bottom: 12px; background: rgba(11, 13, 15, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
+  .top .price-hint { font: 400 12px/1.3 var(--mono); color: var(--muted); margin: 0 6px 0 10px; opacity: 0; transition: opacity .25s; white-space: nowrap; }
+  .top .price-hint b { color: var(--txt); font-weight: 500; }
+  .top.scrolled .price-hint { opacity: 1; }
+  section, .answer { scroll-margin-top: 84px; }
+  .top img { height: 26px; display: block; }
+  .top nav { display: flex; gap: 4px; align-items: center; }
+  .top nav a:not(.join) { font: 500 14px/1 var(--sans); color: var(--dim); text-decoration: none; padding: 10px 12px; border-radius: 999px; }
+  .top nav a:not(.join):hover { color: var(--txt); }
+  .join { font: 600 14px/1 var(--sans); padding: 11px 18px; border-radius: 999px; background: var(--green); color: #07130a; text-decoration: none; border: 0; cursor: pointer; display: inline-block; white-space: nowrap; }
+  .join:hover { background: #8df29a; }
+  .ghost { font: 600 15px/1 var(--sans); padding: 15px 22px 15px 18px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(21,25,28,.85); color: var(--txt); cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
+  .ghost:hover { border-color: var(--dim); }
+  .ghost::before { content: ""; border-left: 10px solid var(--green); border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+
+  /* ── hero: what the guild is ──────────────────────── */
+  .hero { position: relative; min-height: 100svh; display: grid; align-items: center; padding: 96px 0 72px; }
+  /* ambient questions in strips above and below the copy — a hint of what's discussed inside */
+  /* the sky sticks to the viewport while hero and prompt scroll past it;
+     a question dissolves while it passes over text, video or the prompt.
+     It sits above the content so its chips get the clicks — the layer itself lets them through */
+  .stage { position: relative; isolation: isolate; }
+  .sky { position: sticky; top: 0; height: 100svh; margin-bottom: -100svh; z-index: 2; overflow: hidden; pointer-events: none; }
+  .sky .chip { pointer-events: auto; }
+  .sky .chip.hid { opacity: 0 !important; pointer-events: none; transition-duration: .12s; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  .eyebrow b { color: var(--green); font-weight: 500; }
+  h1 { font: 700 clamp(32px, 3.7vw, 54px)/1.05 var(--display); letter-spacing: -.035em; margin: 0 0 22px; text-wrap: balance; }
+  h1 em { font-style: normal; color: var(--green); }
+  .hero .lede { font-size: clamp(16px, 1.6vw, 19px); line-height: 1.55; color: var(--dim); margin: 0 0 30px; max-width: 30em; }
+  .hero .lede strong { color: var(--txt); font-weight: 550; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .actions .join { font-size: 15px; padding: 16px 24px; }
+  .lang-note { margin: 18px 0 0; font: 400 13px/1.5 var(--mono); color: var(--muted); }
+
+  .chip { position: absolute; left: 0; top: 0; white-space: nowrap; cursor: pointer;
+    font: 450 15px/1.2 var(--sans); color: var(--txt);
+    padding: 9px 14px 9px 12px; border-radius: 999px; border: 1px solid var(--line);
+    background: rgba(21, 25, 28, .8); will-change: transform;
+    transition: opacity .3s, filter .3s, border-color .2s, background .2s, box-shadow .3s; }
+  .chip::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--tc); margin-right: 9px; vertical-align: 2px; }
+  .chip[data-depth="0"] { opacity: .25; filter: blur(1.6px); font-size: 13px; }
+  .chip[data-depth="1"] { opacity: .45; filter: blur(.6px); }
+  .chip[data-depth="2"] { opacity: .7; }
+  .chip:hover, .chip:focus-visible { opacity: 1; filter: none; border-color: var(--tc); background: var(--panel-2); z-index: 5; }
+  .chip.fired { opacity: 1; filter: none; border-color: var(--tc); box-shadow: 0 0 0 6px color-mix(in srgb, var(--tc) 18%, transparent); }
+
+  .video { position: relative; aspect-ratio: 16/9; border-radius: 22px; overflow: hidden; border: 1px solid var(--line-2); background: #000 url(/assets/hero-poster.webp) center/cover; cursor: pointer; box-shadow: 0 40px 100px -30px rgba(0,0,0,.9); }
+  .video::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.65)); }
+  .video .play { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 76px; height: 76px; border-radius: 50%; background: var(--green); display: grid; place-items: center; transition: transform .2s; box-shadow: 0 0 0 10px rgba(126,231,135,.15); }
+  .video .play::after { content: ""; border-left: 22px solid #07130a; border-top: 14px solid transparent; border-bottom: 14px solid transparent; margin-left: 6px; }
+  .video:hover .play { transform: scale(1.06); }
+  .video .cap { position: absolute; left: 20px; bottom: 16px; right: 20px; display: flex; justify-content: space-between; font: 500 13px var(--mono); color: #fff; }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  /* ── pains: custdev numbers and verbatim quotes ──── */
+  .pains { padding: clamp(72px, 10vw, 120px) 0 0; }
+  .pain-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .pain { margin: 0; padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: var(--bg-2); display: flex; flex-direction: column; }
+  .pain b { font: 700 40px/1 var(--display); letter-spacing: -.03em; color: var(--green); }
+  .pain span { font: 500 12px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--dim); margin: 8px 0 16px; }
+  .pain blockquote { margin: 0; font-size: 16px; line-height: 1.55; color: var(--txt); }
+
+  /* ── ask: the prompt, second screen ───────────────── */
+  .ask-sec { min-height: 100svh; padding: clamp(96px, 12vh, 140px) 0 clamp(64px, 10vh, 120px); text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .ask-sec h2 { margin-inline: auto; }
+  .ask-sec .sec-lede { margin-inline: auto; }
+  .ask-box { width: 100%; max-width: 780px; margin: 0 auto; text-align: left; }
+  .ask { position: relative; display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 22px;
+    border-radius: 20px; border: 1px solid var(--line-2); background: var(--panel);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); transition: border-color .2s, box-shadow .2s; }
+  .ask:focus-within { border-color: color-mix(in srgb, var(--green) 55%, var(--line-2)); box-shadow: 0 30px 80px -20px rgba(0,0,0,.7), 0 0 0 4px rgba(126,231,135,.08); }
+  .ask input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font-size: 18px; padding: 14px 0; text-overflow: ellipsis; }
+  .ask input::placeholder { color: var(--muted); }
+  .ask button { flex: none; width: 48px; height: 48px; border-radius: 14px; border: 0; background: var(--green); color: #07130a; cursor: pointer; display: grid; place-items: center; }
+  .ask button:disabled { background: var(--panel-2); color: var(--muted); cursor: default; }
+  .hint { margin-top: 14px; font: 400 13px/1.5 var(--mono); color: var(--muted); text-align: center; }
+  .hint b { color: var(--dim); font-weight: 500; }
+  /* ready-made questions: calm, readable, all visible */
+  .picks { display: none; }
+  .picks .chip { position: static; opacity: 1; filter: none; font-size: 14.5px; transform: none; }
+  .picks .chip:hover { background: var(--panel-2); }
+
+  .answer { text-align: left; margin-top: 26px; border: 1px solid var(--line); border-radius: 20px; background: var(--bg-2); overflow: hidden; animation: rise .45s cubic-bezier(.2,.8,.2,1); }
+  .answer[hidden] { display: none; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+  .a-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 16px 22px; border-bottom: 1px solid var(--line); font: 500 12px/1.3 var(--mono); color: var(--dim); }
+  .a-head .q { color: var(--txt); font: 600 15px/1.35 var(--sans); }
+  .a-body { padding: 20px 22px 6px; font-size: 17px; line-height: 1.65; }
+  .a-body.typing::after { content: ""; display: inline-block; width: 8px; height: 1.05em; margin-left: 2px; vertical-align: -3px; background: var(--green); animation: blink 1s steps(1) infinite; }
+  .a-body .wait { color: var(--muted); font: 400 14px var(--mono); }
+  @keyframes blink { 50% { opacity: 0; } }
+  .src-lang { margin: 0; padding: 0 22px 8px; font-size: 14px; line-height: 1.45; color: var(--dim); }
+  .src-h { padding: 18px 22px 8px; font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .srcs { list-style: none; margin: 0; padding: 0 10px 10px; }
+  .src a { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 12px; border-radius: 12px; text-decoration: none; animation: rise .35s backwards; }
+  .src a:hover { background: var(--panel); }
+  .ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--tc) 12%, transparent); color: var(--tc); flex: none; }
+  .src .t { font-weight: 550; line-height: 1.35; }
+  .src .m { font: 400 12px/1.4 var(--mono); color: var(--dim); margin-top: 3px; }
+  .src .go { font: 500 16px/1 var(--mono); color: var(--muted); }
+  .src a:hover .go { color: var(--green); }
+  .a-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 22px; border-top: 1px solid var(--line); font: 400 12px/1.4 var(--mono); color: var(--muted); }
+  .a-foot .join { font-size: 13px; padding: 9px 14px; }
+  .limit { margin-top: 18px; padding: 18px 20px; border-radius: 16px; border: 1px dashed var(--line-2); text-align: left; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .limit p { margin: 0; color: var(--dim); line-height: 1.5; }
+  .limit strong { color: var(--txt); }
+
+  /* ── sections ─────────────────────────────────────── */
+  .sec { padding: clamp(72px, 10vw, 128px) 0 0; }
+  .kicker { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--green); margin-bottom: 18px; }
+  h2 { font: 700 clamp(28px, 4vw, 48px)/1.05 var(--display); letter-spacing: -.03em; margin: 0 0 16px; text-wrap: balance; }
+  h2 em { font-style: normal; color: var(--green); }
+  .sec-lede { color: var(--dim); font-size: clamp(16px, 1.8vw, 18px); line-height: 1.6; max-width: 36em; margin: 0 0 36px; }
+
+  .facts { list-style: none; margin: 0 0 32px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .facts li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+  .facts .ic { width: 44px; height: 44px; border-radius: 12px; --tc: var(--green); font: 700 14px/1 var(--display); }
+  .facts b { display: block; font-weight: 600; font-size: 17px; margin-bottom: 3px; }
+  .facts span { color: var(--dim); line-height: 1.5; }
+
+  .tracks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .track { border: 1px solid var(--line); border-radius: 20px; padding: 22px; background: var(--bg-2); display: flex; flex-direction: column; }
+  .track h3 { margin: 0 0 4px; font: 600 18px/1.2 var(--sans); display: flex; align-items: center; gap: 10px; }
+  .track h3::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--tc); }
+  .track .k { font: 400 12px/1.4 var(--mono); color: var(--dim); margin-bottom: 18px; }
+  .track ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .ep { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; padding: 8px; margin: 0 -8px; border-radius: 12px; }
+  .ep .ic { width: 30px; height: 30px; border-radius: 8px; }
+  .ep .t { font-size: 14.5px; line-height: 1.35; }
+  .ep .m { display: block; font: 400 11px/1.6 var(--mono); color: var(--muted); }
+  .ep.new .m { color: var(--tc); }
+  .track .more { margin-top: auto; padding-top: 16px; font: 500 12px var(--mono); color: var(--tc); }
+
+  .month-extra { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .month-extra li { padding: 18px 22px; border: 1px dashed var(--line-2); border-radius: 16px; color: var(--dim); line-height: 1.5; font-size: 15px; }
+  .month-extra b { display: block; color: var(--green); font: 600 15px/1.3 var(--sans); margin-bottom: 4px; }
+  .note { margin: 18px 0 0; font: 400 13px/1.5 var(--mono); color: var(--muted); }
+  .after { margin-top: clamp(48px, 7vw, 80px); }
+  .after h3 { font: 700 clamp(22px, 2.6vw, 32px)/1.15 var(--display); letter-spacing: -.02em; margin: 0 0 10px; }
+  .after > p { color: var(--dim); font-size: 17px; line-height: 1.55; margin: 0 0 22px; }
+  .signals { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 32px; }
+  .signals li { display: grid; grid-template-columns: 28px 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid var(--line); font-size: 18px; line-height: 1.5; }
+  .signals li::before { content: "↗"; font: 700 18px/1.5 var(--display); color: var(--green); }
+  .track .series { font: 500 12px/1.4 var(--mono); color: var(--dim); margin: -12px 0 16px; }
+  .formats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .fmt { border-top: 2px solid var(--line-2); padding-top: 18px; }
+  .fmt h3 { margin: 0 0 8px; font: 600 17px/1.25 var(--sans); }
+  .fmt p { margin: 0; color: var(--dim); line-height: 1.55; font-size: 15px; }
+  .fmt .when { display: block; margin-top: 12px; font: 400 12px var(--mono); color: var(--muted); }
+
+  .experts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  /* coming soon: visible, but says only what is true */
+  .ex.soon { border-style: dashed; border-color: var(--line-2); background: none; }
+  .ex.soon .ph { display: grid; place-items: center; border-style: dashed; color: var(--amber); font: 500 30px/1 var(--display); }
+  .ex.soon .role { color: var(--amber); }
+  .ex { border: 1px solid var(--line); border-radius: 20px; padding: 24px; background: var(--bg-2); display: flex; flex-direction: column; gap: 16px; }
+  .ex-top { display: flex; gap: 16px; align-items: center; }
+  .ex img, .ex .ph { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex: none; border: 1px solid var(--line-2); }
+  .ex .nm { font: 600 18px/1.2 var(--sans); }
+  .ex .role { font: 500 12.5px/1.4 var(--mono); color: var(--green); margin-top: 4px; }
+  .ex p { margin: 0; color: var(--dim); line-height: 1.55; font-size: 15px; }
+  .ex .stat { margin-top: auto; display: flex; gap: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .ex .stat div { font: 400 12px/1.4 var(--mono); color: var(--muted); }
+  .ex .stat b { display: block; font: 700 22px/1.1 var(--display); color: var(--txt); margin-bottom: 2px; }
+  .ex .tr { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ex .tr span { font: 500 11px/1 var(--mono); padding: 6px 8px; border-radius: 6px; color: var(--tc); background: color-mix(in srgb, var(--tc) 10%, transparent); }
+
+  /* cta: pitch on the left, a "ticket" with price and what's inside on the right */
+  .cta { margin: clamp(72px, 10vw, 128px) 0 0; padding-top: clamp(40px, 6vw, 64px); border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr minmax(340px, 440px); gap: clamp(32px, 6vw, 88px); align-items: start; }
+  .cta h2 { font-size: clamp(28px, 3.6vw, 46px); }
+  .cta .pitch p { color: var(--dim); line-height: 1.6; margin: 0; font-size: 17px; max-width: 30em; }
+  .ticket { border: 1px solid var(--line-2); border-radius: 22px; background: var(--panel); overflow: hidden; box-shadow: 0 40px 100px -40px rgba(0,0,0,.8); }
+  .ticket .price { padding: 26px 28px 22px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .ticket .price b { font: 700 48px/1 var(--display); letter-spacing: -.03em; }
+  .ticket .price span { font: 400 13px/1.4 var(--mono); color: var(--dim); }
+  .ticket .price em { font-style: normal; color: var(--green); }
+  .ticket .tear { position: relative; height: 0; border-top: 2px dashed var(--line-2); margin: 0 18px; }
+  .ticket .tear::before, .ticket .tear::after { content: ""; position: absolute; top: -12px; width: 22px; height: 22px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line-2); }
+  .ticket .tear::before { left: -30px; } .ticket .tear::after { right: -30px; }
+  .ticket ul { list-style: none; margin: 0; padding: 22px 28px 6px; display: grid; gap: 12px; }
+  .ticket li { display: grid; grid-template-columns: 20px 1fr; gap: 12px; line-height: 1.45; font-size: 15.5px; }
+  .ticket li::before { content: ""; width: 18px; height: 18px; margin-top: 2px; border-radius: 6px; background: color-mix(in srgb, var(--green) 14%, transparent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%237ee787' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m2.5 6.2 2.3 2.3 4.7-5'/%3E%3C/svg%3E") center no-repeat; }
+  .ticket li small { display: block; font: 400 12px/1.5 var(--mono); color: var(--muted); }
+  .ticket li.hl { color: var(--green); }
+  .ticket .buy { padding: 20px 28px 26px; display: grid; gap: 10px; text-align: center; }
+  .ticket .buy .join { padding: 16px; font-size: 16px; border-radius: 14px; }
+  .ticket .buy small { font: 400 12px var(--mono); color: var(--muted); }
+  footer { padding: 48px 0 100px; font: 400 12px var(--mono); color: var(--muted); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: var(--dim); text-decoration: none; margin-left: 16px; }
+
+  /* ── tablet ───────────────────────────────────────── */
+  @media (max-width: 1000px) {
+    .hero { min-height: 0; padding-top: 110px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero .lede { max-width: none; }
+    .facts { grid-template-columns: 1fr; }
+    .pain-grid { grid-template-columns: repeat(2, 1fr); }
+    .month-extra { grid-template-columns: 1fr; }
+    .formats { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
+    .experts { grid-template-columns: repeat(2, 1fr); }
+    .cta { grid-template-columns: 1fr; }
+    .ticket { max-width: 520px; }
+  }
+
+  /* ── phone ────────────────────────────────────────── */
+  @media (max-width: 720px) {
+    .top { padding: 14px 16px; }
+    .top.scrolled { padding-top: 10px; padding-bottom: 10px; }
+    .top .price-hint { margin-left: 0; }
+    .top nav a:not(.join) { display: none; }
+    .join { padding: 10px 16px; }
+
+    .hero { padding: 84px 0 0; }
+    .sky { display: none; }
+    .eyebrow { font-size: 11px; }
+    h1 { margin: 16px 0 14px; letter-spacing: -.03em; }
+    .hero .lede { margin-bottom: 22px; }
+    .actions { flex-wrap: nowrap; }
+    .actions .join, .actions .ghost { flex: 1; justify-content: center; text-align: center; padding: 14px 12px; font-size: 15px; }
+    .video { border-radius: 16px; }
+    .video .play { width: 60px; height: 60px; }
+
+    .ask-sec { text-align: left; padding: 64px 0 0; min-height: 0; display: block; }
+    .ask { padding: 6px 6px 6px 16px; border-radius: 16px; }
+    .ask input { font-size: 16px; padding: 12px 0; }
+    .ask button { width: 44px; height: 44px; border-radius: 12px; }
+    .hint { font-size: 12px; text-align: left; }
+    /* ready-made questions become two slow rails */
+    .picks { display: grid; gap: 8px; margin: 18px -16px 0; max-width: none; justify-content: stretch;
+      -webkit-mask: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent); mask: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent); }
+    .rail { overflow: hidden; }
+    .row { display: flex; gap: 8px; width: max-content; padding: 0 16px; animation: slide var(--dur) linear infinite; }
+    .rail:nth-child(2) .row { animation-direction: reverse; }
+    .rail:hover .row, .rail:focus-within .row { animation-play-state: paused; }
+    @keyframes slide { to { transform: translateX(-50%); } }
+    .picks .chip { font-size: 14px; padding: 8px 12px 8px 10px; }
+
+    .answer { margin: 18px 0 0; border-radius: 16px; }
+    .a-head { flex-direction: column; gap: 4px; padding: 14px 16px; }
+    .a-body { padding: 16px 16px 4px; font-size: 16px; }
+    .src-h { padding: 16px 16px 6px; }
+    .src-lang { padding: 0 16px 6px; }
+    .srcs { padding: 0 4px 8px; }
+    .src a { grid-template-columns: 32px 1fr; gap: 12px; padding: 10px 12px; }
+    .src .ic { width: 32px; height: 32px; }
+    .src .go { display: none; }
+    .a-foot { padding: 14px 16px; }
+
+    .sec { padding-top: 64px; }
+    .tracks, .formats, .experts, .pain-grid, .signals { grid-template-columns: 1fr; }
+    .pains { padding-top: 64px; }
+    .signals li { font-size: 16px; }
+    .tracks { gap: 12px; }
+    .track { padding: 18px; border-radius: 16px; }
+    .formats { gap: 22px; }
+    .ex { padding: 20px; border-radius: 16px; }
+    .cta { gap: 28px; }
+    .ticket .price, .ticket ul, .ticket .buy { padding-left: 20px; padding-right: 20px; }
+    .ticket .price b { font-size: 40px; }
+    footer { padding-bottom: 110px; }
+    footer a { margin: 0 16px 0 0; }
+  }
+  @media (max-width: 720px) and (prefers-reduced-motion: reduce) { .rail { overflow-x: auto; } .row { animation: none; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <img src="/assets/nexttick-logo-color.svg" alt="nexttick">
+  <nav><a href="#latest">Что внутри</a><a href="#ask-sec">Спросить</a><a href="#experts">Эксперты</a><span class="price-hint" aria-hidden="true"><b>$50</b> · 4 недели</span><a class="join" href="#join">Вступить</a></nav>
+</header>
+
+<div class="stage" id="stage">
+<div class="sky" id="sky" aria-hidden="true"></div>
+<section class="hero" id="hero">
+  <div class="wrap hero-grid" id="hero-grid">
+    <div>
+            <h1>Обучение для инженеров, <em>у&nbsp;которых нет на&nbsp;него времени.</em></h1>
+      <p class="lede">NextTick — гильдия инженеров. <strong>Около 2 часов в неделю</strong>: короткие видео про архитектуру, коммуникации и AI и задание к каждому — на твоём рабочем проекте. Новое выходит каждую неделю, всё вышедшее остаётся в архиве.</p>
+      <div class="actions">
+        <a class="join" href="#join">Вступить в гильдию</a>
+        <button class="ghost" type="button" id="watch">Смотреть интро</button>
+      </div>
+      <p class="lang-note" id="lang-note" hidden>Материалы гильдии доступны на русском языке</p>
+    </div>
+    <div class="video" id="video" role="button" tabindex="0" aria-label="Смотреть интро: обзор гильдии инженеров NextTick" data-embed="https://www.youtube-nocookie.com/embed/nW8g4Y6otWM?autoplay=1&rel=0">
+      <span class="play"></span>
+      <span class="cap"><span>Что такое гильдия NextTick</span><span>интро</span></span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="pains" id="pains">
+    <h2>Мы спросили инженеров, <em>что мешает им расти.</em></h2>
+    <p class="sec-lede">Вот что они ответили — их словами. Гильдия устроена вокруг этих четырёх проблем.</p>
+    <div class="pain-grid">
+      <figure class="pain"><b>92%</b><span>синдром самозванца</span><blockquote>«Чувство, что все вокруг умнее, синдром самозванца в высшей степени. Думаю, что я обманываю всех.»</blockquote></figure>
+      <figure class="pain"><b>78%</b><span>нет структуры</span><blockquote>«Не понимаю какую книгу или курс купить, чтобы стать лучше.»</blockquote></figure>
+      <figure class="pain"><b>70%</b><span>некому задать вопрос</span><blockquote>«Я один — сам себе сеньйор и сам себе джун. Некому подойти попросить помощи.»</blockquote></figure>
+      <figure class="pain"><b>65%</b><span>AI выбил из уверенности</span><blockquote>«AI показал, что моя ценность как человека, который набирает код, практически нулевая.»</blockquote></figure>
+    </div>
+  </section>
+
+  <section class="ask-sec" id="ask-sec">
+    <h2>Об этом в гильдии <em>уже спрашивали.</em></h2>
+    <p class="sec-lede">У гильдии есть бот по всем её материалам: видео, встречам, обсуждениям в чате. Задай ему свой вопрос — он ответит и покажет, где смотреть дальше.</p>
+    <div class="ask-box">
+      <form class="ask" id="ask">
+        <input id="q" name="q" autocomplete="off" placeholder="Спроси про агентов, архитектуру или людей" aria-label="Вопрос гильдии">
+        <button type="submit" id="send" aria-label="Спросить"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16V4M4.5 9.5 10 4l5.5 5.5"/></svg></button>
+      </form>
+      <div class="hint" id="hint"></div>
+      <div id="limit"></div>
+    </div>
+    <div class="picks" id="picks" aria-label="Готовые вопросы"></div>
+    <div class="ask-box"><article class="answer" id="answer" hidden aria-live="polite"></article></div>
+  </section>
+
+</div>
+</div>
+
+<main class="wrap">
+  <section class="sec" id="latest">
+    <h2>Один месяц <em>в гильдии.</em></h2>
+    <p class="sec-lede">Последние серии по каждому треку — то, что участники смотрят сейчас. Видео по 15 минут, к каждому — задание на своём проекте.</p>
+    <div class="tracks" id="tracks"></div>
+    <ul class="month-extra">
+      <li><b>+ задания</b>к каждому видео — на твоём рабочем проекте, не на учебном</li>
+      <li><b>+ 2 онлайн-встречи</b>по видеосвязи: архитектура; коммуникации и AI — со своими кейсами. Не успел — смотришь запись</li>
+      <li><b>+ чат каждый день</b>Илья, мастера и инженеры твоего уровня</li>
+    </ul>
+    <p class="note">Пропустил неделю — догонять не нужно: каждое видео самостоятельное, всё остаётся в архиве.</p>
+    <div class="after" id="signals">
+      <h3>А потом это видно на работе</h3>
+      <p>Так инженеры описывали момент, когда обучение начинает работать:</p>
+      <ul class="signals">
+        <li>Защитил предложение по рефакторингу перед менеджментом — и получил зелёный свет.</li>
+        <li>Дал эстимет с чётким разделением: в чём уверен, а в чём нет.</li>
+        <li>Позвали на архитектурный митинг или дали задачу сложнее.</li>
+        <li>Взял задачу, сделал, не сомневался — и можешь объяснить, почему именно так.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="formats">
+    <h2>Вокруг видео — <em>живые люди.</em></h2>
+    <p class="sec-lede">Если рядом на работе нет сильного Senior, к которому можно подойти и спросить, — он появляется в гильдии.</p>
+    <div class="formats">
+      <div class="fmt"><h3>Закрытый чат</h3><p>Илья, мастера и опытные инженеры. Цеха по направлениям и отдельное место для «тупых вопросов».</p><span class="when">Илья отвечает 1000+ раз в месяц</span></div>
+      <div class="fmt"><h3>Онлайн-встречи</h3><p>Одна — по архитектуре, вторая — по коммуникациям и AI. Можно принести свой рабочий кейс на разбор или послушать, как разбирают чужие.</p><span class="when">2 встречи в месяц · есть записи</span></div>
+      <div class="fmt"><h3>Дайджест чатов</h3><p>Выжимка и ключевые диалоги — не нужно читать весь чат. Обсуждения можно смотреть по теме.</p><span class="when">ценность чата без часов чтения</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="experts">
+    <h2>Кто ведёт <em>гильдию.</em></h2>
+    <p class="sec-lede">Практики, которые сами каждый день работают с агентами, архитектурой и командами.</p>
+    <div class="experts" id="experts-grid"></div>
+  </section>
+
+  <section class="cta" id="join">
+    <div class="pitch">
+      <h2>Гильдия не отнимает время — <em>она его возвращает.</em></h2>
+      <p>Около 2 часов в неделю — взамен часов на поиск, фильтрацию новостей, ошибки и обучение не тому. Один решённый рабочий кейс может окупить месяцы участия. Платишь раз в 4 недели и каждый раз сам решаешь, стоит ли оно того.</p>
+    </div>
+    <div class="ticket">
+      <div class="price"><b>$50</b><span>за 4 недели<br><em>меньше $2 в день</em></span></div>
+      <div class="tear" aria-hidden="true"></div>
+      <ul>
+                <li><span>3 видео в неделю и задания<small>на твоём рабочем проекте</small></span></li>
+        <li><span>Весь архив и курс по TypeScript<small>и всё, что выйдет дальше</small></span></li>
+        <li><span>Закрытый чат и 2 онлайн-встречи в месяц<small>все встречи в записи</small></span></li>
+        <li><span>Дайджест чатов и обсуждения по темам</span></li>
+        <li class="hl"><span>Бот по материалам — без лимита</span></li>
+      </ul>
+      <div class="buy"><a class="join" href="https://tg.pulse.is/next_tick_bot?start=69ce57941f15eb55e90ea47a&source_channel=website" target="_blank" rel="noopener">Присоединиться к гильдии</a><small>отмена в любое время</small></div>
+    </div>
+  </section>
+
+  <footer><span>nexttick — гильдия инженеров</span><span><a href="/offer.html">Оферта</a><a href="/privacy.html">Конфиденциальность</a></span></footer>
+</main>
+
+<nav class="proto-bar" aria-label="Варианты прототипа" data-i18n-skip>
+  <span id="langs"></span>
+  <span class="sep"></span><button type="button" id="reset">сбросить лимит</button>
+</nav>
+
+<script>
+  for (const f of [`roadmap-data.${LANG}.js`, `featured.real.${LANG}.js`, ...(LANG === "ru" ? [] : [`i18n.${LANG}.js`])])
+    document.write(`<script src="${f}"><\/script>`);
+</script>
+<script src="guild-api.js"></script>
+<script>
+const API = window.GuildAPI;
+const R = window.ROADMAP;
+const $ = (s) => document.querySelector(s);
+/* ── i18n: Russian source text is the key; a missing key falls back to Russian and is listed in I18N_MISSING ── */
+const LANG = window.LANG, I18N = window.I18N || {};
+window.I18N_MISSING = new Set();
+const t = (s, vars) => {
+  let out = LANG === "ru" ? s : I18N[s] ?? (I18N_MISSING.add(s), s);
+  return vars ? out.replace(/\{(\w+)\}/g, (_, k) => vars[k]) : out;
+};
+// forms are "one|few|many" in Russian/Ukrainian and "one|other" in English
+const plural = (n, forms) => {
+  const f = t(forms).split("|");
+  if (LANG === "en") return n === 1 ? f[0] : f[1];
+  const m10 = n % 10, m100 = n % 100;
+  return m10 === 1 && m100 !== 11 ? f[0] : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? f[1] : f[2];
+};
+const fmt = (n) => n.toLocaleString({ ru: "ru-RU", uk: "uk-UA", en: "en-US" }[LANG]);
+// static markup: an element with its own Russian text is one unit, keyed by its normalised innerHTML
+const CYR = /[А-Яа-яЁё]/, norm = (s) => s.replace(/\s+/g, " ").trim();
+function translateStatic(el) {
+  if (el.hasAttribute?.("data-i18n-skip")) return;
+  for (const a of ["placeholder", "aria-label", "title", "alt", "content"]) { const v = el.getAttribute?.(a); if (v && CYR.test(v)) el.setAttribute(a, t(norm(v))); }
+  if ([...el.childNodes].some((n) => n.nodeType === 3 && CYR.test(n.textContent))) { el.innerHTML = t(norm(el.innerHTML)); return; }
+  for (const c of el.children) if (!["SCRIPT", "STYLE", "svg"].includes(c.tagName)) translateStatic(c);
+}
+if (LANG !== "ru") { translateStatic(document.head); translateStatic(document.body); $("#lang-note").hidden = false; }
+$("#langs").innerHTML = ["ru", "uk", "en"].map((l) => `<a href="?lang=${l}"${l === LANG ? ' aria-current="page"' : ""}>${l.toUpperCase()}</a>`).join("");
+document.querySelectorAll("[data-stat]").forEach((el) => (el.textContent = fmt(API.stats[el.dataset.stat])));
+const mobile = matchMedia("(max-width: 720px)");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const ICON = {
+  video: '<svg width="16" height="16" viewBox="0 0 18 18" fill="currentColor"><path d="M5 3.5v11l9-5.5z"/></svg>',
+  thread: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h12v8H8l-3.5 3v-3H3z" stroke-linejoin="round"/></svg>',
+  case: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="4.5"/><path d="m11.5 11.5 3.5 3.5" stroke-linecap="round"/></svg>',
+  post: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 3.5h10v11H4zM7 7h4M7 10h4"/></svg>',
+  call: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2.5 5h9v8h-9zM11.5 8l4-2.5v7l-4-2.5"/></svg>',
+  digest: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h12v8H8l-3.5 3v-3H3z" stroke-linejoin="round"/></svg>',
+  audio: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7v4M6 4.5v9M9 2.5v13M12 5v8M15 7.5v3"/></svg>',
+};
+
+/* ── hint / limit ── */
+function renderHint() {
+  const n = API.remaining();
+  $("#limit").innerHTML = "";
+  $("#q").disabled = $("#send").disabled = n <= 0;
+  if (n > 0) {
+    $("#hint").innerHTML = t("{count} на сегодня · {where} — без лимита", { count: `<b>${n} ${plural(n, "вопрос|вопроса|вопросов")}</b>`, where: mobile.matches ? t("готовые вопросы ниже") : t("вопросы вокруг") });
+  } else {
+    $("#hint").textContent = "";
+    $("#limit").innerHTML = `<div class="limit"><p>${t("<strong>Свои вопросы на сегодня закончились.</strong><br>Готовые вопросы по-прежнему открываются. Участники гильдии спрашивают без ограничений.")}</p><a class="join" href="#join">${t("Вступить в гильдию")}</a></div>`;
+  }
+}
+
+/* ── answer ── */
+// a newer question replaces the one still streaming
+let gen = 0;
+async function answer(q, iter, cached) {
+  const my = ++gen;
+  const el = $("#answer");
+  el.hidden = false;
+  el.style.animation = "none"; el.offsetHeight; el.style.animation = "";
+  el.innerHTML = `<div class="a-head"><span class="q"></span><span>${t("по материалам гильдии")}</span></div><div class="a-body typing"><span class="wait">${t("ищу по видео, кейсам и чату…")}</span></div>`;
+  el.querySelector(".q").textContent = q;
+  const body = el.querySelector(".a-body");
+  el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  let started = false;
+  await API.run(iter, {
+    stale: () => my !== gen,
+    text: (c) => { if (!started) { body.textContent = ""; started = true; } body.append(c); },
+    sources: (items) => {
+      body.classList.remove("typing");
+      if (!items.length) return;
+      el.insertAdjacentHTML("beforeend", `<div class="src-h">${t("Где об этом в гильдии")} · ${items.length}</div>${LANG === "ru" ? "" : `<p class="src-lang">${t("Материалы гильдии доступны на русском языке")}</p>`}<ul class="srcs"></ul>`);
+      const ul = el.querySelector(".srcs");
+      items.forEach((s, i) => {
+        const li = document.createElement("li"); li.className = "src"; li.dataset.track = s.track;
+        li.innerHTML = `<a href="${s.url}" target="_blank" rel="noopener" style="animation-delay:${i * 70}ms"><span class="ic">${ICON[s.kind]}</span><span><div class="t"></div><div class="m"></div></span><span class="go" aria-hidden="true">↗</span></a>`;
+        li.querySelector(".t").textContent = s.title; li.querySelector(".m").textContent = s.meta;
+        ul.append(li);
+      });
+    },
+    done: (left) => {
+      el.insertAdjacentHTML("beforeend", `<div class="a-foot"><span>${cached ? t("готовый ответ · лимит не тратится") : t("осталось {left} из {limit} на сегодня", { left, limit: API.LIMIT })}</span><a class="join" href="#join">${t("Открыть всё в гильдии")}</a></div>`);
+      renderHint();
+    },
+    limit: () => { el.hidden = true; renderHint(); },
+  });
+}
+
+$("#ask").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const q = $("#q").value.trim();
+  if (!q) return;
+  answer(q, API.ask(q), false);
+});
+
+/* ── a ready-made question: typed into the prompt, then the cached answer ── */
+async function fire(f) {
+  const my = ++gen;
+  document.querySelectorAll(".chip.fired").forEach((c) => c.classList.remove("fired"));
+  document.querySelectorAll(`.picks .chip[data-id="${f.id}"]`).forEach((c) => c.classList.add("fired"));
+  const input = $("#q");
+  input.value = "";
+  if (reduce) input.value = f.q;
+  else for (const ch of f.q) { if (my !== gen) return; input.value += ch; await new Promise((r) => setTimeout(r, 14)); }
+  if (my !== gen) return;
+  answer(f.q, API.featuredAnswer(f.id), true);
+}
+
+const featured = API.featured();
+function makeChip(f, depth) {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.dataset.track = f.track; b.dataset.id = f.id;
+  if (depth != null) b.dataset.depth = depth;
+  b.textContent = f.q;
+  b.addEventListener("click", () => {
+    // from the hero, first bring the visitor to the prompt
+    const r = $("#ask").getBoundingClientRect();
+    if (b.closest(".sky") && (r.top > innerHeight || r.bottom < 0)) { $("#ask-sec").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); setTimeout(() => fire(f), reduce ? 0 : 500); }
+    else fire(f);
+  });
+  return b;
+}
+
+/* ── ready-made questions under the prompt ── */
+function buildPicks() {
+  const picks = $("#picks");
+  picks.innerHTML = "";
+  if (!mobile.matches) return; // desktop: the questions live in the sky
+  const half = Math.ceil(featured.length / 2);
+  [featured.slice(0, half), featured.slice(half)].forEach((set, i) => {
+    const rail = document.createElement("div"); rail.className = "rail";
+    const row = document.createElement("div"); row.className = "row"; row.style.setProperty("--dur", 70 + i * 16 + "s");
+    [...set, ...set].forEach((f, j) => { const c = makeChip(f); if (j >= set.length) { c.tabIndex = -1; c.setAttribute("aria-hidden", "true"); } row.append(c); });
+    rail.append(row); picks.append(rail);
+  });
+}
+
+/* ── sky: lanes across the whole viewport; chips under content dissolve ── */
+const sky = $("#sky");
+// what a question must never cover; checked every frame in viewport coordinates
+const SHIELD = [".pains .kicker", ".pains h2", ".pains .sec-lede", ".pain", ".hero .eyebrow", ".hero h1", ".hero .lede", ".hero .actions", "#lang-note", "#video", ".ask-sec .kicker", ".ask-sec h2", ".ask-sec .sec-lede", ".ask-box", "#answer", ".top"];
+let raf;
+function buildSky() {
+  cancelAnimationFrame(raf);
+  sky.innerHTML = "";
+  if (mobile.matches) return;
+  const W = innerWidth, H = innerHeight;
+  const LANE_H = 52, ys = [];
+  for (let y = 78; y + 40 < H; y += LANE_H) ys.push(y);
+  const lanes = ys.map((y, i) => ({ y, depth: [2, 0, 1, 1, 2, 0][i % 6], dir: i % 2 ? 1 : -1, items: [] }));
+  // every question once: with ~30 of them the lanes stay full and nothing repeats on screen
+  [...featured].sort(() => Math.random() - 0.5).forEach((f, i) => lanes[i % lanes.length].items.push(f));
+  const bodies = [];
+  for (const lane of lanes) {
+    const v = (0.12 + lane.depth * 0.1) * lane.dir;
+    const chips = lane.items.map((f) => {
+      const c = makeChip(f, lane.depth);
+      c.tabIndex = -1; // decorative; keyboard users type into the prompt
+      sky.append(c);
+      return { c, w: c.offsetWidth, h: c.offsetHeight, lane, v, hid: false };
+    });
+    // spread the lane's chips evenly over its loop so a lane is never empty on screen
+    const widths = chips.reduce((n, b) => n + b.w, 0);
+    const loop = Math.max(W + 400, widths + chips.length * 160);
+    const gap = (loop - widths) / chips.length;
+    let x = Math.random() * loop;
+    chips.forEach((b) => { b.x = x % loop; b.loop = loop; x += b.w + gap * (0.8 + Math.random() * 0.4); });
+    bodies.push(...chips);
+  }
+  bodies.forEach((b) => {
+    b.c.addEventListener("pointerenter", () => (b.lane.held = true));
+    b.c.addEventListener("pointerleave", () => (b.lane.held = false));
+  });
+  let mx = 0, my = 0, lastY = scrollY, push = 0;
+  window.onmousemove = (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; };
+  const PAD = 14;
+  const tick = () => {
+    // scrolling pushes the lanes sideways, then the push decays
+    push = push * 0.9 + (scrollY - lastY) * 0.35; lastY = scrollY;
+    // the sticky layer can hang past the stage's end; nothing may show below it
+    const stageBottom = $("#stage").getBoundingClientRect().bottom;
+    const shields = SHIELD.flatMap((sel) => [...document.querySelectorAll(sel)]).filter((el) => el.offsetParent).map((el) => el.getBoundingClientRect());
+    for (const b of bodies) {
+      if (!reduce && !b.lane.held) b.x = (((b.x + b.v + push * b.lane.dir * (b.lane.depth + 1) / 3) % b.loop) + b.loop) % b.loop;
+      const par = (b.lane.depth + 1) * 6;
+      const x = b.x - 200 - mx * par, y = b.lane.y - my * par * 0.4;
+      b.c.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      const hit = y + b.h > stageBottom - PAD || shields.some((r) => x < r.right + PAD && x + b.w > r.left - PAD && y < r.bottom + PAD && y + b.h > r.top - PAD);
+      if (hit !== b.hid) { b.hid = hit; b.c.classList.toggle("hid", hit); }
+    }
+    raf = requestAnimationFrame(tick);
+  };
+  tick();
+}
+function build() { buildPicks(); buildSky(); renderHint(); }
+build();
+mobile.addEventListener("change", build);
+let lastW = innerWidth;
+addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(window._rs); window._rs = setTimeout(buildSky, 200); });
+
+/* ── intro video: poster → youtube-nocookie on click (same embed as the live site) ── */
+function playVideo() {
+  const v = $("#video");
+  if (v.querySelector("iframe")) return;
+  v.innerHTML = `<iframe src="${v.dataset.embed}" title="${t("Обзор гильдии инженеров NextTick")}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+}
+$("#video").addEventListener("click", playVideo);
+$("#video").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); playVideo(); } });
+$("#watch").addEventListener("click", () => { if (mobile.matches) $("#video").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); playVideo(); });
+
+/* ── one month: the latest series per track, all its episodes ── */
+$("#tracks").innerHTML = R.tracks.map((tr) => {
+  const all = API.episodes.filter((e) => e.track === tr.id);
+  const ser = R.series.filter((x) => x.track === tr.id).at(-1);
+  return `<div class="track" data-track="${tr.id}"><h3>${tr.name}</h3><div class="k">${tr.kicker}</div><div class="series">${t("серия «{name}»", { name: ser.name })}</div><ol>${ser.episodes.map((e, i, arr) => `<li class="ep${i === arr.length - 1 ? " new" : ""}"><span class="ic">${ICON.video}</span><span class="t">${e.title}${i === arr.length - 1 ? `<span class="m">${t("новое")}</span>` : ""}</span></li>`).join("")}</ol><div class="more">${t("{n} видео в треке →", { n: all.length })}</div></div>`;
+}).join("");
+
+/* ── experts: video counts come from the tracks they lead (PLACEHOLDER mapping) ── */
+const EXPERTS = [
+  { name: "Илья Климов", photo: "/assets/author-ilya.webp", role: "Staff Frontend Engineer в GitLab", bio: "Google Developer Expert по веб-технологиям. Основатель JavaScript.ninja, спикер HolyJS, 15+ лет в индустрии.", tracks: ["agents", "comms"] },
+  { name: "Тимур Шемсединов", photo: "/assets/author-timur.webp", role: "CTO в Metatech", bio: "30+ лет опыта. Главный архитектор Metarhia, преподаватель КПИ, автор 350+ открытых лекций по Node.js и программной инженерии.", tracks: ["arch"] },
+];
+const tname = Object.fromEntries(R.tracks.map((t) => [t.id, t.shortName]));
+$("#experts-grid").innerHTML = EXPERTS.map((x) => {
+  const n = API.episodes.filter((e) => x.tracks.includes(e.track)).length;
+  return `<article class="ex"><div class="ex-top"><img src="${x.photo}" alt="${t(x.name)}" width="72" height="72" decoding="async"><div><div class="nm">${t(x.name)}</div><div class="role">${t(x.role)}</div></div></div><p>${t(x.bio)}</p><div class="tr">${x.tracks.map((id) => `<span data-track="${id}">${tname[id]}</span>`).join("")}</div><div class="stat"><div><b>${n}</b>${t("видео в гильдии")}</div><div><b>${x.tracks.length}</b>${plural(x.tracks.length, "трек|трека|треков")}</div></div></article>`;
+}).join("") + `<article class="ex soon"><div class="ex-top"><span class="ph" aria-hidden="true">+</span><div><div class="nm">${t("Новые эксперты")}</div><div class="role">${t("скоро")}</div></div></div><p>${t("К Илье и Тимуру присоединятся новые эксперты. Расскажем о них, как только всё будет готово.")}</p></article>`;
+
+/* header turns solid once the hero scrolls away */
+const topbar = $(".top");
+const onScroll = () => topbar.classList.toggle("scrolled", scrollY > 40);
+addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+$("#reset").onclick = () => { API.resetLimit(); renderHint(); };
+</script>
+</body>
+</html>
