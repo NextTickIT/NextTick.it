@@ -7,10 +7,11 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <script>
   // ?lang=uk|en (the real site routes by path); Russian is the source text, i18n.<lang>.js maps it
-  window.LANG = ["uk", "en"].find((l) => l === new URLSearchParams(location.search).get("lang")) || "ru";
+  window.LANG = document.documentElement.dataset.lang || ["uk", "en"].find((l) => l === new URLSearchParams(location.search).get("lang")) || "ru";
   document.documentElement.lang = window.LANG;
+  window.LANG_HREF = (l) => "/proto/" + (l === "ru" ? "" : l + "/");
   const sub = window.LANG === "en" ? "latin" : "cyrillic";
-  for (const [href, as] of [["/assets/hero-poster.webp", "image"], [`fonts/unbounded-${sub}.woff2`, "font"], [`/assets/fonts/inter-var-${sub}.woff2`, "font"]]) {
+  for (const [href, as] of [["/assets/hero-poster.webp", "image"], [`/proto/fonts/unbounded-${sub}.woff2`, "font"], [`/assets/fonts/inter-var-${sub}.woff2`, "font"]]) {
     const l = Object.assign(document.createElement("link"), { rel: "preload", href, as });
     if (as === "font") { l.type = "font/woff2"; l.crossOrigin = "anonymous"; } else l.fetchPriority = "high";
     document.head.append(l);
@@ -85,8 +86,8 @@ button, input, textarea { font: inherit; color: inherit; }
 <style>
   /* Unbounded, self-hosted (Google Fonts subsets, variable wght); the fallback is Arial scaled to its
      metrics, measured from the font files, so the headline keeps its line breaks while the font loads */
-  @font-face { font-family: "Unbounded"; src: url(fonts/unbounded-cyrillic.woff2) format("woff2"); font-weight: 500 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
-  @font-face { font-family: "Unbounded"; src: url(fonts/unbounded-latin.woff2) format("woff2"); font-weight: 500 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: "Unbounded"; src: url(/proto/fonts/unbounded-cyrillic.woff2) format("woff2"); font-weight: 500 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+  @font-face { font-family: "Unbounded"; src: url(/proto/fonts/unbounded-latin.woff2) format("woff2"); font-weight: 500 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
   @font-face { font-family: "Unbounded Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Helvetica Neue Bold"); font-weight: 700; size-adjust: 117.67%; ascent-override: 84.56%; descent-override: 20.82%; line-gap-override: 0%; }
   @font-face { font-family: "Unbounded Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Helvetica Neue"); font-weight: 500; size-adjust: 123.72%; ascent-override: 80.42%; descent-override: 19.8%; line-gap-override: 0%; }
   :root { --display: "Unbounded", "Unbounded Fallback", var(--sans); --gutter: clamp(16px, 4vw, 40px); --wrap: 1180px; }
@@ -133,6 +134,7 @@ button, input, textarea { font: inherit; color: inherit; }
   .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
   .actions .join { font-size: 15px; padding: 16px 24px; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  html[lang="ru"] .lang-note { display: none; }
   .lang-note { margin: 18px 0 0; font: 400 13px/1.5 var(--mono); color: var(--muted); }
 
   .chip { position: absolute; left: 0; top: 0; white-space: nowrap; cursor: pointer;
@@ -385,7 +387,7 @@ button, input, textarea { font: inherit; color: inherit; }
         <a class="join" href="#join">Вступить в гильдию</a>
         <button class="ghost" type="button" id="watch">Смотреть интро</button>
       </div>
-      <p class="lang-note" id="lang-note" hidden>Материалы гильдии доступны на русском языке</p>
+      <p class="lang-note" id="lang-note">Материалы гильдии доступны на русском языке</p>
     </div>
     <div class="video" id="video" role="button" tabindex="0" data-embed="https://www.youtube-nocookie.com/embed/nW8g4Y6otWM?autoplay=1&rel=0">
       <span class="sr-only">Смотреть:</span>
@@ -492,9 +494,10 @@ button, input, textarea { font: inherit; color: inherit; }
 </nav>
 
 <script>
+  const V = {"roadmap-data.ru.js": "be62ba08f3", "roadmap-data.uk.js": "955d854f34", "roadmap-data.en.js": "53be2ef890", "featured.real.ru.js": "eb864fe670", "featured.real.uk.js": "44e150a10c", "featured.real.en.js": "91ef5a6b63", "i18n.uk.js": "acd24d8a24", "i18n.en.js": "14c5f2757f", "guild-api.js": "53229f38e2", "app.js": "20b79a8ac9"};
   // locale data → API → page, executed in this order without blocking the parser
   for (const src of [`roadmap-data.${LANG}.js`, `featured.real.${LANG}.js`, ...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
-    document.body.append(Object.assign(document.createElement("script"), { src, async: false }));
+    document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));
 </script>
 </body>
 </html>

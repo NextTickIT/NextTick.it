@@ -24,8 +24,9 @@ function translateStatic(el) {
   if ([...el.childNodes].some((n) => n.nodeType === 3 && CYR.test(n.textContent))) { el.innerHTML = t(norm(el.innerHTML)); return; }
   for (const c of el.children) if (!["SCRIPT", "STYLE", "svg"].includes(c.tagName)) translateStatic(c);
 }
-if (LANG !== "ru") { translateStatic(document.head); translateStatic(document.body); $("#lang-note").hidden = false; }
-$("#langs").innerHTML = ["ru", "uk", "en"].map((l) => `<a href="?lang=${l}"${l === LANG ? ' aria-current="page"' : ""}>${l.toUpperCase()}</a>`).join("");
+// pages pre-translated at build time carry data-lang; the ?lang= preview translates here
+if (LANG !== "ru" && !document.documentElement.dataset.lang) { translateStatic(document.head); translateStatic(document.body); }
+$("#langs").innerHTML = ["ru", "uk", "en"].map((l) => `<a href="${(window.LANG_HREF || ((x) => `?lang=${x}`))(l)}"${l === LANG ? ' aria-current="page"' : ""}>${l.toUpperCase()}</a>`).join("");
 document.querySelectorAll("[data-stat]").forEach((el) => (el.textContent = fmt(API.stats[el.dataset.stat])));
 const mobile = matchMedia("(max-width: 720px)");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
