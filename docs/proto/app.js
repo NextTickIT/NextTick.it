@@ -26,7 +26,7 @@ function translateStatic(el) {
 }
 // pages pre-translated at build time carry data-lang; the ?lang= preview translates here
 if (LANG !== "ru" && !document.documentElement.dataset.lang) { translateStatic(document.head); translateStatic(document.body); }
-$("#langs").innerHTML = ["ru", "uk", "en"].map((l) => `<a href="${(window.LANG_HREF || ((x) => `?lang=${x}`))(l)}"${l === LANG ? ' aria-current="page"' : ""}>${l.toUpperCase()}</a>`).join("");
+document.querySelector(`.lang-switch [data-loc="${LANG}"]`).setAttribute("aria-current", "true");
 document.querySelectorAll("[data-stat]").forEach((el) => (el.textContent = fmt(API.stats[el.dataset.stat])));
 const mobile = matchMedia("(max-width: 720px)");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;

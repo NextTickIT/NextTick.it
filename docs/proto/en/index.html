@@ -9,7 +9,6 @@
   // ?lang=uk|en (the real site routes by path); Russian is the source text, i18n.<lang>.js maps it
   window.LANG = document.documentElement.dataset.lang || ["uk", "en"].find((l) => l === new URLSearchParams(location.search).get("lang")) || "ru";
   document.documentElement.lang = window.LANG;
-  window.LANG_HREF = (l) => "/proto/" + (l === "ru" ? "" : l + "/");
   const sub = window.LANG === "en" ? "latin" : "cyrillic";
   for (const [href, as] of [["/assets/hero-poster.webp", "image"], [`/proto/fonts/unbounded-${sub}.woff2`, "font"], [`/assets/fonts/inter-var-${sub}.woff2`, "font"]]) {
     const l = Object.assign(document.createElement("link"), { rel: "preload", href, as });
@@ -106,8 +105,12 @@ button, input, textarea { font: inherit; color: inherit; }
   section, .answer { scroll-margin-top: 84px; }
   .top img { height: 26px; display: block; }
   .top nav { display: flex; gap: 4px; align-items: center; }
-  .top nav a:not(.join) { font: 500 14px/1 var(--sans); color: var(--dim); text-decoration: none; padding: 10px 12px; border-radius: 999px; }
-  .top nav a:not(.join):hover { color: var(--txt); }
+  .top > nav > a:not(.join) { font: 500 14px/1 var(--sans); color: var(--dim); text-decoration: none; padding: 10px 12px; border-radius: 999px; }
+  .top > nav > a:not(.join):hover { color: var(--txt); }
+  .lang-switch { display: inline-flex; gap: 2px; margin: 0 4px; }
+  .lang-switch a { font: 500 11px/1 var(--mono); letter-spacing: .04em; padding: 6px 7px; border-radius: 6px; color: var(--dim); text-decoration: none; border: 1px solid transparent; transition: color .15s, border-color .15s; }
+  .lang-switch a:hover, html[lang="uk"] .lang-switch [data-loc="uk"], html[lang="en"] .lang-switch [data-loc="en"], html[lang="ru"] .lang-switch [data-loc="ru"] { color: var(--green); border-color: var(--green); }
+  html[lang="uk"] .lang-switch [data-loc="uk"], html[lang="en"] .lang-switch [data-loc="en"], html[lang="ru"] .lang-switch [data-loc="ru"] { pointer-events: none; }
   .join { font: 600 14px/1 var(--sans); padding: 11px 18px; border-radius: 999px; background: var(--green); color: #07130a; text-decoration: none; border: 0; cursor: pointer; display: inline-block; white-space: nowrap; }
   .join:hover { background: #8df29a; }
   .ghost { font: 600 15px/1 var(--sans); padding: 15px 22px 15px 18px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(21,25,28,.85); color: var(--txt); cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
@@ -314,7 +317,9 @@ button, input, textarea { font: inherit; color: inherit; }
     .top { padding: 14px 16px; }
     .top.scrolled { padding-top: 10px; padding-bottom: 10px; }
     .top .price-hint { margin-left: 0; }
-    .top nav a:not(.join) { display: none; }
+    .top > nav > a:not(.join) { display: none; }
+    /* ≥44×44 touch targets, like the home page */
+    .lang-switch a { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 8px; }
     .join { padding: 10px 16px; }
 
     .hero { padding: 84px 0 0; }
@@ -367,13 +372,15 @@ button, input, textarea { font: inherit; color: inherit; }
     footer { padding-bottom: 110px; }
     footer a { margin: 0 16px 0 0; }
   }
+  /* narrow phones: the header keeps logo, languages and the join button; the price is in the ticket below */
+  @media (max-width: 440px) { .top .price-hint { display: none; } }
   @media (max-width: 720px) and (prefers-reduced-motion: reduce) { .rail { overflow-x: auto; } .row { animation: none; } }
 </style>
 </head>
 <body>
 <header class="top">
   <img src="/assets/nexttick-logo-color.svg" alt="nexttick" width="26" height="26">
-  <nav><a href="#latest">What's inside</a><a href="#ask-sec">Ask</a><a href="#experts">Experts</a><span class="price-hint" aria-hidden="true"><b>$50</b> · 4 weeks</span><a class="join" href="#join">Join</a></nav>
+  <nav><a href="#latest">What's inside</a><a href="#ask-sec">Ask</a><a href="#experts">Experts</a><nav class="lang-switch" aria-label="Language"><a data-loc="uk" hreflang="uk" href="/proto/uk/">UK</a><a data-loc="en" hreflang="en" href="/proto/en/">EN</a><a data-loc="ru" hreflang="ru" href="/proto/">RU</a></nav><span class="price-hint" aria-hidden="true"><b>$50</b> · 4 weeks</span><a class="join" href="#join">Join</a></nav>
 </header>
 
 <div class="stage" id="stage">
@@ -489,12 +496,11 @@ button, input, textarea { font: inherit; color: inherit; }
 </main>
 
 <nav class="proto-bar" aria-label="Варианты прототипа" data-i18n-skip>
-  <span id="langs"></span>
-  <span class="sep"></span><button type="button" id="reset">сбросить лимит</button>
+  <button type="button" id="reset">сбросить лимит</button>
 </nav>
 
 <script>
-  const V = {"roadmap-data.ru.js": "be62ba08f3", "roadmap-data.uk.js": "955d854f34", "roadmap-data.en.js": "53be2ef890", "featured.real.ru.js": "eb864fe670", "featured.real.uk.js": "44e150a10c", "featured.real.en.js": "91ef5a6b63", "i18n.uk.js": "acd24d8a24", "i18n.en.js": "14c5f2757f", "guild-api.js": "53229f38e2", "app.js": "20b79a8ac9"};
+  const V = {"roadmap-data.ru.js": "be62ba08f3", "roadmap-data.uk.js": "955d854f34", "roadmap-data.en.js": "53be2ef890", "featured.real.ru.js": "eb864fe670", "featured.real.uk.js": "44e150a10c", "featured.real.en.js": "91ef5a6b63", "i18n.uk.js": "b8218bce1a", "i18n.en.js": "18ea159b92", "guild-api.js": "53229f38e2", "app.js": "b2cf082b37"};
   // locale data → API → page, executed in this order without blocking the parser
   for (const src of [`roadmap-data.${LANG}.js`, `featured.real.${LANG}.js`, ...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));

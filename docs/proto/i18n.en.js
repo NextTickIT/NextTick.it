@@ -99,5 +99,6 @@ window.I18N = {
  "В прототипе нет модели, поэтому здесь заглушка: в живой версии здесь будет ответ по материалам гильдии. Ниже — видео, которые нашлись по словам из вопроса.": "There's no model in the prototype, so this is a placeholder: the live version will show an answer based on the guild's materials. Below are the videos that matched words from your question.",
  "В прототипе нет модели, и по словам из вопроса ничего не нашлось. В живой версии бот ответит по видео, встречам и обсуждениям в чате.": "There's no model in the prototype, and nothing matched the words in your question. In the live version the bot will answer from videos, meetings and chat discussions.",
  "Смотреть:": "Watch:",
- "NextTick — гильдия инженеров. Около 2 часов в неделю: короткие видео про архитектуру, коммуникации и AI и задание к каждому на твоём рабочем проекте.": "NextTick is a guild of engineers. About 2 hours a week: short videos on architecture, communication and AI, each with an assignment you do on your own work project."
+ "NextTick — гильдия инженеров. Около 2 часов в неделю: короткие видео про архитектуру, коммуникации и AI и задание к каждому на твоём рабочем проекте.": "NextTick is a guild of engineers. About 2 hours a week: short videos on architecture, communication and AI, each with an assignment you do on your own work project.",
+ "Язык": "Language"
 };
