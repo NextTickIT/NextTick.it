@@ -479,7 +479,7 @@ button, input, textarea { font: inherit; color: inherit; }
 </main>
 
 <script>
-  const V = {"i18n.uk.js": "7500cad2cb", "i18n.en.js": "555adebbc6", "guild-api.js": "eff208f675", "app.js": "bbc9a75ac4"};
+  const V = {"i18n.uk.js": "7500cad2cb", "i18n.en.js": "555adebbc6", "guild-api.js": "eff208f675", "app.js": "61e06da2f8"};
   // translations → API → page, executed in this order without blocking the parser
   for (const src of [...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));

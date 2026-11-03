@@ -178,8 +178,10 @@ function buildSky() {
     return lane.items.map((f) => {
       const c = makeChip(f, lane.depth);
       c.tabIndex = -1; // decorative; keyboard users type into the prompt
+      // born hidden: the first tick shows only the chips clear of content, so none flashes over the text
+      c.classList.add("hid");
       sky.append(c);
-      return { c, lane, v, hid: false };
+      return { c, lane, v, hid: true };
     });
   });
   // measured once every chip is in the DOM: a single layout instead of one per chip
