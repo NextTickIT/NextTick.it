@@ -8,6 +8,7 @@
   "scripts": {
     "build": "node tools/build.mjs",
     "build:legal": "python3 tools/build-legal.py",
+    "build:proto": "python3 tools/build-proto.py",
     "assets:images": "node tools/optimize-assets.mjs",
     "assets:fonts": "node tools/fetch-fonts.mjs",
     "assets:partytown": "node tools/copy-partytown.mjs",
