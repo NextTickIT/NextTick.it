@@ -3,15 +3,13 @@
 //   GET  /featured/:id?locale=  → { id, track, q, answer, sources }   (cached, does not spend the limit)
 //   POST /session               → { limit, remaining, resetAt }        (sets the browser cookie)
 //   POST /ask { q, locale }     → text/event-stream: text → sources → done, or error (spends 1)
+//   GET  /overview              → { tracks: [{ track, counts, latest }], totals, experts: [{ id, name, videos }], updatedAt }
 // The answer arrives whole, so the typing effect is done here. Streams yield
 // { type: "text", chunk } … { type: "sources", items } → { type: "done", remaining },
 // or { type: "limit", remaining: 0 } / { type: "error", code }.
-//
-// Stats and episodes still come from the roadmap (roadmap-data.<lang>.js); the counts besides videos are placeholders.
 
 (function () {
   const BASE = "https://web.nexttick.it/public/v1";
-  const R = window.ROADMAP;
   const LOCALE = window.LANG;
   const t = (s) => (window.LANG !== "ru" && window.I18N?.[s]) || s;
   const TRACK = { agents: t("Агенты"), comms: t("Коммуникации"), arch: t("Архитектура") };
@@ -141,8 +139,7 @@
         cb[ev.type]?.(ev.chunk ?? ev.items ?? ev.code ?? ev.remaining);
       }
     },
-    // Stats for the "how much is inside" strip. Episodes are real; the rest are placeholders.
-    stats: { videos: R.episodes.length, cases: 38, threads: 1240, audio: 17 },
-    episodes: R.episodes,
+    // the guild by track: counts, latest videos, experts; rejects when the API is unreachable
+    overview: getJson("/overview"),
   };
 })();

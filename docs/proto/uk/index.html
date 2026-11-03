@@ -215,7 +215,8 @@ button, input, textarea { font: inherit; color: inherit; }
   .track h3::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--tc); }
   .track .k { font: 400 12px/1.4 var(--mono); color: var(--dim); margin-bottom: 18px; }
   .track ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  .ep { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; padding: 8px; margin: 0 -8px; border-radius: 12px; }
+  .ep a { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; padding: 8px; margin: 0 -8px; border-radius: 12px; text-decoration: none; }
+  .ep a:hover { background: var(--panel); }
   .ep .ic { width: 30px; height: 30px; border-radius: 8px; }
   .ep .t { font-size: 14.5px; line-height: 1.35; }
   .ep .m { display: block; font: 400 11px/1.6 var(--mono); color: var(--muted); }
@@ -419,7 +420,7 @@ button, input, textarea { font: inherit; color: inherit; }
 <main class="wrap">
   <section class="sec" id="latest">
     <h2>Один місяць <em>у гільдії.</em></h2>
-    <p class="sec-lede">Останні серії з кожного треку — те, що учасники дивляться зараз. Відео по 15 хвилин, до кожного — завдання на своєму проєкті.</p>
+    <p class="sec-lede">Останні випуски з кожного треку — те, що учасники дивляться зараз. Відео по 15 хвилин, до кожного — завдання на своєму проєкті.</p>
     <div class="tracks" id="tracks"></div>
     <ul class="month-extra">
       <li><b>+ завдання</b>до кожного відео — на твоєму робочому проєкті, не на навчальному</li>
@@ -478,9 +479,9 @@ button, input, textarea { font: inherit; color: inherit; }
 </main>
 
 <script>
-  const V = {"roadmap-data.ru.js": "be62ba08f3", "roadmap-data.uk.js": "955d854f34", "roadmap-data.en.js": "53be2ef890", "i18n.uk.js": "9f9687d9ea", "i18n.en.js": "322261d50e", "guild-api.js": "13c2592799", "app.js": "b5dcc6f9e6"};
-  // locale data → API → page, executed in this order without blocking the parser
-  for (const src of [`roadmap-data.${LANG}.js`, ...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
+  const V = {"i18n.uk.js": "7500cad2cb", "i18n.en.js": "555adebbc6", "guild-api.js": "eff208f675", "app.js": "bbc9a75ac4"};
+  // translations → API → page, executed in this order without blocking the parser
+  for (const src of [...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));
 </script>
 </body>

@@ -7,7 +7,7 @@ import hashlib, json, re, subprocess, sys, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = os.path.join(ROOT, 'docs', 'proto')
 PRE = os.path.join(ROOT, 'tools', 'lib', 'proto-i18n-prerender.mjs')
-SCRIPTS = [f'roadmap-data.{l}.js' for l in ('ru', 'uk', 'en')] + ['i18n.uk.js', 'i18n.en.js', 'guild-api.js', 'app.js']
+SCRIPTS = ['i18n.uk.js', 'i18n.en.js', 'guild-api.js', 'app.js']
 V = {f: hashlib.sha1(open(f'{P}/{f}', 'rb').read()).hexdigest()[:10] for f in SCRIPTS}
 s = open(f'{P}/index.html').read()
 s, n = re.subn(r'  const V = \{.*?\};\n', lambda m: f'  const V = {json.dumps(V)};\n', s)

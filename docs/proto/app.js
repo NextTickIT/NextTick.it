@@ -1,5 +1,4 @@
 const API = window.GuildAPI;
-const R = window.ROADMAP;
 const $ = (s) => document.querySelector(s);
 /* ── i18n: Russian source text is the key; a missing key falls back to Russian and is listed in I18N_MISSING ── */
 const LANG = window.LANG, I18N = window.I18N || {};
@@ -27,7 +26,6 @@ function translateStatic(el) {
 // pages pre-translated at build time carry data-lang; the ?lang= preview translates here
 if (LANG !== "ru" && !document.documentElement.dataset.lang) { translateStatic(document.head); translateStatic(document.body); }
 document.querySelector(`.lang-switch [data-loc="${LANG}"]`).setAttribute("aria-current", "true");
-document.querySelectorAll("[data-stat]").forEach((el) => (el.textContent = fmt(API.stats[el.dataset.stat])));
 const mobile = matchMedia("(max-width: 720px)");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -236,23 +234,40 @@ $("#video").addEventListener("click", playVideo);
 $("#video").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); playVideo(); } });
 $("#watch").addEventListener("click", () => { if (mobile.matches) $("#video").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); playVideo(); });
 
-/* ── one month: the latest series per track, all its episodes ── */
-$("#tracks").innerHTML = R.tracks.map((tr) => {
-  const all = API.episodes.filter((e) => e.track === tr.id);
-  const ser = R.series.filter((x) => x.track === tr.id).at(-1);
-  return `<div class="track" data-track="${tr.id}"><h3>${tr.name}</h3><div class="k">${tr.kicker}</div><div class="series">${t("серия «{name}»", { name: ser.name })}</div><ol>${ser.episodes.map((e, i, arr) => `<li class="ep${i === arr.length - 1 ? " new" : ""}"><span class="ic">${ICON.video}</span><span class="t">${e.title}${i === arr.length - 1 ? `<span class="m">${t("новое")}</span>` : ""}</span></li>`).join("")}</ol><div class="more">${t("{n} видео в треке →", { n: all.length })}</div></div>`;
-}).join("");
-
-/* ── experts: video counts come from the tracks they lead (PLACEHOLDER mapping) ── */
-const EXPERTS = [
-  { name: "Илья Климов", photo: "/assets/author-ilya.webp", role: "Staff Frontend Engineer в GitLab", bio: "Google Developer Expert по веб-технологиям. Основатель JavaScript.ninja, спикер HolyJS, 15+ лет в индустрии.", tracks: ["agents", "comms"] },
-  { name: "Тимур Шемсединов", photo: "/assets/author-timur.webp", role: "CTO в Metatech", bio: "30+ лет опыта. Главный архитектор Metarhia, преподаватель КПИ, автор 350+ открытых лекций по Node.js и программной инженерии.", tracks: ["arch"] },
+/* ── one month: per track the latest videos and the count, from /overview ── */
+const TRACKS = [
+  { id: "comms", name: "Коммуникации", short: "Коммуникации", kicker: "Влияние без власти" },
+  { id: "arch", name: "Архитектура", short: "Архитектура", kicker: "Constraints, а не паттерны" },
+  { id: "agents", name: "Агентская разработка", short: "Агенты", kicker: "AI как инструмент, а не как магия" },
 ];
-const tname = Object.fromEntries(R.tracks.map((t) => [t.id, t.shortName]));
-$("#experts-grid").innerHTML = EXPERTS.map((x) => {
-  const n = API.episodes.filter((e) => x.tracks.includes(e.track)).length;
-  return `<article class="ex"><div class="ex-top"><img src="${x.photo}" alt="${t(x.name)}" width="72" height="72" decoding="async"><div><div class="nm">${t(x.name)}</div><div class="role">${t(x.role)}</div></div></div><p>${t(x.bio)}</p><div class="tr">${x.tracks.map((id) => `<span data-track="${id}">${tname[id]}</span>`).join("")}</div><div class="stat"><div><b>${n}</b>${t("видео в гильдии")}</div><div><b>${x.tracks.length}</b>${plural(x.tracks.length, "трек|трека|треков")}</div></div></article>`;
-}).join("") + `<article class="ex soon"><div class="ex-top"><span class="ph" aria-hidden="true">+</span><div><div class="nm">${t("Новые эксперты")}</div><div class="role">${t("скоро")}</div></div></div><p>${t("К Илье и Тимуру присоединятся новые эксперты. Расскажем о них, как только всё будет готово.")}</p></article>`;
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+// without the overview a track shows only its name and kicker
+function renderTracks(overview) {
+  $("#tracks").innerHTML = TRACKS.map((tr) => {
+    const d = overview?.tracks.find((x) => x.track === tr.id);
+    // video titles are Russian on every page
+    const list = d?.latest.length ? `<div class="series">${t("Последние выпуски")}</div><ol>${d.latest.map((e, i) => `<li class="ep${i === 0 ? " new" : ""}"><a href="${esc(e.url)}" target="_blank" rel="noopener"><span class="ic">${ICON[e.kind] || ICON.video}</span><span class="t"><span lang="ru">${esc(e.title)}</span>${i === 0 ? `<span class="m">${t("новое")}</span>` : ""}</span></a></li>`).join("")}</ol>` : "";
+    const more = d ? `<div class="more">${t("{n} видео в треке →", { n: fmt(d.counts.video) })}</div>` : "";
+    return `<div class="track" data-track="${tr.id}"><h3>${t(tr.name)}</h3><div class="k">${t(tr.kicker)}</div>${list}${more}</div>`;
+  }).join("");
+}
+
+/* ── experts: static cards; "N videos" is the expert's count in /overview, matched by user id ── */
+const EXPERTS = [
+  { id: "3c424ec0-b049-4d12-ab44-15fceddc5dfd", name: "Илья Климов", photo: "/assets/author-ilya.webp", role: "Staff Frontend Engineer в GitLab", bio: "Google Developer Expert по веб-технологиям. Основатель JavaScript.ninja, спикер HolyJS, 15+ лет в индустрии.", tracks: ["agents", "comms"] },
+  { id: "8582f023-9bf1-46c0-bf41-9662fdb2e032", name: "Тимур Шемсединов", photo: "/assets/author-timur.webp", role: "CTO в Metatech", bio: "30+ лет опыта. Главный архитектор Metarhia, преподаватель КПИ, автор 350+ открытых лекций по Node.js и программной инженерии.", tracks: ["arch"] },
+];
+const tname = Object.fromEntries(TRACKS.map((tr) => [tr.id, t(tr.short)]));
+// an expert missing from the overview (or no overview at all) shows no video count
+function renderExperts(overview) {
+  $("#experts-grid").innerHTML = EXPERTS.map((x) => {
+    const n = overview?.experts.find((e) => e.id === x.id)?.videos;
+    const videos = n != null ? `<div><b>${fmt(n)}</b>${t("видео в гильдии")}</div>` : "";
+    return `<article class="ex"><div class="ex-top"><img src="${x.photo}" alt="${t(x.name)}" width="72" height="72" decoding="async"><div><div class="nm">${t(x.name)}</div><div class="role">${t(x.role)}</div></div></div><p>${t(x.bio)}</p><div class="tr">${x.tracks.map((id) => `<span data-track="${id}">${tname[id]}</span>`).join("")}</div><div class="stat">${videos}<div><b>${x.tracks.length}</b>${plural(x.tracks.length, "трек|трека|треков")}</div></div></article>`;
+  }).join("") + `<article class="ex soon"><div class="ex-top"><span class="ph" aria-hidden="true">+</span><div><div class="nm">${t("Новые эксперты")}</div><div class="role">${t("скоро")}</div></div></div><p>${t("К Илье и Тимуру присоединятся новые эксперты. Расскажем о них, как только всё будет готово.")}</p></article>`;
+}
+renderTracks(null); renderExperts(null);
+API.overview.then((o) => { renderTracks(o); renderExperts(o); }, () => {});
 
 /* header turns solid once the hero scrolls away */
 const topbar = $(".top");
