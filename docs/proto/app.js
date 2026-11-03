@@ -45,9 +45,12 @@ const ICON = {
 function renderHint() {
   const n = API.remaining();
   $("#limit").innerHTML = "";
-  $("#q").disabled = $("#send").disabled = n <= 0;
-  if (n > 0) {
-    $("#hint").innerHTML = t("{count} на сегодня · {where} — без лимита", { count: `<b>${n} ${plural(n, "вопрос|вопроса|вопросов")}</b>`, where: mobile.matches ? t("готовые вопросы ниже") : t("вопросы вокруг") });
+  $("#q").disabled = $("#send").disabled = n === 0;
+  // until /session answers the counter stays hidden; the server enforces the limit anyway
+  if (n == null) $("#hint").textContent = "";
+  else if (n > 0) {
+    const count = `<b>${n} ${plural(n, "вопрос|вопроса|вопросов")}</b>`;
+    $("#hint").innerHTML = featured.length ? t("{count} на сегодня · {where} — без лимита", { count, where: mobile.matches ? t("готовые вопросы ниже") : t("вопросы вокруг") }) : t("{count} на сегодня", { count });
   } else {
     $("#hint").textContent = "";
     $("#limit").innerHTML = `<div class="limit"><p>${t("<strong>Свои вопросы на сегодня закончились.</strong><br>Готовые вопросы по-прежнему открываются. Участники гильдии спрашивают без ограничений.")}</p><a class="join" href="#join">${t("Вступить в гильдию")}</a></div>`;
@@ -57,6 +60,12 @@ function renderHint() {
 /* ── answer ── */
 // a newer question replaces the one still streaming
 let gen = 0;
+const ERRORS = {
+  busy: "Бот сейчас отвечает другим, попробуйте через минуту",
+  budget_exhausted: "Сегодня бот больше не принимает новые вопросы",
+  upstream_error: "Не получилось ответить, попробуйте ещё раз",
+};
+// cached: the ready-made question's id, or false for a free question
 async function answer(q, iter, cached) {
   const my = ++gen;
   const el = $("#answer");
@@ -83,10 +92,19 @@ async function answer(q, iter, cached) {
       });
     },
     done: (left) => {
-      el.insertAdjacentHTML("beforeend", `<div class="a-foot"><span>${cached ? t("готовый ответ · лимит не тратится") : t("осталось {left} из {limit} на сегодня", { left, limit: API.LIMIT })}</span><a class="join" href="#join">${t("Открыть всё в гильдии")}</a></div>`);
+      el.insertAdjacentHTML("beforeend", `<div class="a-foot"><span>${cached ? t("готовый ответ · лимит не тратится") : left != null && API.LIMIT != null ? t("осталось {left} из {limit} на сегодня", { left, limit: API.LIMIT }) : ""}</span><a class="join" href="#join">${t("Открыть всё в гильдии")}</a></div>`);
       renderHint();
     },
     limit: () => { el.hidden = true; renderHint(); },
+    error: (code) => {
+      body.classList.remove("typing");
+      if (code === "invalid_request") { el.hidden = true; renderHint(); $("#hint").textContent = t("Вопрос — не длиннее 500 символов"); $("#q").focus(); return; }
+      // a ready-made question taken off the list: its chip goes away
+      if (code === "not_found") { el.hidden = true; featured = featured.filter((f) => f.id !== cached); document.querySelectorAll(`.chip[data-id="${CSS.escape(cached)}"]`).forEach((c) => c.remove()); renderHint(); return; }
+      const msg = t(ERRORS[code] || ERRORS.upstream_error);
+      if (started) body.append(document.createElement("br"), document.createElement("br"), msg); else body.textContent = msg;
+      renderHint();
+    },
   });
 }
 
@@ -107,10 +125,10 @@ async function fire(f) {
   if (reduce) input.value = f.q;
   else for (const ch of f.q) { if (my !== gen) return; input.value += ch; await new Promise((r) => setTimeout(r, 14)); }
   if (my !== gen) return;
-  answer(f.q, API.featuredAnswer(f.id), true);
+  answer(f.q, API.featuredAnswer(f.id), f.id);
 }
 
-const featured = API.featured();
+let featured = [];
 function makeChip(f, depth) {
   const b = document.createElement("button");
   b.type = "button"; b.className = "chip"; b.dataset.track = f.track; b.dataset.id = f.id;
@@ -203,8 +221,8 @@ function buildSky() {
   tick();
 }
 function build() { buildPicks(); buildSky(); renderHint(); }
-build();
-mobile.addEventListener("change", build);
+// ready-made questions and the day's limit come from the guild API
+API.ready.then(() => { featured = API.featured(); build(); mobile.addEventListener("change", build); });
 let lastW = innerWidth;
 addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(window._rs); window._rs = setTimeout(buildSky, 200); });
 
@@ -240,5 +258,3 @@ $("#experts-grid").innerHTML = EXPERTS.map((x) => {
 const topbar = $(".top");
 const onScroll = () => topbar.classList.toggle("scrolled", scrollY > 40);
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
-
-$("#reset").onclick = () => { API.resetLimit(); renderHint(); };

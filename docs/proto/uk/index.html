@@ -60,26 +60,8 @@ button, input, textarea { font: inherit; color: inherit; }
 [data-track="comms"] { --tc: var(--t-comms); }
 [data-track="arch"] { --tc: var(--t-arch); }
 
-/* Prototype switcher, fixed bottom-left on every variant */
-.proto-bar {
-  position: fixed; left: 12px; bottom: 12px; z-index: 100;
-  display: flex; gap: 4px; align-items: center;
-  padding: 4px; border: 1px solid var(--line); border-radius: 10px;
-  background: rgba(17, 20, 23, .92); backdrop-filter: blur(8px);
-  font: 500 11px/1 var(--mono); color: var(--dim);
-}
-.proto-bar a, .proto-bar button { padding: 7px 9px; border-radius: 7px; text-decoration: none; background: none; border: 0; cursor: pointer; color: var(--dim); font: inherit; }
-.proto-bar a[aria-current] { background: var(--panel-2); color: var(--txt); }
-.proto-bar a:hover, .proto-bar button:hover { color: var(--txt); }
-.proto-bar .sep { width: 1px; height: 16px; background: var(--line); margin: 0 2px; }
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
-}
-
-@media (max-width: 720px) {
-  .proto-bar { left: 50%; right: auto; translate: -50% 0; bottom: 8px; white-space: nowrap; font-size: 10px; }
-  .proto-bar a, .proto-bar button { padding: 6px 7px; }
 }
 </style>
 <style>
@@ -495,14 +477,10 @@ button, input, textarea { font: inherit; color: inherit; }
   <footer><span>nexttick — гільдія інженерів</span><span><a href="/offer.html">Оферта</a><a href="/privacy.html">Конфіденційність</a></span></footer>
 </main>
 
-<nav class="proto-bar" aria-label="Варианты прототипа" data-i18n-skip>
-  <button type="button" id="reset">сбросить лимит</button>
-</nav>
-
 <script>
-  const V = {"roadmap-data.ru.js": "be62ba08f3", "roadmap-data.uk.js": "955d854f34", "roadmap-data.en.js": "53be2ef890", "featured.real.ru.js": "eb864fe670", "featured.real.uk.js": "44e150a10c", "featured.real.en.js": "91ef5a6b63", "i18n.uk.js": "b8218bce1a", "i18n.en.js": "18ea159b92", "guild-api.js": "53229f38e2", "app.js": "b2cf082b37"};
+  const V = {"roadmap-data.ru.js": "be62ba08f3", "roadmap-data.uk.js": "955d854f34", "roadmap-data.en.js": "53be2ef890", "i18n.uk.js": "9f9687d9ea", "i18n.en.js": "322261d50e", "guild-api.js": "13c2592799", "app.js": "b5dcc6f9e6"};
   // locale data → API → page, executed in this order without blocking the parser
-  for (const src of [`roadmap-data.${LANG}.js`, `featured.real.${LANG}.js`, ...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
+  for (const src of [`roadmap-data.${LANG}.js`, ...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));
 </script>
 </body>
