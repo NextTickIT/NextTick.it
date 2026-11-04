@@ -6,6 +6,7 @@ window.I18N = {
  "Эксперты": "Experts",
  "<b>$50</b> · 4 недели": "<b>$50</b> · 4 weeks",
  "Вступить": "Join",
+ "Уже в гильдии?": "Already a member?",
  "Обучение для инженеров, <em>у&nbsp;которых нет на&nbsp;него времени.</em>": "Learning for engineers <em>who have no time for&nbsp;it.</em>",
  "NextTick — гильдия инженеров. <strong>Около 2 часов в неделю</strong>: короткие видео про архитектуру, коммуникации и AI и задание к каждому — на твоём рабочем проекте. Новое выходит каждую неделю, всё вышедшее остаётся в архиве.": "NextTick is a guild of engineers. <strong>About 2 hours a week</strong>: short videos on architecture, communication and AI, each with an assignment you do on your own work project. New material comes out every week, and everything released stays in the archive.",
  "Вступить в гильдию": "Join the guild",

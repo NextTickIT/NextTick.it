@@ -89,6 +89,10 @@ button, input, textarea { font: inherit; color: inherit; }
   .top nav { display: flex; gap: 4px; align-items: center; }
   .top > nav > a:not(.join) { font: 500 14px/1 var(--sans); color: var(--dim); text-decoration: none; padding: 10px 12px; border-radius: 999px; }
   .top > nav > a:not(.join):hover { color: var(--txt); }
+  /* members who land here instead of the app */
+  .top > nav > a.member { color: var(--txt); border: 1px solid var(--line-2); margin-left: 6px; white-space: nowrap; }
+  .top > nav > a.member:hover { border-color: var(--dim); }
+  .member-m { display: none; }
   .lang-switch { display: inline-flex; gap: 2px; margin: 0 4px; }
   .lang-switch a { font: 500 11px/1 var(--mono); letter-spacing: .04em; padding: 6px 7px; border-radius: 6px; color: var(--dim); text-decoration: none; border: 1px solid transparent; transition: color .15s, border-color .15s; }
   .lang-switch a:hover, html[lang="uk"] .lang-switch [data-loc="uk"], html[lang="en"] .lang-switch [data-loc="en"], html[lang="ru"] .lang-switch [data-loc="ru"] { color: var(--green); border-color: var(--green); }
@@ -301,6 +305,9 @@ button, input, textarea { font: inherit; color: inherit; }
     .top.scrolled { padding-top: 10px; padding-bottom: 10px; }
     .top .price-hint { margin-left: 0; }
     .top > nav > a:not(.join) { display: none; }
+    /* the header has no room for it: on phones the hero opens with it */
+    .member-m { display: inline-flex; align-items: center; min-height: 44px; font: 500 14px/1 var(--sans); color: var(--txt); text-decoration: none; }
+    .member-m::after { content: "→"; color: var(--green); margin-left: 8px; }
     /* ≥44×44 touch targets, like the home page */
     .lang-switch a { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 8px; }
     .join { padding: 10px 16px; }
@@ -357,13 +364,16 @@ button, input, textarea { font: inherit; color: inherit; }
   }
   /* narrow phones: the header keeps logo, languages and the join button; the price is in the ticket below */
   @media (max-width: 440px) { .top .price-hint { display: none; } }
+  /* tablets: "Уже в гильдии?" takes the price's room in the header, and below 800px the section links' too */
+  @media (min-width: 721px) and (max-width: 1000px) { .top .price-hint { display: none; } }
+  @media (min-width: 721px) and (max-width: 800px) { .top > nav > a:not(.join, .member) { display: none; } }
   @media (max-width: 720px) and (prefers-reduced-motion: reduce) { .rail { overflow-x: auto; } .row { animation: none; } }
 </style>
 </head>
 <body>
 <header class="top">
   <img src="/assets/nexttick-logo-color.svg" alt="nexttick" width="26" height="26">
-  <nav><a href="#latest">Что внутри</a><a href="#ask-sec">Спросить</a><a href="#experts">Эксперты</a><nav class="lang-switch" aria-label="Язык"><a data-loc="uk" hreflang="uk" href="/proto/uk/">UK</a><a data-loc="en" hreflang="en" href="/proto/en/">EN</a><a data-loc="ru" hreflang="ru" href="/proto/">RU</a></nav><span class="price-hint" aria-hidden="true"><b>$50</b> · 4 недели</span><a class="join" href="#join">Вступить</a></nav>
+  <nav><a href="#latest">Что внутри</a><a href="#ask-sec">Спросить</a><a href="#experts">Эксперты</a><nav class="lang-switch" aria-label="Язык"><a data-loc="uk" hreflang="uk" href="/proto/uk/">UK</a><a data-loc="en" hreflang="en" href="/proto/en/">EN</a><a data-loc="ru" hreflang="ru" href="/proto/">RU</a></nav><span class="price-hint" aria-hidden="true"><b>$50</b> · 4 недели</span><a class="member" href="https://web.nexttick.it">Уже в гильдии?</a><a class="join" href="#join">Вступить</a></nav>
 </header>
 
 <div class="stage" id="stage">
@@ -371,6 +381,7 @@ button, input, textarea { font: inherit; color: inherit; }
 <section class="hero" id="hero">
   <div class="wrap hero-grid" id="hero-grid">
     <div>
+      <a class="member-m" href="https://web.nexttick.it">Уже в гильдии?</a>
             <h1>Обучение для инженеров, <em>у&nbsp;которых нет на&nbsp;него времени.</em></h1>
       <p class="lede">NextTick — гильдия инженеров. <strong>Около 2 часов в неделю</strong>: короткие видео про архитектуру, коммуникации и AI и задание к каждому — на твоём рабочем проекте. Новое выходит каждую неделю, всё вышедшее остаётся в архиве.</p>
       <div class="actions">
@@ -479,7 +490,7 @@ button, input, textarea { font: inherit; color: inherit; }
 </main>
 
 <script>
-  const V = {"i18n.uk.js": "7500cad2cb", "i18n.en.js": "555adebbc6", "guild-api.js": "eff208f675", "app.js": "61e06da2f8"};
+  const V = {"i18n.uk.js": "71af203676", "i18n.en.js": "9c016d29cd", "guild-api.js": "eff208f675", "app.js": "61e06da2f8"};
   // translations → API → page, executed in this order without blocking the parser
   for (const src of [...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));
