@@ -125,6 +125,7 @@ button, input, textarea { font: inherit; color: inherit; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   html[lang="ru"] .lang-note { display: none; }
   .lang-note { margin: 18px 0 0; font: 400 13px/1.5 var(--mono); color: var(--muted); }
+  .sec-lede + .lang-note { margin: -24px 0 24px; }
 
   .chip { position: absolute; left: 0; top: 0; white-space: nowrap; cursor: pointer;
     font: 450 15px/1.2 var(--sans); color: var(--txt);
@@ -432,6 +433,7 @@ button, input, textarea { font: inherit; color: inherit; }
   <section class="sec" id="latest">
     <h2>One month <em>in the guild.</em></h2>
     <p class="sec-lede">The latest episodes in each track — what members are watching right now. Videos are 15 minutes each, and every one comes with an assignment on your own project.</p>
+    <p class="lang-note">Guild materials are available in Russian</p>
     <div class="tracks" id="tracks"></div>
     <ul class="month-extra">
       <li><b>+ assignments</b>for every video — on your own work project, not a training one</li>
