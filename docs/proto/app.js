@@ -275,3 +275,34 @@ API.overview.then((o) => { renderTracks(o); renderExperts(o); }, () => {});
 const topbar = $(".top");
 const onScroll = () => topbar.classList.toggle("scrolled", scrollY > 40);
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+/* ── member reviews from /reviews replace the static paraphrases; on failure or no items the static block stays ── */
+const FROM = { ru: "Переведено с русского", uk: "Переведено с украинского", en: "Переведено с английского" };
+function renderReviews(items) {
+  const list = $("#signals .signals"), lede = $("#signals > p");
+  if (!list || !items?.length) return;
+  list.replaceChildren(...items.map((r) => {
+    const li = document.createElement("li"), box = document.createElement("div");
+    box.className = "rv";
+    box.append(r.text);
+    if (FROM[r.translatedFrom]) {
+      const tip = t(FROM[r.translatedFrom]);
+      const mark = document.createElement("span");
+      mark.className = "rv-tr"; mark.tabIndex = 0; mark.dataset.tip = tip;
+      const star = document.createElement("span"), sr = document.createElement("span");
+      star.setAttribute("aria-hidden", "true"); star.textContent = "*";
+      sr.className = "sr-only"; sr.textContent = tip;
+      mark.append(star, sr);
+      box.append(mark);
+    }
+    if (r.author) {
+      const by = document.createElement("span");
+      by.className = "rv-by"; by.textContent = `— ${r.author}`;
+      box.append(by);
+    }
+    li.append(box);
+    return li;
+  }));
+  if (lede) lede.textContent = t("Так об этом пишут участники гильдии:");
+}
+API.reviews.then(renderReviews, () => {});

@@ -112,5 +112,9 @@ window.I18N = {
  "Вопрос — не длиннее 500 символов": "A question can be up to 500 characters",
  "Смотреть:": "Watch:",
  "NextTick — гильдия инженеров. Около 2 часов в неделю: короткие видео про архитектуру, коммуникации и AI и задание к каждому на твоём рабочем проекте.": "NextTick is a guild of engineers. About 2 hours a week: short videos on architecture, communication and AI, each with an assignment you do on your own work project.",
+ "Переведено с русского": "Translated from Russian",
+ "Переведено с украинского": "Translated from Ukrainian",
+ "Переведено с английского": "Translated from English",
+ "Так об этом пишут участники гильдии:": "Here is how guild members put it:",
  "Язык": "Language"
 };

@@ -238,6 +238,14 @@ button, input, textarea { font: inherit; color: inherit; }
   .signals { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 32px; }
   .signals li { display: grid; grid-template-columns: 28px 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid var(--line); font-size: 18px; line-height: 1.5; }
   .signals li::before { content: "↗"; font: 700 18px/1.5 var(--display); color: var(--green); }
+  .signals .rv { white-space: pre-line; min-width: 0; overflow-wrap: anywhere; }
+  .rv-tr { position: relative; display: inline-block; margin-left: 2px; color: var(--green); font-size: .75em; line-height: 1; vertical-align: super; cursor: help; }
+  .rv-tr::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 6px); translate: -50% 0; width: max-content; max-width: min(240px, 70vw); padding: 6px 10px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line-2); color: var(--txt); font: 400 12px/1.4 var(--mono); white-space: normal; text-align: center; opacity: 0; visibility: hidden; pointer-events: none; z-index: 5; }
+  .rv-tr:hover::after, .rv-tr:focus::after { opacity: 1; visibility: visible; }
+  .rv-tr:focus { outline: none; }
+  @media (hover: none) { .rv-tr { cursor: pointer; } }
+  .rv-tr:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 2px; }
+  .rv-by { display: block; margin-top: 6px; color: var(--muted); font-size: 14px; }
   .track .series { font: 500 12px/1.4 var(--mono); color: var(--dim); margin: -12px 0 16px; }
   .formats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .fmt { border-top: 2px solid var(--line-2); padding-top: 18px; }
@@ -492,7 +500,7 @@ button, input, textarea { font: inherit; color: inherit; }
 </main>
 
 <script>
-  const V = {"i18n.uk.js": "71af203676", "i18n.en.js": "9c016d29cd", "guild-api.js": "eff208f675", "app.js": "61e06da2f8"};
+  const V = {"i18n.uk.js": "8645ffc995", "i18n.en.js": "9b35a667da", "guild-api.js": "c3a079acbc", "app.js": "9de05f14ca"};
   // translations → API → page, executed in this order without blocking the parser
   for (const src of [...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));

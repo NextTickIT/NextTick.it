@@ -3,6 +3,7 @@
 //   GET  /featured/:id?locale=  → { id, track, q, answer, sources }   (cached, does not spend the limit)
 //   POST /session               → { limit, remaining, resetAt }        (sets the browser cookie)
 //   POST /ask { q, locale }     → text/event-stream: text → sources → done, or error (spends 1)
+//   GET  /reviews?locale=ru|uk|en → { items: [{ id, author, text, translatedFrom }], updatedAt }   (author "Я." or null; translatedFrom ru|uk|en or null; display order)
 //   GET  /overview              → { tracks: [{ track, counts, latest }], totals, experts: [{ id, name, videos }], updatedAt }
 // The answer arrives whole, so the typing effect is done here. Streams yield
 // { type: "text", chunk } … { type: "sources", items } → { type: "done", remaining },
@@ -141,5 +142,7 @@
     },
     // the guild by track: counts, latest videos, experts; rejects when the API is unreachable
     overview: getJson("/overview"),
+    // member reviews in display order; rejects when the API is unreachable (not part of `ready`)
+    reviews: getJson(`/reviews?locale=${LOCALE}`).then((d) => d.items),
   };
 })();
