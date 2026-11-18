@@ -276,13 +276,28 @@ const topbar = $(".top");
 const onScroll = () => topbar.classList.toggle("scrolled", scrollY > 40);
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
-/* ── member reviews from /reviews replace the static paraphrases; on failure or no items the static block stays ── */
+/* ── member reviews from /reviews replace the static paraphrases as chat bubbles: a random handful of the
+      ones shown in the admin, in random order; on failure or no items the static block stays ── */
+const REVIEWS_ON_PAGE = 6;
 const FROM = { ru: "Переведено с русского", uk: "Переведено с украинского", en: "Переведено с английского" };
+const AVATAR_TONES = ["--green", "--amber", "--cyan", "--magenta", "--red"];
+const PERSON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5z"/></svg>';
+function pickRandom(items, n) {
+  const a = items.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a.slice(0, n);
+}
 function renderReviews(items) {
   const list = $("#signals .signals"), lede = $("#signals > p");
   if (!list || !items?.length) return;
-  list.replaceChildren(...items.map((r) => {
-    const li = document.createElement("li"), box = document.createElement("div");
+  list.replaceChildren(...pickRandom(items, REVIEWS_ON_PAGE).map((r, i) => {
+    const li = document.createElement("li"), av = document.createElement("span"), box = document.createElement("div");
+    li.style.setProperty("--i", i);
+    av.className = "av"; av.setAttribute("aria-hidden", "true");
+    if (r.author) {
+      av.textContent = r.author.replace(/\.$/, "");
+      li.style.setProperty("--ac", `var(${AVATAR_TONES[r.author.codePointAt(0) % AVATAR_TONES.length]})`);
+    } else av.innerHTML = PERSON;
     box.className = "rv";
     box.append(r.text);
     if (FROM[r.translatedFrom]) {
@@ -295,14 +310,23 @@ function renderReviews(items) {
       mark.append(star, sr);
       box.append(mark);
     }
-    if (r.author) {
+    if (r.author) { // the avatar shows the initial; screen readers get it as a signature
       const by = document.createElement("span");
-      by.className = "rv-by"; by.textContent = `— ${r.author}`;
+      by.className = "sr-only"; by.textContent = ` — ${r.author}`;
       box.append(by);
     }
-    li.append(box);
+    li.append(av, box);
     return li;
   }));
+  list.classList.add("chat");
+  /* bubbles arrive one after another once the block scrolls into view */
+  if (reduce || !("IntersectionObserver" in window)) list.classList.add("in");
+  else {
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { list.classList.add("in"); io.disconnect(); }
+    }, { rootMargin: "0px 0px -12% 0px" });
+    io.observe(list);
+  }
   if (lede) lede.textContent = t("Так об этом пишут участники гильдии:");
 }
 API.reviews.then(renderReviews, () => {});

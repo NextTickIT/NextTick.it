@@ -246,6 +246,19 @@ button, input, textarea { font: inherit; color: inherit; }
   @media (hover: none) { .rv-tr { cursor: pointer; } }
   .rv-tr:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 2px; }
   .rv-by { display: block; margin-top: 6px; color: var(--muted); font-size: 14px; }
+  /* member reviews arrive as chat bubbles (app.js adds .chat); the static paraphrase fallback stays a flat list */
+  .signals.chat { display: block; columns: 2; column-gap: 40px; }
+  .signals.chat li { display: flex; align-items: flex-end; gap: 15px; padding: 0; margin: 0 0 18px; border: 0; break-inside: avoid; font-size: 16px; line-height: 1.55;
+    transform-origin: 0 100%; animation: bubble .5s cubic-bezier(.2,.8,.2,1) both paused; animation-delay: calc(var(--i, 0) * 140ms); }
+  .signals.chat.in li { animation-play-state: running; }
+  @media (prefers-reduced-motion: reduce) { .signals.chat li { animation: none; } }
+  @keyframes bubble { from { opacity: 0; transform: translateY(14px) scale(.96); } }
+  .signals.chat li::before { content: none; }
+  .signals.chat .av { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font: 600 15px/1 var(--display); color: var(--ac, var(--muted));
+    background: color-mix(in srgb, var(--ac, var(--muted)) 17%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac, var(--muted)) 30%, transparent); }
+  .signals.chat .rv { position: relative; max-width: 100%; padding: 11px 15px 12px; border-radius: 18px 18px 18px 0; background: var(--panel-2); color: var(--txt); }
+  .signals.chat .rv::before { content: ""; position: absolute; left: -11px; bottom: 0; width: 12px; height: 14px; background: inherit;
+    -webkit-mask: radial-gradient(14px 14px at 0 0, transparent 13.5px, #000 14px); mask: radial-gradient(14px 14px at 0 0, transparent 13.5px, #000 14px); }
   .track .series { font: 500 12px/1.4 var(--mono); color: var(--dim); margin: -12px 0 16px; }
   .formats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .fmt { border-top: 2px solid var(--line-2); padding-top: 18px; }
@@ -361,6 +374,9 @@ button, input, textarea { font: inherit; color: inherit; }
     .tracks, .formats, .experts, .pain-grid, .signals { grid-template-columns: 1fr; }
     .pains { padding-top: 64px; }
     .signals li { font-size: 16px; }
+    .signals.chat { columns: 1; }
+    .signals.chat li { gap: 13px; margin-bottom: 14px; font-size: 15.5px; }
+    .signals.chat .av { width: 32px; height: 32px; font-size: 14px; }
     .tracks { gap: 12px; }
     .track { padding: 18px; border-radius: 16px; }
     .formats { gap: 22px; }
@@ -500,7 +516,7 @@ button, input, textarea { font: inherit; color: inherit; }
 </main>
 
 <script>
-  const V = {"i18n.uk.js": "8645ffc995", "i18n.en.js": "9b35a667da", "guild-api.js": "c3a079acbc", "app.js": "9de05f14ca"};
+  const V = {"i18n.uk.js": "8645ffc995", "i18n.en.js": "9b35a667da", "guild-api.js": "c3a079acbc", "app.js": "320a3daa9d"};
   // translations → API → page, executed in this order without blocking the parser
   for (const src of [...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));
