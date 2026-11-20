@@ -276,57 +276,143 @@ const topbar = $(".top");
 const onScroll = () => topbar.classList.toggle("scrolled", scrollY > 40);
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
-/* ── member reviews from /reviews replace the static paraphrases as chat bubbles: a random handful of the
-      ones shown in the admin, in random order; on failure or no items the static block stays ── */
-const REVIEWS_ON_PAGE = 6;
+/* ── member reviews from /reviews replace the static paraphrases with a chat feed: the reviews shown in the
+      admin, in random order, one more arriving at the bottom every few seconds while the oldest fades out at
+      the top, so the block keeps one height however many there are; on failure or no items the static block stays ── */
 const FROM = { ru: "Переведено с русского", uk: "Переведено с украинского", en: "Переведено с английского" };
 const AVATAR_TONES = ["--green", "--amber", "--cyan", "--magenta", "--red"];
 const PERSON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5z"/></svg>';
-function pickRandom(items, n) {
+const PAUSE_ICON = '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="3" y="2.5" width="2.6" height="9" rx="1"/><rect x="8.4" y="2.5" width="2.6" height="9" rx="1"/></svg>';
+const PLAY_ICON = '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M4 2.6v8.8a.6.6 0 0 0 .9.5l7-4.4a.6.6 0 0 0 0-1L4.9 2.1a.6.6 0 0 0-.9.5z"/></svg>';
+// a review stays the newest for long enough to read it: 4 s plus 20 ms a character, at most 10 s
+const readTime = (r) => Math.min(4000 + r.text.length * 20, 10000);
+function shuffle(items) {
   const a = items.slice();
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-  return a.slice(0, n);
+  return a;
+}
+function reviewBubble(r) {
+  const li = document.createElement("li"), av = document.createElement("span"), box = document.createElement("div");
+  li.dataset.id = r.id;
+  av.className = "av"; av.setAttribute("aria-hidden", "true");
+  if (r.author) {
+    av.textContent = r.author.replace(/\.$/, "");
+    li.style.setProperty("--ac", `var(${AVATAR_TONES[r.author.codePointAt(0) % AVATAR_TONES.length]})`);
+  } else av.innerHTML = PERSON;
+  box.className = "rv";
+  box.append(r.text);
+  if (FROM[r.translatedFrom]) {
+    const tip = t(FROM[r.translatedFrom]);
+    const mark = document.createElement("span");
+    mark.className = "rv-tr"; mark.tabIndex = 0; mark.dataset.tip = tip;
+    const star = document.createElement("span"), sr = document.createElement("span");
+    star.setAttribute("aria-hidden", "true"); star.textContent = "*";
+    sr.className = "sr-only"; sr.textContent = tip;
+    mark.append(star, sr);
+    box.append(mark);
+  }
+  if (r.author) { // the avatar shows the initial; screen readers get it as a signature
+    const by = document.createElement("span");
+    by.className = "sr-only"; by.textContent = ` — ${r.author}`;
+    box.append(by);
+  }
+  li.append(av, box);
+  return li;
 }
 function renderReviews(items) {
-  const list = $("#signals .signals"), lede = $("#signals > p");
+  const block = $("#signals"), list = $("#signals .signals"), lede = $("#signals .after-head p");
   if (!list || !items?.length) return;
-  list.replaceChildren(...pickRandom(items, REVIEWS_ON_PAGE).map((r, i) => {
-    const li = document.createElement("li"), av = document.createElement("span"), box = document.createElement("div");
-    li.style.setProperty("--i", i);
-    av.className = "av"; av.setAttribute("aria-hidden", "true");
-    if (r.author) {
-      av.textContent = r.author.replace(/\.$/, "");
-      li.style.setProperty("--ac", `var(${AVATAR_TONES[r.author.codePointAt(0) % AVATAR_TONES.length]})`);
-    } else av.innerHTML = PERSON;
-    box.className = "rv";
-    box.append(r.text);
-    if (FROM[r.translatedFrom]) {
-      const tip = t(FROM[r.translatedFrom]);
-      const mark = document.createElement("span");
-      mark.className = "rv-tr"; mark.tabIndex = 0; mark.dataset.tip = tip;
-      const star = document.createElement("span"), sr = document.createElement("span");
-      star.setAttribute("aria-hidden", "true"); star.textContent = "*";
-      sr.className = "sr-only"; sr.textContent = tip;
-      mark.append(star, sr);
-      box.append(mark);
-    }
-    if (r.author) { // the avatar shows the initial; screen readers get it as a signature
-      const by = document.createElement("span");
-      by.className = "sr-only"; by.textContent = ` — ${r.author}`;
-      box.append(by);
-    }
-    li.append(av, box);
-    return li;
-  }));
-  list.classList.add("chat");
-  /* bubbles arrive one after another once the block scrolls into view */
-  if (reduce || !("IntersectionObserver" in window)) list.classList.add("in");
-  else {
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { list.classList.add("in"); io.disconnect(); }
-    }, { rootMargin: "0px 0px -12% 0px" });
-    io.observe(list);
-  }
+  const feed = document.createElement("div"), win = document.createElement("div");
+  feed.className = "rv-feed"; win.className = "rv-win";
+  list.replaceWith(feed); feed.append(win); win.append(list);
+  list.replaceChildren(); list.classList.add("chat"); block.classList.add("feed");
   if (lede) lede.textContent = t("Так об этом пишут участники гильдии:");
+
+  // the next review is one not on screen; each pass over the pool is a new random order
+  let queue = shuffle(items);
+  const byId = new Map(items.map((r) => [r.id, r]));
+  const next = () => {
+    const seen = new Set([...list.children].map((li) => li.dataset.id));
+    if (!queue.length) queue = shuffle(items.filter((r) => !seen.has(r.id)));
+    while (queue.length && seen.has(queue[0].id)) queue.shift();
+    return queue.shift();
+  };
+  // the top 52px of the window are fully faded (index.html .rv-win): a bubble is gone once it is above that line
+  const FADED = 52;
+  // fill the window up to one bubble cut off by the fade at the top, so it reads as a longer chat
+  for (let r; list.offsetHeight <= win.clientHeight - FADED && (r = next()); ) list.append(reviewBubble(r));
+  // drop the bubbles that have faded out at the top, unless keyboard focus is in one
+  const prune = () => {
+    const top = win.getBoundingClientRect().top + FADED;
+    for (let old; (old = list.firstElementChild) && old !== list.lastElementChild && !old.contains(document.activeElement)
+      && old.getBoundingClientRect().bottom < top; ) old.remove();
+  };
+  prune();
+  [...list.children].forEach((li, i) => li.style.setProperty("--i", i));
+  const reveal = () => list.classList.add("in");
+  const short = list.offsetHeight <= win.clientHeight - FADED; // too few to fill it: a still list of its own height
+  if (short) feed.classList.add("short");
+
+  /* the feed moves only while nothing holds it: out of view, tab hidden, mouse over it, focus in it, paused */
+  const holds = new Set(["view"]);
+  if (document.hidden) holds.add("hidden");
+  if (reduce) holds.add("user");
+  let timer = 0, due = 0, left = 5000;
+  const run = (ms) => { due = Date.now() + ms; timer = setTimeout(step, ms); };
+  const hold = (why, on) => {
+    const moving = !holds.size;
+    holds[on ? "add" : "delete"](why);
+    if (short) return;
+    if (moving && holds.size) { clearTimeout(timer); left = Math.max(due - Date.now(), 1500); }
+    else if (!moving && !holds.size) run(left);
+  };
+  function step() {
+    // every other review is on screen (a small pool, or a wider window than at the start): the oldest comes round again
+    const r = next() ?? byId.get(list.firstElementChild.dataset.id);
+    const li = reviewBubble(r);
+    li.style.setProperty("--i", 2); // it pops in once the room for it has opened
+    list.append(li);
+    // the list grew by one bubble at the bottom: put it back where it was, then let it slide up
+    list.style.transition = "none";
+    list.style.transform = `translateY(${li.offsetHeight + (parseFloat(getComputedStyle(list).rowGap) || 0)}px)`;
+    list.getBoundingClientRect();
+    list.style.transition = list.style.transform = "";
+    setTimeout(prune, 1000);
+    run(readTime(r));
+  }
+
+  if (reduce) reveal();
+  if (!("IntersectionObserver" in window)) { reveal(); hold("view", false); }
+  else new IntersectionObserver((entries) => {
+    const e = entries.at(-1); // a fast scroll can bring an enter and a leave in one call
+    if (e.isIntersecting) reveal();
+    hold("view", !e.isIntersecting);
+  }, { rootMargin: "0px 0px -12% 0px" }).observe(win);
+  if (short) return;
+  document.addEventListener("visibilitychange", () => hold("hidden", document.hidden));
+  feed.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hold("hover", true); });
+  feed.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hold("hover", false); });
+  win.addEventListener("focusin", () => hold("focus", true));
+  // a translation note opens away from the window edges it would be cut by, and below the star while that is under the fade
+  const placeNote = (e) => {
+    const mark = e.target.closest?.(".rv-tr");
+    if (!mark) return;
+    const w = win.getBoundingClientRect(), m = mark.getBoundingClientRect();
+    mark.dataset.x = m.left - w.left > w.width / 2 ? "l" : "r";
+    mark.dataset.y = m.top - w.top < 160 ? "b" : "t";
+  };
+  win.addEventListener("pointerover", placeNote);
+  win.addEventListener("focusin", placeNote);
+  win.addEventListener("focusout", (e) => hold("focus", win.contains(e.relatedTarget)));
+  const pause = document.createElement("button");
+  pause.type = "button"; pause.className = "rv-pause"; pause.setAttribute("aria-label", t("Пауза"));
+  const showPause = () => {
+    const paused = holds.has("user");
+    pause.setAttribute("aria-pressed", String(paused));
+    pause.innerHTML = paused ? PLAY_ICON : PAUSE_ICON;
+  };
+  pause.addEventListener("click", () => { hold("user", !holds.has("user")); showPause(); });
+  showPause();
+  feed.prepend(pause); // before the bubbles in tab order
 }
 API.reviews.then(renderReviews, () => {});

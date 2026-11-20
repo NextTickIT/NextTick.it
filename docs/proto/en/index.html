@@ -234,7 +234,7 @@ button, input, textarea { font: inherit; color: inherit; }
   .note { margin: 18px 0 0; font: 400 13px/1.5 var(--mono); color: var(--muted); }
   .after { margin-top: clamp(48px, 7vw, 80px); }
   .after h3 { font: 700 clamp(22px, 2.6vw, 32px)/1.15 var(--display); letter-spacing: -.02em; margin: 0 0 10px; }
-  .after > p { color: var(--dim); font-size: 17px; line-height: 1.55; margin: 0 0 22px; }
+  .after-head p { color: var(--dim); font-size: 17px; line-height: 1.55; margin: 0 0 22px; }
   .signals { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 32px; }
   .signals li { display: grid; grid-template-columns: 28px 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid var(--line); font-size: 18px; line-height: 1.5; }
   .signals li::before { content: "↗"; font: 700 18px/1.5 var(--display); color: var(--green); }
@@ -246,10 +246,21 @@ button, input, textarea { font: inherit; color: inherit; }
   @media (hover: none) { .rv-tr { cursor: pointer; } }
   .rv-tr:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 2px; }
   .rv-by { display: block; margin-top: 6px; color: var(--muted); font-size: 14px; }
-  /* member reviews arrive as chat bubbles (app.js adds .chat); the static paraphrase fallback stays a flat list */
-  .signals.chat { display: block; columns: 2; column-gap: 40px; }
-  .signals.chat li { display: flex; align-items: flex-end; gap: 15px; padding: 0; margin: 0 0 18px; border: 0; break-inside: avoid; font-size: 16px; line-height: 1.55;
-    transform-origin: 0 100%; animation: bubble .5s cubic-bezier(.2,.8,.2,1) both paused; animation-delay: calc(var(--i, 0) * 140ms); }
+  /* member reviews play as a chat feed (app.js adds .feed/.chat and wraps the list in .rv-feed): the window keeps
+     one height, a new bubble arrives at the bottom and the oldest fades out at the top; the static paraphrase
+     fallback stays a flat list */
+  .after.feed { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .after.feed .after-head p { margin: 0; }
+  .rv-feed { position: relative; border: 1px solid var(--line); border-radius: 22px; background: var(--bg-2); }
+  /* the top 52px are fully faded: the pause button sits there over nothing */
+  .rv-win { position: relative; height: 540px; overflow: hidden; border-radius: inherit;
+    -webkit-mask: linear-gradient(transparent 52px, #000 160px); mask: linear-gradient(transparent 52px, #000 160px); }
+  .rv-feed.short .rv-win { height: auto; -webkit-mask: none; mask: none; }
+  .signals.chat { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 16px; padding: 24px 24px 22px;
+    transition: transform .9s cubic-bezier(.4,0,.2,1); }
+  .rv-feed.short .signals.chat { position: static; }
+  .signals.chat li { display: flex; align-items: flex-end; gap: 14px; padding: 0; border: 0; font-size: 16px; line-height: 1.55;
+    transform-origin: 0 100%; animation: bubble .55s cubic-bezier(.2,.8,.2,1) both paused; animation-delay: calc(var(--i, 0) * 140ms); }
   .signals.chat.in li { animation-play-state: running; }
   @media (prefers-reduced-motion: reduce) { .signals.chat li { animation: none; } }
   @keyframes bubble { from { opacity: 0; transform: translateY(14px) scale(.96); } }
@@ -259,6 +270,14 @@ button, input, textarea { font: inherit; color: inherit; }
   .signals.chat .rv { position: relative; max-width: 100%; padding: 11px 15px 12px; border-radius: 18px 18px 18px 0; background: var(--panel-2); color: var(--txt); }
   .signals.chat .rv::before { content: ""; position: absolute; left: -11px; bottom: 0; width: 12px; height: 14px; background: inherit;
     -webkit-mask: radial-gradient(14px 14px at 0 0, transparent 13.5px, #000 14px); mask: radial-gradient(14px 14px at 0 0, transparent 13.5px, #000 14px); }
+  /* inside the feed window «Переведено с …» opens towards the room it has (app.js sets data-x/data-y) */
+  .signals.chat .rv-tr::after { left: -4px; translate: none; }
+  .signals.chat .rv-tr[data-x="l"]::after { left: auto; right: -4px; }
+  .signals.chat .rv-tr[data-y="b"]::after { bottom: auto; top: calc(100% + 6px); }
+  .rv-pause { position: absolute; top: 12px; right: 12px; z-index: 2; width: 34px; height: 34px; padding: 0; border-radius: 50%; border: 1px solid var(--line-2);
+    background: var(--panel); color: var(--dim); display: grid; place-items: center; cursor: pointer; }
+  .rv-pause:hover { color: var(--txt); border-color: var(--muted); }
+  .rv-pause[aria-pressed="true"] { color: var(--green); }
   .track .series { font: 500 12px/1.4 var(--mono); color: var(--dim); margin: -12px 0 16px; }
   .formats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .fmt { border-top: 2px solid var(--line-2); padding-top: 18px; }
@@ -319,6 +338,9 @@ button, input, textarea { font: inherit; color: inherit; }
     .experts { grid-template-columns: repeat(2, 1fr); }
     .cta { grid-template-columns: 1fr; }
     .ticket { max-width: 520px; }
+    .after.feed { display: block; }
+    .after.feed .after-head p { margin-bottom: 22px; }
+    .rv-feed { max-width: 680px; }
   }
 
   /* ── phone ────────────────────────────────────────── */
@@ -374,9 +396,12 @@ button, input, textarea { font: inherit; color: inherit; }
     .tracks, .formats, .experts, .pain-grid, .signals { grid-template-columns: 1fr; }
     .pains { padding-top: 64px; }
     .signals li { font-size: 16px; }
-    .signals.chat { columns: 1; }
-    .signals.chat li { gap: 13px; margin-bottom: 14px; font-size: 15.5px; }
+    .rv-feed { border: 0; border-radius: 0; background: none; }
+    .rv-win { height: 480px; }
+    .signals.chat { padding: 0 0 4px; gap: 14px; }
+    .signals.chat li { gap: 12px; font-size: 15.5px; }
     .signals.chat .av { width: 32px; height: 32px; font-size: 14px; }
+    .rv-pause { top: 0; right: 0; }
     .tracks { gap: 12px; }
     .track { padding: 18px; border-radius: 16px; }
     .formats { gap: 22px; }
@@ -466,8 +491,10 @@ button, input, textarea { font: inherit; color: inherit; }
     </ul>
     <p class="note">Missed a week? No need to catch up: each video stands on its own, and everything stays in the archive.</p>
     <div class="after" id="signals">
-      <h3>And then it shows at work</h3>
-      <p>This is how engineers described the moment the learning starts to work:</p>
+      <div class="after-head">
+        <h3>And then it shows at work</h3>
+        <p>This is how engineers described the moment the learning starts to work:</p>
+      </div>
       <ul class="signals">
         <li>Defended a refactoring proposal to management — and got the green light.</li>
         <li>Gave an estimate with a clear split: what I'm sure of and what I'm not.</li>
@@ -516,7 +543,7 @@ button, input, textarea { font: inherit; color: inherit; }
 </main>
 
 <script>
-  const V = {"i18n.uk.js": "8645ffc995", "i18n.en.js": "9b35a667da", "guild-api.js": "c3a079acbc", "app.js": "320a3daa9d"};
+  const V = {"i18n.uk.js": "db17aa812b", "i18n.en.js": "517ab76f15", "guild-api.js": "c3a079acbc", "app.js": "cae782c999"};
   // translations → API → page, executed in this order without blocking the parser
   for (const src of [...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));

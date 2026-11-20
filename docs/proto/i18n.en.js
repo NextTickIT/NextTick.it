@@ -115,6 +115,7 @@ window.I18N = {
  "Переведено с русского": "Translated from Russian",
  "Переведено с украинского": "Translated from Ukrainian",
  "Переведено с английского": "Translated from English",
+ "Пауза": "Pause",
  "Так об этом пишут участники гильдии:": "Here is how guild members put it:",
  "Язык": "Language"
 };
