@@ -15,6 +15,25 @@
   // uk/en are built with data-lang (tools/build-landing.py); Russian is the source text, i18n.<lang>.js maps it
   window.LANG = document.documentElement.dataset.lang || "ru";
   document.documentElement.lang = window.LANG;
+  // the theme every nexttick.it page shares: the saved choice, else the system's; set before paint so it doesn't
+  // flash. The header's toggle is handled here too, so it works before the page's scripts have loaded
+  {
+    let saved;
+    try { saved = localStorage.getItem("theme"); } catch {}
+    const setTheme = (t) => {
+      document.documentElement.dataset.theme = t;
+      document.querySelector('meta[name="theme-color"]').content = t === "light" ? "#ffffff" : "#0b0d0f";
+    };
+    setTheme(saved || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest?.("#theme-toggle")) return;
+      const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+      setTheme(next);
+      try { localStorage.setItem("theme", next); } catch {}
+      (window.dataLayer = window.dataLayer || []).push({ event: "theme_toggle", theme: next });
+      if (typeof window.gtag === "function") window.gtag("event", "theme_toggle", { theme: next });
+    });
+  }
   const sub = window.LANG === "en" ? "latin" : "cyrillic";
   for (const [href, as] of [["/landing/video-poster.webp", "image"], [`/landing/fonts/unbounded-${sub}.woff2`, "font"], [`/assets/fonts/inter-var-${sub}.woff2`, "font"]]) {
     const l = Object.assign(document.createElement("link"), { rel: "preload", href, as });
@@ -43,7 +62,8 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-/* Shared tokens — taken verbatim from the current nexttick.it dark theme. */
+/* Shared tokens — the nexttick.it dark theme, and below it the light one (data-theme="light", set before paint
+   and flipped by the first script, on the header's toggle). */
 @font-face { font-family: "Inter"; src: url(/assets/fonts/inter-var-latin.woff2) format("woff2"); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+02BB-02BC, U+2000-206F, U+20AC, U+2122, U+2190-21FF; }
 @font-face { font-family: "Inter"; src: url(/assets/fonts/inter-var-cyrillic.woff2) format("woff2"); font-weight: 100 900; font-display: swap; unicode-range: U+0400-04FF; }
 @font-face { font-family: "JetBrains Mono"; src: url(/assets/fonts/jbmono-var-latin.woff2) format("woff2"); font-weight: 100 800; font-display: swap; unicode-range: U+0000-00FF, U+02BB-02BC, U+2000-206F, U+2190-21FF; }
@@ -62,16 +82,39 @@
   --muted: #81888d; /* was #5d6469 — lifted to 4.5:1 on --panel-2 for small text */
   --green: #7ee787;
   --green-2: #3fb950;
+  --green-hover: #8df29a;
+  --on-green: #07130a; /* text and icons on a green fill */
   --amber: #e3b341;
   --cyan: #56d4dd;
   --magenta: #bc8cff;
   --red: #ff7b72;
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   --sans: "Inter", system-ui, sans-serif;
-  /* track accents, same mapping as the live roadmap */
+  /* track accents */
   --t-agents: var(--amber);
   --t-comms: var(--cyan);
   --t-arch: var(--green);
+}
+/* the light palette of the other nexttick.it pages */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-2: #f6f8fa;
+  --panel: #f0f3f6;
+  --panel-2: #e7ecf1;
+  --line: #d4dae0;
+  --line-2: #b6bfc8;
+  --txt: #1f2328;
+  --dim: #59636e;
+  --muted: #656b73;
+  --green: #197a35;
+  --green-2: #116329;
+  --green-hover: #166b2e;
+  --on-green: #ffffff;
+  --amber: #916100;
+  --cyan: #0b7285;
+  --magenta: #7d4dd7;
+  --red: #cf222e;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -104,7 +147,7 @@ button, input, textarea { font: inherit; color: inherit; }
   /* fixed header: the join button stays on screen the whole way down */
   .top { position: fixed; inset: 0 0 auto; z-index: 50; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px var(--gutter);
     transition: padding .25s, background .25s, border-color .25s; border-bottom: 1px solid transparent; }
-  .top.scrolled { padding-top: 12px; padding-bottom: 12px; background: rgba(11, 13, 15, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
+  .top.scrolled { padding-top: 12px; padding-bottom: 12px; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
   .top .price-hint { font: 400 12px/1.3 var(--mono); color: var(--muted); margin: 0 6px 0 10px; opacity: 0; transition: opacity .25s; white-space: nowrap; }
   .top .price-hint b { color: var(--txt); font-weight: 500; }
   .top.scrolled .price-hint { opacity: 1; }
@@ -121,9 +164,9 @@ button, input, textarea { font: inherit; color: inherit; }
   .lang-switch a { font: 500 11px/1 var(--mono); letter-spacing: .04em; padding: 6px 7px; border-radius: 6px; color: var(--dim); text-decoration: none; border: 1px solid transparent; transition: color .15s, border-color .15s; }
   .lang-switch a:hover, html[lang="uk"] .lang-switch [data-loc="uk"], html[lang="en"] .lang-switch [data-loc="en"], html[lang="ru"] .lang-switch [data-loc="ru"] { color: var(--green); border-color: var(--green); }
   html[lang="uk"] .lang-switch [data-loc="uk"], html[lang="en"] .lang-switch [data-loc="en"], html[lang="ru"] .lang-switch [data-loc="ru"] { pointer-events: none; }
-  .join { font: 600 14px/1 var(--sans); padding: 11px 18px; border-radius: 999px; background: var(--green); color: #07130a; text-decoration: none; border: 0; cursor: pointer; display: inline-block; white-space: nowrap; }
-  .join:hover { background: #8df29a; }
-  .ghost { font: 600 15px/1 var(--sans); padding: 15px 22px 15px 18px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(21,25,28,.85); color: var(--txt); cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
+  .join { font: 600 14px/1 var(--sans); padding: 11px 18px; border-radius: 999px; background: var(--green); color: var(--on-green); text-decoration: none; border: 0; cursor: pointer; display: inline-block; white-space: nowrap; }
+  .join:hover { background: var(--green-hover); }
+  .ghost { font: 600 15px/1 var(--sans); padding: 15px 22px 15px 18px; border-radius: 999px; border: 1px solid var(--line-2); background: color-mix(in srgb, var(--panel) 85%, transparent); color: var(--txt); cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
   .ghost:hover { border-color: var(--dim); }
   .ghost::before { content: ""; border-left: 10px solid var(--green); border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
 
@@ -154,7 +197,7 @@ button, input, textarea { font: inherit; color: inherit; }
   .chip { position: absolute; left: 0; top: 0; white-space: nowrap; cursor: pointer;
     font: 450 15px/1.2 var(--sans); color: var(--txt);
     padding: 9px 14px 9px 12px; border-radius: 999px; border: 1px solid var(--line);
-    background: rgba(21, 25, 28, .8); will-change: transform;
+    background: color-mix(in srgb, var(--panel) 80%, transparent); will-change: transform;
     transition: opacity .3s, filter .3s, border-color .2s, background .2s, box-shadow .3s; }
   .chip::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--tc); margin-right: 9px; vertical-align: 2px; }
   .chip[data-depth="0"] { opacity: .25; filter: blur(1.6px); font-size: 13px; }
@@ -167,8 +210,8 @@ button, input, textarea { font: inherit; color: inherit; }
   .video { position: relative; aspect-ratio: 16/9; border-radius: 22px; overflow: hidden; border: 1px solid var(--line-2); background: #000 url(/landing/video-poster.webp) center/cover; /* a frame of the intro at 0:17.5 */ cursor: pointer; box-shadow: 0 40px 100px -30px rgba(0,0,0,.9); }
   .video::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.65)); }
   /* the play button sits on the background left of the face in the poster, not on it */
-  .video .play { position: absolute; left: 27%; top: 50%; translate: -50% -50%; width: 76px; height: 76px; border-radius: 50%; background: var(--green); display: grid; place-items: center; transition: transform .2s; box-shadow: 0 0 0 10px rgba(126,231,135,.15); }
-  .video .play::after { content: ""; border-left: 22px solid #07130a; border-top: 14px solid transparent; border-bottom: 14px solid transparent; margin-left: 6px; }
+  .video .play { position: absolute; left: 27%; top: 50%; translate: -50% -50%; width: 76px; height: 76px; border-radius: 50%; background: var(--green); display: grid; place-items: center; transition: transform .2s; box-shadow: 0 0 0 10px color-mix(in srgb, var(--green) 15%, transparent); }
+  .video .play::after { content: ""; border-left: 22px solid var(--on-green); border-top: 14px solid transparent; border-bottom: 14px solid transparent; margin-left: 6px; }
   .video:hover .play { transform: scale(1.06); }
   .video .cap { position: absolute; left: 20px; bottom: 16px; right: 20px; display: flex; justify-content: space-between; font: 500 13px var(--mono); color: #fff; }
   .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -189,10 +232,10 @@ button, input, textarea { font: inherit; color: inherit; }
   .ask { position: relative; display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 22px;
     border-radius: 20px; border: 1px solid var(--line-2); background: var(--panel);
     box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); transition: border-color .2s, box-shadow .2s; }
-  .ask:focus-within { border-color: color-mix(in srgb, var(--green) 55%, var(--line-2)); box-shadow: 0 30px 80px -20px rgba(0,0,0,.7), 0 0 0 4px rgba(126,231,135,.08); }
+  .ask:focus-within { border-color: color-mix(in srgb, var(--green) 55%, var(--line-2)); box-shadow: 0 30px 80px -20px rgba(0,0,0,.7), 0 0 0 4px color-mix(in srgb, var(--green) 8%, transparent); }
   .ask input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font-size: 18px; padding: 14px 0; text-overflow: ellipsis; }
   .ask input::placeholder { color: var(--muted); }
-  .ask button { flex: none; width: 48px; height: 48px; border-radius: 14px; border: 0; background: var(--green); color: #07130a; cursor: pointer; display: grid; place-items: center; }
+  .ask button { flex: none; width: 48px; height: 48px; border-radius: 14px; border: 0; background: var(--green); color: var(--on-green); cursor: pointer; display: grid; place-items: center; }
   .ask button:disabled { background: var(--panel-2); color: var(--muted); cursor: default; }
   .hint { margin-top: 14px; font: 400 13px/1.5 var(--mono); color: var(--muted); text-align: center; }
   .hint b { color: var(--dim); font-weight: 500; }
@@ -350,6 +393,22 @@ button, input, textarea { font: inherit; color: inherit; }
   .ticket .buy small { font: 400 12px var(--mono); color: var(--muted); }
   footer { padding: 48px 0 100px; font: 400 12px var(--mono); color: var(--muted); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   footer a { display: inline-block; padding: 6px 0; color: var(--dim); text-decoration: none; margin-left: 16px; } /* 24px+ tap targets */
+  /* theme toggle: beside the languages and in their style; the icon is the theme it switches to */
+  .theme-toggle { display: inline-grid; place-items: center; width: 30px; height: 25px; padding: 0; border-radius: 6px; border: 1px solid transparent; background: none; color: var(--dim); cursor: pointer; transition: color .15s, border-color .15s; }
+  @media (hover: hover) { .theme-toggle:hover { color: var(--green); border-color: var(--green); } } /* a tapped toggle would stay lit on phones */
+  .theme-toggle svg { width: 14px; height: 14px; pointer-events: none; }
+  .theme-toggle .tt-moon, [data-theme="light"] .theme-toggle .tt-sun { display: none; }
+  [data-theme="light"] .theme-toggle .tt-moon { display: block; }
+  /* light theme: the dark page's deep shadows read as smudges on white, and the ticket's check takes the darker green */
+  [data-theme="light"] .video { box-shadow: 0 30px 70px -30px rgba(31,35,40,.35); }
+  [data-theme="light"] .ask, [data-theme="light"] .ticket { box-shadow: 0 24px 60px -28px rgba(31,35,40,.25); }
+  [data-theme="light"] .ask:focus-within { box-shadow: 0 24px 60px -28px rgba(31,35,40,.25), 0 0 0 4px color-mix(in srgb, var(--green) 12%, transparent); }
+  /* the track tags' 11px text and the review avatars' initials keep 4.5:1 on fainter tints */
+  [data-theme="light"] .ex .tr span { background: color-mix(in srgb, var(--tc) 7%, transparent); }
+  [data-theme="light"] .signals.chat .av { background: color-mix(in srgb, var(--ac, var(--muted)) 10%, var(--bg)); }
+  /* the poster doesn't change with the theme, so neither does the play button on it */
+  [data-theme="light"] .video .play { --green: #7ee787; --on-green: #07130a; }
+  [data-theme="light"] .ticket li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%23197a35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m2.5 6.2 2.3 2.3 4.7-5'/%3E%3C/svg%3E"); }
 
   /* ── tablet ───────────────────────────────────────── */
   @media (max-width: 1000px) {
@@ -377,8 +436,9 @@ button, input, textarea { font: inherit; color: inherit; }
     /* the header has no room for it: on phones the hero opens with it */
     .member-m { display: inline-flex; align-items: center; min-height: 44px; font: 500 14px/1 var(--sans); color: var(--txt); text-decoration: none; }
     .member-m::after { content: "→"; color: var(--green); margin-left: 8px; }
-    /* ≥44×44 touch targets, like the home page */
+    /* ≥44×44 touch targets */
     .lang-switch a { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 8px; }
+    .theme-toggle { width: 44px; height: 44px; }
     .join { padding: 10px 16px; }
 
     .hero { padding: 84px 0 0; }
@@ -437,8 +497,10 @@ button, input, textarea { font: inherit; color: inherit; }
     footer { padding-bottom: 110px; }
     footer a { margin: 0 16px 0 0; }
   }
-  /* narrow phones: the header keeps logo, languages and the join button; the price is in the ticket below */
+  /* narrow phones: the header keeps logo, theme, languages and the join button; the price is in the ticket below */
   @media (max-width: 440px) { .top .price-hint { display: none; } }
+  /* the narrowest phones (320–374px): languages, theme and join still fit in one row — the targets keep 44px of height */
+  @media (max-width: 374px) { .lang-switch a { min-width: 34px; padding: 0 6px; } .theme-toggle { width: 34px; } .join { padding: 10px 12px; } }
   /* tablets: the "already a member?" link takes the price's room in the header, and below 800px the section links' too */
   @media (min-width: 721px) and (max-width: 1000px) { .top .price-hint { display: none; } }
   @media (min-width: 721px) and (max-width: 800px) { .top > nav > a:not(.join, .member) { display: none; } }
@@ -529,7 +591,7 @@ button, input, textarea { font: inherit; color: inherit; }
 <body>
 <header class="top">
   <img src="/assets/nexttick-logo-color.svg" alt="nexttick" width="26" height="26">
-  <nav><a href="#latest">Що всередині</a><a href="#ask-sec">Запитати</a><a href="#experts">Експерти</a><nav class="lang-switch" aria-label="Мова"><a class="ls-opt" data-loc="uk" hreflang="uk" href="/uk.html">UK</a><a class="ls-opt" data-loc="en" hreflang="en" href="/en.html">EN</a><a class="ls-opt" data-loc="ru" hreflang="ru" href="/ru.html">RU</a></nav><span class="price-hint" aria-hidden="true"><b>$50</b> · 4 тижні</span><a class="member" href="https://web.nexttick.it">Вже в гільдії?</a><a class="join" href="#join">Вступити</a></nav>
+  <nav><a href="#latest">Що всередині</a><a href="#ask-sec">Запитати</a><a href="#experts">Експерти</a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Перемкнути тему" title="Світла / темна тема"><svg class="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path></svg><svg class="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button><nav class="lang-switch" aria-label="Мова"><a class="ls-opt" data-loc="uk" hreflang="uk" href="/uk.html">UK</a><a class="ls-opt" data-loc="en" hreflang="en" href="/en.html">EN</a><a class="ls-opt" data-loc="ru" hreflang="ru" href="/ru.html">RU</a></nav><span class="price-hint" aria-hidden="true"><b>$50</b> · 4 тижні</span><a class="member" href="https://web.nexttick.it">Вже в гільдії?</a><a class="join" href="#join">Вступити</a></nav>
 </header>
 
 <div class="stage" id="stage">
@@ -653,7 +715,7 @@ button, input, textarea { font: inherit; color: inherit; }
 <!-- /attribution -->
 
 <script>
-  const V = {"i18n.uk.js": "a15ed0ba5e", "i18n.en.js": "f25483a83b", "guild-api.js": "c3a079acbc", "app.js": "e348d871bf"};
+  const V = {"i18n.uk.js": "5dd5b27675", "i18n.en.js": "b7ffe68353", "guild-api.js": "c3a079acbc", "app.js": "e348d871bf"};
   // translations → API → page, executed in this order without blocking the parser
   for (const src of [...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/landing/" + src + "?v=" + V[src], async: false }));

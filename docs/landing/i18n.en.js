@@ -118,5 +118,7 @@ window.I18N = {
  "Переведено с английского": "Translated from English",
  "Пауза": "Pause",
  "Так об этом пишут участники гильдии:": "Here is how guild members put it:",
- "Язык": "Language"
+ "Язык": "Language",
+ "Переключить тему": "Toggle theme",
+ "Светлая / тёмная тема": "Light / dark theme"
 };
