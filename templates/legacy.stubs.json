@@ -2,6 +2,9 @@
   "template": "legacy-redirect.html",
   "outputs": [
     { "out": "en/index.html", "data": { "title": "NextTick", "target": "/en.html" } },
+    { "out": "proto/index.html", "data": { "title": "NextTick", "target": "/ru.html" } },
+    { "out": "proto/uk/index.html", "data": { "title": "NextTick", "target": "/uk.html" } },
+    { "out": "proto/en/index.html", "data": { "title": "NextTick", "target": "/en.html" } },
     { "out": "ru/index.html", "data": { "title": "NextTick", "target": "/ru.html" } },
     { "out": "uk/index.html", "data": { "title": "NextTick", "target": "/uk.html" } },
     { "out": "en/swe.html",   "data": { "title": "NextTick", "target": "/swe.html" } },

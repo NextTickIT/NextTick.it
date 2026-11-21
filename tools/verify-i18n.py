@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """i18n verification gate for the BUILT pages/ tree (page-based layout).
 Dev tool only, not a build step. Runs: JS syntax check, residue gates,
-hreflang/canonical reciprocity, plus the node parity/translated checks.
+hreflang/canonical reciprocity.
 Usage: python3 tools/verify-i18n.py"""
 import re, os, json, subprocess, tempfile, sys
 
@@ -72,7 +72,7 @@ for st in load_stubs():
 print("== 2) Residue gates ==")
 CYR = re.compile(r'[Ѐ-ӿ]')
 RU_ONLY = re.compile(r'[ёъыэЁЪЫЭ]')
-# en: zero Cyrillic anywhere on the surfaces + shared roadmap data
+# en: zero Cyrillic anywhere on the surfaces
 for prefix in SURFACES.values():
     f = surface_file(prefix, "en")
     s = open(f, encoding="utf-8").read()
@@ -80,12 +80,6 @@ for prefix in SURFACES.values():
     print(f"  {'OK ' if not hits else 'FAIL'} {f}: {len(hits)} Cyrillic chars")
     if hits:
         fail.append(f"en residue {f}: {len(hits)} Cyrillic ({''.join(sorted(set(hits))[:20])})")
-f = "docs/roadmap-data.en.js"
-s = open(f, encoding="utf-8").read()
-hits = CYR.findall(s)
-print(f"  {'OK ' if not hits else 'FAIL'} {f}: {len(hits)} Cyrillic")
-if hits:
-    fail.append(f"en residue {f}: {len(hits)} Cyrillic")
 # uk: zero Russian-only letters
 for prefix in SURFACES.values():
     f = surface_file(prefix, "uk")
@@ -94,12 +88,6 @@ for prefix in SURFACES.values():
     print(f"  {'OK ' if not hits else 'FAIL'} {f}: {len(hits)} Russian-only letters")
     if hits:
         fail.append(f"uk residue {f}: {len(hits)} Russian-only ({''.join(sorted(set(hits)))})")
-f = "docs/roadmap-data.uk.js"
-s = open(f, encoding="utf-8").read()
-hits = RU_ONLY.findall(s)
-print(f"  {'OK ' if not hits else 'FAIL'} {f}: {len(hits)} Russian-only letters")
-if hits:
-    fail.append(f"uk residue {f}: {len(hits)} Russian-only")
 
 _WS = re.compile(r'\s+')
 def _collapse(x): return _WS.sub(' ', x)
@@ -116,14 +104,6 @@ for loc in LOCALES:
         print(f"  {'OK ' if not missing else 'FAIL'} {f}")
         if missing:
             fail.append(f"hreflang/canonical {f}: missing {missing}")
-
-print("== 4) node parity + translated checks ==")
-for script in ["tools/verify-parity.mjs", "tools/verify-translated.mjs"]:
-    r = subprocess.run(["node", script], capture_output=True, text=True)
-    print(r.stdout.rstrip())
-    if r.returncode != 0:
-        fail.append(f"{script} failed")
-        print(r.stderr.rstrip())
 
 print("\n" + ("ALL GATES PASS ✅" if not fail else f"GATES FAILED ❌ ({len(fail)}):"))
 for x in fail:

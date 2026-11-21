@@ -1,5 +1,6 @@
-// Pre-translate the prototype page: same unit rule as translateStatic() in app.js, run at build time.
-// usage: node proto-i18n-prerender.mjs <page.html> <i18n.<lang>.js> <out.html>  → prints missing keys
+// Pre-translate the landing at build time: an element with its own Russian text is one unit, keyed by its
+// normalised innerHTML in docs/landing/i18n.<lang>.js (the same keys t() in app.js uses).
+// usage: node landing-i18n-prerender.mjs <page.html> <i18n.<lang>.js> <out.html>  → prints missing keys
 import { readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);

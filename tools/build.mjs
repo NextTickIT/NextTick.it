@@ -55,7 +55,8 @@
 //
 // Output rules:
 //   • writes ONLY *.html — pages/ static (CNAME, favicon.ico, site.webmanifest,
-//     assets/, roadmap-data.<loc>.js) is NEVER touched or wiped.
+//     assets/, landing/) is NEVER touched or wiped. The landing pages (ru/uk/en.html,
+//     index.html) come from tools/build-landing.py, not from here.
 //   • every file is Prettier-formatted through tools/lib/format.mjs (same pinned
 //     prettier + .prettierrc the canary validates), so output is byte-stable.
 //

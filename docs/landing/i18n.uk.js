@@ -1,6 +1,5 @@
-// Ukrainian UI strings for the landing prototype: the Russian source text is the key (see t() in a.html).
+// Ukrainian UI strings for the landing (templates/landing.html, app.js): the Russian source text is the key, see t() in app.js.
 window.I18N = {
- "NextTick — прототип лендинга": "NextTick — прототип лендингу",
  "NextTick — гильдия инженеров": "NextTick — гільдія інженерів",
  "Что внутри": "Що всередині",
  "Спросить": "Запитати",

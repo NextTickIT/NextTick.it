@@ -1,6 +1,5 @@
-// English UI strings for the landing prototype. Key = Russian source text (exactly as in i18n-keys.json).
+// English UI strings for the landing (templates/landing.html, app.js): the Russian source text is the key, see t() in app.js.
 window.I18N = {
- "NextTick — прототип лендинга": "NextTick — landing prototype",
  "NextTick — гильдия инженеров": "NextTick — guild of engineers",
  "Что внутри": "What's inside",
  "Спросить": "Ask",

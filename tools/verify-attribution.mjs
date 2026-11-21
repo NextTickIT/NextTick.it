@@ -43,9 +43,10 @@ const ASSET = "/assets/nt-attribution.js";
 // `channel` is the expected bot-link source_channel, or null for pages with no
 // bot links / no attribution include (guild, offer, privacy — baseline reality).
 const PAGE_DEFS = [
-  // "index.html" is the rootIndex copy of ru.html served at the bare domain
-  // (templates/index.page.json). It carries the same analytics as any content
-  // page, so it belongs here, not in the analytics-free stub list.
+  // The landing (templates/landing.html, built by tools/build-landing.py, not
+  // templated): "index.html" is its ru copy served at the bare domain. It carries
+  // the same analytics as any content page, so it belongs here, not in the
+  // analytics-free stub list.
   {
     dir: "",
     files: ["en.html", "ru.html", "uk.html", "index.html"],
@@ -54,13 +55,6 @@ const PAGE_DEFS = [
   {
     dir: "swe",
     files: ["swe/en.html", "swe/ru.html", "swe/uk.html"],
-    channel: "website",
-  },
-  // The new landing, hand-written in docs/proto (not templated): tools/build-proto.py copies the analytics
-  // partials into it, so it carries the home page's footprint and bot link.
-  {
-    dir: "proto",
-    files: ["proto/index.html", "proto/uk/index.html", "proto/en/index.html"],
     channel: "website",
   },
   {
@@ -141,6 +135,9 @@ const PAGE_DEFS = [
 // that carried the second occurrence fired without consent and was removed.
 const FOOTPRINT = {
   "en.html": { "G-1TYEB7YFP5": 2, "GTM-M74P6CSD": 1, x5houryvs2: 1 },
+  "ru.html": { "G-1TYEB7YFP5": 2, "GTM-M74P6CSD": 1, x5houryvs2: 1 },
+  "uk.html": { "G-1TYEB7YFP5": 2, "GTM-M74P6CSD": 1, x5houryvs2: 1 },
+  "index.html": { "G-1TYEB7YFP5": 2, "GTM-M74P6CSD": 1, x5houryvs2: 1 },
   "ai-speedup-checklist/en.html": { "G-1TYEB7YFP5": 0, "GTM-M74P6CSD": 0 },
   "ai-speedup-checklist-for-guild-members/en.html": {
     x5houryvs2: 1,
@@ -151,9 +148,6 @@ const FOOTPRINT = {
   "privacy/ru.html": { "G-MXX0XQWV3R": 2 },
   "consent/ru.html": { "G-MXX0XQWV3R": 2 },
   "consent/en.html": { "G-MXX0XQWV3R": 2 },
-  "proto/index.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
-  "proto/uk/index.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
-  "proto/en/index.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
   "swe/uk.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
   "swe/en.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
   "swe/ru.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },

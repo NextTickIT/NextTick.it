@@ -13,10 +13,11 @@
 
    `forward` lists the globals the page itself calls on the main thread, which
    Partytown re-points at the worker:
-     dataLayer.push -> roadmap.js (CTA, tab, theme, time-level events) and
-                       lang-switch.html (lang_switch)
-     gtag           -> roadmap.js's theme_toggle event, which is guarded by
-                       `typeof window.gtag === "function"` and so needs the
+     dataLayer.push -> the pages' CTA / theme events, lang-switch.html
+                       (lang_switch) and the landing's docs/landing/app.js
+                       (join_cta_click, lang_switch)
+     gtag           -> the theme_toggle events, which are guarded by
+                       `typeof window.gtag === "function"` and so need the
                        stub to exist.
    Both are defined inside the worker by gtm.html / ga4.html; without the
    forward those main-thread calls would vanish silently.

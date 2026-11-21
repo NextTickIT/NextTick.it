@@ -15,16 +15,10 @@ const plural = (n, forms) => {
   return m10 === 1 && m100 !== 11 ? f[0] : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? f[1] : f[2];
 };
 const fmt = (n) => n.toLocaleString({ ru: "ru-RU", uk: "uk-UA", en: "en-US" }[LANG]);
-// static markup: an element with its own Russian text is one unit, keyed by its normalised innerHTML
-const CYR = /[А-Яа-яЁё]/, norm = (s) => s.replace(/\s+/g, " ").trim();
-function translateStatic(el) {
-  if (el.hasAttribute?.("data-i18n-skip")) return;
-  for (const a of ["placeholder", "aria-label", "title", "alt", "content"]) { const v = el.getAttribute?.(a); if (v && CYR.test(v)) el.setAttribute(a, t(norm(v))); }
-  if ([...el.childNodes].some((n) => n.nodeType === 3 && CYR.test(n.textContent))) { el.innerHTML = t(norm(el.innerHTML)); return; }
-  for (const c of el.children) if (!["SCRIPT", "STYLE", "svg"].includes(c.tagName)) translateStatic(c);
-}
-// pages pre-translated at build time carry data-lang; the ?lang= preview translates here
-if (LANG !== "ru" && !document.documentElement.dataset.lang) { translateStatic(document.head); translateStatic(document.body); }
+// the static markup of uk/en is translated at build time (tools/lib/landing-i18n-prerender.mjs); t() covers what
+// this script renders. The page's language is remembered, as the other pages do (_partials/lang-switch.html), for
+// the bare domain and the /privacy.html-style stubs
+try { localStorage.setItem("lang", LANG); } catch {}
 document.querySelector(`.lang-switch [data-loc="${LANG}"]`).setAttribute("aria-current", "true");
 const mobile = matchMedia("(max-width: 720px)");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -417,14 +411,26 @@ function renderReviews(items) {
 }
 API.reviews.then(renderReviews, () => {});
 
-/* ── the GTM events every nexttick.it page sends (templates/roadmap.js, _partials/lang-switch.html): a click on
-      the bot link is the join conversion. Partytown's head snippet owns dataLayer.push (it queues calls for its
+/* ── the GTM events the nexttick.it pages send (_partials/lang-switch.html, and join_cta_click as the old home page
+      did — its bottom CTA was "subscribe", which the #join section's bot link replaces): a click on the bot link is
+      the join conversion. Partytown's head snippet owns dataLayer.push (it queues calls for its
       worker) and may delete dataLayer when it falls back, so the array is looked up, or made, at click time ── */
 const track = (ev) => (window.dataLayer = window.dataLayer || []).push(ev);
 document.addEventListener("click", (e) => {
   const bot = e.target.closest?.('a[href*="tg.pulse.is/next_tick_bot"]');
-  if (bot) track({ event: "join_cta_click", cta_location: bot.closest("section[id]")?.id || "page",
+  const CTA_LOCATION = { join: "subscribe" };
+  const section = bot?.closest("section[id]")?.id;
+  if (bot) track({ event: "join_cta_click", cta_location: CTA_LOCATION[section] || section || "page",
     cta_text: bot.textContent.trim().replace(/\s+/g, " "), link_url: bot.href });
+  // the language switch, as _partials/lang-switch.html does it: the choice is remembered and the query (utm_*)
+  // and hash go along
   const sw = e.target.closest?.(".lang-switch a[data-loc]");
-  if (sw && sw.dataset.loc !== LANG) track({ event: "lang_switch", from: LANG, to: sw.dataset.loc });
+  if (sw && !e.defaultPrevented && e.button === 0 && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) {
+    const loc = sw.dataset.loc;
+    try { localStorage.setItem("lang", loc); } catch {}
+    if (loc === LANG) return;
+    e.preventDefault();
+    track({ event: "lang_switch", from: LANG, to: loc });
+    location.href = "/" + loc + ".html" + location.search + location.hash;
+  }
 });

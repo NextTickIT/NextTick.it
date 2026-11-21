@@ -75,4 +75,12 @@ markup (e.g. `<span class="em">…</span>`) MUST use `<%~ %>` or they ship as
   — the same one `npm run canary` validates — so `pages/<page>/<loc>.html` is
   byte-stable and diffable against the frozen baseline (`tools/bytediff.mjs`).
 - `build.mjs` writes ONLY `*.html`; it never touches `pages/` static
-  (`CNAME`, `favicon.ico`, `site.webmanifest`, `assets/`, `roadmap-data.<loc>.js`).
+  (`CNAME`, `favicon.ico`, `site.webmanifest`, `assets/`, `landing/`).
+
+## The landing (home page)
+
+`/ru.html`, `/uk.html`, `/en.html` and the bare-domain `index.html` are **not** Eta pages: they are built from
+the hand-written `templates/landing.html` (Russian source text) by `npm run build:landing`
+(`tools/build-landing.py`), which also renders the analytics partials into it and prerenders uk/en from
+`docs/landing/i18n.<lang>.js`. Its scripts, fonts and images live in `docs/landing/`. `npm test` fails when the
+built pages are out of date.
