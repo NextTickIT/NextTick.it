@@ -17,7 +17,7 @@
   window.LANG = document.documentElement.dataset.lang || ["uk", "en"].find((l) => l === new URLSearchParams(location.search).get("lang")) || "ru";
   document.documentElement.lang = window.LANG;
   const sub = window.LANG === "en" ? "latin" : "cyrillic";
-  for (const [href, as] of [["/assets/hero-poster.webp", "image"], [`/proto/fonts/unbounded-${sub}.woff2`, "font"], [`/assets/fonts/inter-var-${sub}.woff2`, "font"]]) {
+  for (const [href, as] of [["/proto/video-poster.webp", "image"], [`/proto/fonts/unbounded-${sub}.woff2`, "font"], [`/assets/fonts/inter-var-${sub}.woff2`, "font"]]) {
     const l = Object.assign(document.createElement("link"), { rel: "preload", href, as });
     if (as === "font") { l.type = "font/woff2"; l.crossOrigin = "anonymous"; } else l.fetchPriority = "high";
     document.head.append(l);
@@ -159,9 +159,10 @@ button, input, textarea { font: inherit; color: inherit; }
   .chip:hover, .chip:focus-visible { opacity: 1; filter: none; border-color: var(--tc); background: var(--panel-2); z-index: 5; }
   .chip.fired { opacity: 1; filter: none; border-color: var(--tc); box-shadow: 0 0 0 6px color-mix(in srgb, var(--tc) 18%, transparent); }
 
-  .video { position: relative; aspect-ratio: 16/9; border-radius: 22px; overflow: hidden; border: 1px solid var(--line-2); background: #000 url(/assets/hero-poster.webp) center/cover; cursor: pointer; box-shadow: 0 40px 100px -30px rgba(0,0,0,.9); }
+  .video { position: relative; aspect-ratio: 16/9; border-radius: 22px; overflow: hidden; border: 1px solid var(--line-2); background: #000 url(/proto/video-poster.webp) center/cover; /* a frame of the intro at 0:17.5 */ cursor: pointer; box-shadow: 0 40px 100px -30px rgba(0,0,0,.9); }
   .video::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.65)); }
-  .video .play { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 76px; height: 76px; border-radius: 50%; background: var(--green); display: grid; place-items: center; transition: transform .2s; box-shadow: 0 0 0 10px rgba(126,231,135,.15); }
+  /* the play button sits on the background left of the face in the poster, not on it */
+  .video .play { position: absolute; left: 27%; top: 50%; translate: -50% -50%; width: 76px; height: 76px; border-radius: 50%; background: var(--green); display: grid; place-items: center; transition: transform .2s; box-shadow: 0 0 0 10px rgba(126,231,135,.15); }
   .video .play::after { content: ""; border-left: 22px solid #07130a; border-top: 14px solid transparent; border-bottom: 14px solid transparent; margin-left: 6px; }
   .video:hover .play { transform: scale(1.06); }
   .video .cap { position: absolute; left: 20px; bottom: 16px; right: 20px; display: flex; justify-content: space-between; font: 500 13px var(--mono); color: #fff; }
