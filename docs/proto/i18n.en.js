@@ -1,6 +1,7 @@
 // English UI strings for the landing prototype. Key = Russian source text (exactly as in i18n-keys.json).
 window.I18N = {
  "NextTick — прототип лендинга": "NextTick — landing prototype",
+ "NextTick — гильдия инженеров": "NextTick — guild of engineers",
  "Что внутри": "What's inside",
  "Спросить": "Ask",
  "Эксперты": "Experts",
@@ -68,6 +69,7 @@ window.I18N = {
  "nexttick — гильдия инженеров": "nexttick — guild of engineers",
  "Оферта": "Offer",
  "Конфиденциальность": "Privacy Policy",
+ "Согласие на обработку данных": "Data Consent",
  "вопрос|вопроса|вопросов": "question|questions",
  "вопросы вокруг": "the floating questions",
  "{count} на сегодня · {where} — без лимита": "{count} left today · {where} — unlimited",

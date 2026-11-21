@@ -4,7 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0b0d0f">
 <script>
   // ?lang=uk|en (the real site routes by path); Russian is the source text, i18n.<lang>.js maps it
   window.LANG = document.documentElement.dataset.lang || ["uk", "en"].find((l) => l === new URLSearchParams(location.search).get("lang")) || "ru";
@@ -18,6 +25,18 @@
 </script>
 <meta name="description" content="NextTick is a guild of engineers. About 2 hours a week: short videos on architecture, communication and AI, each with an assignment you do on your own work project.">
 <title>NextTick — landing prototype</title>
+<!-- link previews; tools/build-proto.py points og:url, og:locale and og:image at the uk/en pages in their copies.
+     og-<lang>.jpg are this page's hero headline and lede rendered at 1200×630: re-render them when those change -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NextTick">
+<meta property="og:title" content="NextTick — guild of engineers">
+<meta property="og:description" content="NextTick is a guild of engineers. About 2 hours a week: short videos on architecture, communication and AI, each with an assignment you do on your own work project.">
+<meta property="og:url" content="https://nexttick.it/proto/en/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nexttick.it/proto/og-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 /* Shared tokens — taken verbatim from the current nexttick.it dark theme. */
 @font-face { font-family: "Inter"; src: url(/assets/fonts/inter-var-latin.woff2) format("woff2"); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+02BB-02BC, U+2000-206F, U+20AC, U+2122, U+2190-21FF; }
@@ -419,6 +438,87 @@ button, input, textarea { font: inherit; color: inherit; }
   @media (min-width: 721px) and (max-width: 800px) { .top > nav > a:not(.join, .member) { display: none; } }
   @media (max-width: 720px) and (prefers-reduced-motion: reduce) { .rail { overflow-x: auto; } .row { animation: none; } }
 </style>
+<!-- analytics: tools/build-proto.py copies templates/_partials/analytics here, the same tags as nexttick.it — edit those, not this block -->
+<script>
+  partytown = {
+    lib: "/~partytown/",
+    forward: ["dataLayer.push", "gtag"],
+  };
+</script>
+<script>
+  /* Partytown 0.14.5 - MIT QwikDev */
+!function(){const t=(t,e,r)=>{var n;if(void 0===(r=globalThis)._pttt){r._pttt=null;try{r._pttt=(null===(n=r.trustedTypes)||void 0===n?void 0:n.createPolicy("partytown",{createHTML:t=>t,createScript:t=>t,createScriptURL:t=>t}))||null}catch(t){}}return r._pttt?r._pttt[t](e):e},e={preserveBehavior:!1},r=t=>{if("string"==typeof t)return[t,e];const[r,n=e]=t;return[r,{...e,...n}]},n=Object.freeze((t=>{const e=new Set;let r=[];do{Object.getOwnPropertyNames(r).forEach((t=>{"function"==typeof r[t]&&e.add(t)}))}while((r=Object.getPrototypeOf(r))!==Object.prototype);return Array.from(e)})());!function(e,o,i,a,c,l,s,p,d,u,y=e,f){function h(){f||(f=1,"/"==(s=(l.lib||"/~partytown/")+(l.debug?"debug/":""))[0]&&(d=o.querySelectorAll('script[type="text/partytown"]'),a!=e&&function(){try{return!!a.dispatchEvent}catch(t){return!1}}()?a.dispatchEvent(new CustomEvent("pt1",{detail:e})):(0!=(null==l?void 0:l.fallbackTimeout)&&(p=setTimeout(w,(null==l?void 0:l.fallbackTimeout)||1e4),o.addEventListener("pt0",m)),c?v(1):i.serviceWorker?i.serviceWorker.register(t("createScriptURL",s+(l.swPath||"partytown-sw.js")),{scope:s}).then((function(t){t?t.active?v():t.installing&&t.installing.addEventListener("statechange",(function(t){"activated"==t.target.state&&v()})):w()}),(function(t){console.error(t),w()})):w())))}function v(r){u=o.createElement(r?"script":"iframe"),e._pttab=Date.now(),r||(u.style.display="block",u.style.width="0",u.style.height="0",u.style.border="0",u.style.visibility="hidden",u.setAttribute("aria-hidden",!0)),u.src=r?t("createScriptURL",s+"partytown-atomics.js?v=0.14.5"):s+"partytown-sandbox-sw.html?"+e._pttab,o.querySelector(l.sandboxParent||"body").appendChild(u)}function w(t,n){for(m(),a==e&&(l.forward||[]).map((function(t){const[n]=r(t);delete e[n.split(".")[0]]})),d=o.querySelectorAll('script[type="text/partytown"]'),t=0;t<d.length;t++)b(d[t]);"undefined"!=typeof MutationObserver&&new MutationObserver((function(t){t.map((function(t){for(var e=0;e<t.addedNodes.length;e++){var r=t.addedNodes[e];1==r.nodeType&&("SCRIPT"==r.nodeName&&"text/partytown"==r.type?b(r):r.querySelectorAll&&r.querySelectorAll('script[type="text/partytown"]').forEach(b))}}))})).observe(o.documentElement,{childList:!0,subtree:!0}),u&&u.parentNode.removeChild(u)}function b(e,r){r=o.createElement("script"),e.src?r.src=t("createScriptURL",e.src):r.innerHTML=t("createHTML",e.innerHTML),r.nonce=l.nonce,e.type+="-x",o.head.appendChild(r)}function m(){clearTimeout(p)}l=e.partytown||{},a==e&&(l.forward||[]).map((function(t){const[o,{preserveBehavior:i}]=r(t);y=e,o.split(".").map((function(t,r,o){var a;y=y[o[r]]=r+1<o.length?y[o[r]]||(a=o[r+1],n.includes(a)?[]:{}):(()=>{let t=null;if(i){const{methodOrProperty:r,thisObject:n}=((t,e)=>{let r=t;for(let t=0;t<e.length-1;t+=1)r=r[e[t]];return{thisObject:r,methodOrProperty:e.length>0?r[e[e.length-1]]:void 0}})(e,o);"function"==typeof r&&(t=(...t)=>r.apply(n,...t))}return"push"==o[r]&&Array.isArray(y)&&y.map((function(t){(e._ptf=e._ptf||[]).push(o,[t])})),function(){let r;return t&&(r=t(arguments)),(e._ptf=e._ptf||[]).push(o,arguments),r}})()}))})),"complete"==o.readyState?h():(e.addEventListener("DOMContentLoaded",h),e.addEventListener("load",h))}(window,document,navigator,top,window.crossOriginIsolated)}();</script>
+<!-- Google Tag Manager — runs in the Partytown worker (see partytown.html) -->
+<script type="text/plain" data-consent="analytics" data-type="text/partytown">
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-M74P6CSD");
+</script>
+<!-- End Google Tag Manager -->
+<script type="text/plain" data-consent="analytics" data-type="text/javascript">
+  (function (c, l, a, r, i, t, y) {
+    c[a] =
+      c[a] ||
+      function () {
+        (c[a].q = c[a].q || []).push(arguments);
+      };
+    t = l.createElement(r);
+    t.async = 1;
+    t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0];
+    y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", "x5houryvs2");
+</script>
+<!-- Google tag (gtag.js) — runs in the Partytown worker (see partytown.html) -->
+<script   type="text/plain" data-consent="analytics" data-type="text/partytown"
+  src="https://www.googletagmanager.com/gtag/js?id=G-1TYEB7YFP5"
+></script>
+<script type="text/plain" data-consent="analytics" data-type="text/partytown">
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-1TYEB7YFP5");
+</script>
+<!-- Meta Pixel Code -->
+<script type="text/plain" data-consent="analytics">
+  !(function (f, b, e, v, n, t, s) {
+    if (f.fbq) return;
+    n = f.fbq = function () {
+      n.callMethod
+        ? n.callMethod.apply(n, arguments)
+        : n.queue.push(arguments);
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n;
+    n.loaded = !0;
+    n.version = "2.0";
+    n.queue = [];
+    t = b.createElement(e);
+    t.async = !0;
+    t.src = v;
+    s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  })(
+    window,
+    document,
+    "script",
+    "https://connect.facebook.net/en_US/fbevents.js",
+  );
+  fbq("init", "1543537094181571");
+  fbq("track", "PageView");
+</script>
+<!-- End Meta Pixel Code -->
+<script src="/assets/nt-consent.js?v=1" defer></script>
+<!-- /analytics -->
 </head>
 <body>
 <header class="top">
@@ -539,11 +639,15 @@ button, input, textarea { font: inherit; color: inherit; }
     </div>
   </section>
 
-  <footer><span>nexttick — guild of engineers</span><span><a href="/offer.html">Offer</a><a href="/privacy.html">Privacy Policy</a></span></footer>
+  <footer><span>nexttick — guild of engineers</span><span><a href="/offer/en.html">Offer</a><a href="/privacy/en.html">Privacy Policy</a><a href="/consent/en.html">Data Consent</a><a href="#" data-nt-consent-open>Cookies</a></span></footer>
 </main>
 
+<!-- attribution: tools/build-proto.py copies templates/_partials/analytics/attribution.html here -->
+<script src="/assets/nt-attribution.js?v=1"></script>
+<!-- /attribution -->
+
 <script>
-  const V = {"i18n.uk.js": "db17aa812b", "i18n.en.js": "517ab76f15", "guild-api.js": "c3a079acbc", "app.js": "cae782c999"};
+  const V = {"i18n.uk.js": "35c3eed822", "i18n.en.js": "eb2bb5992b", "guild-api.js": "c3a079acbc", "app.js": "12174e3aed"};
   // translations → API → page, executed in this order without blocking the parser
   for (const src of [...(LANG === "ru" ? [] : [`i18n.${LANG}.js`]), "guild-api.js", "app.js"])
     document.body.append(Object.assign(document.createElement("script"), { src: "/proto/" + src + "?v=" + V[src], async: false }));

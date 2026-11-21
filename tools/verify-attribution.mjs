@@ -56,6 +56,13 @@ const PAGE_DEFS = [
     files: ["swe/en.html", "swe/ru.html", "swe/uk.html"],
     channel: "website",
   },
+  // The new landing, hand-written in docs/proto (not templated): tools/build-proto.py copies the analytics
+  // partials into it, so it carries the home page's footprint and bot link.
+  {
+    dir: "proto",
+    files: ["proto/index.html", "proto/uk/index.html", "proto/en/index.html"],
+    channel: "website",
+  },
   {
     dir: "all",
     files: ["all/en.html", "all/ru.html", "all/uk.html"],
@@ -144,6 +151,9 @@ const FOOTPRINT = {
   "privacy/ru.html": { "G-MXX0XQWV3R": 2 },
   "consent/ru.html": { "G-MXX0XQWV3R": 2 },
   "consent/en.html": { "G-MXX0XQWV3R": 2 },
+  "proto/index.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
+  "proto/uk/index.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
+  "proto/en/index.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
   "swe/uk.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
   "swe/en.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },
   "swe/ru.html": { "GTM-M74P6CSD": 1, "G-1TYEB7YFP5": 2, x5houryvs2: 1 },

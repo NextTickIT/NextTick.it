@@ -416,3 +416,15 @@ function renderReviews(items) {
   feed.prepend(pause); // before the bubbles in tab order
 }
 API.reviews.then(renderReviews, () => {});
+
+/* ── the GTM events every nexttick.it page sends (templates/roadmap.js, _partials/lang-switch.html): a click on
+      the bot link is the join conversion. Partytown's head snippet owns dataLayer.push (it queues calls for its
+      worker) and may delete dataLayer when it falls back, so the array is looked up, or made, at click time ── */
+const track = (ev) => (window.dataLayer = window.dataLayer || []).push(ev);
+document.addEventListener("click", (e) => {
+  const bot = e.target.closest?.('a[href*="tg.pulse.is/next_tick_bot"]');
+  if (bot) track({ event: "join_cta_click", cta_location: bot.closest("section[id]")?.id || "page",
+    cta_text: bot.textContent.trim().replace(/\s+/g, " "), link_url: bot.href });
+  const sw = e.target.closest?.(".lang-switch a[data-loc]");
+  if (sw && sw.dataset.loc !== LANG) track({ event: "lang_switch", from: LANG, to: sw.dataset.loc });
+});
